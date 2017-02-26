@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createModal"> Create Participant </button>
+        </div>     
+
+        <!-- Modal Create Participant --> 
+
+         <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModallabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="createModal">Create Participant</h4>
+              </div>
+              <form action="{% url 'core:create_participant' %}"  method="POST">
+                  {% csrf_token %}
+                  <div class="modal-body">
+                        <div class="form-group">
+                                <label for="participant_name"> Participant Name </label>
+                                <input class="form-control " type="text" name="participant_name" id="participant_name">
+                        </div>
+                        <div class="form-group">
+                                <label for="puskesmas"> Puskesmas </label>
+                                <!--<input class="form-control " type="text" name="puskesmas_code" id="puskesmas_code">-->
+                                <select class="form-control selectpicker" name="puskesmas">
+                                  {% for puskesmas in puskesmas_list %}
+                                  <option value={{puskesmas.id}}>{{ puskesmas.name }}</option>
+                                  {% endfor %}
+                                </select>
+                        </div>
+                        
+                        <div class="form-group">
+                                <label for="date_admission"> Date Admission </label>
+                                <input class="form-control" type="date" id="date_admission" name="date_admission" required>
+                        </div>
+                                
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Create Participant"/>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div> 
+
+        <!-- End of Modal Create Participant-->
+        <div class="row">         
+            <h2> List Of Patient </h2>
+           <table id="myTable" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Participant_ID</th>
+                        <th>Name</th>
+                        <th>Date Admission </th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for participant in participants %}
+                        <tr>
+                            <td>{{ participant.participant_id }}</td>
+                            <td>{{ participant.name }}</td>
+                            <td>{{ participant.date_admission }}</td>
+                            <td>
+                                <form action="{% url 'core:forms' %}"  method="POST">
+                                   {% csrf_token %}
+                                   <input type="hidden" name="participant_id" value={{participant.id}}>
+                                   <input type="submit" class="btn btn-detail" value="Detail"/>
+                                </form>
+                             </td>
+                        </tr>
+                        
+                    {% endfor %}     
+                </tbody>
+           </table>
+        </div>
+    </div>
+    <!-- /.container -->
+{% endblock %}

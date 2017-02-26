@@ -1,0 +1,760 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+    <script>
+    $(document).ready(function(){
+
+        $("#previousCompilation :input").prop("readonly", true);
+        $("#previousMedicalHistory :input").prop("readonly", true);
+        $("#familyHistoryDisease :input").prop("readonly", true);
+       
+
+        $("#yesPreviousCompilation").click(function(){
+            $("#previousCompilation").removeClass('hidden');
+            $("#previousCompilation :input").prop("readonly", false);
+
+        });
+
+        $("#noPreviousCompilation").click(function(){
+            $("#previousCompilation").addClass('hidden');
+            $("#previousCompilation :input").val("");
+            $("#previousCompilation :input").prop("checked", false);
+
+        });
+
+        $("#yesPreviousMedicalHistory").click(function(){
+            $("#previousMedicalHistory").removeClass('hidden');
+            $("#previousMedicalHistory :input").prop("readonly", false);
+        });
+
+        $("#noPreviousMedicalHistory").click(function(){
+            $("#previousMedicalHistory").addClass('hidden');
+             $("#previousMedicalHistory :input").val("");
+            $("#previousMedicalHistory :input").prop("checked", false);
+        });
+
+        $("#yesFamilyHistoryDisease").click(function(){
+            $("#familyHistoryDisease").removeClass('hidden');
+            $("#familyHistoryDisease :input").prop("readonly", false);
+        });
+
+        $("#noFamilyHistoryDisease").click(function(){
+            $("#familyHistoryDisease").addClass('hidden');
+            $("#familyHistoryDisease :input").val("");
+            $("#familyHistoryDisease :input").prop("checked", false);
+        });
+    });
+    </script>
+
+    <div class ="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1'%}"> Mother Demographic Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <!-- Tadinya pa-->
+                    <form class="sectionA3-question" action="{% url 'forms_a:process_section3' %}" method="post">
+                        <h2>Obstetric History</h2>
+                        <hr>
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="a3m_pre_weight"> Pre-pregnancy weight (in kg) </label>              
+                                <input class="form-control" type="number" name="a3m_pre_weight" placeholder="in Kg" value="{{a3.a3m_pre_pregnancy_weight}}">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="a3m_pre_height"> Pre-pregnancy Height (in cm) </label>            
+                                <input class="form-control" type="number" name="a3m_pre_height" placeholder="in cm" value="{{a3.a3m_pre_pregnancy_height}}">
+                            </div>
+                        </div>   
+           
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a3m_fdlm"> First Day of Last Menstruation </label>
+                                    <input class="form-control" type="date" name="a3m_fdlm" value="{{first_day_last_menstruation}}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a3m_edd"> Estimated Due Date </label>
+                                    <input class="form-control" type="date" name="a3m_edd" value="{{estimated_due_date}}"required>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="form-group">
+                            <label>Current Pregnancy Order</label>
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a3m_gravida"> Gravida </label>
+                                    <input class="form-control" type="number" id="a3m_gravida" name="a3m_gravida" value="{{ a3.a3m_gravida }}" required>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a3m_parity"> Parity </label>
+                                    <input class="form-control" type="number" name="a3m_parity" value="{{ a3.a3m_parity }}" required>
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a3m_abortus"> Abortus </label>
+                                    <input class="form-control" type="number" name="a3m_abortus" value="{{ a3.a3m_abortus }}" required>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <fieldset class="form-group">
+                            <label for="a3m_premature"> Previous Premature Labor ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_premature %}
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_premature %}
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <label for="a3m_premature"> Previous Miscarriage/demise ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_miscarriage %}
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_miscarriage %}
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <label for="a3m_premature"> Previous Complication ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_complication %}
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_previous_complication %}
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                             
+                        </fieldset>
+
+                        <div class="form-group" id="previousCompilation">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_hypertension_complication %}
+                                <input class="form-check-input" name="a3m_hypertensioncom" type="checkbox" checked>
+                                {% else %}
+                                <input class="form-check-input" name="a3m_hypertensioncom" type="checkbox">
+                                {% endif %}
+                                Hypertension
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_diabetes_complication %}
+                                    <input class="form-check-input" name="a3m_diabetescom" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_diabetescom" type="checkbox">
+                                    {% endif %}
+                                    Diabetes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_preeclampsia_complication %}
+                                    <input class="form-check-input" name="a3m_preeclampsiacom" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_preeclampsiacom" type="checkbox"> 
+                                    {% endif %}
+                                    Preeclampsia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_eclampsia_complication %}
+                                    <input class="form-check-input" name="a3m_eclampsiacom" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_eclampsiacom" type="checkbox">
+                                    {% endif %}
+                                    Eclampsia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_infection_complication %}
+                                    <input class="form-check-input" name="a3m_infectioncom" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_infectioncom" type="checkbox"> 
+                                    {% endif %}
+                                    Infection around delivery
+                                </label>
+                            </div>
+                            
+                            <label>Other, specify</label>
+                            <input class="form-control" type="text" name="a3m_other" value="{{a3.a3m_other_complication_name}}" required>
+                          
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="a3m_premature"> Previous Medical History of Mother (Physician Diagnosis/treated for) ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_medical_history %}
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1">
+                                {% endif %}
+                                Yes 
+                                </label>
+                            </div>                                                            
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_medical_history %}
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+                        <div class="form-group" id="previousMedicalHistory">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_asthma_history %}
+                                    <input class="form-check-input" name="a3m_asthmahis" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_asthmahis" type="checkbox">
+                                    {% endif %}
+                                    Asthma
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_tubercolosis_history %}
+                                    <input class="form-check-input" name="a3m_tbchis" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_tbchis" type="checkbox"> 
+                                    {% endif %}
+                                    Tuberculosis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_cronic_cough_history %}
+                                    <input class="form-check-input" name="a3m_chroniccoughhis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_chroniccoughhis" type="checkbox">
+                                    {% endif %}
+                                    Chronic Cough (more than 2 weeks) (obtain sputum sample)
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_hypertension_history %}
+                                    <input class="form-check-input" name="a3m_hypertensionhis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_hypertensionhis" type="checkbox">
+                                    {% endif %}
+                                    Hypertension
+                                </label>
+                            </div>
+
+                            <div id="a3m_hd_group"> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_coronary %}
+                                        <input class="form-check-input" name="a3m_hdcoronary" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hdcoronary" type="checkbox">
+                                        {% endif %}
+                                        Heart Disease Coronary
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_valve %}
+                                        <input class="form-check-input" name="a3m_hdvalve" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hdvalve" type="checkbox"> 
+                                        {% endif %}
+                                        Heart Disease Valve
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_rhythm %}
+                                        <input class="form-check-input" name="a3m_hdrhythm" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hdrhythm" type="checkbox">
+                                        {% endif %}
+                                        Heart Disease Rythm
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_muscle %}
+                                        <input class="form-check-input" name="a3m_hdmuscle" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hdmuscle" type="checkbox"> 
+                                        {% endif %}
+                                        Heart Disease Muscle
+                                    </label>
+                                </div>
+                            </div>  
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_diabetes_history %}
+                                    <input class="form-check-input" name="a3m_diabeteshis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_diabeteshis" type="checkbox">
+                                    {% endif %} 
+                                    Diabetes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_is_use_insulin %}
+                                    <input class="form-check-input" name="a3m_insulin" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_insulin" type="checkbox"> 
+                                    {% endif %} 
+                                    Insulin
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a3.a3m_stroke_history %}
+                                    <input class="form-check-input" name="a3m_strokehis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a3m_strokehis" type="checkbox"> 
+                                    {% endif %} 
+                                    Stroke
+                                </label>
+                            </div>                             
+
+                            <label>Alergy, specify</label>
+                            <input class="form-control" type="text" name="a3m_allergyhis" value="{{ a3.a3m_allergy_detail }}" required>  
+
+                            <label>Other, specify</label>
+                            <input class="form-control" type="text" name="a3m_otherhis" value="{{ a3.a3m_other_detail }}" required>
+
+                        </div>
+
+                        <h3> Family History of Chronic Diseases </h3>
+                        <hr>
+
+                        <fieldset class="form-group">
+                            <label for="a3m_premature"> Is there any of your first degree family have the following disease ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_family_disease %}
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" 
+                                id="yesFamilyHistoryDisease" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" 
+                                id="yesFamilyHistoryDisease" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a3.a3m_family_disease %}
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+
+                        <div id="familyHistoryDisease">
+                            <h4>Asthma, who has had it?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_asthma_mother %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_asthma_father %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_father" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_father" type="checkbox">{% endif %} 
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_asthma_sibling %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Hypertension, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_hypertension_mother %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_hypertension_father %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_hypertension_sibling %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hypertension_fam_siblings" type="checkbox"> 
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Heart Disease, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_mother %}
+                                        <input class="form-check-input" name="a3m_hd_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hd_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_father %}
+                                        <input class="form-check-input" name="a3m_hd_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hd_fam_father" type="checkbox"> 
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_heart_disease_sibling %}
+                                        <input class="form-check-input" name="a3m_hd_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_hd_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Diabetes, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_diabetes_mother %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_mother" type="checkbox">
+                                        {% endif %} 
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_diabetes_father %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_diabetes_sibling %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_siblings" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_diabetes_fam_siblings" type="checkbox">
+                                        {% endif %} 
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Stroke, who has had it?</h4>                            
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_stroke_mother %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_mother" type="checkbox">
+                                        {% endif %} 
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_stroke_father %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_father" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_father" type="checkbox">
+                                        {% endif %} 
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_stroke_sibling %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_stroke_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Other</h4>                         
+                                   <input class="form-control" type="text" id="a3m_other_desease" name="a3m_other_desease" value="{{ a3.a3m_other_disease_name }}">
+                                   <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_other_mother %}
+                                        <input class="form-check-input" name="a3m_other_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_other_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_other_father %}
+                                        <input class="form-check-input" name="a3m_other_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_other_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_other_sibling %}
+                                        <input class="form-check-input" name="a3m_other_fam_siblings" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_other_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    {% if is_save_all %}
+
+                                    {% else %}
+                                        {% if role == 'staff' %}
+                                        <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                        {% endif %}
+                                    {% endif %}    
+                                </div>
+                            </div>                            
+                    </form>
+                    {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                    {% endif %}
+            </div>
+        </div>
+    </div>    
+{% endblock %}    
+
+    

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- Page Content -->
+
+    <div class="container">
+        <!-- Form Umum Section -->
+        <div class="jumbotron">         
+            <form class="patient-form-data">
+                <div class="row">
+                   <div class="col-md-6 col-md-offset-3 col-xs-6 col-sm-6 col-sm-offset-3">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant ID</label>
+                            <input class="form-control disabled" type="text" value={{participant.participant_id}} disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" value={{participant.name}} disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="text" value={{date_admission}} disabled>
+                        </div>                        
+                    </div>                     
+                </div> 
+            </form>
+        </div>
+
+        <div class="list_all_form">
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <form action="{% url 'core:form_a' %}"  method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="participant_id" value={{participant.id}}>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Form A - Baseline"/>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form B - Pregnancy Trimester I </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form B - Pregnancy Trimester II </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form B - Pregnancy Trimester III </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form C - Birth Delivery </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form D - Infant First Visit  </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form D - Infant Second Visit </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form D - Infant Third Visit </a>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-8 col-md-offset-2">
+                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form D - Infant Fourth Visit </a>
+                </div>
+            </div>
+
+            
+        </div>      
+    </div>
+{% endblock %}

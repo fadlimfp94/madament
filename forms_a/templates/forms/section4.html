@@ -1,0 +1,802 @@
+{% extends 'base.html' %}
+{% block content %}
+         <script>
+
+    $(document).ready(function(){        
+        $("#previousMedicalHistory :input").prop("readonly", true);
+        $("#familyHistoryDisease :input").prop("readonly", true);
+
+
+        $("#employed").click(function(){
+            $("#job").removeClass('hidden');
+        });
+
+        $("#unemployed").click(function(){
+            $("#job").addClass('hidden');
+        });
+
+        $("#self-employed").click(function(){
+            $("#job").removeClass('hidden');
+        });
+
+        $("#yesPreviousMedicalHistory").click(function(){
+            $("#previousMedicalHistory").removeClass('hidden');
+            $("#previousMedicalHistory :input").prop("readonly", false);
+        });
+
+        $("#noPreviousMedicalHistory").click(function(){
+            $("#previousMedicalHistory").addClass('hidden');
+        });
+
+        $("#noFamilyHistoryDisease").click(function(){
+            $("#familyHistoryDisease").addClass('hidden');
+        });
+
+        $("#yesFamilyHistoryDisease").click(function(){
+            $("#familyHistoryDisease").removeClass('hidden');
+            $("#familyHistoryDisease :input").prop("readonly", false);
+        });
+
+    });
+</script>
+        
+    <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionA4-question" action="{% url 'forms_a:process_section4' %}" method="post">
+                        <h2>Father Data </h2>
+                        <hr>
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group">
+                            <label for="a4f_name"> Full Name </label>
+                            {% if a4 %}
+                            <input class="form-control" type="text" name="a4f_name" value="{{ a4.a4f_name }}" required>
+                            {% else %}
+                            <input class="form-control" type="text" name="a4f_name" value="{{form.participant.name}}" required>
+                            {% endif %}      
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a4f_pob"> Place of Birth </label>
+                                    <input class="form-control" type="text" name="a4f_pob" value="{{ a4.a4f_pob }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a4f_dob"> Date of Birth </label>
+                                    <input class="form-control" type="date" name="a4f_dob" value="{{ dob }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a4f_residence_street"> Address </label>
+                                    <input class="form-control" type="text" name="a4f_residence_street" value = "{{ a4.a4f_residence_street }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a4f_residence_rt"> RT </label>
+                                    <input class="form-control" type="text" name="a4f_residence_rt" value = "{{ a4.a4f_residence_rt }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a4f_residence_rw"> RW </label>
+                                    <input class="form-control" type="text" name="a4f_residence_rw" value = "{{ a4.a4f_residence_rw }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a4f_residence_district"> District </label>
+                                    <input class="form-control" type="text" name="a4f_residence_district" value = "{{ a4.a4f_residence_district }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a4f_residence_city"> City </label>
+                                    <input class="form-control" type="text" name="a4f_residence_city" value = "{{ a4.a4f_residence_city }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a4f_residence_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="a4f_residence_zipcode" value = "{{ a4.a4f_residence_zipcode }}">
+                                </div>
+                            </div>
+                        </div>    
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a4f_home_phone_number">Home Phone Number </label>                                    
+                                    <input class="form-control" type="text" name="a4f_home_phone_number" value = "{{ a4.a4f_home_phone_number }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a4f_mobile_phone_number"> Mobile Phone Number</label>
+                                    <input class="form-control" type="text" name="a4f_mobile_phone_number" value = "{{ a4.a4f_mobile_phone_number }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a4f_email"> Email </label>
+                            <input class="form-control" type="email" name="a4f_email" value = "{{ a4.a4f_email }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Education Level </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a4.a4f_education_level == "1" %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Illiterate
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_education_level == "2" %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Elementary
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_education_level == "3" %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3">
+                                    {% endif %}
+                                    High School
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_education_level == "4" %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4">
+                                    {% endif %}
+                                    Undergraduate
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_education_level == "5" %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5">
+                                    {% endif %}
+                                    Postgraduate
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="a4f_weight"> Father Weight </label>                         
+                                <input class="form-control" type="number" name="a4f_weight" value="{{a4.a4f_weight}}" required>  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="a4f_height">Father Height </label>                         
+                                <input class="form-control" type="number" name="a4f_height" value="{{a4.a4f_height}}" required>
+                            </div>
+                        </div> 
+
+                        <div class="form-group">
+                            <label for="a4f_working_status"> Employment Status </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a4.a4f_employment_status == "1" %}
+                                    <input type="radio" name="a4f_working_status" id="employed" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_working_status" id="employed" value="1">
+                                    {% endif %}
+                                    Employed
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_employment_status == "2" %}
+                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2">
+                                    {% endif %}
+                                    Self-Employed
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a4.a4f_employment_status == "3" %}
+                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3">
+                                    {% endif %}
+                                    Unemployed
+                                </label>
+                            </div>            
+                        </div>
+
+                        <div id="job">
+                            <div class="form-group">
+                                <label for="a4f_working_type"> Type of Job </label>
+                                <input class="form-control" type="text" name="a4f_working_type" value="{{a4.a4f_type_of_job}}" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <label for="a4f_work_street"> Work Address </label>
+                                        <input class="form-control" type="text" name="a4f_work_street" id="a4f_work_street" value="{{a4.a4f_work_street}}">
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <label for="a4f_work_rt"> RT </label>
+                                        <input class="form-control" type="text" name="a4f_work_rt" id="a4f_work_rt" value="{{a4.a4f_work_rt}}">
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <label for="a4f_work_rw"> RW </label>
+                                        <input class="form-control" type="text" name="a4f_work_rw" id="a4f_work_rw" value="{{a4.a4f_work_rw}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="a4f_work_district"> District </label>
+                                        <input class="form-control" type="text" name="a4f_work_district" id="a4f_work_district" value="{{a4.a4f_work_district}}">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="a4f_work_city"> City </label>
+                                        <input class="form-control" type="text" name="a4f_work_city" id="a4f_work_city" value="{{a4.a4f_work_city}}">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="a4f_work_zip_code"> Zip Code </label>
+                                        <input class="form-control" type="text" name="a4f_work_zip_code" id="a4f_work_zip_code" value="{{a4.a4f_work_zipcode}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">                            
+                                <label for="a4f_work_phone">Work Phone Number </label>  
+                                <input class="form-control" type="text" name= "a4f_work_phone" id="a4f_work_phone" value="{{a4.a4f_work_phone_number}}" required>
+                            </div>    
+                        </div>
+
+                        <fieldset class="form-group">
+                            <label for="a4f_premature"> Previous Medical History of Father (Physician Diagnosis/treated for) ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a4.a4f_medical_history %}
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1">
+                                {% endif %}
+                                Yes 
+                                </label>
+                            </div>                                                            
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a4.a4f_medical_history %}
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+                        <div class="form-group" id="previousMedicalHistory">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_asthma_history %}
+                                    <input class="form-check-input" name="a4f_asthmahis" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_asthmahis" type="checkbox">
+                                    {% endif %}
+                                    Asthma
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_tubercolosis_history %}
+                                    <input class="form-check-input" name="a4f_tbchis" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_tbchis" type="checkbox"> 
+                                    {% endif %}
+                                    Tuberculosis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_cronic_cough_history %}
+                                    <input class="form-check-input" name="a4f_chroniccoughhis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_chroniccoughhis" type="checkbox">
+                                    {% endif %}
+                                    Chronic Cough (more than 2 weeks) (obtain sputum sample)
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_hypertension_history %}
+                                    <input class="form-check-input" name="a4f_hypertensionhis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_hypertensionhis" type="checkbox">
+                                    {% endif %}
+                                    Hypertension
+                                </label>
+                            </div>
+
+                            <div id="a4f_hd_group"> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_coronary %}
+                                        <input class="form-check-input" name="a4f_hdcoronary" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hdcoronary" type="checkbox">
+                                        {% endif %}
+                                        Heart Disease Coronary
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_valve %}
+                                        <input class="form-check-input" name="a4f_hdvalve" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hdvalve" type="checkbox"> 
+                                        {% endif %}
+                                        Heart Disease Valve
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_rhythm %}
+                                        <input class="form-check-input" name="a4f_hdrhythm" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hdrhythm" type="checkbox">
+                                        {% endif %}
+                                        Heart Disease Rythm
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_muscle %}
+                                        <input class="form-check-input" name="a4f_hdmuscle" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hdmuscle" type="checkbox"> 
+                                        {% endif %}
+                                        Heart Disease Muscle
+                                    </label>
+                                </div>
+                            </div>  
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_diabetes_history %}
+                                    <input class="form-check-input" name="a4f_diabeteshis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_diabeteshis" type="checkbox">
+                                    {% endif %} 
+                                    Diabetes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_is_use_insulin %}
+                                    <input class="form-check-input" name="a4f_insulin" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_insulin" type="checkbox"> 
+                                    {% endif %} 
+                                    Insulin
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a4.a4f_stroke_history %}
+                                    <input class="form-check-input" name="a4f_strokehis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="a4f_strokehis" type="checkbox"> 
+                                    {% endif %} 
+                                    Stroke
+                                </label>
+                            </div>                             
+
+                            <label>Alergy, specify</label>
+                            <input class="form-control" type="text" name="a4f_allergyhis" value="{{ a4.a4f_allergy_detail }}" required>  
+
+                            <label>Other, specify</label>
+                            <input class="form-control" type="text" name="a4f_otherhis" value="{{ a4.a4f_other_detail }}" required>
+
+                        </div>
+
+                        <h3> Family History of Chronic Diseases </h3>
+                        <hr>
+
+                        <fieldset class="form-group">
+                            <label for="a4f_premature"> Is there any of your first degree family have the following disease ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a4.a4f_family_disease %}
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" 
+                                id="yesFamilyHistoryDisease" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" 
+                                id="yesFamilyHistoryDisease" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if a4.a4f_family_disease %}
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+
+                        <div id="familyHistoryDisease">
+                            <h4>Asthma, who has had it?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_asthma_mother %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_asthma_father %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_father" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_father" type="checkbox">{% endif %} 
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_asthma_sibling %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_asthma_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Hypertension, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_hypertension_mother %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_hypertension_father %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_hypertension_sibling %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hypertension_fam_siblings" type="checkbox"> 
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Heart Disease, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_mother %}
+                                        <input class="form-check-input" name="a4f_hd_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hd_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_father %}
+                                        <input class="form-check-input" name="a4f_hd_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hd_fam_father" type="checkbox"> 
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_heart_disease_sibling %}
+                                        <input class="form-check-input" name="a4f_hd_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_hd_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Diabetes, who has had it?</h4>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_diabetes_mother %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_mother" type="checkbox">
+                                        {% endif %} 
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_diabetes_father %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_diabetes_sibling %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_siblings" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_diabetes_fam_siblings" type="checkbox">
+                                        {% endif %} 
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Stroke, who has had it?</h4>                            
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_stroke_mother %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_mother" type="checkbox">
+                                        {% endif %} 
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_stroke_father %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_father" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_father" type="checkbox">
+                                        {% endif %} 
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_stroke_sibling %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_siblings" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_stroke_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+
+                                <h4>Other</h4>                         
+                                   <input class="form-control" type="text" id="a4f_other_desease" name="a4f_other_desease" value="{{ a4.a4f_other_disease_name }}">
+                                   <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_other_mother %}
+                                        <input class="form-check-input" name="a4f_other_fam_mother" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_other_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_other_father %}
+                                        <input class="form-check-input" name="a4f_other_fam_father" type="checkbox" checked> 
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_other_fam_father" type="checkbox">
+                                        {% endif %}
+                                        Father
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a4.a4f_other_sibling %}
+                                        <input class="form-check-input" name="a4f_other_fam_siblings" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a4f_other_fam_siblings" type="checkbox">
+                                        {% endif %}
+                                        Siblings
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    {% if is_save_all %}
+
+                                    {% else %}
+                                        {% if role == 'staff' %}
+                                        <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                        {% endif %}
+                                    {% endif %}    
+                                </div>
+                            </div>                                                       
+                    </form>
+                    {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>        
+{% endblock %}            
+

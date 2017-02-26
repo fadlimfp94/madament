@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- Page Content -->
+ <div class="container">
+        <!-- Form Umum Section -->
+        <div class="jumbotron">         
+            <form class="patient-form-data">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 col-xs-6 col-sm-6 col-sm-offset-3">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant ID</label>
+                            <input class="form-control disabled" type="text" value={{participant.participant_id}} disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" value={{participant.name}} disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="text" value={{date_admission}} disabled>
+                        </div>                        
+                    </div>                     
+                </div> 
+            </form>
+        </div>
+        <form action="{% url 'forms_a:create_form' %}"  method="GET">
+            {% csrf_token %}
+            <input type="hidden" name="participant_id" value={{participant.id}}>
+            <input type="submit" class="btn btn-primary" value="Create Form A"/>
+        </form>    
+        <h4> List Form A ( Baseline) of {{ participant.name }} </h4>
+
+        <div class="list_all_form">
+            <div class="form-group row">
+                {% for form in forms %}
+                    <div class="col-md-8 col-md-offset-2">
+                        <form action="{% url 'forms_a:process_section1' %}"  method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Form A - Baseline"/>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>            
+        </div>      
+</div>
+{% endblock %}

@@ -1,0 +1,571 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content -->
+
+    <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    {% if context == "create" %}
+                    <form class="formA-question" action="{% url 'forms_a:process_section1' %}" method="post" id="form_a">
+                    {% else %}
+                    <form class="formA-question" action="{% url 'forms_a:process_section1' %}" method="post" id="form_a">
+                    {% endif %}
+                        <h2>Mother Demographic Data</h2>
+                        <hr> 
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group">
+                            <label for="a1m_name"> Full Name </label>
+                            {% if a1 %}
+                            <input class="form-control" type="text" name="a1m_name" value="{{ a1.a1m_name }}" required>
+                            {% else %}
+                            <input class="form-control" type="text" name="a1m_name" value="{{form.participant.name}}" required>
+                            {% endif %}      
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_pob"> Place of Birth </label>
+                                    <input class="form-control" type="text" name="a1m_pob" value = "{{ a1.a1m_pob }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_dob"> Date of Birth </label>
+                                    <input class="form-control" type="date" name="a1m_dob" value = "{{ dob }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_residence_street"> Address </label>
+                                    <input class="form-control" type="text" name="a1m_residence_street" value = "{{ a1.a1m_residence_street }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rt"> RT </label>
+                                    <input class="form-control" type="text" name="a1m_residence_rt" value = "{{ a1.a1m_residence_rt }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rw"> RW </label>
+                                    <input class="form-control" type="text" name="a1m_residence_rw" value = "{{ a1.a1m_residence_rw }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_district"> District </label>
+                                    <input class="form-control" type="text" name="a1m_residence_district" value = "{{ a1.a1m_residence_district }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_city"> City </label>
+                                    <input class="form-control" type="text" name="a1m_residence_city" value = "{{ a1.a1m_residence_city }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="a1m_residence_zipcode" value = "{{ a1.a1m_residence_zipcode }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5">
+                                    <label for="a1m_moving_date"> Date you moved into current address </label>
+                                    <input class="form-control" type="date" name="a1m_moving_date" value = "{{ moving_date }}">
+                                </div>
+                                <div class="col-md-7 col-sm-7">
+                                    <label for="a1m_residing_duration"> How long have your resided in the current address 
+                                    </label>
+                                    <input class="form-control" type="number" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Residence Status </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a1.a1m_residential_status == "1" %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Personal Property
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_residential_status == "2" %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Rent
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_residential_status == "3" %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3">
+                                    {% endif %}
+                                    Family House
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a1m_residence">Previous Residence (if any)</label> <br>
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_1st_start_year"> From</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_1st_start_year" value = "{{ a1.a1m_previous_residence_1st_start_year }}" >                                  
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_1st_end_year"> To</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_1st_end_year" value = "{{ a1.a1m_previous_residence_1st_end_year }}" >
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_1st_district"> District</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_1st_district" name="a1m_previous_residence_1st_district" value = "{{ a1.a1m_previous_residence_1st_district }}" >
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_1st_city"> City</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_1st_city"
+                                    name="a1m_previous_residence_1st_city" value = "{{ a1.a1m_previous_residence_1st_city }}" >
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_1st_zipcode"> Zip Code</label>
+                                    <input class="form-control" type="text" name="a1m_previous_residence_1st_zipcode" value = "{{ a1.a1m_previous_residence_1st_zipcode }}" > 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_2nd_start_year"> From</label>                                    
+                                    <input class="form-control" type="number" name="a1m_previous_residence_2nd_start_year" value = "{{ a1.a1m_previous_residence_2nd_start_year }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="aa1m_previous_residence_2nd_end_year"> To</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_2nd_end_year" value = "{{ a1.a1m_previous_residence_2nd_end_year }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_2nd_district"> District</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_2nd_district" name="a1m_previous_residence_2nd_district" value = "{{ a1.a1m_previous_residence_2nd_district }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_2nd_city"> City</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_2nd_city"
+                                    name="a1m_previous_residence_2nd_city" value = "{{ a1.a1m_previous_residence_2nd_city }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_2nd_zipcode"> Zip Code</label>
+                                    <input class="form-control" type="text" name="a1m_previous_residence_2nd_zipcode" value = "{{ a1.a1m_previous_residence_2nd_zipcode }}" > 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_3rd_start_year"> From</label>                                    
+                                    <input class="form-control" type="number" name="a1m_previous_residence_3rd_start_year" value = "{{ a1.a1m_previous_residence_3rd_start_year }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_3rd_end_year"> To</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_3rd_end_year" value = "{{ a1.a1m_previous_residence_3rd_end_year }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_3rd_district"> District</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_3rd_district" name="a1m_previous_residence_3rd_district" value = "{{ a1.a1m_previous_residence_3rd_district }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_3rd_city"> City</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_3rd_city"
+                                    name="a1m_previous_residence_3rd_city" value = "{{ a1.a1m_previous_residence_3rd_city }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_3rd_zipcode"> Zip Code</label>
+                                    <input class="form-control" type="text" name="a1m_previous_residence_3rd_zipcode" value = "{{ a1.a1m_previous_residence_3rd_zipcode }}" > 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_4th_start_year"> From</label>                                    
+                                    <input class="form-control" type="number" name="a1m_previous_residence_4th_start_year" value = "{{ a1.a1m_previous_residence_4th_start_year }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_4th_end_year"> To</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_4th_end_year" value = "{{ a1.a1m_previous_residence_4th_end_year }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_4th_district"> District</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_4th_district" name="a1m_previous_residence_4th_district" value = "{{ a1.a1m_previous_residence_4th_district }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_4th_city"> City</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_4th_city"
+                                    name="a1m_previous_residence_4th_city" value = "{{ a1.a1m_previous_residence_4th_city }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_4th_zipcode"> Zip Code</label>
+                                    <input class="form-control" type="text" name="a1m_previous_residence_4th_zipcode" value = "{{ a1.a1m_previous_residence_4th_zipcode }}" > 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_5th_start_year"> From</label>                                    
+                                    <input class="form-control" type="number" name="a1m_previous_residence_5th_start_year" value = "{{ a1.a1m_previous_residence_5th_start_year }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_5th_end_year"> To</label>
+                                    <input class="form-control" type="number" name="a1m_previous_residence_5th_end_year" value = "{{ a1.a1m_previous_residence_5th_end_year }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_5th_district"> District</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_5th_district" name="a1m_previous_residence_5th_district" value = "{{ a1.a1m_previous_residence_5th_district }}" >
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_previous_residence_5th_city"> City</label>
+                                    <input class="form-control" type="text" id="a1m_previous_residence_5th_city"
+                                    name="a1m_previous_residence_5th_city" value = "{{ a1.a1m_previous_residence_5th_city }}" >
+                                </div>
+
+                                <div class="col-md-2 col-sm-2">
+                                    <label for="a1m_previous_residence_5th_zipcode"> Zip Code</label>
+                                    <input class="form-control" type="text" name="a1m_previous_residence_5th_zipcode" value = "{{ a1.a1m_previous_residence_5th_zipcode }}" > 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_home_phone_number">Home Phone Number </label>                                    
+                                    <input class="form-control" type="text" name="a1m_home_phone_number" value = "{{ a1.a1m_home_phone_number }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_mobile_phone_number"> Mobile Phone Number</label>
+                                    <input class="form-control" type="text" name="a1m_mobile_phone_number" value = "{{ a1.a1m_mobile_phone_number }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a1m_email"> Email </label>
+                            <input class="form-control" type="email" name="a1m_email" value = "{{ a1.a1m_email }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Education Level </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a1.a1m_education_level == "1" %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Illiterate
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_education_level == "2" %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Elementary
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_education_level == "3" %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3">
+                                    {% endif %}
+                                    High School
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_education_level == "4" %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4">
+                                    {% endif %}
+                                    Undergraduate
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_education_level == "5" %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5">
+                                    {% endif %}
+                                    Postgraduate
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a1m_family_income"> Family Income </label>
+                            <input class="form-control" type="number" name="a1m_family_income" value = "{{ a1.a1m_family_income }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Marital Status </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a1.a1m_marital_status == "1" %}
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Married
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a1.a1m_marital_status == "2" %}
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Divorced/Unmarried (single parent)
+                                </label>
+                            </div>                            
+                        </div>
+
+
+                        <h3> Closest Relative </h3>
+                        <div class="form-group">
+                            <label for="a1m_relative_name">  Name </label>
+                            <input class="form-control" type="text" name="a1m_relative_name" value = "{{ a1.a1m_relative_name }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_relative_street"> Address </label>
+                                    <input class="form-control" type="text" name="a1m_relative_street" value = "{{ a1.a1m_relative_street }}" required>
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_relative_rt"> RT </label>
+                                    <input class="form-control" type="text" name="a1m_relative_rt" value = "{{ a1.a1m_relative_rt }}" required>
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_relative_rw"> RW </label>
+                                    <input class="form-control" type="text" name="a1m_relative_rw" value = "{{ a1.a1m_relative_rw }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_relative_district"> District </label>
+                                    <input class="form-control" type="text" name="a1m_relative_district" value = "{{ a1.a1m_relative_district }}" required>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_relative_city"> City </label>
+                                    <input class="form-control" type="text" name="a1m_relative_city" value = "{{ a1.a1m_relative_city }}" required>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_relative_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="a1m_relative_zipcode" value = "{{ a1.a1m_relative_zipcode }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_relative_home_phone_number">Home Phone Number </label>                              
+                                    <input class="form-control" type="text" name="a1m_relative_home_phone_number" value = "{{ a1.a1m_relative_home_phone_number }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_relative_mobile_phone_number"> Mobile Phone Number</label>
+                                    <input class="form-control" type="text" name="a1m_relative_mobile_phone_number" value = "{{ a1.a1m_relative_mobile_phone_number }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    {% if role == 'staff' %}
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                    {% endif %}
+                                {% endif %}    
+                            </div>
+                        </div>
+                        <!--
+                        <a href="" type="submit" class="btn btn-primary">Save </a>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a> -->
+                    </form>
+                        {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="section_number" value=1>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                        {% endif %} 
+                </div>
+            </div>
+        </div>
+    </div>
+ {% endblock %}

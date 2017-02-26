@@ -1,0 +1,424 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content -->
+
+    <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Infant Feeding Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Infant Cardiovascular Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Infant Biological Samples </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section7'%}"> Infection Episode </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    {% if context == "create" %}
+                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    {% else %}
+                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    {% endif %}
+                        <h2>Infant Growth / Immunisation Data</h2>
+                        <hr> 
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group">
+                            <label for="d1c_ur_number"> Child UR number </label>
+                            {% if d1 %}
+                            <input class="form-control" type="text" name="d1c_ur_number" value="{{ d1.d1c_ur_number }}" required>
+                            {% else %}
+                            <input class="form-control" type="text" name="d1c_ur_number" value="{{d1.d1c_ur_number}}" required>
+                            {% endif %}      
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_first_name"> First name </label>
+                                    <input class="form-control" type="text" name="d1c_first_name" value = "{{ d1.d1c_first_name }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_surname"> Surname </label>
+                                    <input class="form-control" type="text" name="d1c_surname" value = "{{ d1.d1c_surname }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="d1c_dob"> Date of Birth </label>
+                            <input class="form-control" type="date" name="d1c_dob" value="{{ d1.d1c_dob }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_weight_1st">Body weight (gram) (1)</label>
+                                    <input class="form-control" type="text" name="d1c_weight_1st" value = "{{ d1.d1c_weight_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_weight_2nd">Body weight (gram) (2)</label>
+                                    <input class="form-control" type="text" name="d1c_weight_2nd" value = "{{ d1.d1c_weight_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_length_1st">Body length (cm) (1)</label>
+                                    <input class="form-control" type="text" name="d1c_length_1st" value = "{{ d1.d1c_length_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_length_2nd">Body length (cm) (2)</label>
+                                    <input class="form-control" type="text" name="d1c_length_2nd" value = "{{ d1.d1c_length_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_hc_1st">Head circumference (1)</label>
+                                    <input class="form-control" type="text" name="d1c_hc_1st" value = "{{ d1.d1c_hc_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_hc_2nd">Head circumference (2)</label>
+                                    <input class="form-control" type="text" name="d1c_hc_2nd" value = "{{ d1.d1c_hc_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_chest_1st">Chest circumference (1)</label>
+                                    <input class="form-control" type="text" name="d1c_chest_1st" value = "{{ d1.d1c_chest_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_chest_2nd">Chest circumference (2)</label>
+                                    <input class="form-control" type="text" name="d1c_chest_2nd" value = "{{ d1.d1c_chest_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_ac_1st">Abdominal circumference (1)</label>
+                                    <input class="form-control" type="text" name="d1c_ac_1st" value = "{{ d1.d1c_ac_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_ac_2nd">Abdominal circumference (2)</label>
+                                    <input class="form-control" type="text" name="d1c_ac_2nd" value = "{{ d1.d1c_ac_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                            
+                        <fieldset class="form-group">
+                                <label for="a2m_working_pregnancy"> Any vaccination received at current or after the last visit? </label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d1.d1c_vaccination_history %}
+                                    <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="1">
+                                    {% endif %}
+                                    Yes
+                                    </label>
+                                </div>                                
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d1.d1c_vaccination_history %}
+                                    <input type="radio" class="form-check-input" name="d1c_vaccination_history" 
+                                    value="0">
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="d1c_vaccination_history" 
+                                    value="0" checked>
+                                    {% endif %}
+                                    No
+                                    </label>
+                                </div>                            
+                        </fieldset> 
+
+
+                        <div id="familyHistoryDisease">
+                            <h4>Type of vaccine?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_bcg %}
+                                        <input class="form-check-input" name="d1_bcg" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_bcg" type="checkbox">
+                                        {% endif %}
+                                        BCG
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_bcg_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_bcg_date" value="{{ d1.d1_bcg_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_hepb %}
+                                        <input class="form-check-input" name="d1_hepb" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_hepb" type="checkbox">
+                                        {% endif %}
+                                        Hepatitis B
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_hepb_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_hepb_date" value="{{ d1.d1_hepb_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_dpt %}
+                                        <input class="form-check-input" name="d1_dpt" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_dpt" type="checkbox">
+                                        {% endif %}
+                                        DPT
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_dpt_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_dpt_date" value="{{ d1.d1_dpt_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_ipv %}
+                                        <input class="form-check-input" name="d1_ipv" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_ipv" type="checkbox">
+                                        {% endif %}
+                                        IPV
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_ipv_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_ipv_date" value="{{ d1.d1_ipv_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_opv %}
+                                        <input class="form-check-input" name="d1_opv" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_opv" type="checkbox">
+                                        {% endif %}
+                                        OPV
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_opv_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_opv_date" value="{{ d1.d1_opv_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_hib %}
+                                        <input class="form-check-input" name="d1_hib" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_hib" type="checkbox">
+                                        {% endif %}
+                                        HIB
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_hib_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_hib_date" value="{{ d1.d1_hib_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_rotavirus %}
+                                        <input class="form-check-input" name="d1_rotavirus" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_rotavirus" type="checkbox">
+                                        {% endif %}
+                                        Rotavirus
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_rotavirus_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_rotavirus_date" value="{{ d1.d1_rotavirus_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_pneumococcus %}
+                                        <input class="form-check-input" name="d1_pneumococcus" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_pneumococcus" type="checkbox">
+                                        {% endif %}
+                                        Pneumococcus
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_pneumococcus_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_pneumococcus_date" value="{{ d1.d1_pneumococcus_date }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1_influenza %}
+                                        <input class="form-check-input" name="d1_influenza" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1_influenza" type="checkbox">
+                                        {% endif %}
+                                        Influenza
+                                    </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="d1_influenza_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1_influenza_date" value="{{ d1.d1_influenza_date }}" required>
+                            </div>
+
+                        </div>   
+
+                        <div class="form-group">
+                            <div class="row">
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    {% if role == 'staff' %}
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                    {% endif %}
+                                {% endif %}    
+                            </div>
+                        </div>
+                        <!--
+                        <a href="" type="submit" class="btn btn-primary">Save </a>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a> -->
+                    </form>
+                        {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                        {% endif %}  
+                </div>
+            </div>
+        </div>
+    </div>
+ {% endblock %}

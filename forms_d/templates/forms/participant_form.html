@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="c-form-container section-container section-container-image-bg">
+   <div class="container">
+      <div class="row">
+         <div class="col-sm-6 col-sm-offset-3 c-form-box wow fadeInUp">
+            <div class="c-form-top">
+               <div style="text-align: center">
+                  <h3>Create Participant</h3>
+                  <p></p>
+               </div>
+            </div>
+            <br>
+            <div class="c-form-bottom">
+               <form action="{% url 'forms_a:create_participant' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <h4>Participant Data Form</h4>
+                  <br>
+                  {{ participant_form }}
+                  <br>
+                  <input type="submit" class="btn btn-info btn-block form-button" style="margin-bottom: 25%;" value="Send" />
+               </form>
+            </div>                      
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

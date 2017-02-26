@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+{% block content %}
+    <script>
+    $(document).ready(function(){
+
+        $("#employed").click(function(){
+            $("#job").removeClass('hidden');
+            $("#job :input").prop("readonly", false);
+            $("#job :input").prop("required", true);
+            $("#job :checkbox").prop("required", false);
+        });
+
+        $("#self-employed").click(function(){
+            $("#job").removeClass('hidden');
+            $("#job :input").prop("readonly", false);
+            $("#job :input").prop("required", true);
+            $("#job :checkbox").prop("required", false);
+        });
+
+        $("#unemployed").click(function(){
+            $("#job").addClass('hidden');
+            $("#job :input").removeAttr('value');
+            $("#job :input").prop("readonly", true);
+            $("#job :input").prop("checked", false);
+            $("#job :input").prop("required", false);
+        });
+        
+        $("#noWorkingPregnancy").click(function(){
+            $("#workingPregnancy").addClass('hidden');
+            $("#workingPregnancy :input").removeAttr('value');
+            $("#workingPregnancy :input").prop("readonly", true);
+            $("#workingPregnancy :input").prop("checked", false);
+            $("#workingPregnancy :input").prop("required", false);
+            $("#workingPregnancy :checkbox").prop("required", false);
+        });
+
+        $("#yesWorkingPregnancy").click(function(){
+            $("#workingPregnancy").removeClass('hidden');
+            $("#workingPregnancy :input").prop("readonly", false);
+            $("#workingPregnancy :input").prop("required", true);    
+        });
+
+        $("#noMaternalLeave").click(function(){
+            $("#a2m_maternal_leave_duration :input").removeAttr('value');
+            $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+            $("#a2m_maternal_leave_duration :input").prop("required", false);
+        });
+
+        $("#yesMaternalLeave").click(function(){
+            $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+            $("#a2m_maternal_leave_duration :input").prop("required", true);
+        });
+
+    });
+    </script>
+    <!-- Page Content -->
+
+    <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1'%}"> Mother Demographic Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    {% if context == "create" %}
+                    <form class="formA-question" action="{% url 'forms_a:process_section2' %}" method="post" id="form_a">
+                    {% else %}
+                    <form class="formA-question" action="{% url 'forms_a:process_section2' %}" method="post" id="form_a">
+                    {% endif %}
+                        <h2>Mother Employment History</h2>
+                        <hr> 
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group">
+                            <label for="a2m_working_status"> Employment Status </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a2.a2m_working_status == "1" %}
+                                    <input type="radio" name="a2m_working_status" id="employed" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a2m_working_status" id="employed" value="1">
+                                    {% endif %}
+                                    Employed
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a2.a2m_working_status == "2" %}
+                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2">
+                                    {% endif %}
+                                    Self-Employed
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a2.a2m_working_status == "3" %}
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3">
+                                    {% endif %}
+                                    Unemployed
+                                </label>
+                            </div>            
+                        </div>
+
+                        <div id="job">
+                            <div class="form-group">
+                                <label for="a2m_working_type"> Type of Job </label>
+                                <input class="form-control" type="text" name="a2m_working_type" value="{{a2.a2m_working_type}}" required>
+                            </div>
+
+                        <fieldset class="form-group">
+                                <label for="a2m_working_pregnancy"> Are You Still working in pregnancy ? </label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_working_pregnancy %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_pregnancy" id="yesWorkingPregnancy" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_pregnancy" id="yesWorkingPregnancy" value="1">
+                                    {% endif %}
+                                    Yes
+                                    </label>
+                                </div>                                
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_working_pregnancy %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_pregnancy" 
+                                    id="noWorkingPregnancy" value="0">
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_pregnancy" 
+                                    id="noWorkingPregnancy" value="0" checked>
+                                    {% endif %}
+                                    No
+                                    </label>
+                                </div>                            
+                        </fieldset>
+
+                        
+
+                        <fieldset class="form-group" id="workingPregnancy">
+                                <label for="a2m_maternal_leave"> If yes, please specify whether you will have a maternal leave? </label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_maternal_leave_duration == 0 %}
+                                    <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
+                                    id="noMaternalLeave" value="0" checked>
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
+                                    id="noMaternalLeave" value="0">
+                                    {% endif %}
+                                    No
+                                    </label>
+                                </div>                                
+                                <div class="form-check">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="form-check-label">
+                                            {% if a2.a2m_maternal_leave_duration > 0 %}
+                                            <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
+                                            id="yesMaternalLeave" value="1" checked>
+                                            {% else %}
+                                            <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
+                                            id="yesMaternalLeave" value="1">
+                                            {% endif %}
+                                             Yes, How Long ?
+                                            </label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div id="a2m_maternal_leave_duration">
+                                                {% if a2.a2m_maternal_leave_duration > 0 %}
+                                                <input class="form-control" type="number" id="a2m_maternal_leave_duration" 
+                                                name="a2m_maternal_leave_duration" value="{{a2.a2m_maternal_leave_duration}}">
+                                                {% else %}
+                                                <input class="form-control" type="number" id="a2m_maternal_leave_duration" 
+                                                name="a2m_maternal_leave_duration">
+                                                {% endif %} 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                            
+                        </fieldset>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a2m_work_street"> Work Address </label>
+                                    <input class="form-control" type="text" name="a2m_work_street" id="a2m_work_street" value="{{a2.a2m_work_street}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a2m_work_rt"> RT </label>
+                                    <input class="form-control" type="text" name="a2m_work_rt" id="a2m_work_rt" value="{{a2.a2m_work_rt}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a2m_work_rw"> RW </label>
+                                    <input class="form-control" type="text" name="a2m_work_rw" id="a2m_work_rw" value="{{a2.a2m_work_rw}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a2m_work_district"> District </label>
+                                    <input class="form-control" type="text" name="a2m_work_district" id="a2m_work_district" value="{{a2.a2m_work_district}}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a2m_work_city"> City </label>
+                                    <input class="form-control" type="text" name="a2m_work_city" id="a2m_work_city" value="{{a2.a2m_work_city}}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a2m_work_zip_code"> Zip Code </label>
+                                    <input class="form-control" type="text" name="a2m_work_zip_code" id="a2m_work_zip_code" value="{{a2.a2m_work_zipcode}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">                            
+                            <label for="a2m_work_phone">Work Phone Number </label>  
+                            <input class="form-control" type="text" name= "a2m_work_phone" id="a2m_work_phone" value="{{a2.a2m_work_phone_number}}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>How do you travel to work(cross main mode if more used such as bus and walking)</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a2.a2m_travel_by_car %}
+                                    <input class="form-check-input" name="a2m_car" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a2m_car" type="checkbox">
+                                    {% endif %}
+                                    Car
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a2.a2m_travel_by_motorcycle %}
+                                    <input class="form-check-input" name="a2m_motorcycle" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a2m_motorcycle" type="checkbox">
+                                    {% endif %}
+                                    Motorcycle
+                                </label>
+                            </div>                           
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a2.a2m_travel_by_cycling %}
+                                    <input class="form-check-input" name="a2m_cycling" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a2m_cycling" type="checkbox"> 
+                                    {% endif %}
+                                    Cycling
+                                </label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if a2.a2m_travel_by_walking %}
+                                    <input class="form-check-input" name="a2m_walking" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="a2m_walking" type="checkbox">
+                                    {% endif %}
+                                    Walking
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3">
+                                        <label class="form-check-label">
+                                            {% if a2.a2m_travel_by_public_transport %}
+                                            <input class="form-check-input" name="a2m_public" type="checkbox" checked> 
+                                            {% else %}
+                                            <input class="form-check-input" name="a2m_public" type="checkbox"> 
+                                            {% endif %}
+                                            Public Transport:
+                                        </label>                                        
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        {% if a2.a2m_travel_by_public_transport %}
+                                        <input class="form-control" type="text" name="a2m_public_transport" value="{{a2.a2m_public_transport_type}}" required>
+                                        {% else %}
+                                        <input class="form-control" type="text" name="a2m_public_transport" required>
+                                        {% endif %}
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="a2m_time_travel"> How much time do you need for work travel (home to office) </label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input class="form-control" type="number" name="a2m_time_travel" placeholder="in minutes" value="{{a2.a2m_work_time_travel}}">
+                                    </div>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <label>Are you exposed to dust, gases, and/or fumes at work? </label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_is_exposed_to_pollution %}
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_is_exposed_to_pollution %}
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios2" value="0">
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios2" value="0" checked>
+                                    {% endif %}
+                                    No
+                                    </label>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <label for="a2m_working_hours"> How long is your working hours? </label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input class="form-control" type="number" name="a2m_working_hours" value="{{a2.a2m_working_hours}}">
+                                    </div>
+                                </div>                                
+                            </div>
+
+                            <div class="form-group">
+                                <label>Where do you work mostly? </label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if a2.a2m_working_area == '1' %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_area" id="optionsRadios1" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" class="form-check-input" name="a2m_working_area" id="optionsRadios1" value="1">
+                                    {% endif %}
+                                    Indoor
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label>
+                                    {% if a2.a2m_working_area == '2' %}
+                                    <input type="radio" name="a2m_working_area" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="a2m_working_area" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Outdoor
+                                    </label>
+                                </div>                                
+                            </div>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                                <div class="row">
+                                    {% if is_save_all %}
+
+                                    {% else %}
+                                        {% if role == 'staff' %}
+                                        <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                        {% endif %}
+                                    {% endif %}    
+                                </div>
+                        </div>
+                    </form>
+                        {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                        {% endif %} 
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,550 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content -->
+        <script>
+        $(document).ready(function(){
+
+            // This For Mother smoke
+            /*$("#yesExSmoker :input").prop("disabled", true);
+            $("#everSmoker :input").prop("disabled", true);
+            $("#averageCigars :input").prop("disabled", true);
+            $("#smokePipeOrCigars :input").prop("disabled", true);*/
+
+            $("#smoker").click(function(){
+                $("#yesExSmoker").addClass("hidden");
+                $("#everSmoker").removeClass("hidden");
+                $("#everSmoker :input").prop("readonly", false);
+                $("#averageCigars :input").prop("readonly", false);
+                $("#smokePipeOrCigars :input").prop("readonly", false);
+            });
+
+            $("#exSmokerMother").click(function(){
+                $("#yesExSmoker :input").prop("readonly", false);
+                $("#yesExSmoker").removeClass("hidden");
+                $("#motherNeverSmoke").removeClass('hidden');
+                $("#everSmoker :input").prop("readonly", false);
+                $("#averageCigars :input").prop("readonly", false);
+                $("#smokePipeOrCigars :input").prop("readonly", false);
+            });
+
+            $("#neverSmoke").click(function(){
+                $("#motherNeverSmoke").addClass('hidden');
+            });
+
+            $("#noHouseholdSmoke").click(function(){
+            $("#householdSmoke").addClass('hidden');
+            });
+
+            $("#yesHouseholdSmoke").click(function(){
+            $("#householdSmoke").removeClass('hidden');
+            });
+            // end of mother smoke
+
+            /*$("#exSmokerQuit :input").prop("disabled", true);*/
+
+            $("#smokerFather").click(function(){
+                $("#exSmokerQuit").addClass("hidden");
+                $("#ifNeverSmoke").removeClass("hidden");
+            });
+
+            $("#exSmokerFather").click(function(){
+                $("#exSmokerQuit").removeClass("hidden");
+                $("#exSmokerQuit :input").prop("readonly", false);
+                $("#ifNeverSmoke").removeClass("hidden");
+            });
+
+            $("#neverSmokeFather").click(function(){
+                $("#ifNeverSmoke").addClass("hidden");
+            });
+
+            $("#yesSmokingPresence").click(function(){
+                $("#ifWorkColleaguesSmoke").removeClass("hidden");
+            });
+
+            $("#noSmokingPresence").click(function(){
+                $("#ifWorkColleaguesSmoke").addClass("hidden");
+            });
+
+
+        });
+    </script>
+        <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form A - Baseline</h2>
+            <hr>         
+            <form class="patient-form-data">
+               <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewer_id"> Interviewed By </label>
+                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="interviewed_date"> Date Interviewed </label>
+                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_date"> Created Date  </label>
+                            {% if date_data_entered %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
+                            {% else %}
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+            </form>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                        {% if role == 'staff' %}
+                            {% if is_save_all %}
+
+                            {% else %}
+                                <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                        <form action="{% url 'forms_a:check_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-success" value="Check Form"/> 
+                        </form>
+                        {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+        </div> <!-- End of Form  -->
+
+        <div class="row">
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <h2 class="panel-warning"> Pre-Pregnancy Smoking Habits </h2>
+                <hr>
+                <form class="sectionA5-question" action="{% url 'forms_a:process_section5' %}" method="post">
+                    <div class="form-group">
+                        <h4> Mother</h4>
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <label> What was your pre-pregnancy smoking status? </label>
+                        <div class="radio">                                
+                            <label>
+                                {% if a5.a5m_mother_smoking_status == "1" %}
+                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1">
+                                {% endif %}
+                                Smoker (at least 1 cigarette per day)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                {% if a5.a5m_mother_smoking_status == "2" %}
+                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2" checked>
+                                {% else %}
+                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2">
+                                {% endif %}
+                                Ex-smoker
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                {% if a5.a5m_mother_smoking_status == "3" %}
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" checked>
+                                {% else %}
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3">
+                                {% endif %}
+                                Never smoke
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="motherNeverSmoke">
+                    <!-- If you were an ex-smoker of cigarettes -->
+                    <div class="form-group" id="yesExSmoker">
+                        <label for="a5m_quitting_duration"> For how long have your quit now ? (year) </label>
+                        <input class="form-control" type="number" name="a5m_quitting_duration" placeholder="in years" value="{{ a5.a5m_mother_quit_duration }}">
+                    </div>
+
+                    <!-- endif -->
+
+                    <!-- When you were an active or ex-smoker -->
+                    <div class="form-group" id="everSmoker">
+                        <label for="a5m_starting_age"> When did you first start smoke? (year) </label>                 <input class="form-control" type="number" name="a5m_starting_age" placeholder="age of years" value="{{ a5.a5m_mother_start_smoke_age }}">
+                    </div>
+
+                    <div class="form-group" id="averageCigars">
+                        <label for="a5m_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                        </label>
+                        <input class="form-control" type="number" name="a5m_cigar_number" value="{{ a5.a5m_mother_cigarretes_per_day }}">
+                    </div>
+
+                    <div class="form-group" id="smokePipeOrCigars">                        
+                        <label> Do you smoke pipes or cigars? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5m_mother_smoke_pipes %}
+                            <input type="radio" name="a5m_cigar_type" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5m_cigar_type" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5m_mother_smoke_pipes %}
+                            <input type="radio" name="a5m_cigar_type" id="optionsRadios2" value="0">
+                            {% else %}
+                            <input type="radio" name="a5m_cigar_type" id="optionsRadios2" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+                    <!-- End of an active or ex-smoker -->
+                    </div>
+                    
+                    <div class="form-group">                        
+                        <label> Besides you, is there any other household member who smokes? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5m_other_member_smoke %}
+                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5m_other_member_smoke %}
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0">
+                            {% else %}
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+
+                    <!-- if there is any member who smokes -->
+                    <div id="householdSmoke">
+                    <div class="form-group">
+                        <label for="a5m_quitting_duration"> How many Person ? </label>
+                        <input class="form-control" type="number" name="a5m_household_smoker_number" value="{{ a5.a5m_other_member_smoke_number }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="a5m_household_total_cigar"> How many cigarettes per day are smoked in the home? </label>
+                        <input class="form-control" type="number" name="a5m_household_total_cigar" value="{{ a5.a5m_total_cigarretes_per_day }}">
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do they smoke in front of you ? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5m_smoke_in_front_of %}
+                            <input type="radio" name="a5m_household_presence" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5m_household_presence" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5m_smoke_in_front_of %}
+                            <input type="radio" name="a5m_household_presence" id="optionsRadios2" value="0">
+                            {% else %}
+                            <input type="radio" name="a5m_household_presence" id="optionsRadios2" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+                    </div>
+                    <!--end of if there is any member who smokes -->
+
+                    <div class="form-group">
+                        <h4>Father</h4>
+                        <label> What was your smoking status before this pregnancy ? </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if a5.a5f_father_smoking_status == "1" %}
+                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1">
+                                    {% endif %}
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if a5.a5f_father_smoking_status == "2" %}
+                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2" checked >
+                                {% else %}
+                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2">
+                                {% endif %}
+                                Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if a5.a5f_father_smoking_status == "3" %}
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3">
+                                    {% endif %}
+                                    Never smoke
+                                </label>
+                            </div>
+                    </div>
+
+                    <!-- If you were an ex-smoker -->
+                    <div id="ifNeverSmoke">
+                    <div class="form-group" id="exSmokerQuit">
+                        <label for="a5f_quitting_duration"> For how long have your quit now ? (year) </label>
+                        <input class="form-control" type="number" name="a5f_quitting_duration" placeholder="in years" value="{{ a5.a5f_father_quit_duration }}">
+                    </div>
+                    <!-- endif you were an ex-smoker -->
+
+                    <!-- When you were an active or ex-smoker -->
+                    <div class="form-group">
+                        <label for="a5f_starting_age"> When did you first start smoke? (year) </label>                 <input class="form-control" type="number" name="a5f_starting_age" placeholder="age of years" value="{{ a5.a5f_father_start_smoke_age }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="a5f_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                        </label>
+                        <input class="form-control" type="number" name="a5f_cigar_number" value="{{ a5.a5f_father_cigarretes_per_day }}">
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you smoke pipes or cigars? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5f_father_smoke_pipes %}
+                            <input type="radio" name="a5f_cigar_type" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_cigar_type" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5f_father_smoke_pipes %}
+                            <input type="radio" name="a5f_cigar_type" id="optionsRadios2" value="0">
+                            {% else %}
+                            <input type="radio" name="a5f_cigar_type" id="optionsRadios2" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> How often do you some inside your house? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5f_father_smoke_frequency == "1" %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5f_father_smoke_frequency == "2" %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="2" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="2">
+                            {% endif %}
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5f_father_smoke_frequency == "3" %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="3" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="3">
+                            {% endif %}
+                            Monthly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5f_father_smoke_frequency == "0" %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_frequency" id="optionsRadios2" value="0">
+                            {% endif %}
+                            Never
+                            </label>
+                        </div>                        
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you smoke in the presence of mother ? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5f_smoke_in_front_of_mother %}
+                            <input type="radio" name="a5f_smoking_presence" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_presence" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5f_smoke_in_front_of_mother %}
+                            <input type="radio" name="a5f_smoking_presence" id="optionsRadios2" value="0">
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_presence" id="optionsRadios2" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+                    </div>
+                    <!-- End of an active or ex-smoker -->
+
+                    <div class="form-group">
+                        <h4>Work Colleagues</h4>
+                        <label> Is there any of your work colleagues (who work in the same room) who smoke in your presence? </label>                            
+                        <div class="radio">                                
+                            <label>
+                            {% if a5.a5c_colleagues_smoking_status %}
+                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if a5.a5c_colleagues_smoking_status %}
+                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0">
+                            {% else %}
+                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- If there are work colleagues smoke -->
+                    <div id="ifWorkColleaguesSmoke">
+                        <div class="form-group">
+                            <label for="a5c_smoker_number"> How many Person? </label>
+                            <input class="form-control" type="number" name="a5c_smoker_number" value="{{ a5.a5c_colleagues_smoke }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a5c_daily_duration"> On average, how many hours per day do you spend with smokers in the same room (in hours) </label>
+                            <input class="form-control" type="number" name="a5c_daily_duration" placeholder="in hours" value="{{ a5.a5c_duration_with_smokers_per_day }}" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a5c_monthly_duration"> How long have you worked with them? (in month) </label>
+                            <input class="form-control" type="number" name="a5c_monthly_duration" placeholder="in month" value="{{ a5.a5c_month_duration_with_smokers }}">
+                        </div> 
+                    </div>
+                    <!-- Endif -->
+                    <div class="form-group">
+                                <div class="row">
+                                    {% if is_save_all %}
+
+                                    {% else %}
+                                        {% if role == 'staff' %}
+                                        <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                        {% endif %}
+                                    {% endif %}    
+                                </div>
+                    </div>
+                </form>
+                {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="section_number" value=1>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div> 
+{% endblock %}
+    
