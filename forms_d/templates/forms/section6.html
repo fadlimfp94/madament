@@ -129,58 +129,308 @@
                     {% else %}
                     <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
                     {% endif %}
-                        <h2>Current second hand skomking exposure</h2>
+                        <h2>Current Second Hand Smoking Exposure</h2>
                         <hr> 
                         {% csrf_token %}
                         <input type="hidden" name="context" value="SAVE">
-                        <div class="form-group">
-                            <label for="d5c_date_blood"> Blood (heel prick, 0-2 weeks) </label>
-                            <input class="form-control" type="date" name="d5c_date_blood" value="{{ d5.d5c_date_blood }}" required>
-                        </div>
-
 
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_1"> Hair (0-1 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_1" value="{{ d5.d5c_hair_1 }}" required>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_6"> Hair (6 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
+                        <h4> Mother</h4>
+                            <label> What is your current smoking status? </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if d6.d6m_smoking_status  == "1" %}
+                                    <input type="radio" name="d6m_smoking_status" id="smoker" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6m_smoking_status" id="smoker" value="1">
+                                    {% endif %}
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if d6.d6m_smoking_status == "2" %}
+                                    <input type="radio" name="d6m_smoking_status" id="exSmokerMother" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6m_smoking_status" id="exSmokerMother" value="2">
+                                    {% endif %}
+                                    Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if d6.d6m_smoking_status == "3" %}
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmoke" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmoke" value="3">
+                                    {% endif %}
+                                    Never smoke
+                                </label>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_1"> Hair (0-1 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_6"> Hair (6 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
+                        <div class="form-group" id="">                        
+                            <label> Have you quitted smoking after the birth of your baby? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d6.d6m_quitting_smoke %}
+                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
                             </div>
+                            <div class="radio">
+                                <label>
+                                {% if d6.d6m_quitting_smoke %}
+                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
                         </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_2"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_2 " value="{{ d5.d5c_nasopharyngeal_2 }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_4"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_4 " value="{{ d5.d5c_nasopharyngeal_4 }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_6"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_6 " value="{{ d5.d5c_nasopharyngeal_6 }}" required>
-                                </div>
-                            </div>
+                        <div class="form-group" id="">
+                            <label for="d6m_quitting_durationr"> How long have you quitted now?
+                            </label>
+                            <input class="form-control" type="number" name="d6m_quitting_duration" value="{{ d6.d6m_quitting_duration }}">
                         </div>
+
+                        <div class="form-group" id="averageCigars">
+                            <label for="d6m_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                            </label>
+                            <input class="form-control" type="number" name="d6m_cigar_number" value="{{ d6.d6m_cigar_number }}">
+                        </div>
+
+                        <div class="form-group" id="smokePipeOrCigars">                        
+                            <label> Do you smoke pipes or cigars? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d6.d6m_cigar_type %}
+                                <input type="radio" name="d6m_cigar_type" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d6m_cigar_type" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d6.d6m_cigar_type %}
+                                <input type="radio" name="d6m_cigar_type" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d6m_cigar_type" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
+                    
+                    <div class="form-group">                        
+                        <label> Besides you, is there any other household member who smokes? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if d6.d6m_smoking_household %}
+                            <input type="radio" name="d6m_smoking_household" id="yesHouseholdSmoke" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="d6m_smoking_household" id="yesHouseholdSmoke" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if d6.d6m_smoking_household %}
+                            <input type="radio" name="d6m_smoking_household" id="noHouseholdSmoke" value="0">
+                            {% else %}
+                            <input type="radio" name="d6m_smoking_household" id="noHouseholdSmoke" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+
+                    <!-- if there is any member who smokes -->
+                    <div id="householdSmoke">
+                    <div class="form-group">
+                        <label for="d6m_household_number"> How many Person ? </label>
+                        <input class="form-control" type="number" name="d6m_household_number" value="{{ d6.d6m_household_number }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="d6m_household_cigar_number"> How many cigarettes per day are smoked in the home? </label>
+                        <input class="form-control" type="number" name="d6m_household_cigar_number" value="{{ d6.d6m_household_cigar_number }}">
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do they smoke in front of you ? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if d6.d6m_household_presence %}
+                            <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if d6.d6m_household_presence %}
+                            <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0">
+                            {% else %}
+                            <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0" checked>
+                            {% endif %}
+                            No
+                            </label>
+                        </div>                        
+                    </div>
+                    </div>    
+
+                    <div class="form-group">
+                        <h4> Father</h4>
+                            <label> What is your smoking status? </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if d6.d6f_smoking_status  == "1" %}
+                                    <input type="radio" name="d6f_smoking_status" id="smoker" value="1" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6f_smoking_status" id="smoker" value="1">
+                                    {% endif %}
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if d6.d6f_smoking_status == "2" %}
+                                    <input type="radio" name="d6f_smoking_status" id="exSmokerMother" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6f_smoking_status" id="exSmokerMother" value="2">
+                                    {% endif %}
+                                    Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if d6.d6f_smoking_status == "3" %}
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmoke" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmoke" value="3">
+                                    {% endif %}
+                                    Never smoke
+                                </label>
+                            </div>
+                    </div>
+
+                        <div class="form-group" id="">
+                            <label for="d6f_quitting_duration"> How long have you quitted now?
+                            </label>
+                            <input class="form-control" type="number" name="d6f_quitting_duration" value="{{ d6.d6f_quitting_duration }}">
+                        </div>
+
+                        <div class="form-group" id="averageCigars">
+                            <label for="d6f_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                            </label>
+                            <input class="form-control" type="number" name="d6f_cigar_number" value="{{ d6.d6f_cigar_number }}">
+                        </div>
+
+                        <div class="form-group" id="smokePipeOrCigars">                        
+                            <label> Do you smoke pipes or cigars? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d6.d6f_cigar_type %}
+                                <input type="radio" name="d6f_cigar_type" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d6f_cigar_type" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d6.d6f_cigar_type %}
+                                <input type="radio" name="d6f_cigar_type" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d6f_cigar_type" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
+
+                        <div class="form-group">                        
+                        <label> How often do you some inside your house? </label>
+                        <div class="radio">                                
+                            <label>
+                            {% if d6.d6f_smoking_frequency == "1" %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios1" value="1" checked>
+                            {% else %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios1" value="1">
+                            {% endif %}
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            {% if d6.d6f_smoking_frequency == "2" %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="2" checked>
+                            {% else %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="2">
+                            {% endif %}
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            {% if d6.d6f_smoking_frequency == "3" %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="3" checked>
+                            {% else %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="3">
+                            {% endif %}
+                            Monthly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            {% if d6.d6f_smoking_frequency == "0" %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="0">
+                            {% endif %}
+                            Never
+                            </label>
+                        </div>                        
+                        </div>
+
+                        <div class="form-group">                        
+                            <label> Do you smoke in the presence of mother ? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d6.d6f_smoking_presence %}
+                                <input type="radio" name="d6f_smoking_presence" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d6f_smoking_presence" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d6.d6f_smoking_presence %}
+                                <input type="radio" name="d6f_smoking_presence" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d6f_smoking_presence" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>    
+                       
                         <div class="form-group">
                             <div class="row">
                                 {% if is_save_all %}
