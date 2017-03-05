@@ -58,7 +58,10 @@
 
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="#" type="submit" class="btn btn-primary btn-lg btn-block">Form C - Birth Delivery </a>
+                    <form action="{% url 'core:form_c' %}"  method="POST">
+                        {% csrf_token %}                       
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" value="Form C - Birth"/>
+                    </form>
                 </div>
             </div>
 

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'forms_a',
     #'forms_b',
     'core',
+    
 ]
 
 MIDDLEWARE = [

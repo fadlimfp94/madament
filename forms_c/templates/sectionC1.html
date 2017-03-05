@@ -1,0 +1,420 @@
+    <script>
+        $(document).ready(function(){
+
+
+        
+        $("#deliveryCompilation :input").prop("disabled", true);
+        $("#receiveAntibiotics :input").prop("disabled", true);
+
+
+        $("#noDeliveryCompilation").click(function(){
+             $("#deliveryCompilation :input").prop("disabled", true);
+        });
+
+        $("#yesDeliveryCompilation").click(function(){           
+            $("#deliveryCompilation :input").prop("disabled", false);
+        });
+
+        $("#noAntibiotics").click(function(){
+             $("#receiveAntibiotics :input").prop("disabled", true);
+        });
+
+        $("#yesAntibiotics").click(function(){           
+            $("#receiveAntibiotics :input").prop("disabled", false);
+        });
+
+        $("#noMaternalBlood").click(function(){
+             
+             $("#maternalBloodTest").addClass('hidden');
+        });
+
+        $("#yesMaternalBlood").click(function(){           
+            $("#maternalBloodTest").removeClass('hidden');
+        });
+
+        
+  
+    });
+    </script>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question">
+                    <h2>Mother</h2>
+                    <hr>                        
+                        <div class="form-group">
+                            <label for="c1m_pre_height"> Mother UR Number </label>                       
+                            <input class="form-control" type="text" name="c1m_ur_number">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c1m_pre_height"> Place of Delivery </label>                         
+                            <input class="form-control" type="text" name="c1m_delivery_place">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gestational Age </label>
+                            <div class="row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label> Last menstrual period (in weeks) </label>                        
+                                <input class="form-control" type="number" pattern="[0-9]" 
+                                name="c1m_gestational_age_fdlm" placeholder="in weeks">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label> ultrasound (in weeks) </label>                         
+                                <input class="form-control" type="number" name="c1m_gestational_age_usg" placeholder="in weeks" >
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="text" name="c1m_systolic1st"  aria-describedby="basic-addon1">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="c1m_pre_height"> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="text" name="c1m_systolic2nd">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="text" name="c1m_diastolic1st"  aria-describedby="basic-addon1">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="c1m_pre_height"> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="text" name="c1m_diastolic2nd">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c1m_pre_height"> Weight at delivery </label>                         
+                            <input class="form-control" type="text" name="c1m_delivery_weight">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Delivery Method </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="Unassisted vaginal birth">
+                                    Unassisted vaginal birth
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios2" value="vacuum">
+                                    vacuum
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios3" value="Forceps">
+                                    Forceps
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios4" value="C-section">
+                                    C-section
+                                </label>
+                            </div>                            
+                        </div>
+
+
+                        <fieldset class="form-group" id="opsi">
+                            <label for="c1m_premature"> Delivery Compilation ? </label>
+                            <div class="form-check">
+                                <label>
+                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0">
+                                No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label>
+                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1">
+                                Yes, specify
+                                </label>
+                            </div>                             
+                        </fieldset>
+
+                        <div class="form-group" id="deliveryCompilation">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox"> Hypertension
+                                </label>
+                            </div>                           
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_eclampsiacom" type="checkbox"> Preeclampsia/eclampsia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_visualcom" type="checkbox"> Visual disturbances 
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_consciousnesscom" type="checkbox"> Decreased consciousness
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_seizurecom" type="checkbox"> Seizure
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_pullmonarycom" type="checkbox"> Pulmonary Oedema
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_postpartumcom" type="checkbox"> Post-partum bleeding
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_fevercom" type="checkbox"> Fever
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_prematurerupturecom" type="checkbox"> Premature rupture of the membrane
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_placentacom" type="checkbox"> Placental abruption
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_placenta_praeviacom" type="checkbox"> Placenta praevia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_gbscom" type="checkbox"> GBS+
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_chorioamnionitiscom" type="checkbox"> Chorioamnionitis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_chlinical_diagnosiscom" type="checkbox"> Presumed/clinical diagnosis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="c1m_definite_diagnosiscom" type="checkbox"> Definite (proven by pathology findings)
+                                </label>
+                            </div>
+                            
+                            <label>Other</label>
+                            <input class="form-control" type="text" name="c1m_othercom" required>                           
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                        <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
+                        #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
+                        </div>
+
+
+                        <fieldset class="form-group">
+                            <label for="c1m_premature"> Did mother receive any antibiotics ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_antibiotics" id="noAntibiotics" value="0">
+                                No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1">
+                                Yes, specify
+                                </label>
+                            </div>                             
+                        </fieldset>
+
+                        <div id="receiveAntibiotics">
+                            <div class="form-group">
+                                <label> Name of antibiotics </label>                         
+                                <input class="form-control" type="text" name="c1m_antibiotics_type">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Indication </label>                         
+                                <input class="form-control" type="text" name="c1m_antibiotics_indication">
+                            </div>  
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Duration of antibiotics course (days) </label> 
+                                <input class="form-control" type="text" name="c1m_antibiotics_duration">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Proteinuria </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1">
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios2" value="2">
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios2" value="3">
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios2" value="4">
+                                    Negative
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <fieldset class="form-group">
+                            <label for="c1m_premature"> Maternal blood test (at birth, optional) </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="noMaternalBlood" value="0">
+                                No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="yesMaternalBlood" value="1">
+                                Yes
+                                </label>
+                            </div>                             
+                        </fieldset>
+
+                        <div id="maternalBloodTest">
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Date </label>                         
+                                <input class="form-control" type="date" name="c1m_blood_test_date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Hemoglobin level (g/dl) (in decimal) </label>
+                                <input class="form-control" type="number" name="c1m_hb" step="0.1">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> WBC (/micro litre) </label> 
+                                <input class="form-control" type="number" name="c1m_wbc" step="0.1">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Platelets/thrombocyte (/microlite) </label> 
+                                <input class="form-control" type="number" name="c1m_platelets" step="0.1">
+                            </div>                            
+                        
+
+                        <h4>Preeclampsia work up (if there is persistent hypertension, see * above)</h4>
+                        <div class="form-group">
+                                <label> SGOT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_sgot" name="c1m_sgot" step="0.1">
+                            </div>
+
+                            <div class="form-group">
+                                <label> SGPT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_sgpt" name="c1m_sgpt">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Ureum (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_ureum" name="c1m_ureum">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Creatinine (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_creatinine" name="c1m_creatinine" >
+                            </div>
+
+
+                            <fieldset class="form-group">
+                            <label for="a3m_premature"> Sampling of vaginal swab </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="0">
+                                Yes
+                                </label>
+                            </div>                            
+                            </fieldset>
+                            
+                            <div id="vaginalSampling">
+                                <div class="form-group">
+                                    <label for="c1m_swab_date"> Date taken </label> 
+                                    <input class="form-control" type="text" name="c1m_swab_date">
+                                </div>
+                            </div>
+                        </div>
+
+             
+
+                        <button type="submit" id="save" class="btn btn-primary">Save </button>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a>
+
+    
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+    
+
+
+     
+
+</body>
+
+</html>

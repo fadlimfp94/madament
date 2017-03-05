@@ -1,0 +1,264 @@
+    <script>
+        $(document).ready(function(){
+
+
+        
+        $("#complicationDiagnosed :input").prop("disabled", true);
+
+
+        $("#noComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").addClass('hidden');
+        });
+
+        $("#yesComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").removeClass('hidden');
+            $("#complicationDiagnosed :input").prop("disabled", false);
+        });
+
+        
+  
+    });
+    </script>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question">
+                    <h2>Placental Sampling</h2>
+                    <hr>                        
+                        <div class="form-group">
+                            <label> Date of Sampling </label>                         
+                            <input class="form-control" type="date" name="c2m_sampling_date">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Time </label>                         
+                            <input class="form-control" type="time" name="c2m_sampling_date">
+                        </div>
+
+                        <h4>Steps in sampling the placenta (tick when completed) </h4>
+                        <div class="form-group">
+                            <label> Pictures taken on both sides against a scale bar </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_pictures_taken" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_pictures_taken" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Comments on appearance </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_comments" id="noComments" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_comments" id="yesComments" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div id="commentsOnAppearance">
+                            <div class="form-group">
+                                <label> Shapes </label>
+                                <div class="radio">                                
+                                    <label>
+                                        <input type="radio" name="c2m_placenta_shapes"  value="Eclipse">
+                                        Eclipse
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="c2m_placenta_shapes"  value="Oval">
+                                        Oval
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="c2m_placenta_shapes"  value="Oval">
+                                        Other
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label> Other </label>                         
+                                    <input class="form-control" type="text" name="c2m_placenta_shapes_other">
+                                </div>                            
+                            </div>
+
+
+                            <div class="form-group">
+                                <label> Umbilical cord insertion </label>
+                                <div class="radio">                                
+                                    <label>
+                                        <input type="radio" name="c2m_umbilical_cord"  value="1">
+                                        Centre
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="c2m_umbilical_cord"  value="2">
+                                       Marginal
+                                    </label>
+                                </div>                                                           
+                            </div>
+
+                            <div class="form-group">
+                                <label> Other abnormality </label>                         
+                                <input class="form-control" type="text" name="c2m_abnormality">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Take sample of cord bloods </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_cord_blood_sample" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_cord_blood_sample" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Take a membrane roll (2cm wide) from the rupture side </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_membrane_roll" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_membrane_roll" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Trim the membranes and umbilical cord to 1 cm </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_membrane_trim" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_membrane_trim" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Trimmed Weight </label>                         
+                            <input class="form-control" type="text" name="c2m_membrane_weight">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Cut out 1-2 cm3 placenta of the exposed villous tissue </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_villous_tissue" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_villous_tissue" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Place samples into a container (immersed with PBS) </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_placenta_container" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_placenta_container" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> Send the sample to the laboratory </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_placenta_laboratory" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_placenta_laboratory" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <label> If all steps above are completed ? </label>
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c2m_placenta_sampling" value="0">
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_placenta_sampling" value="1">
+                                    Yes
+                                </label>
+                            </div>                            
+                        </div>
+                                                              
+
+                        <button type="submit" id="save" class="btn btn-primary">Save </button>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a>
+
+    
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+    
+
+
+     
+
+</body>
+
+</html>

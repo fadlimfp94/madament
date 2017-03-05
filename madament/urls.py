@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^forms_a/', include('forms_a.urls')),
-    url(r'^forms_b/', include('forms_b.urls')),
+    url(r'^forms_c/', include('forms_c.urls')),
     url(r'^', include('core.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

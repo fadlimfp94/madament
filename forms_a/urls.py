@@ -3,7 +3,6 @@ from django.contrib.auth.views import login, logout
 from . import views, forms
 
 app_name = 'forms_a'
-
 urlpatterns = [
 	url(r'^create/form', views.create_form, name='create_form'),
 	url(r'^check/form', views.check_form, name='check_form'),
