@@ -3,8 +3,13 @@
     <!-- Page Content -->
     <div class="container">
         <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success!</strong>
+            </div>
+        {% endif %}
         <div class="jumbotron">
-            <h2 class="text-center">Form A - Baseline</h2>
+            <h2 class="text-center">Form A - Baseline Data</h2>
             <hr>         
             <form class="patient-form-data" action="{% url 'forms_a:create_form' %}" method="post">
                 {% csrf_token %}
@@ -25,21 +30,30 @@
                             <label for="date_admission"> Date Admission </label>
                             <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" readonly>
                         </div>
-
-                        <div class="form-group">
-                            <label for="interviewer_id"> Interviewed By </label>
-                            <!--<input class="form-control" type="text" name="interviewer_id">-->
-                            <select class="form-control selectpicker" name="interviewer_id">
-                            {% for interviewer in staff_list %}
-                                <option value={{interviewer.id}}>{{ interviewer.username }}</option>
-                            {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewed_date"> Date Interviewed </label>
-                            <input class="form-control" type="date" name="date_interviewed">
-                        </div>
+                        {% if context == "create_new_form" %}
+                            <div class="form-group">
+                                <label for="interviewer_id"> Interviewed By </label>
+                                <!--<input class="form-control" type="text" name="interviewer_id">-->
+                                <select class="form-control selectpicker" name="interviewer_id" required>
+                                    {% for interviewer in staff_list %}
+                                        <option value={{interviewer.id}}>{{ interviewer.username }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="interviewed_date"> Date Interviewed </label>
+                                <input class="form-control" type="date" name="date_interviewed" required>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="interviewer_id"> Interviewed By </label>
+                                <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="interviewed_date"> Date Interviewed </label>
+                                <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" readonly>
+                            </div>
+                        {% endif %}                                              
                     </div>
 
                     <div class="col-md-6 col-xs-6 col-sm-6">                                            
@@ -47,29 +61,74 @@
                             <label for="created_id"> Created By  </label>
                             <input class="form-control" type="text" name="data_entry_id" value="{{request.user.username}}" readonly>
                         </div>
-
-                        <div class="form-group">
-                            <label for="created_date"> Created Date  </label>
-                            <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" readonly>
-                        </div>
+                        {% if context == "create_new_form" %}
+                            <div class="form-group">
+                                <label for="created_date"> Created Date  </label>
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" readonly>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="created_date"> Created Date  </label>
+                                <input class="form-control" type="date" name="date_data_entered" value="{{ date_data_entered }}" readonly>
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             <label for="checked_id"> Checked By </label>
-                            <input class="form-control" type="text" name="data_checked_id" readonly>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{ form.data_checked_id }}" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="checked_date"> Checked Date </label>
-                            <input class="form-control" type="date" name="date_data_checked" readonly>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{ date_data_checked }}" readonly>
                         </div>
                     </div>                  
                 </div> <!-- end row -->
 
+                {% if context == "create_new_form" %}
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                            <input type="submit" class="btn btn-primary" value="Create Form"/>
+                        </div>
+                    </div> <!-- End Row -->
+                {% else %}
+                    
+                {% endif %}
+            </form>
+            {% if context == "create_new_form" %}
+    
+            {% else %}
                 <div class="row">
                     <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                        <input type="submit" class="btn btn-primary" value="Create Form"/>
-                    </div>
+                            {% if role == 'staff' %}
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    <form action="{% url 'forms_a:save_form' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" class="btn btn-primary" value="Submit Form"/>
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                {% if date_data_checked %}
+                                
+                                {% else %}
+                                    <form action="{% url 'forms_a:check_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-success" value="Check Form"/> 
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                    </div> 
                 </div> <!-- End Row -->
-            </form>
+            {% endif %}
         </div> <!-- End of Form  -->
+        {% if context == "create_new_form" %}
+
+        {% else %}
+            <div class="row">
+                {% block form_section %}
+                {% endblock %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

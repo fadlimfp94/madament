@@ -15,57 +15,33 @@ def check_form(request):
 	form.data_checked_id = request.user.username
 	form.date_data_checked = datetime.date.today()
 	form.save()
-	interviewer = User.objects.get(id=form.interviewer_id)
-	is_save_all = form.is_save_all 	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
-	date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
-	role = ''
-	success = True
-	if not request.user.is_staff:
-		role = 'staff'
-	try:
-		a1_obj = A1MotherDemographic.objects.get(a_form_id=request.session['form_id']) 
-		dob = a1_obj.a1m_dob.strftime('%Y-%m-%d')
-		moving_date = a1_obj.a1m_moving_date.strftime('%Y-%m-%d')
-		return render(request, 'forms/section1.html', {'date_data_checked' : date_data_checked, 'success' : success, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
-	except:
-		return render(request, 'forms/section1.html', {'date_data_checked' : date_data_checked, 'success' : success, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+	return process_section1(request)
 
 @login_required(login_url='core:login')
 def save_form(request):
 	form = ABaseLine.objects.get(id=request.session['form_id'])
 	form.is_save_all = True
 	form.save()
-	return show_section1(request, request.session['form_id'])
+	return process_section1(request)
 
 @login_required(login_url='core:login')
 def edit_form(request):
 	form = ABaseLine.objects.get(id=request.session['form_id'])
-	interviewer = User.objects.get(id=form.interviewer_id)
-	is_save_all = form.is_save_all 	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
-	role = ''
-	if not request.user.is_staff:
-		role = 'staff'
-	section_number = request.POST.get('section_number')
-	if section_number == 1:
-		try:
-			a1_obj = A1MotherDemographic.objects.get(a_form_id=request.session['form_id']) 
-			dob = a1_obj.a1m_dob.strftime('%Y-%m-%d')
-			moving_date = a1_obj.a1m_moving_date.strftime('%Y-%m-%d')
-			if form.date_data_checked is not None:
-				date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
-				return render(request, 'forms/edit_section1.html', {'date_data_checked' : date_data_checked,'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
-			else:	
-				return render(request, 'forms/edit_section1.html', {'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
-		except:
-				return render(request, 'forms/edit_section1.html', {'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+	form.is_save_all = False
+	form.save()
+	request.session['edit_mode'] = True
+	section_number = request.POST.get('section_number')	
+	if section_number == "2":	
+		return process_section2(request)
+	elif section_number == "3":
+		return process_section3(request)
+	elif section_number == "4":
+		return process_section4(request)
+	elif section_number == "5":
+		return process_section5(request)
 	else:
-		return render(request, 'forms/edit_section1.html', {'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})					
+		return process_section1(request)
+						
 
 @login_required(login_url='core:login')
 def create_form(request):
@@ -84,7 +60,7 @@ def create_form(request):
 		participant = Participant.objects.get(id=request.session['participant_id'])
 		date_admission = participant.date_admission.strftime('%Y-%m-%d')
 		staff_list = User.objects.filter(is_staff=False)
-		return render(request, 'forms/form.html', {'staff_list' : staff_list, 'context' : 'create', 'participant' : participant, 'date_admission' : date_admission})
+		return render(request, 'forms/form.html', {'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission})
 
 
 
@@ -254,6 +230,9 @@ def save_section1(a1_obj, request):
 	a1_obj.a1m_relative_home_phone_number = request.POST.get('a1m_relative_home_phone_number')
 	a1_obj.a1m_relative_mobile_phone_number = request.POST.get('a1m_relative_mobile_phone_number')
 	a1_obj.save()
+	if request.user.is_staff:
+		a1_obj.a_form.is_save_all = True
+		a1_obj.a_form.save()
 	return a1_obj
 
 
@@ -327,7 +306,10 @@ def save_section2(a2_obj, request):
 	else:
 		a2_obj.a2m_working_pregnancy = False
 	if request.POST.get('a2m_maternal_leave'):
-		a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
+		if request.POST.get('a2m_maternal_leave_duration'):
+			a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
+		else:
+			a2_obj.a2m_maternal_leave_duration = None
 		a2m_maternal_leave = True
 	else:
 		a2_obj.a2m_maternal_leave_duration = None
@@ -373,8 +355,14 @@ def save_section2(a2_obj, request):
 		a2_obj.a2m_working_hours = request.POST.get('a2m_working_hours')
 	else:
 		a2_obj.a2m_working_hours = None
-	a2_obj.a2m_working_area = request.POST.get('a2m_working_area')
+	if request.POST.get('a2m_working_area'):	
+		a2_obj.a2m_working_area = request.POST.get('a2m_working_area')
+	else:
+		a2_obj.a2m_working_area = ""	
 	a2_obj.save()
+	if request.user.is_staff:
+		a2_obj.a_form.is_save_all = True
+		a2_obj.a_form.save()
 	return a2_obj
 
 
@@ -650,6 +638,9 @@ def save_section3(a3_obj, request):
 	else:
 		a3_obj.a3m_other_sibling = False		
 	a3_obj.save()
+	if request.user.is_staff:
+		a3_obj.a_form.is_save_all = True
+		a3_obj.a_form.save()
 	return a3_obj
 
 
@@ -718,7 +709,6 @@ def show_section4(request, is_save):
 
 #@login_required(login_url='core:login')
 def save_section4(a4_obj, request):
-	print "tes"
 	a4_obj.a4f_name = request.POST.get('a4f_name')
 	a4_obj.a4f_pob = request.POST.get('a4f_pob')
 	a4_obj.a4f_dob = request.POST.get('a4f_dob')
@@ -903,6 +893,9 @@ def save_section4(a4_obj, request):
 	else:
 		a4_obj.a4f_other_sibling = False
 	a4_obj.save()
+	if request.user.is_staff:
+		a4_obj.a_form.is_save_all = True
+		a4_obj.a_form.save()
 	return a4_obj
 
 
@@ -914,10 +907,8 @@ def process_section5(request):
 	a_form_obj = ABaseLine.objects.get(id=int(request.session['form_id']))
 	try:
 		a5_obj = A5PrePregnancySmoking.objects.get(a_form=a_form_obj)
-		print "masuk1"
 		return update_section5(request)	
 	except:
-		print "masuk2"
 		return create_section5(request)
 
 @login_required(login_url='core:login')
@@ -927,7 +918,6 @@ def create_section5(request):
 		a5_obj = A5PrePregnancySmoking()
 		a5_obj.a_form = a_form_obj
 		a5_obj = save_section5(a5_obj, request)
-		print "masuk3"
 		return show_section5(request, True)	
 	else:
 		return show_section5(request, False)
@@ -937,7 +927,6 @@ def update_section5(request):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
 		a5_obj = A5PrePregnancySmoking.objects.get(a_form_id=request.session['form_id'])
 		a5_obj = save_section5(a5_obj, request)
-		print "masuk4"
 		return show_section5(request, True)	
 	else:
 		return show_section5(request, False)
@@ -955,8 +944,7 @@ def show_section5(request, is_save):
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		a5_obj = A5PrePregnancySmoking.objects.get(a_form_id=form.id)
-		print "masuk5" 
+		a5_obj = A5PrePregnancySmoking.objects.get(a_form_id=form.id) 
 		if form.date_data_checked is not None:
 			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
 			if is_save:
@@ -1021,4 +1009,7 @@ def save_section5(a5_obj, request):
 	a5_obj.a5c_duration_with_smokers_per_day = request.POST.get('a5c_daily_duration')
 	a5_obj.a5c_month_duration_with_smokers = request.POST.get('a5c_monthly_duration')
 	a5_obj.save()
+	if request.user.is_staff:
+		a5_obj.a_form.is_save_all = True
+		a5_obj.a_form.save()
 	return a5_obj							        							        

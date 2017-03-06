@@ -241,19 +241,294 @@
                             <h4>Do you do garbage burning?</h4>
                             <div class="form-check">
                                     <label class="form-check-label">
-                                        {% if a3.a3m_asthma_mother %}
-                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox" checked>
+                                        {% if d8.d8m_garbage_burning == '0' %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox">
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
                                         {% endif %}
-                                        Mother
+                                        No
                                     </label>
                             </div>
-                        </div>    
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_garbage_burning == '1' %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        {% endif %}
+                                        Once per week or less
+                                    </label>
+                            </div>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_garbage_burning == '2' %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        {% endif %}
+                                        More than once per week but not daily
+                                    </label>
+                            </div>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_garbage_burning == '3' %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        {% endif %}
+                                        Daily
+                                    </label>
+                            </div>
+                        </div>
 
+                        <div class="form-group" id="">                        
+                            <label> Does you have any pet inside or around the house? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_pet %}
+                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_pet %}
+                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
 
+                        <div class="form-group" id="">                        
+                            <label> What kind of house do you live in now? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_housing_type == "1" %}
+                                <input type="radio" name="d8m_housing_type" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_housing_type" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Landed House
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_housing_type == "2" %}
+                                <input type="radio" name="d8m_housing_type" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_housing_type" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                Flat/Apartment
+                                </label>
+                            </div>                        
+                        </div>
 
+                        <div class="form-group" id="">                        
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_landed_house_type == "1" %}
+                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios1" value="1">
+                                {% endif %}
+                                One story building
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_landed_house_type == "2" %}
+                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                More than one story building
+                                </label>
+                            </div>                        
+                        </div>
 
+                        <div class="form-group" id="">                        
+                            <label> Is there any dampness or molds inside your house? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_dampness_house %}
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_dampness_house %}
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
+
+                        <div id="">
+                            <h4>Do you use any of the following equipment inside your house?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_ac %}
+                                        <input class="form-check-input" name="d8m_ac" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_ac" type="checkbox">
+                                        {% endif %}
+                                        Air conditioner
+                                    </label>
+                            </div>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_fan %}
+                                        <input class="form-check-input" name="d8m_fan" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_fan" type="checkbox">
+                                        {% endif %}
+                                        Electric fan
+                                    </label>
+                            </div>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_air_filter %}
+                                        <input class="form-check-input" name="d8m_air_filter" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_air_filter" type="checkbox">
+                                        {% endif %}
+                                        Air filtering device
+                                    </label>
+                            </div>    
+                        </div>
+
+                        <div class="form-group" id="">                        
+                            <label> Have you travelled out of Jakarta or stayed in another place other than your current residence? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_staying_out_history %}
+                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_staying_out_history %}
+                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d8m_staying_out_1st_street"> Address </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_street" value = "{{ d8.d8m_staying_out_1st_street }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="d8m_staying_out_1st_rt"> RT </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rt" value = "{{ d8.d8m_staying_out_1st_rt }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="d8m_staying_out_1st_rw"> RW </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rw" value = "{{ d8.d8m_staying_out_1st_rw }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_1st_district"> District </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_district" value = "{{ d8.d8m_staying_out_1st_district }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_1st_city"> City </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_city" value = "{{ d8.d8m_staying_out_1st_city }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_1st_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_zipcode" value = "{{ d8.d8m_staying_out_1st_zipcode }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7">
+                                    <label for="a1m_residing_duration"> Duration of stay (in days)
+                                    </label>
+                                    <input class="form-control" type="number" name="d8m_staying_out_1st_duration" value = "{{ d8.d8m_staying_out_1st_duration }}">
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d8m_staying_out_2nd_street"> Address </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_street" value = "{{ d8.d8m_staying_out_2nd_street }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="d8m_staying_out_2nd_rt"> RT </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rt" value = "{{ d8.d8m_staying_out_2nd_rt }}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="d8m_staying_out_2nd_rw"> RW </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rw" value = "{{ d8.d8m_staying_out_2nd_rw }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_2nd_district"> District </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_district" value = "{{ d8.d8m_staying_out_2nd_district }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_2nd_city"> City </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_city" value = "{{ d8.d8m_staying_out_2nd_city }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d8m_staying_out_2nd_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_zipcode" value = "{{ d8.d8m_staying_out_2nd_zipcode }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7 col-sm-7">
+                                    <label for="a1m_residing_duration"> Duration of stay (in days)
+                                    </label>
+                                    <input class="form-control" type="number" name="d8m_staying_out_2nd_duration" value = "{{ d8.d8m_staying_out_2nd_duration }}">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="row">

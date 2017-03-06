@@ -42,17 +42,17 @@
                                 
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-primary" value="Create Participant"/>
                   </div>
                 </form>
             </div>
           </div>
         </div> 
-
         <!-- End of Modal Create Participant-->
+
         <div class="row">         
-            <h2> List Of Patient </h2>
+            <h3> List of Patient </h3>
            <table id="myTable" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -61,8 +61,7 @@
                         <th>Date Admission </th>
                         <th> </th>
                     </tr>
-                </thead>
-                
+                </thead>            
                 <tbody>
                     {% for participant in participants %}
                         <tr>
@@ -76,8 +75,7 @@
                                    <input type="submit" class="btn btn-detail" value="Detail"/>
                                 </form>
                              </td>
-                        </tr>
-                        
+                        </tr>                      
                     {% endfor %}     
                 </tbody>
            </table>

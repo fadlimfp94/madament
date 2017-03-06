@@ -15,15 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.auth.views import login, logout
-
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^forms_a/', include('forms_a.urls')),
-    url(r'^forms_b/', include('forms_b.urls')),
+    #url(r'^forms_b/', include('forms_b.urls')),
+    #url(r'^forms_c/', include('forms_c.urls')),
+    #url(r'^forms_d/', include('forms_d.urls')),
     url(r'^', include('core.urls')),
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

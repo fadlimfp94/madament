@@ -1,117 +1,28 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'forms/form.html' %}
+{% block form_section %}
     <!-- Page Content -->
-
-    <div class="container">
-        <!-- Form Umum Section -->
-        {% if success %}
-            <div class="alert alert-success text-center">
-              <strong>Success!</strong>
-            </div>
-        {% endif %}
-        <div class="jumbotron">
-            <h2 class="text-center">Form A - Baseline</h2>
-            <hr>         
-            <form class="patient-form-data">
-               <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label for="participant_id"> Participant Id </label>
-                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="participant_name"> Participant Name </label>
-                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date_admission"> Date Admission </label>
-                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewer_id"> Interviewed By </label>
-                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewed_date"> Date Interviewed </label>
-                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
-                        <div class="form-group">
-                            <label for="created_id"> Created By  </label>
-                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="created_date"> Created Date  </label>
-                            {% if date_data_entered %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
-                            {% else %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label for="checked_id"> Checked By </label>
-                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="checked_date"> Checked Date </label>
-                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
-                        </div>
-                    </div>                  
-                </div> <!-- end row -->
-            </form>
-                <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                        {% if role == 'staff' %}
-                            {% if is_save_all %}
-
-                            {% else %}
-                                <form action="{% url 'forms_a:save_form' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                        <form action="{% url 'forms_a:check_form' %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" class="btn btn-success" value="Check Form"/> 
-                        </form>
-                        {% endif %}
-                    </div> 
-                </div> <!-- End Row -->
-        </div> <!-- End of Form  -->
-
-        <div class="row">
             <div class="col-md-4 section-list">
-                <div class="panel panel-primary">
-                    <div class="panel-heading text-center"> List of Sections  </div>
-                    <ul class="list-group">
-                        <li class="list-group-item active">
-                            <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
-                        </li>
-                    </ul>
-                </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading text-center"> List of Sections  </div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                                </li>
+                            </ul>
+                        </div>
             </div>
-
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
@@ -151,17 +62,17 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_residence_street"> Address </label>
-                                    <input class="form-control" type="text" name="a1m_residence_street" value = "{{ a1.a1m_residence_street }}">
+                                    <input class="form-control" type="text" name="a1m_residence_street" value = "{{ a1.a1m_residence_street }}" required>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_residence_rt"> RT </label>
-                                    <input class="form-control" type="text" name="a1m_residence_rt" value = "{{ a1.a1m_residence_rt }}">
+                                    <input class="form-control" type="text" name="a1m_residence_rt" value = "{{ a1.a1m_residence_rt }}" required>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_residence_rw"> RW </label>
-                                    <input class="form-control" type="text" name="a1m_residence_rw" value = "{{ a1.a1m_residence_rw }}">
+                                    <input class="form-control" type="text" name="a1m_residence_rw" value = "{{ a1.a1m_residence_rw }}" required>
                                 </div>
                             </div>
                         </div>
@@ -170,17 +81,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_district"> District </label>
-                                    <input class="form-control" type="text" name="a1m_residence_district" value = "{{ a1.a1m_residence_district }}">
+                                    <input class="form-control" type="text" name="a1m_residence_district" value = "{{ a1.a1m_residence_district }}" required>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_city"> City </label>
-                                    <input class="form-control" type="text" name="a1m_residence_city" value = "{{ a1.a1m_residence_city }}">
+                                    <input class="form-control" type="text" name="a1m_residence_city" value = "{{ a1.a1m_residence_city }}" required>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_zipcode"> Zip Code </label>
-                                    <input class="form-control" type="text" name="a1m_residence_zipcode" value = "{{ a1.a1m_residence_zipcode }}">
+                                    <input class="form-control" type="text" name="a1m_residence_zipcode" value = "{{ a1.a1m_residence_zipcode }}" required>
                                 </div>
                             </div>
                         </div>
@@ -189,12 +100,12 @@
                             <div class="row">
                                 <div class="col-md-5 col-sm-5">
                                     <label for="a1m_moving_date"> Date you moved into current address </label>
-                                    <input class="form-control" type="date" name="a1m_moving_date" value = "{{ moving_date }}">
+                                    <input class="form-control" type="date" name="a1m_moving_date" value = "{{ moving_date }}" required>
                                 </div>
                                 <div class="col-md-7 col-sm-7">
                                     <label for="a1m_residing_duration"> How long have your resided in the current address 
                                     </label>
-                                    <input class="form-control" type="number" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}">
+                                    <input class="form-control" type="number" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}" required>
                                 </div>
                             </div>
                         </div>
@@ -204,9 +115,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a1.a1m_residential_status == "1" %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1">
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios1" value="1" required>
                                     {% endif %}
                                     Personal Property
                                 </label>
@@ -214,9 +125,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_residential_status == "2" %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2" checked>
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2">
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="2" required>
                                     {% endif %}
                                     Rent
                                 </label>
@@ -224,9 +135,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_residential_status == "3" %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3" checked>
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3">
+                                    <input type="radio" name="a1m_residential_status" id="optionsRadios2" value="3" required>
                                     {% endif %}
                                     Family House
                                 </label>
@@ -396,7 +307,7 @@
 
                         <div class="form-group">
                             <label for="a1m_email"> Email </label>
-                            <input class="form-control" type="email" name="a1m_email" value = "{{ a1.a1m_email }}">
+                            <input class="form-control" type="email" name="a1m_email" value = "{{ a1.a1m_email }}" required>
                         </div>
 
                         <div class="form-group">
@@ -404,9 +315,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a1.a1m_education_level == "1" %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1">
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1" required>
                                     {% endif %}
                                     Illiterate
                                 </label>
@@ -414,9 +325,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_education_level == "2" %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2" checked>
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2">
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="2" required>
                                     {% endif %}
                                     Elementary
                                 </label>
@@ -424,9 +335,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_education_level == "3" %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3" checked>
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3">
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="3" required>
                                     {% endif %}
                                     High School
                                 </label>
@@ -434,9 +345,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_education_level == "4" %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4" checked>
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4">
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="4" required>
                                     {% endif %}
                                     Undergraduate
                                 </label>
@@ -444,9 +355,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_education_level == "5" %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5" checked>
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5">
+                                    <input type="radio" name="a1m_education_level" id="optionsRadios2" value="5" required>
                                     {% endif %}
                                     Postgraduate
                                 </label>
@@ -463,9 +374,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a1.a1m_marital_status == "1" %}
-                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1">
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios1" value="1" required>
                                     {% endif %}
                                     Married
                                 </label>
@@ -473,9 +384,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a1.a1m_marital_status == "2" %}
-                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2" checked>
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2">
+                                    <input type="radio" name="a1m_marital_status" id="optionsRadios2" value="2" required>
                                     {% endif %}
                                     Divorced/Unmarried (single parent)
                                 </label>
@@ -543,29 +454,26 @@
                         <div class="form-group">
                             <div class="row">
                                 {% if is_save_all %}
-
+                                    
                                 {% else %}
-                                    {% if role == 'staff' %}
                                     <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
-                                    {% endif %}
                                 {% endif %}    
                             </div>
                         </div>
-                        <!--
-                        <a href="" type="submit" class="btn btn-primary">Save </a>
-                        <a href="" type="submit" class="btn btn-success"> Edit </a> -->
                     </form>
                         {% if role != 'staff' %}
-                        {% if is_save_all %}
-                        <form action="{% url 'forms_a:edit_form' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="section_number" value=1>
-                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
-                        </form>
-                        {% endif %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+                                {% if is_save_all %}
+                                <form action="{% url 'forms_a:edit_form' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="section_number" value="1">
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                                </form>
+                                {% endif %}
+                            {% endif %}
                         {% endif %} 
                 </div>
             </div>
-        </div>
-    </div>
  {% endblock %}

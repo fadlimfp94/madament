@@ -7,6 +7,8 @@ empty value pada model ini
  > Integer = None (Null)
 
 semua IntergerField di sini memiliki sifat Null = True
+
+JANGAN LUPA MENGGANTI BOOLEAN MENJADI BERTIPE NULLBOOLEANFIELD
 """
 
 from __future__ import unicode_literals
