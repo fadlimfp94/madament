@@ -129,58 +129,132 @@
                     {% else %}
                     <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
                     {% endif %}
-                        <h2>Infant Biological Samples</h2>
+                        <h2>Outdoor/Indoor Pollutant Exposure and Travel Habits</h2>
                         <hr> 
                         {% csrf_token %}
                         <input type="hidden" name="context" value="SAVE">
-                        <div class="form-group">
-                            <label for="d5c_date_blood"> Blood (heel prick, 0-2 weeks) </label>
-                            <input class="form-control" type="date" name="d5c_date_blood" value="{{ d5.d5c_date_blood }}" required>
-                        </div>
-
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_1"> Hair (0-1 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_1" value="{{ d5.d5c_hair_1 }}" required>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_6"> Hair (6 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
+                        <div id="">
+                            <h4>Do you use the following cooking fuel in this period?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_charcoal }
+                                        <input class="form-check-input" name="d8m_charcoal" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_charcoal" type="checkbox">
+                                        {% endif %}
+                                        Charcoal
+                                    </label>
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_kerosene }
+                                        <input class="form-check-input" name="d8m_kerosene" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_kerosene" type="checkbox">
+                                        {% endif %}
+                                        Kerosene
+                                    </label>
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_wood }
+                                        <input class="form-check-input" name="d8m_wood" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_wood" type="checkbox">
+                                        {% endif %}
+                                        Wood
+                                    </label>
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_gas }
+                                        <input class="form-check-input" name="d8m_gas" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_gas" type="checkbox">
+                                        {% endif %}
+                                        Gas
+                                    </label>
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_electric }
+                                        <input class="form-check-input" name="d8m_electric" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_electric" type="checkbox">
+                                        {% endif %}
+                                        Electric
+                                    </label>
+                                    <label class="form-check-label">
+                                        {% if d8.d8m_other %}
+                                        <input class="form-check-input" name="d8m_other" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d8m_other" type="checkbox">
+                                        {% endif %}
+                                        Other
+                                    </label>
+                                    <label>Other, specify</label>
+                                    <input class="form-control" type="text" name="a3m_other" value="{{a3.a3m_other_complication_name}}" required>       
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_1"> Hair (0-1 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
-                                <div class="col-md-6 col-sm-6">
-                                    <label for="d5c_hair_6"> Hair (6 month of age) </label>
-                                    <input class="form-control" type="date" name="d5c_hair_6" value="{{ d5.d5c_hair_6 }}" required>
-                                </div>
+                        <div class="form-group" id="">                        
+                            <label> Does cooking fumes goes out of the house? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_cooking_exhaust %}
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
                             </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_cooking_exhaust %}
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
                         </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_2"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_2 " value="{{ d5.d5c_nasopharyngeal_2 }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_4"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_4 " value="{{ d5.d5c_nasopharyngeal_4 }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d5c_nasopharyngeal_6"> Nasopharingeal </label>
-                                    <input class="form-control" type="date" name="d5c_nasopharyngeal_6 " value="{{ d5.d5c_nasopharyngeal_6 }}" required>
-                                </div>
+                        <div class="form-group" id="">                        
+                            <label> Do you use any insecticide/pesticide at home? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d8.d8m_pesticide %}
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
                             </div>
+                            <div class="radio">
+                                <label>
+                                {% if d8.d8m_pesticide %}
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
                         </div>
+
+                        <div id="">
+                            <h4>Do you do garbage burning?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if a3.a3m_asthma_mother %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="a3m_asthma_fam_mother" type="checkbox">
+                                        {% endif %}
+                                        Mother
+                                    </label>
+                            </div>
+                        </div>    
+
+
+
+
+
                         <div class="form-group">
                             <div class="row">
                                 {% if is_save_all %}
