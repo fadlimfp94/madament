@@ -9,6 +9,7 @@ urlpatterns = [
 	url(r'^participant/create', views.create_participant, name='create_participant'),
 	url(r'^participant/forms', views.forms, name='forms'),
 	url(r'^participant/form_a', views.form_a, name='form_a'),
+	url(r'^participant/form_d', views.form_d, name='form_d'),
 	url(r'^login/$', login, {'template_name': 'login.html', 'authentication_form': forms.LoginForm}, name='login'),
     url(r'^logout/$', logout, {'next_page': 'core:login'}, name='logout'),	
 ]

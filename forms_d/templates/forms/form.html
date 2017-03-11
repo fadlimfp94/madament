@@ -4,9 +4,9 @@
     <div class="container">
         <!-- Form Umum Section -->
         <div class="jumbotron">
-            <h2 class="text-center">Form A - Baseline</h2>
+            <h2 class="text-center">Form D - Infant</h2>
             <hr>         
-            <form class="patient-form-data" action="{% url 'forms_a:create_form' %}" method="post">
+            <form class="patient-form-data" action="{% url 'forms_d:create_form' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_id" value={{form.id}}>
                 <div class="row">

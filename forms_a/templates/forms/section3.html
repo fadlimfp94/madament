@@ -3,44 +3,59 @@
     <script>
     $(document).ready(function(){
 
-        $("#previousCompilation :input").prop("readonly", true);
-        $("#previousMedicalHistory :input").prop("readonly", true);
-        $("#familyHistoryDisease :input").prop("readonly", true);
-       
-
         $("#yesPreviousCompilation").click(function(){
             $("#previousCompilation").removeClass('hidden');
             $("#previousCompilation :input").prop("readonly", false);
-
+            $("#previousCompilation :input").prop("required", true);
+            $("#previousCompilation :checkbox").prop("required", false);
+            $("#a3m_other_complication_name").prop("required", false);
+             
         });
 
         $("#noPreviousCompilation").click(function(){
             $("#previousCompilation").addClass('hidden');
-            $("#previousCompilation :input").val("");
+            $("#previousCompilation :input").removeAttr('value');
+            $("#previousCompilation :input").prop("readonly", true);
             $("#previousCompilation :input").prop("checked", false);
+            $("#previousCompilation :input").prop("required", false);
+            $("#previousCompilation :checkbox").prop("required", false);
 
         });
 
         $("#yesPreviousMedicalHistory").click(function(){
             $("#previousMedicalHistory").removeClass('hidden');
             $("#previousMedicalHistory :input").prop("readonly", false);
+            $("#previousMedicalHistory :input").prop("required", true);
+            $("#previousMedicalHistory :checkbox").prop("required", false); 
+            $("#a3m_allergyhis").prop("required", false);
+            $("#a3m_otherhis").prop("required", false);
         });
 
         $("#noPreviousMedicalHistory").click(function(){
             $("#previousMedicalHistory").addClass('hidden');
-             $("#previousMedicalHistory :input").val("");
+            $("#previousMedicalHistory :input").removeAttr('value');
+            $("#previousMedicalHistory :input").prop("readonly", true);
             $("#previousMedicalHistory :input").prop("checked", false);
+            $("#previousMedicalHistory :input").prop("required", false);
+            $("#previousMedicalHistory :checkbox").prop("required", false);
         });
 
         $("#yesFamilyHistoryDisease").click(function(){
             $("#familyHistoryDisease").removeClass('hidden');
             $("#familyHistoryDisease :input").prop("readonly", false);
+            $("#familyHistoryDisease :input").prop("required", true);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
+            $("#a3m_other_desease").prop("required", false);
+            
         });
 
         $("#noFamilyHistoryDisease").click(function(){
-            $("#familyHistoryDisease").addClass('hidden');
-            $("#familyHistoryDisease :input").val("");
+            $("#familyHistoryDisease").addClass('hidden');  
+            $("#familyHistoryDisease :input").removeAttr('value');
+            $("#familyHistoryDisease :input").prop("readonly", true);
             $("#familyHistoryDisease :input").prop("checked", false);
+            $("#familyHistoryDisease :input").prop("required", false);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
         });
     });
     </script>
@@ -245,7 +260,7 @@
                             </div>
                             
                             <label>Other, specify</label>
-                            <input class="form-control" type="text" name="a3m_other" value="{{a3.a3m_other_complication_name}}" required>
+                            <input class="form-control" type="text" name="a3m_other" value="{{a3.a3m_other_complication_name}}" id="a3m_other_complication_name" required>
                           
                         </div>
 
@@ -398,10 +413,10 @@
                             </div>                             
 
                             <label>Alergy, specify</label>
-                            <input class="form-control" type="text" name="a3m_allergyhis" value="{{ a3.a3m_allergy_detail }}" required>  
+                            <input class="form-control" type="text" name="a3m_allergyhis" value="{{ a3.a3m_allergy_detail }}" id="a3m_allergyhis" required>  
 
                             <label>Other, specify</label>
-                            <input class="form-control" type="text" name="a3m_otherhis" value="{{ a3.a3m_other_detail }}" required>
+                            <input class="form-control" type="text" name="a3m_otherhis" value="{{ a3.a3m_other_detail }}" id="a3m_otherhis" required>
 
                         </div>
 

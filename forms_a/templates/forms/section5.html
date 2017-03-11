@@ -4,66 +4,112 @@
         <script>
         $(document).ready(function(){
 
-            // This For Mother smoke
-            /*$("#yesExSmoker :input").prop("disabled", true);
-            $("#everSmoker :input").prop("disabled", true);
-            $("#averageCigars :input").prop("disabled", true);
-            $("#smokePipeOrCigars :input").prop("disabled", true);*/
-
+            /* starting of mother part 
+            */
             $("#smoker").click(function(){
+                $("#motherEverSmoke").removeClass('hidden');
                 $("#yesExSmoker").addClass("hidden");
-                $("#everSmoker").removeClass("hidden");
-                $("#everSmoker :input").prop("readonly", false);
-                $("#averageCigars :input").prop("readonly", false);
-                $("#smokePipeOrCigars :input").prop("readonly", false);
+                $("#motherEverSmoke :input").prop("readonly", false); 
+                $("#motherEverSmoke :input").prop("required", true);
+                $("#motherEverSmoke :checkbox").prop("required", false);
             });
 
             $("#exSmokerMother").click(function(){
-                $("#yesExSmoker :input").prop("readonly", false);
+                $("#motherEverSmoke").removeClass('hidden');
                 $("#yesExSmoker").removeClass("hidden");
-                $("#motherNeverSmoke").removeClass('hidden');
-                $("#everSmoker :input").prop("readonly", false);
-                $("#averageCigars :input").prop("readonly", false);
-                $("#smokePipeOrCigars :input").prop("readonly", false);
+                $("#motherEverSmoke :input").prop("readonly", false); 
+                $("#motherEverSmoke :input").prop("required", true);
+                $("#motherEverSmoke :checkbox").prop("required", false);
             });
 
             $("#neverSmoke").click(function(){
-                $("#motherNeverSmoke").addClass('hidden');
+                $("#motherEverSmoke").addClass('hidden');
+                $("#motherEverSmoke :input").removeAttr('value');
+                $("#motherEverSmoke :input").prop("readonly", true);
+                $("#motherEverSmoke :input").prop("checked", false);
+                $("#motherEverSmoke :input").prop("required", false);
+                $("#motherEverSmoke :checkbox").prop("required", false);
             });
 
             $("#noHouseholdSmoke").click(function(){
-            $("#householdSmoke").addClass('hidden');
+                $("#householdSmoke").addClass('hidden');
+                $("#householdSmoke :input").removeAttr('value');
+                $("#householdSmoke :input").prop("readonly", true);
+                $("#householdSmoke :input").prop("checked", false);
+                $("#householdSmoke :input").prop("required", false);
+                $("#householdSmoke :checkbox").prop("required", false);
             });
 
             $("#yesHouseholdSmoke").click(function(){
-            $("#householdSmoke").removeClass('hidden');
+                $("#householdSmoke").removeClass('hidden');
+                $("#householdSmoke :input").prop("readonly", false); 
+                $("#householdSmoke :input").prop("required", true);
+                $("#householdSmoke :checkbox").prop("required", false);
             });
             // end of mother smoke
 
-            /*$("#exSmokerQuit :input").prop("disabled", true);*/
-
+            // start of father
             $("#smokerFather").click(function(){
+                $("#fatherEverSmoke").removeClass("hidden");
                 $("#exSmokerQuit").addClass("hidden");
-                $("#ifNeverSmoke").removeClass("hidden");
+                $("#fatherEverSmoke :input").prop("readonly", false); 
+                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
             });
 
             $("#exSmokerFather").click(function(){
+                $("#fatherEverSmoke").removeClass("hidden");
                 $("#exSmokerQuit").removeClass("hidden");
-                $("#exSmokerQuit :input").prop("readonly", false);
-                $("#ifNeverSmoke").removeClass("hidden");
+                $("#fatherEverSmoke :input").prop("readonly", false); 
+                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
+                
             });
 
             $("#neverSmokeFather").click(function(){
-                $("#ifNeverSmoke").addClass("hidden");
+                $("#fatherEverSmoke").addClass("hidden");
+                $("#fatherEverSmoke :input").removeAttr('value');
+                $("#fatherEverSmoke :input").prop("readonly", true);
+                $("#fatherEverSmoke :input").prop("checked", false);
+                $("#fatherEverSmoke :input").prop("required", false);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
+            });
+            /* end of father part
+            */
+
+            $("#yesHouseholdSmoke").click(function(){
+                $("#householdSmoke").removeClass("hidden");
+                $("#householdSmoke :input").prop("readonly", false);
+                $("#householdSmoke :input").prop("required", true);
+                $("#householdSmoke :checkbox").prop("required", false);
+            });
+
+            $("#noHouseholdSmoke").click(function(){
+                $("#householdSmoke").addClass("hidden");
+                $("#ifWorkColleaguesSmoke :input").removeAttr('value');
+                $("#householdSmoke :input").prop("readonly", true);
+                $("#householdSmoke :input").prop("checked", false);
+                $("#householdSmoke :input").prop("required", false);
+                $("#householdSmoke :checkbox").prop("required", false);
             });
 
             $("#yesSmokingPresence").click(function(){
                 $("#ifWorkColleaguesSmoke").removeClass("hidden");
+                $("#ifWorkColleaguesSmoke :input").prop("readonly", false);
+                $("#ifWorkColleaguesSmoke :input").prop("required", true);
+                $("#ifWorkColleaguesSmoke :checkbox").prop("required", false);
             });
 
             $("#noSmokingPresence").click(function(){
                 $("#ifWorkColleaguesSmoke").addClass("hidden");
+                $("#ifWorkColleaguesSmoke :input").removeAttr('value');
+                $("#ifWorkColleaguesSmoke :input").prop("readonly", true);
+                $("#ifWorkColleaguesSmoke :input").prop("checked", false);
+                $("#ifWorkColleaguesSmoke :input").prop("required", false);
+                $("#ifWorkColleaguesSmoke :checkbox").prop("required", false);
             });
+
+
 
 
         });
@@ -132,7 +178,7 @@
                         </div>
                     </div>
 
-                    <div id="motherNeverSmoke">
+                    <div id="motherEverSmoke">
                     <!-- If you were an ex-smoker of cigarettes -->
                     <div class="form-group" id="yesExSmoker">
                         <label for="a5m_quitting_duration"> For how long have your quit now ? (year) </label>
@@ -142,7 +188,7 @@
                     <!-- endif -->
 
                     <!-- When you were an active or ex-smoker -->
-                    <div class="form-group" id="everSmoker">
+                    <div class="form-group" id="startingSmoke">
                         <label for="a5m_starting_age"> When did you first start smoke? (year) </label>                 <input class="form-control" type="number" name="a5m_starting_age" placeholder="age of years" value="{{ a5.a5m_mother_start_smoke_age }}">
                     </div>
 
@@ -276,7 +322,7 @@
                     </div>
 
                     <!-- If you were an ex-smoker -->
-                    <div id="ifNeverSmoke">
+                   <div id="fatherEverSmoke">
                     <div class="form-group" id="exSmokerQuit">
                         <label for="a5f_quitting_duration"> For how long have your quit now ? (year) </label>
                         <input class="form-control" type="number" name="a5f_quitting_duration" placeholder="in years" value="{{ a5.a5f_father_quit_duration }}">

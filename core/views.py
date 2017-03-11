@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from forms_a.models import *
+from forms_d.models import *
 #from forms_b.models import *
 #from forms_c.models import *
 #from forms_d.models import *
@@ -50,3 +51,10 @@ def form_a(request):
 	forms = ABaseLine.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/form_a.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_d(request):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = DInfant.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})

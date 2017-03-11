@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'forms_a',
     #'forms_b',
     #'forms_c',
-    #'forms_d',
+    'forms_d',
     'core',
 ]
 
