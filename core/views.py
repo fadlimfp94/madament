@@ -50,8 +50,7 @@ def form_a(request):
 	return render(request, 'core/form_a.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
-def form_c(request):
-	print request.session['participant_id']
+def form_c(request):	
 	participant = Participant.objects.get(id=request.session['participant_id'])
 	forms = CBirth.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')

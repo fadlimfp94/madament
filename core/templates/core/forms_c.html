@@ -39,7 +39,7 @@
                         <form action="{% url 'forms_c:process_sectionC1' %}"  method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="form_id" value={{form.id}}>
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Form C - Birth"/>
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="{{ form.id}} -- Form C - Birth"/>
                         </form>
                     </div>
                 {% endfor %}

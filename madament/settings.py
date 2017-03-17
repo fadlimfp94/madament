@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'forms_a',
     #'forms_b',
+    'forms_c',
     'core',
     
 ]

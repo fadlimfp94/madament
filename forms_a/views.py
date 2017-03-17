@@ -96,8 +96,10 @@ def process_section1(request):
 	a_form_obj = ABaseLine.objects.get(id=int(request.session['form_id']))
 	try:
 		a1_obj = A1MotherDemographic.objects.get(a_form=a_form_obj)
+		print "masuk ke update_section1"
 		return update_section1(request)	
 	except:
+		print "masuk ke create_section1"
 		return create_section1(request)
 
 @login_required(login_url='core:login')
@@ -107,8 +109,10 @@ def create_section1(request):
 		a1_obj = A1MotherDemographic()
 		a1_obj.a_form = a_form_obj
 		a1_obj = save_section1(a1_obj, request)
+		print "masuk ke show section true"
 		return show_section1(request, True)	
 	else:
+		print "masuk ke show section false"
 		return show_section1(request, False)
 		
 @login_required(login_url='core:login')
@@ -116,8 +120,10 @@ def update_section1(request):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
 		a1_obj = A1MotherDemographic.objects.get(a_form_id=request.session['form_id'])
 		a1_obj = save_section1(a1_obj, request)
+		print "masuk ke show section yang diupdate true"
 		return show_section1(request, True)	
 	else:
+		print "masuk ke show section1 yang diupdate false"
 		return show_section1(request, False)		
 
 @login_required(login_url='core:login')
@@ -134,20 +140,25 @@ def show_section1(request, is_save):
 		role = 'staff'
 	try:
 		a1_obj = A1MotherDemographic.objects.get(a_form_id=form.id) 
-		dob = a1_obj.a1m_dob.strftime('%Y-%m-%d')
-		moving_date = a1_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		dob = a1_obj.a1m_dob.strftime('%Y-%m-%d')		
+		moving_date = a1_obj.a1m_moving_date.strftime('%Y-%m-%d')		
 		if form.date_data_checked is not None:
 			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
 			if is_save:
-				return render(request, 'forms/section1.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
+				return render(request, 'forms/section1.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date, 'date_data_checked' : date_data_checked})
 			else:
-				return render(request, 'forms/section1.html', {'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
+				print 'b'
+				return render(request, 'forms/section1.html', {'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date, 'date_data_checked' : date_data_checked})
 		else:
+			print 'c'
 			if is_save:	
+				print 'masuk ke yang is_save = true '
 				return render(request, 'forms/section1.html', {'success' : True, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})
 			else:
+				print 'masuk ke yang is_save = false'
 				return render(request, 'forms/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'a1' : a1_obj, 'dob' : dob, 'moving_date' : moving_date})	
 	except:
+		print "masuk ke except yang form A"
 		return render(request, 'forms/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')

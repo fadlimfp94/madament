@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
 from django.db import models
 from core.models import *
+from django.db import IntegrityError
 
+class CBirth(models.Model):
 	participant = models.ForeignKey(Participant, on_delete=models.PROTECT)
 	child_id = models.CharField(max_length=25)
 	interviewer_id = models.CharField(max_length=25)
@@ -11,9 +13,11 @@ from core.models import *
 	date_interviewed = models.DateField()
 	date_data_entered = models.DateField()
 	date_data_checked = models.DateField(null=True)
-	is_save_all = models.BooleanField(default=False)
+	is_save_all = models.BooleanField(default=False)	
 
-class CMother(models.Model):
+
+class CMother(models.Model):	
+	c_form = models.ForeignKey(CBirth, on_delete=models.PROTECT)	
 	c1m_ur_number = models.CharField(max_length=25)
 	c1m_delivery_place = models.CharField(max_length=25)
 	c1m_gestational_age_fdlm = models.CharField(max_length=25)
@@ -37,24 +41,24 @@ class CMother(models.Model):
 	c1m_delivery_compilation = models.CharField(choices=DELIVERY_COMPILATION_OPTION, max_length=1, default="")
 	c1m_hypertensioncom = models.BooleanField(default=False)
 	c1m_eclampsiacom = models.BooleanField(default=False)
-	c1m_visualcom = models.BooleanField()
-	c1m_consciousnesscom = models.BooleanField()
-	c1m_seizurecom = models.BooleanField()
-	c1m_pullmonarycom = models.BooleanField()
-	c1m_postpartumcom = models.BooleanField()
-	c1m_fevercom = models.BooleanField()
-	c1m_prematurerupturecom = models.BooleanField()
-	c1m_placentacom = models.BooleanField()
-	c1m_placenta_previacom = models.BooleanField()
-	c1m_gbscom = models.BooleanField()
-	c1m_chorioamnionitiscom = models.BooleanField()
-	c1m_chlinical_diagnosiscom = models.BooleanField()
-	c1m_definite_diagnosiscom = models.BooleanField()
-	c1m_othercom = models.CharField(max_length=25)
-	c1m_antibiotics = models.BooleanField()
-	c1m_antibiotis_type = models.CharField(max_length=25)
-	c1m_antibiotics_indication = models.CharField(max_length=255)
-	c1m_antibiotics_duration = models.CharField(max_length=20)
+	c1m_visualcom = models.BooleanField(default=False)
+	c1m_consciousnesscom = models.BooleanField(default=False)
+	c1m_seizurecom = models.BooleanField(default=False)
+	c1m_pullmonarycom = models.BooleanField(default=False)
+	c1m_postpartumcom = models.BooleanField(default=False)
+	c1m_fevercom = models.BooleanField(default=False)
+	c1m_prematurerupturecom = models.BooleanField(default=False)
+	c1m_placentacom = models.BooleanField(default=False)
+	c1m_placenta_previacom = models.BooleanField(default=False)
+	c1m_gbscom = models.BooleanField(default=False)
+	c1m_chorioamnionitiscom = models.BooleanField(default=False)
+	c1m_chlinical_diagnosiscom = models.BooleanField(default=False)
+	c1m_definite_diagnosiscom = models.BooleanField(default=False)
+	c1m_othercom = models.CharField(max_length=25, default="", null=True)
+	c1m_antibiotics = models.BooleanField(default=False)
+	c1m_antibiotics_type = models.CharField(max_length=25, null=True)
+	c1m_antibiotics_indication = models.CharField(max_length=255, null=True)
+	c1m_antibiotics_duration = models.CharField(max_length=20, null=True)
 	PROTEINURIA_OPTION = (
 		('0', 'Negative'),
 		('1', 'Positive +'),
@@ -63,21 +67,22 @@ class CMother(models.Model):
 	)
 	c1m_proteinuria = models.CharField(choices=PROTEINURIA_OPTION, max_length=1, default="");
 	c1m_delivery_blood_test = models.BooleanField()
-	c1m_blood_test_date = models.DateField()
-	c1m_hb = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_wbc = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_platelets = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_sgot = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_sgpt = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_ureum = models.DecimalField(max_digits=10, decimal_places=3)
-	c1m_creatinine = models.DecimalField(max_digits=10, decimal_places=3)
+	c1m_blood_test_date = models.DateField()	 
+	c1m_hb = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_wbc = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_platelets = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_sgot = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_sgpt = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_ureum = models.DecimalField(max_digits=10, decimal_places=3, null=True)
+	c1m_creatinine = models.DecimalField(max_digits=10, decimal_places=3, null=True)
 	c1m_vaginal_swab = models.BooleanField()
 	c1m_swab_date = models.DateField()
 
 
 class CPlacentalSampling(models.Model):
+	c_form = models.ForeignKey(CBirth, on_delete=models.PROTECT)
 	c2m_sampling_date = models.DateField()
-	c2m_time = models.TimeField();
+	c2m_sampling_time = models.TimeField();
 	c2m_pictures_taken = models.BooleanField()
 	c2m_comments = models.BooleanField()
 	PLACENTA_SHAPES = (
@@ -96,7 +101,7 @@ class CPlacentalSampling(models.Model):
 	c2m_cord_blood_sample = models.BooleanField()
 	c2m_membrane_roll = models.BooleanField()
 	c2m_membrane_trim = models.BooleanField()
-	c2m_membrane_weight = models.BooleanField()
+	c2m_membrane_weight = models.CharField(max_length=5)
 	c2m_villous_tissue = models.BooleanField()
 	c2m_placenta_container = models.BooleanField()
 	c2m_placenta_laboratory = models.BooleanField()
@@ -104,6 +109,7 @@ class CPlacentalSampling(models.Model):
 
 
 class CInfantData(models.Model):
+	c_form = models.ForeignKey(CBirth, on_delete=models.PROTECT)
 	c3c_ur_number = models.CharField(max_length=25)
 	c3c_first_name = models.CharField(max_length=25)
 	c3c_surname = models.CharField(max_length=25)
@@ -164,7 +170,21 @@ class CInfantData(models.Model):
 	c3c_iterus = models.BooleanField()
 	c3c_asphyxia = models.BooleanField()
 	c3c_respiratory_distress = models.BooleanField()
+	# RESPIRATORIES_LIST = (
+	# 	('1', 'Nenatal pneumonia'),
+	# 	('2', 'Hyaline membrane disease'),
+	# 	('3', 'Meconium aspiration syndrome'),
+	# 	('4', 'others'),		
+	# )
+	c3c_respiratory_diagnosis = models.CharField( max_length=1, default="")
 	c3c_other_respiratory_diagnosis = models.CharField(max_length=25)
+	# RESPIRATORY_SUPPORT_LIST = (
+	# 	('1', '02 therapy (nasal/mask)'),
+	# 	('2', 'CPAP'),
+	# 	('3', 'Non-invasive IPPR'),
+	# 	('4', 'Intubation/ETT'),
+	# )
+	c3c_respiratory_support = models.CharField(max_length=1, default="")
 	c3c_others_mobirdities = models.CharField(max_length=25)
 	c3c_congenital_anomaly = models.BooleanField()
 	c3c_cardiovascularano = models.BooleanField()
