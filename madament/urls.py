@@ -23,6 +23,6 @@ urlpatterns = [
     url(r'^forms_a/', include('forms_a.urls')),
     #url(r'^forms_b/', include('forms_b.urls')),
     #url(r'^forms_c/', include('forms_c.urls')),
-    #url(r'^forms_d/', include('forms_d.urls')),
+    url(r'^forms_d/', include('forms_d.urls')),
     url(r'^', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

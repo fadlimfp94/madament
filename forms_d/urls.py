@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth.views import login, logout
-from . import views, forms
+from . import views
 
 app_name = 'forms_d'
 
