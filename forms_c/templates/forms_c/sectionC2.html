@@ -57,7 +57,7 @@
                             {% if c2.c2m_pictures_taken == 1 %}
                             <div class="radio">                                
                                 <label>                                
-                                    <input type="radio" name="c2m_pictures_taken" value="0">
+                                    <input type="radio" name="c2m_pictures_taken" value="0"> No
                                 </label>
                             </div>
                             <div class="radio">
@@ -84,26 +84,31 @@
 
                         <div class="form-group">
                             <label> Comments on appearance </label>
+                            {% if c2.c2m_comments == 1 %}
                             <div class="radio">                                
-                                <label>
-                                {% if c2.c2m_comments %}
-                                    <input type="radio" name="c2m_comments" id="noComments" value="0" checked>
-                                 {% else %}
+                                <label>                              
                                     <input type="radio" name="c2m_comments" id="noComments" value="0">
-                                 {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
-                                {% if c2.c2m_comments %}
-                                    <input type="radio" name="c2m_comments" id="yesComments" value="1" checked>
-                                 {% else %}
-                                    <input type="radio" name="c2m_comments" id="yesComments" value="1">
-                                 {% endif %}
+                                <label>                              
+                                    <input type="radio" name="c2m_comments" id="yesComments" value="1" checked>                                 
                                     Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                              
+                                    <input type="radio" name="c2m_comments" id="noComments" value="0" checked>  No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                              
+                                    <input type="radio" name="c2m_comments" id="yesComments" value="1">   Yes
+                                </label>
+                            </div>
+                            {% endif %}
                         </div>
 
                         <div id="commentsOnAppearance">
@@ -178,75 +183,93 @@
 
                         <div class="form-group">
                             <label> Take sample of cord bloods </label>
+                            {% if c2.c2m_coord_blood_sample %}
                             <div class="radio">                                
-                                <label>
-                                {% if c2.c2m_cord_blood_sample %}
-                                    <input type="radio" name="c2m_cord_blood_sample" value="0" checked>
-                                {% else %}
+                                <label>                               
                                     <input type="radio" name="c2m_cord_blood_sample" value="0">
-                                {% endif %}
-                                    No
-                                
+                                    No                                
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if c2.c2m_cord_blood_sample %}
                                     <input type="radio" name="c2m_cord_blood_sample" value="1" checked>
-                                 {% else %}
-                                    <input type="radio" name="c2m_cord_blood_sample" value="1">
-                                 {% endif %}
                                     Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                               
+                                    <input type="radio" name="c2m_cord_blood_sample" value="0" checked>
+                                    No                                
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="c2m_cord_blood_sample" value="1" >
+                                    Yes
+                                </label>
+                            </div>
+                            {% endif %}                          
                         </div>
 
                         <div class="form-group">
                             <label> Take a membrane roll (2cm wide) from the rupture side </label>
+                            {% if c2.c2m_membrane_roll %}
                             <div class="radio">                                
-                                <label>
-                                    {% if c2.c2m_membrane_roll %}
-                                    <input type="radio" name="c2m_membrane_roll" value="0" checked>
-                                    {% else %}
+                                <label>                                    
                                     <input type="radio" name="c2m_membrane_roll" value="0">
-                                    {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if c2.c2m_membrane_roll %}
-                                    <input type="radio" name="c2m_membrane_roll" value="1" checked>
-                                {% else %}
-                                <input type="radio" name="c2m_membrane_roll" value="1">
-                                {% endif %}
-                                    Yes
+                                
+                                    <input type="radio" name="c2m_membrane_roll" value="1" checked>       Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                                    
+                                    <input type="radio" name="c2m_membrane_roll" value="0" checked>
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                               
+                                    <input type="radio" name="c2m_membrane_roll" value="1">Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
                         </div>
 
                         <div class="form-group">
                             <label> Trim the membranes and umbilical cord to 1 cm </label>
+                            {% if c2.c2m_membrane_trim %}
                             <div class="radio">                                
-                                <label>
-                                {% if c2.c2m_membrane_trim %}
-                                    <input type="radio" name="c2m_membrane_trim" value="0" checked>
-                                    {% else %}
+                                <label>                                    
                                     <input type="radio" name="c2m_membrane_trim" value="0">
-                                    {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if c2.c2m_membrane_trim %}
-                                    <input type="radio" name="c2m_membrane_trim" value="1" checked>
-                                    {% else %}
-                                    <input type="radio" name="c2m_membrane_trim" value="1">
-                                    {% endif %}
-                                    Yes
+                                
+                                    <input type="radio" name="c2m_membrane_trim" value="1" checked>       Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                                    
+                                    <input type="radio" name="c2m_membrane_trim" value="0" checked>
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                               
+                                    <input type="radio" name="c2m_membrane_trim" value="1">Yes
+                                </label>
+                            </div>
+                            {% endif %}                                
                         </div>
 
                         <div class="form-group">
@@ -256,74 +279,90 @@
 
                         <div class="form-group">
                             <label> Cut out 1-2 cm3 placenta of the exposed villous tissue </label>
+                            <{% if c2.c2m_villous_tissue %}
                             <div class="radio">                                
-                                <label>
-                                    {% if c2.c2m_villous_tissue %}
-                                    <input type="radio" name="c2m_villous_tissue" value="0" checked>
-                                    {% else %}
+                                <label>                                    
                                     <input type="radio" name="c2m_villous_tissue" value="0">
-                                    {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    {% if c2.c2m_villous_tissue %}
-                                    <input type="radio" name="c2m_villous_tissue" value="1" checked>
-                                    {% else %}
-                                    <input type="radio" name="c2m_villous_tissue" value="1">
-                                    {% endif %}
-                                    Yes
+                                
+                                    <input type="radio" name="c2m_villous_tissue" value="1" checked>       Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                                    
+                                    <input type="radio" name="c2m_villous_tissue" value="0" checked>
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                               
+                                    <input type="radio" name="c2m_villous_tissue" value="1">Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
                         </div>
 
                         <div class="form-group">
                             <label> Place samples into a container (immersed with PBS) </label>
+                            <{% if c2.c2m_placenta_container %}
                             <div class="radio">                                
-                                <label>
-                                    {% if c2.c2m_placenta_container %}
-                                    <input type="radio" name="c2m_placenta_container" value="0" checked>
-                                    {% else %}
+                                <label>                                    
                                     <input type="radio" name="c2m_placenta_container" value="0">
-                                    {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
-                                    {% if c2.c2m_placenta_container %}
-                                    <input type="radio" name="c2m_placenta_container" value="1" checked>
-                                    {% else %}
-                                    <input type="radio" name="c2m_placenta_container" value="1">
-                                    {% endif %}
-                                    Yes
+                                <label>                                
+                                    <input type="radio" name="c2m_placenta_container" value="1" checked>   Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                                    
+                                    <input type="radio" name="c2m_placenta_container" value="0" checked>
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                               
+                                    <input type="radio" name="c2m_placenta_container" value="1">Yes
+                                </label>
+                            </div>
+                            {% endif %}                             
                         </div>
 
                         <div class="form-group">
                             <label> Send the sample to the laboratory </label>
+                            <{% if c2.c2m_placenta_laboratory %}
                             <div class="radio">                                
-                                <label>
-                                    {% if c2.c2m_placenta_laboratory %}
-                                    <input type="radio" name="c2m_placenta_laboratory" value="0" checked>
-                                    {% else %}
+                                <label>                                    
                                     <input type="radio" name="c2m_placenta_laboratory" value="0">
-                                    {% endif %}
                                     No
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
-                                    {% if c2.c2m_placenta_laboratory %}
-                                    <input type="radio" name="c2m_placenta_laboratory" value="1" checked>
-                                    {% else %}
-                                    <input type="radio" name="c2m_placenta_laboratory" value="1">
-                                    {% endif %}
-                                    Yes
+                                <label>                                
+                                    <input type="radio" name="c2m_placenta_laboratory" value="1" checked>   Yes
                                 </label>
-                            </div>                            
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>                                    
+                                    <input type="radio" name="c2m_placenta_laboratory" value="0" checked>
+                                    No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                               
+                                    <input type="radio" name="c2m_placenta_laboratory" value="1">Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
                         </div>
 
                         <div class="form-group">

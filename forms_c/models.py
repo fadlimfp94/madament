@@ -34,11 +34,11 @@ class CMother(models.Model):
 					('4', 'C-section'),
 	)
 	c1m_delivery_method = models.CharField(choices=DELIVERY_METHOD_LIST, max_length=1, default="")
-	DELIVERY_COMPILATION_OPTION = (
-		('0', 'No'),
-		('1', 'Yes'),
-	)
-	c1m_delivery_compilation = models.CharField(choices=DELIVERY_COMPILATION_OPTION, max_length=1, default="")
+	# DELIVERY_COMPILATION_OPTION = (
+	# 	('0', 'No'),
+	# 	('1', 'Yes'),
+	# )
+	c1m_delivery_compilation = models.BooleanField(default=False)
 	c1m_hypertensioncom = models.BooleanField(default=False)
 	c1m_eclampsiacom = models.BooleanField(default=False)
 	c1m_visualcom = models.BooleanField(default=False)
@@ -76,7 +76,7 @@ class CMother(models.Model):
 	c1m_ureum = models.DecimalField(max_digits=10, decimal_places=3, null=True)
 	c1m_creatinine = models.DecimalField(max_digits=10, decimal_places=3, null=True)
 	c1m_vaginal_swab = models.BooleanField()
-	c1m_swab_date = models.DateField()
+	c1m_swab_date = models.DateField(null=True)
 
 
 class CPlacentalSampling(models.Model):

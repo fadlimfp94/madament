@@ -333,10 +333,12 @@ def show_section2(request, is_save):
 def save_section2(a2_obj, request):
 	a2_obj.a2m_working_status = request.POST.get('a2m_working_status')
 	a2_obj.a2m_working_type = request.POST.get('a2m_working_type')
+	
 	if request.POST.get('a2m_working_pregnancy') == '1':
 		a2_obj.a2m_working_pregnancy = True
 	else:
 		a2_obj.a2m_working_pregnancy = False
+
 	if request.POST.get('a2m_maternal_leave'):
 		a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
 		a2m_maternal_leave = True

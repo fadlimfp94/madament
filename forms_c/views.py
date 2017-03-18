@@ -179,11 +179,9 @@ def save_sectionC1(c1_obj, request):
 	c1_obj.c1m_delivery_method = request.POST.get('c1m_delivery_method')	 
 
 	if request.POST.get('c1m_delivery_compilation') == '1':
-		c1_obj.c1m_delivery_compilation = 1
+		c1_obj.c1m_delivery_compilation = True
 	else:
-		c1_obj.c1m_delivery_compilation = 0
-
-		print c1_obj.c1m_delivery_compilation
+		c1_obj.c1m_delivery_compilation = False		
 
 	if request.POST.get('c1m_hypertensioncom') == 'on':
 		c1_obj.c1m_hypertensioncom = True

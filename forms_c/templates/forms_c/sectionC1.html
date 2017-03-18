@@ -168,34 +168,27 @@
 
                         <fieldset class="form-group" id="opsi">
                             <label for="c1m_premature"> Delivery Compilation ? </label>
-                            {% if c1.c1m_delivery_compilation == "1" %}
                             <div class="form-check">
-                                <label>                                
-                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" >                               
-                                No
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>                                
-                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" checked>                               
-                                Yes, specify
-                                </label>
-                            </div> 
-
-                            {% else %}
-                            <div class="form-check">
-                                <label>                                
-                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" checked >                               
-                                No
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label>                                
-                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" >                               
+                                <label>
+                                {% if c1.c1m_delivery_compilation %}                                
+                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" checked> 
+                                {% else %}
+                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1"> 
+                                {% endif %}                             
                                 Yes, specify
                                 </label>
                             </div>
-                            {% endif %}                             
+                            <div class="form-check">
+                                <label>
+                                {% if c1.c1m_delivery_compilation %}                                
+                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" checked>
+                                {% else %}
+                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0">
+                                {% endif %}                               
+                                No
+                                </label>
+                            </div>
+                                                                                    
                         </fieldset>
 
                         <div class="form-group" id="deliveryCompilation">
