@@ -15,8 +15,8 @@ from core.models import *
 
 class DInfant(models.Model):
 	participant = models.ForeignKey(Participant, on_delete=models.PROTECT)
-	id_mother = models.CharField(max_length=25)
 	date_admission = models.DateField()
+	child_id = models.CharField(max_length=25)
 	NUMBER_CHILD_VISIT_STATUS_LIST = (
 						('1', '#1 (0-4 weeks)'),
 						('2', '#2 (2 month of age)'),
@@ -24,14 +24,13 @@ class DInfant(models.Model):
 						('4', '#4 (6 month of age)'),		
 	)
 	number_child_visit = models.CharField(choices=NUMBER_CHILD_VISIT_STATUS_LIST, max_length=1, default="")
-	id_child = models.CharField(max_length=25)
-	id_interviewer = models.CharField(max_length=25)
-	date_interview = models.DateField()
-	id_entry = models.CharField(max_length=25)
-	date_entry = models.DateField()
-	id_check = models.CharField(max_length=25)
-	date_check = models.DateField()
-	is_submitted = models.NullBooleanField()
+	interviewer_id = models.CharField(max_length=25)
+	date_interviewed = models.DateField()
+	data_entry_id = models.CharField(max_length=25)
+	date_data_entered = models.DateField()
+	data_check_id = models.CharField(max_length=25, null=True)
+	date_data_checked = models.DateField(null=True)
+	is_save_all = models.NullBooleanField()
 
 class D1InfantGrowth(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
@@ -106,6 +105,7 @@ class D3InfantCardiovascular(models.Model):
 	)
 	d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, default="")
 	d3c_heart_abnormality = models.NullBooleanField()
+	d3c_heart_abnormality_detail = models.CharField(max_length=25)
 	d3c_lvidd_1st = models.IntegerField(null=True)
 	d3c_lvidd_2nd = models.IntegerField(null=True)
 	d3c_lvidd_3rd = models.IntegerField(null=True)
@@ -217,15 +217,24 @@ class D4InfantLungFunction(models.Model):
 
 class D5InfantBiological(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
-	d5c_date_blood = models.DateField()
-	d5c_buccal_swab = models.DateField()
-	d5c_hair_1 = models.DateField()
-	d5c_hair_6 = models.DateField()
-	d5c_nail_1 = models.DateField()
-	d5c_nail_6 = models.DateField()
-	d5c_nasopharyngeal_2 = models.DateField()
-	d5c_nasopharyngeal_4 = models.DateField()
-	d5c_nasopharyngeal_6 = models.DateField()
+	d5c_blood = models.NullBooleanField()
+	d5c_blood_date = models.DateField()
+	d5c_buccal_swab = models.NullBooleanField()
+	d5c_buccal_swab_date = models.DateField()
+	d5c_hair_1 = models.NullBooleanField()
+	d5c_hair_1_date = models.DateField()
+	d5c_hair_6 = models.NullBooleanField()
+	d5c_hair_6_date = models.DateField()
+	d5c_nail_1 = models.NullBooleanField()
+	d5c_nail_1_date = models.DateField()
+	d5c_nail_6 = models.NullBooleanField()
+	d5c_nail_6_date = models.DateField()
+	d5c_nasopharyngeal_2 = models.NullBooleanField()
+	d5c_nasopharyngeal_2_date = models.DateField()
+	d5c_nasopharyngeal_4 = models.NullBooleanField()
+	d5c_nasopharyngeal_4_date = models.DateField()
+	d5c_nasopharyngeal_6 = models.NullBooleanField()
+	d5c_nasopharyngeal_6_date = models.DateField()
 
 class D6CurrentSmoking(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
@@ -268,6 +277,7 @@ class D7Infection(models.Model):
 	d7c_infection_sepsis = models.NullBooleanField()
 	d7c_infection_dengue = models.NullBooleanField()
 	d7c_infection_others = models.NullBooleanField()
+	d7c_infection_others_detail = models.CharField(max_length=25)
 	d7c_infection_unknown = models.NullBooleanField()
 	d7c_physician_clinic = models.CharField(max_length=25)
 	d7c_contact = models.CharField(max_length=25)
@@ -357,6 +367,7 @@ class D8PollutantExposure(models.Model):
 	d8m_gas = models.NullBooleanField()
 	d8m_electric = models.NullBooleanField()
 	d8m_other = models.NullBooleanField()
+	d8m_other_detail = models.CharField(max_length=25)
 	d8m_cooking_exhaust = models.NullBooleanField()
 	d8m_pesticide = models.NullBooleanField()	
 	GARBAGE_BURNING_STATUS_LIST = (
@@ -377,6 +388,7 @@ class D8PollutantExposure(models.Model):
 						('2', 'More than one story building'),
 		)
 	d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, default="")
+	d8m_apartment_level_number = models.IntegerField(null=True)
 	d8m_dampness_house = models.NullBooleanField()
 	d8m_ac = models.NullBooleanField()
 	d8m_fan = models.NullBooleanField()

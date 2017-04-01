@@ -1,121 +1,33 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'forms_d/form.html' %}
+{% block form_section %}
     <!-- Page Content -->
-
-    <div class="container">
-        <!-- Form Umum Section -->
-        {% if success %}
-            <div class="alert alert-success text-center">
-              <strong>Success!</strong>
-            </div>
-        {% endif %}
-        <div class="jumbotron">
-            <h2 class="text-center">Form A - Baseline</h2>
-            <hr>         
-            <form class="patient-form-data">
-               <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label for="participant_id"> Participant Id </label>
-                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="participant_name"> Participant Name </label>
-                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date_admission"> Date Admission </label>
-                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewer_id"> Interviewed By </label>
-                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewed_date"> Date Interviewed </label>
-                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
-                        <div class="form-group">
-                            <label for="created_id"> Created By  </label>
-                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="created_date"> Created Date  </label>
-                            {% if date_data_entered %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
-                            {% else %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label for="checked_id"> Checked By </label>
-                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="checked_date"> Checked Date </label>
-                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
-                        </div>
-                    </div>                  
-                </div> <!-- end row -->
-            </form>
-                <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                        {% if role == 'staff' %}
-                            {% if is_save_all %}
-
-                            {% else %}
-                                <form action="{% url 'forms_a:save_form' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                        <form action="{% url 'forms_a:check_form' %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" class="btn btn-success" value="Check Form"/> 
-                        </form>
-                        {% endif %}
-                    </div> 
-                </div> <!-- End Row -->
-        </div> <!-- End of Form  -->
-
-        <div class="row">
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                        </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_a:process_section1' %}"> Infant Growth / Immunisation Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section2'%}"> Infant Feeding Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section3'%}"> Infant Cardiovascular Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section5'%}"> Infant Biological Samples </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section7'%}"> Infection Episode </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -125,9 +37,9 @@
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
                     {% if context == "create" %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{% url 'forms_d:process_section8' %}" method="post" id="form_d">
                     {% else %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{% url 'forms_d:process_section8' %}" method="post" id="form_d">
                     {% endif %}
                         <h2>Outdoor/Indoor Pollutant Exposure and Travel Habits</h2>
                         <hr> 
@@ -137,45 +49,55 @@
                             <h4>Do you use the following cooking fuel in this period?</h4>
                             <div class="form-check">
                                     <label class="form-check-label">
-                                        {% if d8.d8m_charcoal }
+                                        {% if d8.d8m_charcoal %}
                                         <input class="form-check-input" name="d8m_charcoal" type="checkbox" checked>
                                         {% else %}
                                         <input class="form-check-input" name="d8m_charcoal" type="checkbox">
                                         {% endif %}
                                         Charcoal
                                     </label>
+                            </div>
+                            <div class="form-check">        
                                     <label class="form-check-label">
-                                        {% if d8.d8m_kerosene }
+                                        {% if d8.d8m_kerosene %}
                                         <input class="form-check-input" name="d8m_kerosene" type="checkbox" checked>
                                         {% else %}
                                         <input class="form-check-input" name="d8m_kerosene" type="checkbox">
                                         {% endif %}
                                         Kerosene
                                     </label>
+                            </div>
+                            <div class="form-check">
                                     <label class="form-check-label">
-                                        {% if d8.d8m_wood }
+                                        {% if d8.d8m_wood %}
                                         <input class="form-check-input" name="d8m_wood" type="checkbox" checked>
                                         {% else %}
                                         <input class="form-check-input" name="d8m_wood" type="checkbox">
                                         {% endif %}
                                         Wood
                                     </label>
+                            </div>
+                            <div class="form-check">
                                     <label class="form-check-label">
-                                        {% if d8.d8m_gas }
+                                        {% if d8.d8m_gas %}
                                         <input class="form-check-input" name="d8m_gas" type="checkbox" checked>
                                         {% else %}
                                         <input class="form-check-input" name="d8m_gas" type="checkbox">
                                         {% endif %}
                                         Gas
                                     </label>
+                            </div>
+                            <div class="form-check">
                                     <label class="form-check-label">
-                                        {% if d8.d8m_electric }
+                                        {% if d8.d8m_electric %}
                                         <input class="form-check-input" name="d8m_electric" type="checkbox" checked>
                                         {% else %}
                                         <input class="form-check-input" name="d8m_electric" type="checkbox">
                                         {% endif %}
                                         Electric
                                     </label>
+                            </div>
+                            <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_other %}
                                         <input class="form-check-input" name="d8m_other" type="checkbox" checked>
@@ -184,8 +106,10 @@
                                         {% endif %}
                                         Other
                                     </label>
+                            </div>        
+                            <div class="form-check">
                                     <label>Other, specify</label>
-                                    <input class="form-control" type="text" name="a3m_other" value="{{a3.a3m_other_complication_name}}" required>       
+                                    <input class="form-control" type="text" name="d8m_other_detail" value="{{d8.d8m_other_detail}}" required>       
                             </div>
                         </div>
 
@@ -324,12 +248,16 @@
                                 {% else %}
                                 <input type="radio" name="d8m_housing_type" id="optionsRadios2" value="0" checked>
                                 {% endif %}
-                                Flat/Apartment
+                                Flat/Apartment, specify the level number:
                                 </label>
-                            </div>                        
+                            </div>
+                            <div class="form-check">
+                                    <input class="form-control" type="number" name="d8m_apartment_level_number" value="{{ d8.d8m_apartment_level_number }}" required>       
+                            </div>
                         </div>
 
                         <div class="form-group" id="">                        
+                            <label> Landed House Type? </label>
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_landed_house_type == "1" %}
@@ -435,20 +363,21 @@
                         </div>
 
                         <div class="form-group">
+                            <h4> First Travel </h4>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d8m_staying_out_1st_street"> Address </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_street" value = "{{ d8.d8m_staying_out_1st_street }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_street" value ="{{ d8.d8m_staying_out_1st_street }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="d8m_staying_out_1st_rt"> RT </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rt" value = "{{ d8.d8m_staying_out_1st_rt }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rt" value ="{{ d8.d8m_staying_out_1st_rt }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="d8m_staying_out_1st_rw"> RW </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rw" value = "{{ d8.d8m_staying_out_1st_rw }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_rw" value ="{{ d8.d8m_staying_out_1st_rw }}">
                                 </div>
                             </div>
                         </div>
@@ -457,17 +386,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_1st_district"> District </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_district" value = "{{ d8.d8m_staying_out_1st_district }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_district" value ="{{ d8.d8m_staying_out_1st_district }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_1st_city"> City </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_city" value = "{{ d8.d8m_staying_out_1st_city }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_city" value ="{{ d8.d8m_staying_out_1st_city }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_1st_zipcode"> Zip Code </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_1st_zipcode" value = "{{ d8.d8m_staying_out_1st_zipcode }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_1st_zipcode" value ="{{ d8.d8m_staying_out_1st_zipcode }}">
                                 </div>
                             </div>
                         </div>
@@ -477,26 +406,27 @@
                                 <div class="col-md-7 col-sm-7">
                                     <label for="a1m_residing_duration"> Duration of stay (in days)
                                     </label>
-                                    <input class="form-control" type="number" name="d8m_staying_out_1st_duration" value = "{{ d8.d8m_staying_out_1st_duration }}">
+                                    <input class="form-control" type="number" name="d8m_staying_out_1st_duration" value ="{{ d8.d8m_staying_out_1st_duration }}">
                                 </div>
                             </div>
                         </div>
 
                          <div class="form-group">
+                            <h4> Second Travel </h4>
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d8m_staying_out_2nd_street"> Address </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_street" value = "{{ d8.d8m_staying_out_2nd_street }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_street" value="{{ d8.d8m_staying_out_2nd_street }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="d8m_staying_out_2nd_rt"> RT </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rt" value = "{{ d8.d8m_staying_out_2nd_rt }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rt" value ="{{ d8.d8m_staying_out_2nd_rt }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="d8m_staying_out_2nd_rw"> RW </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rw" value = "{{ d8.d8m_staying_out_2nd_rw }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_rw" value ="{{ d8.d8m_staying_out_2nd_rw }}">
                                 </div>
                             </div>
                         </div>
@@ -505,17 +435,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_2nd_district"> District </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_district" value = "{{ d8.d8m_staying_out_2nd_district }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_district" value ="{{ d8.d8m_staying_out_2nd_district }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_2nd_city"> City </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_city" value = "{{ d8.d8m_staying_out_2nd_city }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_city" value ="{{ d8.d8m_staying_out_2nd_city }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d8m_staying_out_2nd_zipcode"> Zip Code </label>
-                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_zipcode" value = "{{ d8.d8m_staying_out_2nd_zipcode }}">
+                                    <input class="form-control" type="text" name="d8m_staying_out_2nd_zipcode" value ="{{ d8.d8m_staying_out_2nd_zipcode }}">
                                 </div>
                             </div>
                         </div>
@@ -525,7 +455,7 @@
                                 <div class="col-md-7 col-sm-7">
                                     <label for="a1m_residing_duration"> Duration of stay (in days)
                                     </label>
-                                    <input class="form-control" type="number" name="d8m_staying_out_2nd_duration" value = "{{ d8.d8m_staying_out_2nd_duration }}">
+                                    <input class="form-control" type="number" name="d8m_staying_out_2nd_duration" value ="{{ d8.d8m_staying_out_2nd_duration }}">
                                 </div>
                             </div>
                         </div>
@@ -548,7 +478,7 @@
                 </div>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                        <form action="{% url 'forms_d:edit_form' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="section_number" value=1>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
@@ -556,7 +486,4 @@
                         {% endif %}
                         {% endif %} 
                  </div>
-            </div>
-        </div>
-    </div>
- {% endblock %}
+{% endblock %}

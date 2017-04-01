@@ -1,121 +1,34 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'forms_d/form.html' %}
+{% block form_section %}
     <!-- Page Content -->
 
-    <div class="container">
-        <!-- Form Umum Section -->
-        {% if success %}
-            <div class="alert alert-success text-center">
-              <strong>Success!</strong>
-            </div>
-        {% endif %}
-        <div class="jumbotron">
-            <h2 class="text-center">Form A - Baseline</h2>
-            <hr>         
-            <form class="patient-form-data">
-               <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6">
-                        <div class="form-group">
-                            <label for="participant_id"> Participant Id </label>
-                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="participant_name"> Participant Name </label>
-                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date_admission"> Date Admission </label>
-                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewer_id"> Interviewed By </label>
-                            <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="interviewed_date"> Date Interviewed </label>
-                            <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
-                        <div class="form-group">
-                            <label for="created_id"> Created By  </label>
-                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="created_date"> Created Date  </label>
-                            {% if date_data_entered %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{{date_data_entered}}" disabled>
-                            {% else %}
-                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" disabled>
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            <label for="checked_id"> Checked By </label>
-                            <input class="form-control" type="text" name="data_checked_id" value="{{form.data_checked_id}}" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="checked_date"> Checked Date </label>
-                            <input class="form-control" type="date" name="date_data_checked" value="{{date_data_checked}}" disabled>
-                        </div>
-                    </div>                  
-                </div> <!-- end row -->
-            </form>
-                <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                        {% if role == 'staff' %}
-                            {% if is_save_all %}
-
-                            {% else %}
-                                <form action="{% url 'forms_a:save_form' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-primary" value="Submit Form"/>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                        <form action="{% url 'forms_a:check_form' %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" class="btn btn-success" value="Check Form"/> 
-                        </form>
-                        {% endif %}
-                    </div> 
-                </div> <!-- End Row -->
-        </div> <!-- End of Form  -->
-
-        <div class="row">
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                        </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_a:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section2'%}"> Infant Feeding Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section3'%}"> Infant Cardiovascular Data </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section5'%}"> Infant Biological Samples </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section7'%}"> Infection Episode </a> 
-                        </li>
-                        <li class="list-group-item">
-                            <a href="{% url 'forms_a:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -125,9 +38,9 @@
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
                     {% if context == "create" %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{% url 'forms_d:process_section7' %}" method="post" id="form_d">
                     {% else %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{% url 'forms_d:process_section7' %}" method="post" id="form_d">
                     {% endif %}
                         <h2>Infection Episode</h2>
                         <hr> 
@@ -227,9 +140,18 @@
                                 {% endif %}
                                 Dengue (haemorrhagic) fever
                                 </label>
-                            </div>                           
-                            <label>Other, specify</label>
-                            <input class="form-control" type="text" name="d7c_infection_others" value="{{d7.d7c_infection_others}}" required>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if d7c_infection_others %}
+                                <input class="form-check-input" name="d7c_infection_others" type="checkbox" checked>
+                                {% else %}
+                                <input class="form-check-input" name="d7c_infection_others" type="checkbox">
+                                {% endif %}
+                                Other, specify
+                                </label>
+                            </div>
+                            <input class="form-control" type="text" name="d7c_infection_others_detail" value="{{d7c_infection_others_detail}}" required>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_infection_unknown %}
@@ -322,12 +244,12 @@
 
                         <div class="form-group">
                             <label for="d7c_admission_date"> Date of admission </label>
-                            <input class="form-control" type="date" name="d7c_admission_date" value="{{ d7.d7c_admission_date }}" required>
+                            <input class="form-control" type="date" name="d7c_admission_date" value="{{ d7.d7c_admission_date | date:'Y-m-d' }}" required>
                         </div>
 
                         <div class="form-group">
                             <label for="d7c_discharged_date"> Date of discharged </label>
-                            <input class="form-control" type="date" name="d7c_discharged_date" value="{{ d7.d7c_discharged_date }}" required>
+                            <input class="form-control" type="date" name="d7c_discharged_date" value="{{ d7.d7c_discharged_date | date:'Y-m-d' }}" required>
                         </div>
 
                         <div class="form-group">
@@ -345,41 +267,31 @@
                             <input class="form-control" type="text" name="d7c_hospital_contact" value="{{ d7.d7c_hospital_contact }}" required>
                         </div>
 
-                        <div id="">
-                            <h4>In which ward that the child is admitted?</h4>
-                            <div class="form-check">
-                                    <label class="form-check-label">
-                                        {% if d7.d7c_ward == "1" %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox" checked>
-                                        {% else %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox">
-                                        {% endif %}
-                                        Emergency room only
-                                    </label>
-                                    <label class="form-check-label">
-                                        {% if d7.d7c_ward == "2" %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox" checked>
-                                        {% else %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox">
-                                        {% endif %}
-                                        One day care
-                                    </label>
-                                    <label class="form-check-label">
-                                        {% if d7.d7c_ward == "3" %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox" checked>
-                                        {% else %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox">
-                                        {% endif %}
-                                        General Ward
-                                    </label>
-                                    <label class="form-check-label">
-                                        {% if d7.d7c_ward == "4" %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox" checked>
-                                        {% else %}
-                                        <input class="form-check-input" name="d7c_ward" type="checkbox">
-                                        {% endif %}
-                                        High care/intensive care
-                                    </label>
+                        <div class="form-group" id="">
+                            <label>In which ward that the child is admitted?</label>
+                            <div class="radio">                                
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_1" value="1">
+                                Emergency room only
+                                </label>
+                            </div>
+                            <div class="radio">                                
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_2" value="2">
+                                One day care
+                                </label>
+                            </div>
+                            <div class="radio">                                
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_3" value="3">
+                                General Ward
+                                </label>
+                            </div>
+                            <div class="radio">                                
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_4" value="4">
+                                High care/intensive care
+                                </label>
                             </div>
                         </div>
 
@@ -460,7 +372,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_blood_culture_date"> Blood culture date </label>
-                                <input class="form-control" type="date" name="d7c_blood_culture_date" value="{{ d7.d7c_blood_culture_date }}" required>
+                                <input class="form-control" type="date" name="d7c_blood_culture_date" value="{{ d7.d7c_blood_culture_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_blood_microorganism"> Microorganism growth </label>
@@ -528,7 +440,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_urinalysis_date"> Urinalysis date </label>
-                                <input class="form-control" type="date" name="d7c_urinalysis_date" value="{{ d7.d7c_urinalysis_date }}" required>
+                                <input class="form-control" type="date" name="d7c_urinalysis_date" value="{{ d7.d7c_urinalysis_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -541,8 +453,8 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="d7c_urine_date  "> Urine culture date </label>
-                                <input class="form-control" type="date" name="d7c_urine_date " value="{{ d7.d7c_urine_date  }}" required>
+                                <label for="d7c_urine_date"> Urine culture date </label>
+                                <input class="form-control" type="date" name="d7c_urine_date" value="{{ d7.d7c_urine_date  | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_urine_microorganism"> Microorganism growth </label>
@@ -559,8 +471,8 @@
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="d7c_csf_date  "> CSF date </label>
-                                <input class="form-control" type="date" name="d7c_csf_date " value="{{ d7.d7c_csf_date  }}" required>
+                                <label for="d7c_csf_date"> CSF date </label>
+                                <input class="form-control" type="date" name="d7c_csf_date" value="{{ d7.d7c_csf_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_csf_microorganism"> Microorganism growth </label>
@@ -578,7 +490,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_faecal_date"> Faecal date </label>
-                                <input class="form-control" type="date" name="d7c_faecal_date" value="{{ d7.d7c_faecal_date  }}" required>
+                                <input class="form-control" type="date" name="d7c_faecal_date" value="{{ d7.d7c_faecal_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_faecal_microorganism"> Microorganism growth </label>
@@ -596,7 +508,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_chest_xray_findings"> Chest x-ray findings </label>
-                                <input class="form-control" type="text" name="d7c_chest_xray_finding" value="{{ d7.d7c_chest_xray_finding }}" required>
+                                <input class="form-control" type="text" name="d7c_chest_xray_findings" value="{{ d7.d7c_chest_xray_findings }}" required>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -613,8 +525,8 @@
                                 <input class="form-control" type="text" name="d7c_usg_type" value="{{ d7.d7c_usg_type }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="d7c_usg_date "> USG date </label>
-                                <input class="form-control" type="date" name="d7c_usg_date " value="{{ d7.d7c_usg_date   }}" required>
+                                <label for="d7c_usg_date"> USG date </label>
+                                <input class="form-control" type="date" name="d7c_usg_date" value="{{ d7.d7c_usg_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_usg_findings"> USG findings </label>
@@ -636,8 +548,8 @@
                                 <input class="form-control" type="text" name="d7c_mri_type" value="{{ d7.d7c_mri_type }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="d7c_mri_date "> MRI date </label>
-                                <input class="form-control" type="date" name="d7c_mri_date " value="{{ d7.d7c_mri_date   }}" required>
+                                <label for="d7c_mri_date"> MRI date </label>
+                                <input class="form-control" type="date" name="d7c_mri_date" value="{{ d7.d7c_mri_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_mri_findings"> MRI findings </label>
@@ -660,7 +572,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_other_test_date"> Test date </label>
-                                <input class="form-control" type="date" name="d7c_other_test_date" value="{{ d7.d7c_other_test_date  }}" required>
+                                <input class="form-control" type="date" name="d7c_other_test_date" value="{{ d7.d7c_other_test_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_other_test_findings"> Findings </label>
@@ -707,11 +619,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med1_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med1_start_date" value="{{ d7.d7c_med1_start_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med1_start_date" value="{{ d7.d7c_med1_start_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med1_end_date"> End date </label>
-                                <input class="form-control" type="text" name="d7c_med1_end_date" value="{{ d7.d7c_med1_end_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med1_end_date" value="{{ d7.d7c_med1_end_date }}" required>
                             </div>                            
                         </div>
 
@@ -726,11 +638,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med2_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med2_start_date" value="{{ d7.d7c_med2_start_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med2_start_date" value="{{ d7.d7c_med2_start_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med2_end_date"> End date </label>
-                                <input class="form-control" type="text" name="d7c_med2_end_date" value="{{ d7.d7c_med2_end_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med2_end_date" value="{{ d7.d7c_med2_end_date }}" required>
                             </div>                            
                         </div>
 
@@ -745,11 +657,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med3_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med3_start_date" value="{{ d7.d7c_med3_start_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med3_start_date" value="{{ d7.d7c_med3_start_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med3_end_date"> End date </label>
-                                <input class="form-control" type="text" name="d7c_med3_end_date" value="{{ d7.d7c_med3_end_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med3_end_date" value="{{ d7.d7c_med3_end_date }}" required>
                             </div>                            
                         </div>
 
@@ -764,11 +676,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med4_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med4_start_date" value="{{ d7.d7c_med4_start_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med4_start_date" value="{{ d7.d7c_med4_start_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med4_end_date"> End date </label>
-                                <input class="form-control" type="text" name="d7c_med4_end_date" value="{{ d7.d7c_med4_end_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med4_end_date" value="{{ d7.d7c_med4_end_date }}" required>
                             </div>                            
                         </div>
 
@@ -783,11 +695,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med5_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med5_start_date" value="{{ d7.d7c_med5_start_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med5_start_date" value="{{ d7.d7c_med5_start_date | date:'Y-m-d' }}" required>
                             </div>
                             <div class="form-group">
                                 <label for="d7c_med5_end_date"> End date </label>
-                                <input class="form-control" type="text" name="d7c_med5_end_date" value="{{ d7.d7c_med5_end_date }}" required>
+                                <input class="form-control" type="date" name="d7c_med5_end_date" value="{{ d7.d7c_med5_end_date | date:'Y-m-d' }}" required>
                             </div>                            
                         </div>
 
@@ -809,15 +721,12 @@
                 </div>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_a:edit_form' %}" method="post">
+                        <form action="{% url 'forms_d:edit_form' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="section_number" value=1>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
                         </form>
                         {% endif %}
                         {% endif %} 
-                 </div>
             </div>
-        </div>
-    </div>
  {% endblock %}

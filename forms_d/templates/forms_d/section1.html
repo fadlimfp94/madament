@@ -1,0 +1,504 @@
+{% extends 'forms_d/form.html' %}
+{% block form_section %}
+    <script>
+        $(document).ready(function(){
+
+            $("#yesVaccination").click(function(){
+                $("#vaccinationHistory").removeClass('hidden');
+                $("#vaccinationHistory :input").prop("readonly", false);
+                $("#vaccinationHistory :input").prop("required", true);
+                $("#vaccinationHistory :checkbox").prop("required", false);
+            });
+
+            $("#noVaccination").click(function(){
+                $("#vaccinationHistory").addClass('hidden');
+                $("#vaccinationHistory :input").removeAttr('value');
+                $("#vaccinationHistory :input").prop("readonly", true);
+                $("#vaccinationHistory :input").prop("checked", false);
+                $("#vaccinationHistory :input").prop("required", false);
+                $("#vaccinationHistory :checkbox").prop("required", false);
+
+            });
+
+            $('#d1c_bcg').click(function(){
+                if (this.checked) {
+                    $("#d1c_bcg_date").removeClass('hidden');
+                    $('d1c_bcg_date :input').prop("readonly", false);
+                    $('d1c_bcg_date :input').prop("required", true);
+                }
+                else{
+                    $("#d1c_bcg_date").addClass('hidden');
+                    $("#d1c_bcg_date :input").removeAttr('value');
+                    $('d1c_bcg_date :input').prop("readonly", true);
+                    $('d1c_bcg_date :input').prop("required", false);
+                }
+            })
+
+            $('#d1c_hep_b').click(function(){
+                if (this.checked) {
+                    $("#d1c_hep_b_date").removeClass('hidden');
+                    $('d1c_hep_b_date').prop("readonly", false);
+                    $('d1c_hep_b_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_hep_b_date").addClass('hidden');
+                    $("#d1c_hep_b_date").removeAttr('value');
+                    $('d1c_hep_b_date').prop("readonly", true);
+                    $('d1c_hep_b_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_dpt').click(function(){
+                if (this.checked) {
+                    $("#d1c_dpt_date").removeClass('hidden');
+                    $('d1c_dpt_date').prop("readonly", false);
+                    $('d1c_dpt_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_dpt_date").addClass('hidden');
+                    $("#d1c_dpt_date").removeAttr('value');
+                    $('d1c_dpt_date').prop("readonly", true);
+                    $('d1c_dpt_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_ipv').click(function(){
+                if (this.checked) {
+                    $("#d1c_ipv_date").removeClass('hidden');
+                    $('d1c_ipv_date').prop("readonly", false);
+                    $('d1c_ipv_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_ipv_date").addClass('hidden');
+                    $("#d1c_ipv_date").removeAttr('value');
+                    $('d1c_ipv_date').prop("readonly", true);
+                    $('d1c_ipv_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_opv').click(function(){
+                if (this.checked) {
+                    $("#d1c_opv_date").removeClass('hidden');
+                    $('d1c_opv_date').prop("readonly", false);
+                    $('d1c_opv_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_opv_date").addClass('hidden');
+                    $("#d1c_opv_date").removeAttr('value');
+                    $('d1c_opv_date').prop("readonly", true);
+                    $('d1c_opv_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_hib').click(function(){
+                if (this.checked) {
+                    $("#d1c_hib_date").removeClass('hidden');
+                    $('d1c_hib_date').prop("readonly", false);
+                    $('d1c_hib_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_hib_date").addClass('hidden');
+                    $("#d1c_hib_date").removeAttr('value');
+                    $('d1c_hib_date').prop("readonly", true);
+                    $('d1c_hib_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_rotavirus').click(function(){
+                if (this.checked) {
+                    $("#d1c_rotavirus_date").removeClass('hidden');
+                    $('d1c_rotavirus_date').prop("readonly", false);
+                    $('d1c_rotavirus_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_rotavirus_date").addClass('hidden');
+                    $("#d1c_rotavirus_date").removeAttr('value');
+                    $('d1c_rotavirus_date').prop("readonly", true);
+                    $('d1c_rotavirus_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_pneumococcus').click(function(){
+                if (this.checked) {
+                    $("#d1c_pneumococcus_date").removeClass('hidden');
+                    $('d1c_pneumococcus_date').prop("readonly", false);
+                    $('d1c_pneumococcus_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_pneumococcus_date").addClass('hidden');
+                    $("#d1c_pneumococcus_date").removeAttr('value');
+                    $('d1c_pneumococcus_date').prop("readonly", true);
+                    $('d1c_pneumococcus_date').prop("required", false);
+                }
+            })
+
+            $('#d1c_influenza').click(function(){
+                if (this.checked) {
+                    $("#d1c_influenza_date").removeClass('hidden');
+                    $('d1c_influenza_date').prop("readonly", false);
+                    $('d1c_influenza_date').prop("required", true);
+                }
+                else{
+                    $("#d1c_influenza_date").addClass('hidden');
+                    $("#d1c_influenza_date").removeAttr('value');
+                    $('d1c_influenza_date').prop("readonly", true);
+                    $('d1c_influenza_date').prop("required", false);
+                }
+            })
+
+        });
+    </script>
+
+    <!-- Page Content -->
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    {% if context == "create" %}
+                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    {% else %}
+                    <form class="formD-question" action="{% url 'forms_d:process_section1' %}" method="post" id="form_d">
+                    {% endif %}
+                        <h2>Infant Growth / Immunisation Data</h2>
+                        <hr> 
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <div class="form-group">
+                            <label for="d1c_ur_number"> Child UR number </label>
+                            {% if d1 %}
+                            <input class="form-control" type="text" name="d1c_ur_number" value="{{ d1.d1c_ur_number }}" required>
+                            {% else %}
+                            <input class="form-control" type="text" name="d1c_ur_number" value="{{d1.d1c_ur_number}}" required>
+                            {% endif %}      
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_first_name"> First name </label>
+                                    <input class="form-control" type="text" name="d1c_first_name" value = "{{ d1.d1c_first_name }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_surname"> Surname </label>
+                                    <input class="form-control" type="text" name="d1c_surname" value = "{{ d1.d1c_surname }}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="d1c_dob"> Date of Birth </label>
+                            <input class="form-control" type="date" name="d1c_dob" value="{{ d1.d1c_dob | date:'Y-m-d' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_weight_1st">Body weight (gram) (1)</label>
+                                    <input class="form-control" type="number" name="d1c_weight_1st" value = "{{ d1.d1c_weight_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_weight_2nd">Body weight (gram) (2)</label>
+                                    <input class="form-control" type="number" name="d1c_weight_2nd" value = "{{ d1.d1c_weight_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_length_1st">Body length (cm) (1)</label>
+                                    <input class="form-control" type="number" name="d1c_length_1st" value = "{{ d1.d1c_length_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_length_2nd">Body length (cm) (2)</label>
+                                    <input class="form-control" type="number" name="d1c_length_2nd" value = "{{ d1.d1c_length_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_hc_1st">Head circumference (1)</label>
+                                    <input class="form-control" type="number" name="d1c_hc_1st" value = "{{ d1.d1c_hc_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_hc_2nd">Head circumference (2)</label>
+                                    <input class="form-control" type="number" name="d1c_hc_2nd" value = "{{ d1.d1c_hc_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_chest_1st">Chest circumference (1)</label>
+                                    <input class="form-control" type="number" name="d1c_chest_1st" value = "{{ d1.d1c_chest_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_chest_2nd">Chest circumference (2)</label>
+                                    <input class="form-control" type="number" name="d1c_chest_2nd" value = "{{ d1.d1c_chest_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_ac_1st">Abdominal circumference (1)</label>
+                                    <input class="form-control" type="number" name="d1c_ac_1st" value = "{{ d1.d1c_ac_1st }}" required>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d1c_ac_2nd">Abdominal circumference (2)</label>
+                                    <input class="form-control" type="number" name="d1c_ac_2nd" value = "{{ d1.d1c_ac_2nd }}" required>
+                                </div>                                
+                            </div>
+                        </div>
+
+                            
+                        <fieldset class="form-group">
+                                <label for="a2m_working_pregnancy"> Any vaccination received at current or after the last visit? </label>
+                                {% if d1.d1c_vaccination_history == None %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="1" id="yesVaccination">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="0" id="noVaccination">
+                                        No
+                                        </label>
+                                    </div> 
+                                {% elif d1.d1c_vaccination_history %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="1" checked id="yesVaccination">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="0" id="noVaccination">
+                                        No
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="1" id="yesVaccination">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d1c_vaccination_history" value="0" checked id="noVaccination">
+                                        No
+                                        </label>
+                                    </div>
+                                {% endif %}                            
+                        </fieldset> 
+
+
+                       <div id="vaccinationHistory">
+                            <h4>Type of vaccine?</h4>
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_bcg %}
+                                        <input class="form-check-input" name="d1c_bcg" type="checkbox" id="d1c_bcg" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_bcg" type="checkbox" id="d1c_bcg">
+                                        {% endif %}
+                                        BCG
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_bcg_date">
+                                <label for="d1c_bcg_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_bcg_date" value="{{ d1.d1c_bcg_date | date:'Y-m-d' }}" required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_hep_b %}
+                                        <input class="form-check-input" name="d1c_hep_b" type="checkbox" checked id="d1c_hep_b">
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_hep_b" type="checkbox" id="d1c_hep_b">
+                                        {% endif %}
+                                        Hepatitis B
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_hep_b_date">
+                                <label for="d1c_hep_b_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_hep_b_date" value="{{ d1.d1c_hepb_date | date:'Y-m-d' }}" required >
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_dpt %}
+                                        <input class="form-check-input" name="d1c_dpt" type="checkbox" checked id="d1c_dpt">
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_dpt" type="checkbox" id="d1c_dpt">
+                                        {% endif %}
+                                        DPT
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_dpt_date">
+                                <label for="d1c_dpt_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_dpt_date" value="{{ d1.d1c_dpt_date | date:'Y-m-d' }}" required >
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_ipv %}
+                                        <input class="form-check-input" name="d1c_ipv" type="checkbox" id="d1c_ipv" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_ipv" type="checkbox" id="d1c_ipv">
+                                        {% endif %}
+                                        IPV
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_ipv_date">
+                                <label for="d1c_ipv_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_ipv_date" value="{{ d1.d1c_ipv_date | date:'Y-m-d' }}"  required>
+                            </div>
+
+                           <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_opv %}
+                                        <input class="form-check-input" name="d1c_opv" type="checkbox" id="d1c_opv" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_opv" type="checkbox" id="d1c_opv">
+                                        {% endif %}
+                                        opv
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_opv_date">
+                                <label for="d1c_opv_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_opv_date" value="{{ d1.d1c_opv_date | date:'Y-m-d' }}"  required>
+                            </div>
+
+
+                           <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_hib %}
+                                        <input class="form-check-input" name="d1c_hib" type="checkbox" id="d1c_hib" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_hib" type="checkbox" id="d1c_hib">
+                                        {% endif %}
+                                        hib
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_hib_date">
+                                <label for="d1c_hib_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_hib_date" value="{{ d1.d1c_hib_date | date:'Y-m-d' }}"  required>
+                            </div>
+           
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_rotavirus %}
+                                        <input class="form-check-input" name="d1c_rotavirus" type="checkbox" id="d1c_rotavirus" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_rotavirus" type="checkbox" id="d1c_rotavirus">
+                                        {% endif %}
+                                        rotavirus
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_rotavirus_date">
+                                <label for="d1c_rotavirus_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_rotavirus_date" value="{{ d1.d1c_rotavirus_date | date:'Y-m-d' }}"  required>
+                            </div>
+
+
+                           <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_pneumococcus %}
+                                        <input class="form-check-input" name="d1c_pneumococcus" type="checkbox" id="d1c_pneumococcus" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_pneumococcus" type="checkbox" id="d1c_pneumococcus">
+                                        {% endif %}
+                                        pneumococcus
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_pneumococcus_date">
+                                <label for="d1c_pneumococcus_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_pneumococcus_date" value="{{ d1.d1c_pneumococcus_date | date:'Y-m-d' }}"  required>
+                            </div>
+
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d1.d1c_influenza %}
+                                        <input class="form-check-input" name="d1c_influenza" type="checkbox" id="d1c_influenza" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d1c_influenza" type="checkbox" id="d1c_influenza">
+                                        {% endif %}
+                                        influenza
+                                    </label>
+                            </div>
+                            <div class="form-group" id="d1c_influenza_date">
+                                <label for="d1c_influenza_date"> Date of vaccination </label>
+                                <input class="form-control" type="date" name="d1c_influenza_date" value="{{ d1.d1c_influenza_date | date:'Y-m-d' }}"  required>
+                            </div>
+
+                        </div>   
+
+                        <div class="form-group">
+                            <div class="row">
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    {% if role == 'staff' %}
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                    {% endif %}
+                                {% endif %}    
+                            </div>
+                        </div>
+                        <!--
+                        <a href="" type="submit" class="btn btn-primary">Save </a>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a> -->
+                    </form>
+                        {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                        {% endif %}  
+                </div>
+            </div>
+ {% endblock %}

@@ -1,0 +1,241 @@
+{% extends 'forms_d/form.html' %}
+{% block form_section %}
+    <!-- Page Content -->
+
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="formD-question" action="{% url 'forms_d:process_section2' %}" method="post" id="form_d">
+                        <h2>Infant Feeding Data</h2>
+                        <hr> 
+                        {% csrf_token %}
+                        <input type="hidden" name="context" value="SAVE">
+                        <fieldset class="form-group">
+                                <label for="a2m_working_pregnancy"> Is your baby currently still fully breastfed? </label>
+                                {% if d2.d2c_breast_feeding_status == None %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0">
+                                        No
+                                        </label>
+                                    </div>
+                                {% elif d2.d2c_breast_feeding_status %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" checked>
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0">
+                                        No
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" checked>
+                                        No
+                                        </label>
+                                    </div>
+                                
+                                {% endif %}                            
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                                <label for="d2c_supplementary_food"> If your baby is not fully breastfed anymore, what sort of foods that you have started to give?</label>
+                                {% if d2.d2c_supplementary_food == None %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="0">
+                                        No
+                                        </label>
+                                    </div>
+                                {% elif d2.d2c_supplementary_food %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="1" checked>
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="0">
+                                        No
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="d2c_supplementary_food" value="0" checked>
+                                        No
+                                        </label>
+                                    </div>
+                                {% endif %}                            
+                        </fieldset>
+
+                        <fieldset class="form-group" id="familyHistoryDisease"> 
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_infant_formula %}
+                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox">
+                                        {% endif %}
+                                        Infant formula, firstly introduced at the age (in weeks)
+                                    </label> 
+                                </div>
+                                <div class="form-check">                                      
+                                        <input class="form-control" type="number" name="d2c_age_formula" placeholder="in weeks" value="{{d2.d2c_age_formula}}">  
+                                </div>
+                                <div class="form-check">                                    
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_cows_milk_formula %}
+                                        <input class="form-check-input" name="d2c_cows_milk_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_cows_milk_formula" type="checkbox">
+                                        {% endif %}
+                                        Regular / cow's milk based
+                                    </label>
+                                </div>    
+
+                                <div class="form-check">                                
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_soy_formula %}
+                                        <input class="form-check-input" name="d2c_soy_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_soy_formula" type="checkbox">
+                                        {% endif %}
+                                        Soy-based
+                                    </label>
+                                </div>    
+
+                                <div class="form-check">                                
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_hypoallergen_formula %}
+                                        <input class="form-check-input" name="d2c_hypoallergen_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_hypoallergen_formula" type="checkbox">
+                                        {% endif %}
+                                        Hypoallergenic (e.g NAN HA, Nutrilon HA)
+                                    </label>
+                                </div>    
+
+                                <div class="form-check">                            
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_hydrolized_formula %}
+                                        <input class="form-check-input" name="d2c_hydrolized_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_hydrolized_formula" type="checkbox">
+                                        {% endif %}
+                                        Regular / cow's milk based
+                                    </label>
+                                </div>    
+
+                                <div class="form-check">                            
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_cows_milk_formula %}
+                                        <input class="form-check-input" name="d2c_cows_milk_formula" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_cows_milk_formula" type="checkbox">
+                                        {% endif %}
+                                        Regular / cow's milk based
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        {% if d2.d2c_weaning_food %}
+                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox" checked>
+                                        {% else %}
+                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox">
+                                        {% endif %}
+                                        Complementary / weaning food, firstly introduced at the age (in weeks)
+                                    </label>
+                                </div>
+                                <div class="form-check">                                     
+                                    <input class="form-control" type="number" name="d2c_age_weaning_food" placeholder="in weeks" value="{{d2.d2c_age_weaning_food}}">  
+                                </div>        
+                        </fieldset>    
+
+                        <div class="form-group">
+                            <div class="row">
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    {% if role == 'staff' %}
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                    {% endif %}
+                                {% endif %}    
+                            </div>
+                        </div>
+                    </form>
+                        {% if role != 'staff' %}
+                        {% if is_save_all %}
+                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="form_id" value={{form.id}}>
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                        </form>
+                        {% endif %}
+                        {% endif %}  
+                </div>
+            </div>
+ {% endblock %}
