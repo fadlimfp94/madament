@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'forms_c/form.html' %}
 {% block content %}
 
     <script>
@@ -39,7 +39,6 @@
         });
 
 
-
           
     });
     </script>
@@ -66,7 +65,7 @@
                     <input type="hidden" name="context" value="SAVE">
                     {% csrf_token %}                        
                         <div class="form-group">                       
-                            <label> Mother UR Number </label>                                                           
+                            <label> Mother UR Number </label>                                              
                             <input class="form-control" type="text" name="c1m_ur_number" value="{{ c1.c1m_ur_number }}">
                         </div>
 
@@ -111,13 +110,14 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label for="c1m_pre_height"> Diastolic blood pressure (mmHg) </label>
-                                <span class="input-group-addon" id="basic-addon1">2</span>                         
-                                <input class="form-control" type="text" name="c1m_diastolic2nd" value="{{ c1.c1m_diastolic2nd }}">
+                                <span class="input-group-addon" id="basic-addon1">2</span>                
+                                <input class="form-control" type="text" name="c1m_diastolic2nd" value="
+                                {{ c1.c1m_diastolic2nd }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="c1m_pre_height"> Weight at delivery </label>                         
+                            <label for="c1m_pre_height"> Weight at delivery </label>                        
                             <input class="form-control" type="text" name="c1m_delivery_weight" value="{{ c1.c1m_delivery_weight }}">
                         </div>
 
@@ -168,28 +168,39 @@
 
                         <fieldset class="form-group" id="opsi">
                             <label for="c1m_premature"> Delivery Compilation ? </label>
+                             {% if c1.c1m_delivery_compilation == null %}
+                                <div class="form-check">
+                                    <label>
+                                        <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1"> Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label>
+                                        <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0"> No
+                                    </label>
+                                </div>
+                            {% else %}
                             <div class="form-check">
-                                <label>
-                                {% if c1.c1m_delivery_compilation %}                                
-                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" checked> 
-                                {% else %}
-                                <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1"> 
-                                {% endif %}                             
-                                Yes, specify
-                                </label>
+                                <label>                                
+                                    {% if c1.c1m_delivery_compilation %}                                
+                                    <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" checked> 
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1"> 
+                                    {% endif %}                             
+                                    Yes, specify
+                                    </label>
                             </div>
                             <div class="form-check">
-                                <label>
-                                {% if c1.c1m_delivery_compilation %}                                
-                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" checked>
-                                {% else %}
-                                <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0">
-                                {% endif %}                               
-                                No
-                                </label>
+                                    <label>
+                                    {% if c1.c1m_delivery_compilation %}                                
+                                    <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" >
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" checked>
+                                    {% endif %}                               
+                                    No
+                                    </label>
                             </div>
-                                                                                    
-                        </fieldset>
+                            {% endif %}                                                                    </fieldset>
 
                         <div class="form-group" id="deliveryCompilation">
                             <div class="form-check">
@@ -369,6 +380,18 @@
 
                         <fieldset class="form-group">
                             <label for="c1m_premature"> Did mother receive any antibiotics ? </label>
+                            {% if c1.c1m_antibiotics == null %}
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="noAntibiotics" value="0"> No
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1"> Yes
+                                    </label>
+                                </div>
+                            {% else %}
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if c1.c1m_antibiotics %}
@@ -382,13 +405,14 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if c1.c1m_antibiotics %}
-                                <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1" checked>
-                                {% else %}
                                 <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1">
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1" checked>
                                 {% endif %}
                                 Yes, specify
                                 </label>
-                            </div>                             
+                            </div>
+                            {% endif %}                             
                         </fieldset>
 
                         <div id="receiveAntibiotics">
@@ -480,22 +504,22 @@
                         <div id="maternalBloodTest">
                             <div class="form-group">
                                 <label for="c1m_pre_height"> Date </label>                         
-                                <input class="form-control" type="date" name="c1m_blood_test_date" value="{{ blood_test_date }}">
+                                <input class="form-control" type="date" name="c1m_blood_test_date" value="{{ blood_test_date }}" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="c1m_pre_height"> Hemoglobin level (g/dl) (in decimal) </label>
-                                <input class="form-control" type="number" name="c1m_hb" step="0.1" placeholder="in decimal" value="{{ c1.c1m_hb }}">
+                                <input class="form-control" type="text" name="c1m_hb" step="0.1" placeholder="in decimal" value="{{ c1.c1m_hb }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="c1m_pre_height"> WBC (/micro litre) </label> 
-                                <input class="form-control" type="number" name="c1m_wbc" step="0.1" placeholder="in decimal" value="{{c1.c1m_wbc }}">
+                                <input class="form-control" type="text" name="c1m_wbc" step="0.1" placeholder="in decimal" value="{{c1.c1m_wbc }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="c1m_pre_height"> Platelets/thrombocyte (/microlite) </label> 
-                                <input class="form-control" type="number" name="c1m_platelets" step="0.1" placeholder="in decimal" value="{{ c1.c1m_platelets }}">
+                                <input class="form-control" type="text" name="c1m_platelets" step="0.1" placeholder="in decimal" value="{{ c1.c1m_platelets }}">
                             </div>                            
                         
 
@@ -507,24 +531,25 @@
 
                             <div class="form-group">
                                 <label> SGPT (mg/dl) </label>
-                                <input class="form-control" type="number"  id="c1m_sgpt" name="c1m_sgpt" step="0.1" placeholder="in decimal" value="{{ c1.c1m_sgpt }}">
+                                <input class="form-control" type="text"  id="c1m_sgpt" name="c1m_sgpt" step="0.1" placeholder="in decimal" value="{{ c1.c1m_sgpt }}">
                             </div>
 
                             <div class="form-group">
                                 <label> Ureum (mg/dl) </label>
-                                <input class="form-control" type="number"  id="c1m_ureum" name="c1m_ureum" step="0.1" placeholder="in decimal" value="{{ c1.c1m_ureum }}">
+                                <input class="form-control" type="text"  id="c1m_ureum" name="c1m_ureum" step="0.1" placeholder="in decimal" value="{{ c1.c1m_ureum }}">
                             </div>
 
                             <div class="form-group">
                                 <label> Creatinine (mg/dl) </label>
-                                <input class="form-control" type="number"  id="c1m_creatinine" name="c1m_creatinine" step="0.1" placeholder="in decimal" value="{{ c1.c1m_creatinine }}">
+                                <input class="form-control" type="text"  id="c1m_creatinine" name="c1m_creatinine" step="0.1" placeholder="in decimal" value="{{ c1.c1m_creatinine }}">
                             </div>
 
 
-                            <fieldset class="form-group">
+                           <!--  <fieldset class="form-group">
                             <label> Sampling of vaginal swab </label>
                             <div class="form-check">
-                                <label class="form-check-label">
+                                <label class="form-check-label">                              
+                                
                                 {% if c1.c1m_vaginal_swab %}
                                 <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0" checked>
                                 {% else %}
@@ -543,12 +568,51 @@
                                 Yes
                                 </label>
                             </div>                            
+                            </fieldset> -->
+
+                            <fieldset class="form-group">
+                                <label> Sampling of vaginal swab </label>
+                                {% if c1.c1m_vaginal_swab == null %}
+                                    <div class="form-check">                                        
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                            No
+                                        </label>                                        
+                                    </div>
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">                             
+                                            {% if c1.c1m_vaginal_swab %}
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                            {% else %}
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0" checked>
+                                            {% endif %}
+                                            No
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            {% if c1.c1m_vaginal_swab %}
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1" checked>
+                                            {% else %}
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
+                                            {% endif %}
+                                            Yes
+                                            </label>
+                                        </div>          
+                                    {% endif %}
                             </fieldset>
 
                             <div id="vaginalSwab">
                                 <div class="form-group">
                                     <label for="c1m_swab_date"> Date taken </label> 
-                                    <input class="form-control" type="date" name="c1m_swab_date" value="{{ swab_date }}">
+                                    <input class="form-control" type="date" name="c1m_swab_date" value="{{ swab_date }}" required>
                                 </div>
                             </div>
                         </div>
@@ -561,6 +625,19 @@
                             {% endif %}                       
     
                     </form>
+                    {% if role != 'staff' %}
+                        {% if date_data_checked %}
+
+                        {% else %}
+                            {% if is_save_all %}
+                            <form action="{% url 'forms:edit_form' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="section_number" value="1">
+                                <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                            </form>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
 

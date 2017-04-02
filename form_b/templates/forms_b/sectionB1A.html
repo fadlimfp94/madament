@@ -1,0 +1,222 @@
+    <script>
+        $(document).ready(function(){
+
+
+        
+        $("#complicationDiagnosed :input").prop("disabled", true);
+
+
+        $("#noComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").addClass('hidden');
+        });
+
+        $("#yesComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").removeClass('hidden');
+            $("#complicationDiagnosed :input").prop("disabled", false);
+        });
+
+        
+  
+    });
+    </script>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question">
+                    <h2>Medical Data</h2>
+                    <hr>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Body Weight (kg) </label>                         
+                                <input class="form-control" type="text" name="b1m_weight" placeholder="in kg">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Fundal Height (in cm) </label>                         
+                                <input class="form-control" type="text" name="b1m_fundal" placeholder="in cm" >
+                            </div>
+                        </div> 
+
+                        <h4><b>Blood Pressure</b></h4>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="text" name="b1m_systolic1st"  aria-describedby="basic-addon1">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="text" name="b1m_systolic2nd">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="text" name="b1m_diastolic1st" aria-describedby="basic-addon1">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="text" name="b1m_diastolic2nd">
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> If systolic blood pressure is greater or equal to 140 mmHg(systolic) or diastolic is >90 mmHg, repeat measurements within 1 week; if greater than or equal to 160 mm Hg systolic or greater than or equal to 110 mm Hg diastolic, hypertension can be confirmed within a short interval (minutes).
+                        </div> 
+                        
+
+                        <fieldset class="form-group">
+                            <label for="b1m_premature"> Has there been any morbidity or complication diagnosed in this pregnancy period ? </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="noComplicationDiagnosed" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="yesComplicationDiagnosed" value="1">
+                                Yes
+                                </label>
+                            </div>                            
+                        </fieldset>
+
+                        <div class="form-group" id="complicationDiagnosed">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_hypertensioncom" type="checkbox"> Hypertension
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_visualcom" type="checkbox"> Visual Disturbances
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_consciousnesscom" type="checkbox"> Decreased Consciousness
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_seizurecom" type="checkbox"> Seizure
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_diabetescom" type="checkbox"> Diabetes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_eclampsiacom" type="checkbox"> Pre-eclampsia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_laborcom" type="checkbox"> Threatened Labor
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_hypremesiscom" type="checkbox"> Hyperemesis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_tbcom" type="checkbox"> Active Tuberculosis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_hivcom" type="checkbox"> HIV Infection
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_urinarycom" type="checkbox"> Urinary Tract Infection
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_fevercom" type="checkbox"> Fever ( unknown cause )
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_respiratorycom" type="checkbox"> Upper Respiratory Tract Infection
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_pulmonarycom" type="checkbox"> Pulmonary Oedema
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_chroniccom" type="checkbox"> Chronic Cough ( at least two weeks) - obtain sputum sample
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" name="b1m_gastroentetriscom" type="checkbox"> Gastroenteritis
+                                </label>
+                            </div>
+
+                            <label>Other, specify </label>
+                            <input class="form-control" type="text" name="b1m_other" required>                           
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                        <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
+                        #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
+                        </div>
+
+                        
+                            
+
+                        <button type="submit" id="save" class="btn btn-primary">Save </button>
+                        <a href="" type="submit" class="btn btn-success"> Edit </a>
+
+    
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+    
+
+
+     
+
+</body>
+
+</html>

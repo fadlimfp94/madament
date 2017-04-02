@@ -4,7 +4,22 @@ from django.db import models
 
 # Create your models here.
 
+
+class BPregnancy(models.Model):
+	participant = models.ForeignKey(Participant, on_delete=models.PROTECT)
+	child_id = models.CharField(max_length=25)
+	interviewer_id = models.CharField(max_length=25)
+	data_entry_id = models.CharField(max_length=25)
+	data_checked_id = models.CharField(max_length=25, null=True)
+	date_admission = models.DateField()
+	date_interviewed = models.DateField()
+	date_data_entered = models.DateField()
+	date_data_checked = models.DateField(null=True)
+	is_save_all = models.BooleanField(default=False)
+
+
 class B1MedicalData(models.Model):
+	b1_form = models.ForeignKey(BPregnancy, on_delete=models.PROTECT)
 	b1m_weight = models.DecimalField(decimal_places=1)
 	b1m_fundal = models.DecimalField(decimal_places=1)
 	b1m_systolic1st = models.IntegerField()
