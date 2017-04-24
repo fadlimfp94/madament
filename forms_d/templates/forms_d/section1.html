@@ -2,12 +2,137 @@
 {% block form_section %}
     <script>
         $(document).ready(function(){
+            if($("#yesVaccination").is(':checked')){
+                $("#vaccinationHistory").removeClass('hidden');
+                $("#vaccinationHistory :input").prop("readonly", false);
+                $("#vaccinationHistory :checkbox").prop("required", false);
+                $("#vaccinationHistory :input[type='date']").prop("required", false);
+                
+                if($('#d1c_bcg').is(':checked')){
+                        $("#d1c_bcg_date").removeClass('hidden');
+                        $("#d1c_bcg_date :input[type='date']").prop("readonly", false);
+                        $("#d1c_bcg_date :input[type='date']").prop("required", true);
+                }
+                else{
+                        $("#d1c_bcg_date").addClass('hidden');
+                        $("#d1c_bcg_date :input[type='date']").removeAttr('value');
+                        $("#d1c_bcg_date :input[type='date']").prop("readonly", true);
+                        $("#d1c_bcg_date :input[type='date']").prop("required", false);
+                }
+
+                if($('#d1c_hep_b').is(':checked')){
+                        $("#d1c_hep_b_date").removeClass('hidden');
+                        $('#d1c_hep_b_date :input').prop("readonly", false);
+                        $('#d1c_hep_b_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_hep_b_date").addClass('hidden');
+                        $("#d1c_hep_b_date :input").removeAttr('value');
+                        $('#d1c_hep_b_date :input').prop("readonly", true);
+                        $('#d1c_hep_b_date :input').prop("required", false);
+                }
+
+                if($('#d1c_dpt').is(':checked')){
+                        $("#d1c_dpt_date").removeClass('hidden');
+                        $('#d1c_dpt_date :input').prop("readonly", false);
+                        $('#d1c_dpt_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_dpt_date").addClass('hidden');
+                        $("#d1c_dpt_date :input").removeAttr('value');
+                        $('#d1c_dpt_date :input').prop("readonly", true);
+                        $('#d1c_dpt_date :input').prop("required", false);
+                }
+
+                if($('#d1c_ipv').is(':checked')){
+                        $("#d1c_ipv_date").removeClass('hidden');
+                        $('#d1c_ipv_date :input').prop("readonly", false);
+                        $('#d1c_ipv_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_ipv_date").addClass('hidden');
+                        $("#d1c_ipv_date :input").removeAttr('value');
+                        $('#d1c_ipv_date :input').prop("readonly", true);
+                        $('#d1c_ipv_date :input').prop("required", false);
+                }
+
+                if($('#d1c_opv').is(':checked')){
+                        $("#d1c_opv_date").removeClass('hidden');
+                        $('#d1c_opv_date :input').prop("readonly", false);
+                        $('#d1c_opv_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_opv_date").addClass('hidden');
+                        $("#d1c_opv_date :input").removeAttr('value');
+                        $('#d1c_opv_date :input').prop("readonly", true);
+                        $('#d1c_opv_date :input').prop("required", false);
+                }
+
+                if($('#d1c_hib').is(':checked')){
+                        $("#d1c_hib_date").removeClass('hidden');
+                        $('#d1c_hib_date :input').prop("readonly", false);
+                        $('#d1c_hib_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_hib_date").addClass('hidden');
+                        $("#d1c_hib_date :input").removeAttr('value');
+                        $('#d1c_hib_date :input').prop("readonly", true);
+                        $('#d1c_hib_date :input').prop("required", false);
+                }
+
+                if($('#d1c_rotavirus').is(':checked')){
+                        $("#d1c_rotavirus_date").removeClass('hidden');
+                        $('#d1c_rotavirus_date :input').prop("readonly", false);
+                        $('#d1c_rotavirus_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_rotavirus_date").addClass('hidden');
+                        $("#d1c_rotavirus_date :input").removeAttr('value');
+                        $('#d1c_rotavirus_date :input').prop("readonly", true);
+                        $('#d1c_rotavirus_date :input').prop("required", false);
+                }
+
+                if($('#d1c_pneumococcus').is(':checked')){
+                        $("#d1c_pneumococcus_date").removeClass('hidden');
+                        $('#d1c_pneumococcus_date :input').prop("readonly", false);
+                        $('#d1c_pneumococcus_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_pneumococcus_date").addClass('hidden');
+                        $("#d1c_pneumococcus_date :input").removeAttr('value');
+                        $('#d1c_pneumococcus_date :input').prop("readonly", true);
+                        $('#d1c_pneumococcus_date :input').prop("required", false);
+                }
+
+                if($('#d1c_influenza').is(':checked')){
+                        $("#d1c_influenza_date").removeClass('hidden');
+                        $('#d1c_influenza_date :input').prop("readonly", false);
+                        $('#d1c_influenza_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_influenza_date").addClass('hidden');
+                        $("#d1c_influenza_date :input").removeAttr('value');
+                        $('#d1c_influenza_date :input').prop("readonly", true);
+                        $('#d1c_influenza_date :input').prop("required", false);
+                }
+
+            }
+            else{
+                $("#vaccinationHistory").addClass('hidden');
+                $("#vaccinationHistory :input").removeAttr('value');
+                $("#vaccinationHistory :input").prop("readonly", true);
+                $("#vaccinationHistory :input").prop("checked", false);
+                $("#vaccinationHistory :input").prop("required", false);
+                $("#vaccinationHistory :checkbox").prop("required", false);
+            }
+
 
             $("#yesVaccination").click(function(){
                 $("#vaccinationHistory").removeClass('hidden');
                 $("#vaccinationHistory :input").prop("readonly", false);
-                $("#vaccinationHistory :input").prop("required", true);
                 $("#vaccinationHistory :checkbox").prop("required", false);
+                $("#vaccinationHistory :input[type='date']").prop("required", false);
+                console.log( "Yes" );
             });
 
             $("#noVaccination").click(function(){
@@ -17,132 +142,133 @@
                 $("#vaccinationHistory :input").prop("checked", false);
                 $("#vaccinationHistory :input").prop("required", false);
                 $("#vaccinationHistory :checkbox").prop("required", false);
+                console.log( "No" );
 
             });
 
             $('#d1c_bcg').click(function(){
                 if (this.checked) {
                     $("#d1c_bcg_date").removeClass('hidden');
-                    $('d1c_bcg_date :input').prop("readonly", false);
-                    $('d1c_bcg_date :input').prop("required", true);
+                    $("#d1c_bcg_date :input[type='date']").prop("readonly", false);
+                    $("#d1c_bcg_date :input[type='date']").prop("required", true);
                 }
                 else{
                     $("#d1c_bcg_date").addClass('hidden');
-                    $("#d1c_bcg_date :input").removeAttr('value');
-                    $('d1c_bcg_date :input').prop("readonly", true);
-                    $('d1c_bcg_date :input').prop("required", false);
+                    $("#d1c_bcg_date :input[type='date']").removeAttr('value');
+                    $("#d1c_bcg_date :input[type='date']").prop("readonly", true);
+                    $("#d1c_bcg_date :input[type='date']").prop("required", false);
                 }
             })
 
             $('#d1c_hep_b').click(function(){
                 if (this.checked) {
                     $("#d1c_hep_b_date").removeClass('hidden');
-                    $('d1c_hep_b_date').prop("readonly", false);
-                    $('d1c_hep_b_date').prop("required", true);
+                    $('#d1c_hep_b_date :input').prop("readonly", false);
+                    $('#d1c_hep_b_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_hep_b_date").addClass('hidden');
-                    $("#d1c_hep_b_date").removeAttr('value');
-                    $('d1c_hep_b_date').prop("readonly", true);
-                    $('d1c_hep_b_date').prop("required", false);
+                    $("#d1c_hep_b_date :input").removeAttr('value');
+                    $('#d1c_hep_b_date :input').prop("readonly", true);
+                    $('#d1c_hep_b_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_dpt').click(function(){
                 if (this.checked) {
                     $("#d1c_dpt_date").removeClass('hidden');
-                    $('d1c_dpt_date').prop("readonly", false);
-                    $('d1c_dpt_date').prop("required", true);
+                    $('#d1c_dpt_date :input').prop("readonly", false);
+                    $('#d1c_dpt_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_dpt_date").addClass('hidden');
-                    $("#d1c_dpt_date").removeAttr('value');
-                    $('d1c_dpt_date').prop("readonly", true);
-                    $('d1c_dpt_date').prop("required", false);
+                    $("#d1c_dpt_date :input").removeAttr('value');
+                    $('#d1c_dpt_date :input').prop("readonly", true);
+                    $('#d1c_dpt_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_ipv').click(function(){
                 if (this.checked) {
                     $("#d1c_ipv_date").removeClass('hidden');
-                    $('d1c_ipv_date').prop("readonly", false);
-                    $('d1c_ipv_date').prop("required", true);
+                    $('#d1c_ipv_date :input').prop("readonly", false);
+                    $('#d1c_ipv_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_ipv_date").addClass('hidden');
-                    $("#d1c_ipv_date").removeAttr('value');
-                    $('d1c_ipv_date').prop("readonly", true);
-                    $('d1c_ipv_date').prop("required", false);
+                    $("#d1c_ipv_date :input").removeAttr('value');
+                    $('#d1c_ipv_date :input').prop("readonly", true);
+                    $('#d1c_ipv_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_opv').click(function(){
                 if (this.checked) {
                     $("#d1c_opv_date").removeClass('hidden');
-                    $('d1c_opv_date').prop("readonly", false);
-                    $('d1c_opv_date').prop("required", true);
+                    $('#d1c_opv_date :input').prop("readonly", false);
+                    $('#d1c_opv_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_opv_date").addClass('hidden');
-                    $("#d1c_opv_date").removeAttr('value');
-                    $('d1c_opv_date').prop("readonly", true);
-                    $('d1c_opv_date').prop("required", false);
+                    $("#d1c_opv_date :input").removeAttr('value');
+                    $('#d1c_opv_date :input').prop("readonly", true);
+                    $('#d1c_opv_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_hib').click(function(){
                 if (this.checked) {
                     $("#d1c_hib_date").removeClass('hidden');
-                    $('d1c_hib_date').prop("readonly", false);
-                    $('d1c_hib_date').prop("required", true);
+                    $('#d1c_hib_date :input').prop("readonly", false);
+                    $('#d1c_hib_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_hib_date").addClass('hidden');
-                    $("#d1c_hib_date").removeAttr('value');
-                    $('d1c_hib_date').prop("readonly", true);
-                    $('d1c_hib_date').prop("required", false);
+                    $("#d1c_hib_date :input").removeAttr('value');
+                    $('#d1c_hib_date :input').prop("readonly", true);
+                    $('#d1c_hib_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_rotavirus').click(function(){
                 if (this.checked) {
                     $("#d1c_rotavirus_date").removeClass('hidden');
-                    $('d1c_rotavirus_date').prop("readonly", false);
-                    $('d1c_rotavirus_date').prop("required", true);
+                    $('#d1c_rotavirus_date :input').prop("readonly", false);
+                    $('#d1c_rotavirus_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_rotavirus_date").addClass('hidden');
-                    $("#d1c_rotavirus_date").removeAttr('value');
-                    $('d1c_rotavirus_date').prop("readonly", true);
-                    $('d1c_rotavirus_date').prop("required", false);
+                    $("#d1c_rotavirus_date :input").removeAttr('value');
+                    $('#d1c_rotavirus_date :input').prop("readonly", true);
+                    $('#d1c_rotavirus_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_pneumococcus').click(function(){
                 if (this.checked) {
                     $("#d1c_pneumococcus_date").removeClass('hidden');
-                    $('d1c_pneumococcus_date').prop("readonly", false);
-                    $('d1c_pneumococcus_date').prop("required", true);
+                    $('#d1c_pneumococcus_date :input').prop("readonly", false);
+                    $('#d1c_pneumococcus_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_pneumococcus_date").addClass('hidden');
-                    $("#d1c_pneumococcus_date").removeAttr('value');
-                    $('d1c_pneumococcus_date').prop("readonly", true);
-                    $('d1c_pneumococcus_date').prop("required", false);
+                    $("#d1c_pneumococcus_date :input").removeAttr('value');
+                    $('#d1c_pneumococcus_date :input').prop("readonly", true);
+                    $('#d1c_pneumococcus_date :input').prop("required", false);
                 }
             })
 
             $('#d1c_influenza').click(function(){
                 if (this.checked) {
                     $("#d1c_influenza_date").removeClass('hidden');
-                    $('d1c_influenza_date').prop("readonly", false);
-                    $('d1c_influenza_date').prop("required", true);
+                    $('#d1c_influenza_date :input').prop("readonly", false);
+                    $('#d1c_influenza_date :input').prop("required", true);
                 }
                 else{
                     $("#d1c_influenza_date").addClass('hidden');
-                    $("#d1c_influenza_date").removeAttr('value');
-                    $('d1c_influenza_date').prop("readonly", true);
-                    $('d1c_influenza_date').prop("required", false);
+                    $("#d1c_influenza_date :input").removeAttr('value');
+                    $('#d1c_influenza_date :input').prop("readonly", true);
+                    $('#d1c_influenza_date :input').prop("required", false);
                 }
             })
 

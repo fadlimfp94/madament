@@ -1,6 +1,116 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+        $(document).ready(function(){
+            if($("#yesBreastfed").is(':checked')){
+                $("#foodsGiven").addClass('hidden');
+                $("#foodsGiven :input").removeAttr('value');
+                $("#foodsGiven :input").prop("readonly", true);
+                $("#foodsGiven :input").prop("checked", false);
+                $("#foodsGiven :input").prop("required", false);
+                $("#foodsGiven :checkbox").prop("required", false);
+
+            }
+            else{
+                $("#foodsGiven").removeClass('hidden');
+                $("#foodsGiven :input").prop("readonly", false);
+                $("#foodsGiven :input").prop("required", true);
+                $("#foodsGiven :checkbox").prop("required", false);
+
+                if($('#d2c_infant_formula').is(':checked')){
+                    $("#infant_formula").removeClass('hidden');
+                    $("#infant_formula :input").prop("readonly", false);
+                    $("#infant_formula :input").prop("required", true);
+                    $("#infant_formula :checkbox").prop("required", false);
+                    $("#d2c_age_formula").prop("required", true);
+                }
+                else{
+                    $("#infant_formula").addClass('hidden');
+                    $("#infant_formula :input").removeAttr('value');
+                    $("#infant_formula :input").prop("readonly", true);
+                    $("#infant_formula :input").prop("required", false);
+                    $("#infant_formula :checkbox").prop("required", false);
+                    $("#d2c_age_formula").prop("required", false);
+                }
+
+                if($('#d2c_weaning_food').is(':checked')){
+                    $("#weaning_food").removeClass('hidden');
+                    $("#weaning_food :input").prop("readonly", false);
+                    $("#weaning_food :input").prop("required", true);
+                    $("#weaning_food :checkbox").prop("required", false);
+                }
+                else{
+                    $("#weaning_food").addClass('hidden');
+                    $("#weaning_food :input").removeAttr('value');
+                    $("#weaning_food :input").prop("readonly", true);
+                    $("#weaning_food :input").prop("required", false);
+                    $("#weaning_food :checkbox").prop("required", false);
+                }
+            }
+
+
+
+            $("#yesBreastfed").click(function(){
+                $("#foodsGiven").addClass('hidden');
+                $("#foodsGiven :input").removeAttr('value');
+                $("#foodsGiven :input").prop("readonly", true);
+                $("#foodsGiven :input").prop("checked", false);
+                $("#foodsGiven :input").prop("required", false);
+                $("#foodsGiven :checkbox").prop("required", false);
+                console.log("yes");
+            });
+
+            $("#noBreastfed").click(function(){
+                $("#foodsGiven").removeClass('hidden');
+                $("#foodsGiven :input").prop("readonly", false);
+                $("#foodsGiven :input").prop("required", true);
+                $("#foodsGiven :checkbox").prop("required", false);
+                
+                
+
+                console.log("no");
+            });
+
+            $('#d2c_infant_formula').click(function(){
+                if (this.checked) {
+                    $("#infant_formula").removeClass('hidden');
+                    $("#infant_formula :input").prop("readonly", false);
+                    $("#infant_formula :input").prop("required", true);
+                    $("#infant_formula :checkbox").prop("required", false);
+                    $("#d2c_age_formula").prop("required", true);
+                    console.log("masuk");
+                }
+                else{
+                    $("#infant_formula").addClass('hidden');
+                    $("#infant_formula :input").removeAttr('value');
+                    $("#infant_formula :input").prop("readonly", true);
+                    $("#infant_formula :input").prop("required", false);
+                    $("#infant_formula :checkbox").prop("required", false);
+                    $("#d2c_age_formula").prop("required", false);
+                     console.log("tidak masuk");
+                }
+            })
+
+           $('#d2c_weaning_food').click(function(){
+                if (this.checked) {
+                    $("#weaning_food").removeClass('hidden');
+                    $("#weaning_food :input").prop("readonly", false);
+                    $("#weaning_food :input").prop("required", true);
+                    $("#weaning_food :checkbox").prop("required", false);
+                    
+                }
+                else{
+                    $("#weaning_food").addClass('hidden');
+                    $("#weaning_food :input").removeAttr('value');
+                    $("#weaning_food :input").prop("readonly", true);
+                    $("#weaning_food :input").prop("required", false);
+                    $("#weaning_food :checkbox").prop("required", false);
+                }
+            })
+
+        });
+    </script>
 
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
@@ -47,39 +157,39 @@
                                 {% if d2.d2c_breast_feeding_status == None %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed">
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed">
                                         No
                                         </label>
                                     </div>
                                 {% elif d2.d2c_breast_feeding_status %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed" checked>
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed">
                                         No
                                         </label>
                                     </div>
                                 {% else %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed">
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed" checked>
                                         No
                                         </label>
                                     </div>
@@ -87,6 +197,7 @@
                                 {% endif %}                            
                         </fieldset>
 
+                        <!--    
                         <fieldset class="form-group">
                                 <label for="d2c_supplementary_food"> If your baby is not fully breastfed anymore, what sort of foods that you have started to give?</label>
                                 {% if d2.d2c_supplementary_food == None %}
@@ -130,20 +241,26 @@
                                     </div>
                                 {% endif %}                            
                         </fieldset>
+                        -->
 
-                        <fieldset class="form-group" id="familyHistoryDisease"> 
+                        <fieldset class="form-group" id="foodsGiven"> 
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d2.d2c_infant_formula %}
-                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox" checked>
+                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox" id="d2c_infant_formula" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox">
+                                        <input class="form-check-input" name="d2c_infant_formula" type="checkbox" id="d2c_infant_formula">
                                         {% endif %}
                                         Infant formula, firstly introduced at the age (in weeks)
                                     </label> 
                                 </div>
-                                <div class="form-check">                                      
-                                        <input class="form-control" type="number" name="d2c_age_formula" placeholder="in weeks" value="{{d2.d2c_age_formula}}">  
+                                <div id="infant_formula">
+                                <div class="form-check">
+                                        {% if d2.d2c_age_formula != None %}                                      
+                                        <input class="form-control" type="number" name="d2c_age_formula" placeholder="in weeks" value="{{d2.d2c_age_formula}}" id="d2c_age_formula">
+                                        {% else %}
+                                        <input class="form-control" type="number" name="d2c_age_formula" placeholder="in weeks" id="d2c_age_formula">
+                                        {% endif %}  
                                 </div>
                                 <div class="form-check">                                    
                                     <label class="form-check-label">
@@ -169,10 +286,10 @@
 
                                 <div class="form-check">                                
                                     <label class="form-check-label">
-                                        {% if d2.d2c_hypoallergen_formula %}
-                                        <input class="form-check-input" name="d2c_hypoallergen_formula" type="checkbox" checked>
+                                        {% if d2.d2c_hypo_allergen_formula %}
+                                        <input class="form-check-input" name="d2c_hypo_allergen_formula" type="checkbox" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d2c_hypoallergen_formula" type="checkbox">
+                                        <input class="form-check-input" name="d2c_hypo_allergen_formula" type="checkbox">
                                         {% endif %}
                                         Hypoallergenic (e.g NAN HA, Nutrilon HA)
                                     </label>
@@ -185,7 +302,7 @@
                                         {% else %}
                                         <input class="form-check-input" name="d2c_hydrolized_formula" type="checkbox">
                                         {% endif %}
-                                        Regular / cow's milk based
+                                        Extensively-hydrolized formula (e.g Pregestimil, Pepti Junior)
                                     </label>
                                 </div>    
 
@@ -196,22 +313,29 @@
                                         {% else %}
                                         <input class="form-check-input" name="d2c_cows_milk_formula" type="checkbox">
                                         {% endif %}
-                                        Regular / cow's milk based
+                                        Amino acid based formula (e.g Neocates)
                                     </label>
+                                </div>
                                 </div>
 
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d2.d2c_weaning_food %}
-                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox" checked>
+                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox" id="d2c_weaning_food" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox">
+                                        <input class="form-check-input" name="d2c_weaning_food" type="checkbox" id="d2c_weaning_food">
                                         {% endif %}
                                         Complementary / weaning food, firstly introduced at the age (in weeks)
                                     </label>
                                 </div>
-                                <div class="form-check">                                     
-                                    <input class="form-control" type="number" name="d2c_age_weaning_food" placeholder="in weeks" value="{{d2.d2c_age_weaning_food}}">  
+                                <div id="weaning_food">
+                                <div class="form-check">
+                                    {% if d2.d2c_age_weaning_food != None %}                                     
+                                    <input class="form-control" type="number" name="d2c_age_weaning_food" placeholder="in weeks" value="{{d2.d2c_age_weaning_food}}">
+                                    {% else %}
+                                    <input class="form-control" type="number" name="d2c_age_weaning_food" placeholder="in weeks">
+                                    {% endif %}  
+                                </div>
                                 </div>        
                         </fieldset>    
 

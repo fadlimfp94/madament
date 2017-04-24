@@ -1,0 +1,8 @@
+catatan-catatan:
+
+bagian smoking frequency father masih form 6 terdapat bugs ketika kitika kita habis menekan never smoke untuk smoking status
+
+form yg belum beres javascriptnya :
+- form 3
+- form 7
+- form 8

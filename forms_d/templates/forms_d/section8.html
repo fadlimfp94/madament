@@ -1,6 +1,125 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+        $(document).ready(function(){
+            
+            if($('#yesTravel').is(':checked')){
+                $("#travelHistory").removeClass('hidden');
+                $("#travelHistory :input").prop("readonly", false);
+            }
+            else{
+                $("#travelHistory").addClass('hidden');
+                $("#travelHistory :input").removeAttr('value');
+                $("#travelHistory :input").prop("readonly", true);
+                $("#travelHistory :input").prop("required", false);
+            }
+
+            $('#yesTravel').click(function(){
+                $("#travelHistory").removeClass('hidden');
+                $("#travelHistory :input").prop("readonly", false);
+            });
+
+            $('#noTravel').click(function(){
+                $("#travelHistory").addClass('hidden');
+                $("#travelHistory :input").removeAttr('value');
+                $("#travelHistory :input").prop("readonly", true);
+                $("#travelHistory :input").prop("required", false);
+            });
+
+
+            if($('#d8m_other').is(':checked')){
+                $("#d8m_other_detail").removeClass('hidden');
+                $("#d8m_other_detail :input").prop("readonly", false);
+                $("#d8m_other_detail :input").prop("required", true);
+            }
+            else{
+                $("#d8m_other_detail").addClass('hidden');
+                $("#d8m_other_detail :input").removeAttr('value');
+                $("#d8m_other_detail :input").prop("readonly", true);
+                $("#d8m_other_detail :input").prop("required", false);
+            }
+
+            $('#d8m_other').click(function(){
+                if (this.checked) {
+                    $("#d8m_other_detail").removeClass('hidden');
+                    $("#d8m_other_detail :input").prop("readonly", false);
+                    $("#d8m_other_detail :input").prop("required", true);
+                }
+                else{
+                    $("#d8m_other_detail").addClass('hidden');
+                    $("#d8m_other_detail :input").removeAttr('value');
+                    $("#d8m_other_detail :input").prop("readonly", true);
+                    $("#d8m_other_detail :input").prop("required", false);
+                }
+            });
+
+            if($("#landed_house").is(':checked')){
+                console.log("1");
+                $("#flat_level_number").addClass('hidden');
+                $("#flat_level_number :input").removeAttr('value');
+                $("#flat_level_number :input").prop("readonly", true);
+                $("#flat_level_number :input").prop("required", false);
+
+                $("#landed_house_type").removeClass('hidden');
+                $("#landed_house_type :input").prop("readonly", false);
+                $("#landed_house_type :input").prop("required", true);         
+            }
+            else if($("#flat").is(':checked')) {
+                console.log("2");
+                $("#landed_house_type").addClass('hidden');
+                $("#landed_house_type :input").removeAttr('value');
+                $("#landed_house_type :input").prop("readonly", true);
+                $("#landed_house_type :input").prop("required", false);
+                $("#one_story").val("1")
+                $("#more_than_one").val("2")
+                
+
+                $("#flat_level_number").removeClass('hidden');
+                $("#flat_level_number :input").prop("readonly", false);
+                $("#flat_level_number :input").prop("required", true);
+            }
+            else{
+                console.log("3");
+                $("#flat_level_number").addClass('hidden');
+                $("#flat_level_number :input").removeAttr('value');
+                $("#flat_level_number :input").prop("readonly", true);
+                $("#flat_level_number :input").prop("required", false);
+
+                $("#landed_house_type").addClass('hidden');
+                $("#landed_house_type :input").removeAttr('value');
+                $("#landed_house_type :input").prop("readonly", true);
+                $("#landed_house_type :input").prop("required", false);
+                $("#one_story").val("1")
+                $("#more_than_one").val("2")
+            }
+
+            $("#landed_house").click(function(){
+                $("#flat_level_number").addClass('hidden');
+                $("#flat_level_number :input").removeAttr('value');
+                $("#flat_level_number :input").prop("readonly", true);
+                $("#flat_level_number :input").prop("required", false);
+
+                $("#landed_house_type").removeClass('hidden');
+                $("#landed_house_type :input").prop("readonly", false);
+                $("#landed_house_type :input").prop("required", true);
+            });
+
+            $("#flat").click(function(){
+                $("#landed_house_type").addClass('hidden');
+                $("#landed_house_type :input").removeAttr('value');
+                $("#landed_house_type :input").prop("readonly", true);
+                $("#landed_house_type :input").prop("required", false);
+                $("#one_story").val("1")
+                $("#more_than_one").val("2")
+
+                $("#flat_level_number").removeClass('hidden');
+                $("#flat_level_number :input").prop("readonly", false);
+                $("#flat_level_number :input").prop("required", true);
+            });
+
+        });
+    </script>
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"> List of Sections  </div>
@@ -100,15 +219,14 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_other %}
-                                        <input class="form-check-input" name="d8m_other" type="checkbox" checked>
+                                        <input class="form-check-input" name="d8m_other" type="checkbox" id="d8m_other" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_other" type="checkbox">
+                                        <input class="form-check-input" name="d8m_other" type="checkbox" id="d8m_other">
                                         {% endif %}
-                                        Other
+                                        Other, specify
                                     </label>
                             </div>        
-                            <div class="form-check">
-                                    <label>Other, specify</label>
+                            <div class="form-check" id="d8m_other_detail">
                                     <input class="form-control" type="text" name="d8m_other_detail" value="{{d8.d8m_other_detail}}" required>       
                             </div>
                         </div>
@@ -166,9 +284,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '0' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="0" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="0" type="radio">
                                         {% endif %}
                                         No
                                     </label>
@@ -176,9 +294,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '1' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="1" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="1" type="radio">
                                         {% endif %}
                                         Once per week or less
                                     </label>
@@ -186,9 +304,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '2' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="2" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="2" type="radio">
                                         {% endif %}
                                         More than once per week but not daily
                                     </label>
@@ -196,9 +314,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '3' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="3" checked>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="3" type="radio">
                                         {% endif %}
                                         Daily
                                     </label>
@@ -234,9 +352,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_housing_type == "1" %}
-                                <input type="radio" name="d8m_housing_type" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d8m_housing_type" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1">
                                 {% endif %}
                                 Landed House
                                 </label>
@@ -244,26 +362,26 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_housing_type == "2" %}
-                                <input type="radio" name="d8m_housing_type" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_housing_type" id="flat" value="2" checked>
                                 {% else %}
-                                <input type="radio" name="d8m_housing_type" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_housing_type" id="flat" value="2">
                                 {% endif %}
                                 Flat/Apartment, specify the level number:
                                 </label>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check" id="flat_level_number">
                                     <input class="form-control" type="number" name="d8m_apartment_level_number" value="{{ d8.d8m_apartment_level_number }}" required>       
                             </div>
                         </div>
 
-                        <div class="form-group" id="">                        
+                        <div class="form-group" id="landed_house_type">                        
                             <label> Landed House Type? </label>
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_landed_house_type == "1" %}
-                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_landed_house_type" id="one_story" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_landed_house_type" id="one_story" value="1">
                                 {% endif %}
                                 One story building
                                 </label>
@@ -271,9 +389,9 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_landed_house_type == "2" %}
-                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_landed_house_type" id="more_than_one" value="2" checked>
                                 {% else %}
-                                <input type="radio" name="d8m_landed_house_type" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_landed_house_type" id="more_than_one" value="2">
                                 {% endif %}
                                 More than one story building
                                 </label>
@@ -343,9 +461,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_staying_out_history %}
-                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -353,15 +471,16 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_staying_out_history %}
-                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0">
                                 {% else %}
-                                <input type="radio" name="d8m_staying_out_history" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
+                        <div id="travelHistory">
                         <div class="form-group">
                             <h4> First Travel </h4>
                             <div class="row">
@@ -458,6 +577,7 @@
                                     <input class="form-control" type="number" name="d8m_staying_out_2nd_duration" value ="{{ d8.d8m_staying_out_2nd_duration }}">
                                 </div>
                             </div>
+                        </div>
                         </div>
 
                         <div class="form-group">

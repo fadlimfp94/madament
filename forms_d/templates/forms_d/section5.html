@@ -1,6 +1,246 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+     <script>
+        $(document).ready(function(){
+            
+            if($('#d5c_blood').is(':checked')){
+                $("#d5c_blood_date").removeClass('hidden');
+                $("#d5c_blood_date :input[type='date']").prop("readonly", false);
+                $("#d5c_blood_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_blood_date").addClass('hidden');
+                $("#d5c_blood_date :input[type='date']").removeAttr('value');
+                $("#d5c_blood_date :input[type='date']").prop("readonly", true);
+                $("#d5c_blood_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_buccal_swab').is(':checked')){
+                $("#d5c_buccal_swab_date").removeClass('hidden');
+                $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", false);
+                $("#d5c_buccal_swab_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_buccal_swab_date").addClass('hidden');
+                $("#d5c_buccal_swab_date :input[type='date']").removeAttr('value');
+                $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", true);
+                $("#d5c_buccal_swab_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_hair_1').is(':checked')){
+                $("#d5c_hair_1_date").removeClass('hidden');
+                $("#d5c_hair_1_date :input[type='date']").prop("readonly", false);
+                $("#d5c_hair_1_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_hair_1_date").addClass('hidden');
+                $("#d5c_hair_1_date :input[type='date']").removeAttr('value');
+                $("#d5c_hair_1_date :input[type='date']").prop("readonly", true);
+                $("#d5c_hair_1_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_hair_6').is(':checked')){
+                $("#d5c_hair_6_date").removeClass('hidden');
+                $("#d5c_hair_6_date :input[type='date']").prop("readonly", false);
+                $("#d5c_hair_6_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_hair_6_date").addClass('hidden');
+                $("#d5c_hair_6_date :input[type='date']").removeAttr('value');
+                $("#d5c_hair_6_date :input[type='date']").prop("readonly", true);
+                $("#d5c_hair_6_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_nail_1').is(':checked')){
+                $("#d5c_nail_1_date").removeClass('hidden');
+                $("#d5c_nail_1_date :input[type='date']").prop("readonly", false);
+                $("#d5c_nail_1_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_nail_1_date").addClass('hidden');
+                $("#d5c_nail_1_date :input[type='date']").removeAttr('value');
+                $("#d5c_nail_1_date :input[type='date']").prop("readonly", true);
+                $("#d5c_nail_1_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_nail_6').is(':checked')){
+                $("#d5c_nail_6_date").removeClass('hidden');
+                $("#d5c_nail_6_date :input[type='date']").prop("readonly", false);
+                $("#d5c_nail_6_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_nail_6_date").addClass('hidden');
+                $("#d5c_nail_6_date :input[type='date']").removeAttr('value');
+                $("#d5c_nail_6_date :input[type='date']").prop("readonly", true);
+                $("#d5c_nail_6_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_nasopharyngeal_2').is(':checked')){
+                $("#d5c_nasopharyngeal_2_date").removeClass('hidden');
+                $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("readonly", false);
+                $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_nasopharyngeal_2_date").addClass('hidden');
+                $("#d5c_nasopharyngeal_2_date :input[type='date']").removeAttr('value');
+                $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("readonly", true);
+                $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_nasopharyngeal_4').is(':checked')){
+                $("#d5c_nasopharyngeal_4_date").removeClass('hidden');
+                $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("readonly", false);
+                $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_nasopharyngeal_4_date").addClass('hidden');
+                $("#d5c_nasopharyngeal_4_date :input[type='date']").removeAttr('value');
+                $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("readonly", true);
+                $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("required", false);
+            }
+
+            if($('#d5c_nasopharyngeal_6').is(':checked')){
+                $("#d5c_nasopharyngeal_6_date").removeClass('hidden');
+                $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("readonly", false);
+                $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("required", true);
+            }
+            else{
+                $("#d5c_nasopharyngeal_6_date").addClass('hidden');
+                $("#d5c_nasopharyngeal_6_date :input[type='date']").removeAttr('value');
+                $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("readonly", true);
+                $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("required", false);
+            }
+
+
+            $('#d5c_blood').click(function(){
+                if (this.checked) {
+                    $("#d5c_blood_date").removeClass('hidden');
+                    $("#d5c_blood_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_blood_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_blood_date").addClass('hidden');
+                    $("#d5c_blood_date :input[type='date']").removeAttr('value');
+                    $("#d5c_blood_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_blood_date :input[type='date']").prop("required", false);
+                }
+            })
+
+            $('#d5c_buccal_swab').click(function(){
+                if (this.checked) {
+                    $("#d5c_buccal_swab_date").removeClass('hidden');
+                    $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_buccal_swab_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_buccal_swab_date").addClass('hidden');
+                    $("#d5c_buccal_swab_date :input[type='date']").removeAttr('value');
+                    $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_buccal_swab_date :input[type='date']").prop("required", false);
+                }
+            })
+
+            $('#d5c_hair_1').click(function(){
+                if (this.checked) {
+                    $("#d5c_hair_1_date").removeClass('hidden');
+                    $("#d5c_hair_1_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_hair_1_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_hair_1_date").addClass('hidden');
+                    $("#d5c_hair_1_date :input[type='date']").removeAttr('value');
+                    $("#d5c_hair_1_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_hair_1_date :input[type='date']").prop("required", false);
+                }
+            })
+
+            $('#d5c_hair_6').click(function(){
+                if (this.checked) {
+                    $("#d5c_hair_6_date").removeClass('hidden');
+                    $("#d5c_hair_6_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_hair_6_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_hair_6_date").addClass('hidden');
+                    $("#d5c_hair_6_date :input[type='date']").removeAttr('value');
+                    $("#d5c_hair_6_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_hair_6_date :input[type='date']").prop("required", false);
+                }
+            })
+            
+            $('#d5c_nail_1').click(function(){
+                if (this.checked) {
+                    $("#d5c_nail_1_date").removeClass('hidden');
+                    $("#d5c_nail_1_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_nail_1_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_nail_1_date").addClass('hidden');
+                    $("#d5c_nail_1_date :input[type='date']").removeAttr('value');
+                    $("#d5c_nail_1_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_nail_1_date :input[type='date']").prop("required", false);
+                }
+            })
+
+           $('#d5c_nail_6').click(function(){
+                if (this.checked) {
+                    $("#d5c_nail_6_date").removeClass('hidden');
+                    $("#d5c_nail_6_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_nail_6_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_nail_6_date").addClass('hidden');
+                    $("#d5c_nail_6_date :input[type='date']").removeAttr('value');
+                    $("#d5c_nail_6_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_nail_6_date :input[type='date']").prop("required", false);
+                }
+            })
+
+            $('#d5c_nasopharyngeal_2').click(function(){
+                if (this.checked) {
+                    $("#d5c_nasopharyngeal_2_date").removeClass('hidden');
+                    $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_nasopharyngeal_2_date").addClass('hidden');
+                    $("#d5c_nasopharyngeal_2_date :input[type='date']").removeAttr('value');
+                    $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_nasopharyngeal_2_date :input[type='date']").prop("required", false);
+                }
+            })
+
+            $('#d5c_nasopharyngeal_4').click(function(){
+                if (this.checked) {
+                    $("#d5c_nasopharyngeal_4_date").removeClass('hidden');
+                    $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_nasopharyngeal_4_date").addClass('hidden');
+                    $("#d5c_nasopharyngeal_4_date :input[type='date']").removeAttr('value');
+                    $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_nasopharyngeal_4_date :input[type='date']").prop("required", false);
+                }
+            })
+
+           $('#d5c_nasopharyngeal_6').click(function(){
+                if (this.checked) {
+                    $("#d5c_nasopharyngeal_6_date").removeClass('hidden');
+                    $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("readonly", false);
+                    $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("required", true);
+                }
+                else{
+                    $("#d5c_nasopharyngeal_6_date").addClass('hidden');
+                    $("#d5c_nasopharyngeal_6_date :input[type='date']").removeAttr('value');
+                    $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("readonly", true);
+                    $("#d5c_nasopharyngeal_6_date :input[type='date']").prop("required", false);
+                }
+            })
+
+        });
+    </script>
 
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
@@ -49,14 +289,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_blood %}
-                                    <input class="form-check-input" name="d5c_blood" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_blood" type="checkbox" id="d5c_blood" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_blood" type="checkbox">
+                                    <input class="form-check-input" name="d5c_blood" type="checkbox" id="d5c_blood">
                                 {% endif %}
                                 Blood (heel prick, 0-2 weeks)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_blood_date">
                             <label for="d5c_blood_date"> Blood Date </label>
                             <input class="form-control" type="date" name="d5c_blood_date" value="{{ d5.d5c_blood_date | date:'Y-m-d' }}" required>
                         </div>
@@ -64,29 +304,29 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_buccal_swab %}
-                                    <input class="form-check-input" name="d5c_buccal_swab" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_buccal_swab" id="d5c_buccal_swab" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_buccal_swab" type="checkbox">
+                                    <input class="form-check-input" name="d5c_buccal_swab" id="d5c_buccal_swab" type="checkbox">
                                 {% endif %}
                                 Buccal Swab
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_buccal_swab_date">
                             <label for="d5c_buccal_swab_date"> Buccal Swab Date </label>
-                            <input class="form-control" type="date" name="d5c_buccal_swab_date" value="{{ d5.d5c_buccal_swab_date | date:'Y-m-d' }}" required>
+                            <input class="form-control" type="date" name="d5c_buccal_swab_date"  value="{{ d5.d5c_buccal_swab_date | date:'Y-m-d' }}" required>
                         </div>
 
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_hair_1 %}
-                                    <input class="form-check-input" name="d5c_hair_1" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_hair_1" id="d5c_hair_1" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_hair_1" type="checkbox">
+                                    <input class="form-check-input" name="d5c_hair_1" id="d5c_hair_1" type="checkbox">
                                 {% endif %}
                                 Hair (0-1 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_hair_1_date">
                             <label for="d5c_hair_1_date"> Hair (0-1 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_hair_1_date" value="{{ d5.d5c_hair_1_date | date:'Y-m-d' }}" required>
                         </div>
@@ -94,14 +334,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_hair_6 %}
-                                    <input class="form-check-input" name="d5c_hair_6" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_hair_6" id="d5c_hair_6" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_hair_6" type="checkbox">
+                                    <input class="form-check-input" name="d5c_hair_6" id="d5c_hair_6" type="checkbox">
                                 {% endif %}
                                 Hair (6 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_hair_6_date">
                             <label for="d5c_hair_6_date"> Hair (6 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_hair_6_date" value="{{ d5.d5c_hair_6_date | date:'Y-m-d' }}" required>
                         </div>
@@ -110,14 +350,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_nail_1 %}
-                                    <input class="form-check-input" name="d5c_nail_1" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_nail_1" id="d5c_nail_1" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_nail_1" type="checkbox">
+                                    <input class="form-check-input" name="d5c_nail_1" id="d5c_nail_1" type="checkbox">
                                 {% endif %}
                                 Nail (0-1 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_nail_1_date">
                             <label for="d5c_nail_1_date"> Nail (0-1 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_nail_1_date" value="{{ d5.d5c_nail_1_date | date:'Y-m-d' }}" required>
                         </div>
@@ -125,14 +365,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_nail_6 %}
-                                    <input class="form-check-input" name="d5c_nail_6" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_nail_6" id="d5c_nail_6" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_nail_6" type="checkbox">
+                                    <input class="form-check-input" name="d5c_nail_6" id="d5c_nail_6" type="checkbox">
                                 {% endif %}
                                 Nail (6 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_nail_6_date">
                             <label for="d5c_nail_6_date"> Nail (6 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_nail_6_date" value="{{ d5.d5c_nail_6_date | date:'Y-m-d' }}" required>
                         </div>
@@ -140,14 +380,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_nasopharyngeal_2 %}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_2" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_2"  id="d5c_nasopharyngeal_2" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_2" type="checkbox">
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_2" id="d5c_nasopharyngeal_2" type="checkbox">
                                 {% endif %}
                                 Nasopharingeal (2 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_nasopharyngeal_2_date">
                             <label for="d5c_nasopharyngeal_2_date"> Nasopharingeal (2 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_nasopharyngeal_2_date" value="{{ d5.d5c_nasopharyngeal_2_date | date:'Y-m-d' }}" required>
                         </div>
@@ -155,14 +395,14 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_nasopharyngeal_4%}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_4" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_4" id="d5c_nasopharyngeal_4" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_4" type="checkbox">
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_4" id="d5c_nasopharyngeal_4" type="checkbox">
                                 {% endif %}
                                 Nasopharingeal (4 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_nasopharyngeal_4_date">
                             <label for="d5c_nasopharyngeal_4_date">  Nasopharingeal (4 month of age) Date </label>
                             <input class="form-control" type="date" name="d5c_nasopharyngeal_4_date" value="{{ d5.d5c_nasopharyngeal_4_date | date:'Y-m-d' }}" required>
                         </div>
@@ -170,16 +410,16 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_nasopharyngeal_6 %}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_6" type="checkbox" checked>
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_6" id="d5c_nasopharyngeal_6" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="d5c_nasopharyngeal_6" type="checkbox">
+                                    <input class="form-check-input" name="d5c_nasopharyngeal_6" id="d5c_nasopharyngeal_6" type="checkbox">
                                 {% endif %}
                                 Nasopharingeal (6 month of age)
                             </label> 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="d5c_nasopharyngeal_6_date">
                             <label for="d5c_nasopharyngeal_6_date"> Nasopharingeal (6 month of age) Date </label>
-                            <input class="form-control" type="date" name="d5c_nasopharyngeal_6_date" value="{{ d5.d5c_nasopharyngeal_6_date | date:'Y-m-d' }}" required>
+                            <input class="form-control" type="date" name="d5c_nasopharyngeal_6_date"  value="{{ d5.d5c_nasopharyngeal_6_date | date:'Y-m-d' }}" required>
                         </div> 
 
                         <div class="form-group">

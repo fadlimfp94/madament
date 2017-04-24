@@ -3,9 +3,9 @@ from django.http import HttpResponse
 from .models import *
 from forms_a.models import *
 from forms_d.models import *
-#from forms_b.models import *
+#from forms_b1.models import *	
 #from forms_c.models import *
-#from forms_d.models import *
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import update_session_auth_hash
@@ -36,7 +36,10 @@ def format_number(number):
 def home(request):
 	participants = Participant.objects.all()
 	puskesmas_list = Puskesmas.objects.all()
-	return render(request, 'core/home.html', {'participants' : participants, 'puskesmas_list' : puskesmas_list})
+	number_of_participants_list = []
+	for puskesmas in puskesmas_list:
+		number_of_participants_list.append(puskesmas.name + ": " + str(Participant.objects.filter(puskesmas=puskesmas).count()))	
+	return render(request, 'core/home.html', {'number_of_participants_list' : number_of_participants_list,'participants' : participants, 'puskesmas_list' : puskesmas_list})
 
 @login_required(login_url='core:login')
 def forms(request):
@@ -45,6 +48,8 @@ def forms(request):
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/forms.html', {'participant' : participant, 'date_admission' : date_admission})
 
+
+# form fadli
 @login_required(login_url='core:login')
 def form_a(request):
 	participant = Participant.objects.get(id=request.session['participant_id'])
@@ -58,3 +63,20 @@ def form_d(request):
 	forms = DInfant.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+##################################
+
+# form gama
+@login_required(login_url='core:login')
+def form_c(request):	
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = CBirth.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_c.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_b1(request):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = BPregnancy.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_b1.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})

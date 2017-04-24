@@ -1,6 +1,92 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+        $(document).ready(function(){
+            if($("#yesChildHadFever").is(':checked')){
+                $("#childHadFever").removeClass('hidden');
+                $("#childHadFever :input").prop("readonly", false);
+            }
+            else{
+                $("#childHadFever").addClass('hidden');
+                $("#childHadFever :input").removeAttr('value');
+                $("#childHadFever :input").prop("readonly", true);
+                $("#childHadFever :input").prop("required", false);
+                $("#childHadFever :input").prop("checked", false);
+            }
+
+            $("#yesChildHadFever").click(function(){
+                $("#childHadFever").removeClass('hidden');
+                $("#childHadFever :input").prop("readonly", false);
+            });
+
+            $("#noChildHadFever").click(function(){
+                $("#childHadFever").addClass('hidden');
+                $("#childHadFever :input").removeAttr('value');
+                $("#childHadFever :input").prop("readonly", true);
+                $("#childHadFever :input").prop("required", false);
+                $("#childHadFever :input").prop("checked", false);
+            });
+
+
+            if($("#yesBeenHospitalised").is(':checked')){
+                $("#childBeenHospitalised").removeClass('hidden');
+                $("#childBeenHospitalised :input").prop("readonly", false);
+            }
+            else{
+                $("#childBeenHospitalised").addClass('hidden');
+                $("#childBeenHospitalised :input").removeAttr('value');
+                $("#childBeenHospitalised :input").prop("readonly", true);
+                $("#childBeenHospitalised :input").prop("required", false);
+                $("#childBeenHospitalised :input").prop("checked", false);
+                $("#childBeenHospitalised :input[type='date']").prop("required", false);
+
+            }
+
+            $("#yesBeenHospitalised").click(function(){
+                $("#childBeenHospitalised").removeClass('hidden');
+                $("#childBeenHospitalised :input").prop("readonly", false);
+            });
+
+            $("#noBeenHospitalised").click(function(){
+                $("#childBeenHospitalised").addClass('hidden');
+                $("#childBeenHospitalised :input").removeAttr('value');
+                $("#childBeenHospitalised :input").prop("readonly", true);
+                $("#childBeenHospitalised :input").prop("required", false);
+                $("#childBeenHospitalised :input").prop("checked", false);
+                $("#childBeenHospitalised :input[type='date']").prop("required", false);
+            });
+
+            if($("#yesMedication").is(':checked')){
+                $("#medicationHistory").removeClass('hidden');
+                $("#medicationHistory :input").prop("readonly", false);
+            }
+            else{
+                $("#medicationHistory").addClass('hidden');
+                $("#medicationHistory :input").removeAttr('value');
+                $("#medicationHistory :input").prop("readonly", true);
+                $("#medicationHistory :input").prop("required", false);
+                $("#medicationHistory :input").prop("checked", false);
+                $("#medicationHistory :input[type='date']").prop("required", false);
+            }
+
+            $("#yesMedication").click(function(){
+                $("#medicationHistory").removeClass('hidden');
+                $("#medicationHistory :input").prop("readonly", false);
+            });
+
+            $("#noMedication").click(function(){
+                $("#medicationHistory").addClass('hidden');
+                $("#medicationHistory :input").removeAttr('value');
+                $("#medicationHistory :input").prop("readonly", true);
+                $("#medicationHistory :input").prop("required", false);
+                $("#medicationHistory :input").prop("checked", false);
+                $("#medicationHistory :input[type='date']").prop("required", false);
+            });
+
+
+        });
+    </script>
 
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
@@ -51,9 +137,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_infection %}
-                                <input type="radio" name="d7c_infection" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d7c_infection" id="optionsRadios1" value="1">
+                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -61,16 +147,16 @@
                             <div class="radio">
                                 <label>
                                 {% if d7.d7c_infection %}
-                                <input type="radio" name="d7c_infection" id="optionsRadios2" value="0">
+                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
                                 {% else %}
-                                <input type="radio" name="d7c_infection" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
-                        <div class="form-group" id="">
+                        <div class="form-group" id="childHadFever">
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_infection_upper_respi %}
@@ -223,9 +309,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_hospitalization %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios1" value="1">
+                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -233,15 +319,16 @@
                             <div class="radio">
                                 <label>
                                 {% if d7.d7c_hospitalization %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios2" value="0">
+                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0">
                                 {% else %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
+                        <div class="form-group" id="childBeenHospitalised">
                         <div class="form-group">
                             <label for="d7c_admission_date"> Date of admission </label>
                             <input class="form-control" type="date" name="d7c_admission_date" value="{{ d7.d7c_admission_date | date:'Y-m-d' }}" required>
@@ -579,15 +666,16 @@
                                 <input class="form-control" type="text" name="d7c_other_test_findings" value="{{ d7.d7c_other_test_findings }}" required>
                             </div>
                         </div>
+                        </div>
 
                         <div class="form-group" id="">                        
                             <label> Has the child took any medications since the last visit? </label>
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_medication %}
-                                <input type="radio" name="d7c_medication" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d7c_medication" id="yesMedication" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d7c_medication" id="optionsRadios1" value="1">
+                                <input type="radio" name="d7c_medication" id="yesMedication" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -595,15 +683,16 @@
                             <div class="radio">
                                 <label>
                                 {% if d7.d7c_medication %}
-                                <input type="radio" name="d7c_medication" id="optionsRadios2" value="0">
+                                <input type="radio" name="d7c_medication" id="noMedication" value="0">
                                 {% else %}
-                                <input type="radio" name="d7c_medication" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d7c_medication" id="noMedication" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
+                        <div class="form-group" id="medicationHistory" >
                         <div class="form-group" id="">                        
                             <label> List of medications taken since the last visit? </label>
                         </div>    
@@ -701,6 +790,7 @@
                                 <label for="d7c_med5_end_date"> End date </label>
                                 <input class="form-control" type="date" name="d7c_med5_end_date" value="{{ d7.d7c_med5_end_date | date:'Y-m-d' }}" required>
                             </div>                            
+                        </div>
                         </div>
 
                         <div class="form-group">

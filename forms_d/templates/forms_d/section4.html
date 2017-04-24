@@ -1,6 +1,45 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+        $(document).ready(function(){
+            if($("#yesRespiratory").is(':checked')){
+                $("#respiratory_symptom").removeClass('hidden');
+                $("#respiratory_symptom :input").prop("readonly", false);
+                $("#respiratory_symptom :input").prop("required", true);
+                $("#respiratory_symptom :checkbox").prop("required", false);
+            }
+            else{
+                $("#respiratory_symptom").addClass('hidden');
+                $("#respiratory_symptom :input").removeAttr('value');
+                $("#respiratory_symptom :input").prop("readonly", true);
+                $("#respiratory_symptom :input").prop("checked", false);
+                $("#respiratory_symptom :input").prop("required", false);
+                $("#respiratory_symptom :checkbox").prop("required", false);
+            }
+
+
+            $("#yesRespiratory").click(function(){
+                $("#respiratory_symptom").removeClass('hidden');
+                $("#respiratory_symptom :input").prop("readonly", false);
+                $("#respiratory_symptom :input").prop("required", true);
+                $("#respiratory_symptom :checkbox").prop("required", false);
+                console.log( "Yes" );
+            });
+
+            $("#noRespiratory").click(function(){
+                $("#respiratory_symptom").addClass('hidden');
+                $("#respiratory_symptom :input").removeAttr('value');
+                $("#respiratory_symptom :input").prop("readonly", true);
+                $("#respiratory_symptom :input").prop("checked", false);
+                $("#respiratory_symptom :input").prop("required", false);
+                $("#respiratory_symptom :checkbox").prop("required", false);
+                console.log( "No" );
+
+            });
+
+        });
+    </script>
 
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
@@ -89,7 +128,17 @@
                         </div>
 
                         <div class="form-group">
-                            Time constant
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d4c_time_constant_1st"> Time constant 1st</label>
+                                    <input class="form-control" type="number" step="any" name="d4c_time_constant_1st" value = "{{ d4.d4c_time_constant_1st }}" required>
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d4c_time_constant_2nd"> Time constant 2nd</label>
+                                    <input class="form-control" type="number" step="any" name="d4c_time_constant_2nd" value = "{{ d4.d4c_time_constant_2nd }}" required>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -125,9 +174,9 @@
                             <div class="radio">
                                 <label>
                                     {% if d4.d4c_respiratory_symptom %}
-                                    <input type="radio" name="d4c_respiratory_symptom" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="d4c_respiratory_symptom" id="yesRespiratory" value="1" checked>
                                     {% else %}
-                                    <input type="radio" name="d4c_respiratory_symptom" id="optionsRadios1" value="1">
+                                    <input type="radio" name="d4c_respiratory_symptom" id="yesRespiratory" value="1">
                                     {% endif %}
                                     Yes
                                 </label>
@@ -135,15 +184,16 @@
                             <div class="radio">
                                 <label>
                                     {% if d4.d4c_respiratory_symptom %}
-                                    <input type="radio" name="d4c_respiratory_symptom" id="optionsRadios1" value="1">
+                                    <input type="radio" name="d4c_respiratory_symptom" id="noRespiratory" value="0">
                                     {% else %}
-                                    <input type="radio" name="d4c_respiratory_symptom" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="d4c_respiratory_symptom" id="noRespiratory" value="0" checked>
                                     {% endif %}
                                     No
                                 </label>
                             </div>
                         </div>
 
+                        <div id="respiratory_symptom">
                         <div class="form-group">
                             <label> Dry cough </label>
                             <div class="radio">
@@ -628,6 +678,7 @@
                                     Every day
                                 </label>
                             </div>
+                        </div>
                         </div>
 
                         <div class="form-group">

@@ -52,7 +52,11 @@
         <!-- End of Modal Create Participant-->
 
         <div class="row">         
-            <h3> List of Patient </h3>
+           <h3> List of Patient </h3>
+           <h4> Number of Registered Participant: {{ participants.count }} </h4>
+           {% for item in number_of_participants_list %}
+              <h4>{{ item }}</h4>
+           {% endfor %} 
            <table id="myTable" cellspacing="0" width="100%">
                 <thead>
                     <tr>

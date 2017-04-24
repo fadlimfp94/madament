@@ -1,6 +1,286 @@
 {% extends 'forms_d/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+        $(document).ready(function(){
+            // mother
+            if($("#smokerMother").is(':checked')){
+                console.log("1");
+                $("#exSmokerDetailMother").addClass('hidden');
+                $("#exSmokerDetailMother :input").removeAttr('value');
+                $("#exSmokerDetailMother :input").prop("readonly", true);
+                $("#exSmokerDetailMother :input").prop("checked", false);
+                $("#exSmokerDetailMother :input").prop("required", false);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+
+                $("#smokerDetailMother").removeClass('hidden');
+                $("#smokerDetailMother :input").prop("readonly", false);
+                $("#smokerDetailMother :input").prop("required", true);
+                $("#smokerDetailMother :checkbox").prop("required", false);         
+            }
+            else if($("#exSmokerMother").is(':checked')) {
+                $("#smokerDetailMother").addClass('hidden');
+                $("#smokerDetailMother :input").removeAttr('value');
+                $("#smokerDetailMother :input").prop("readonly", true);
+                $("#smokerDetailMother :input").prop("checked", false);
+                $("#smokerDetailMother :input").prop("required", false);
+                $("#smokerDetailMother :checkbox").prop("required", false);
+
+                $("#exSmokerDetailMother").removeClass('hidden');
+                $("#exSmokerDetailMother :input").prop("readonly", false);
+                $("#exSmokerDetailMother :input").prop("required", true);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+                console.log("exSmokerMother");
+            }
+            else{
+                $("#exSmokerDetailMother").addClass('hidden');
+                $("#exSmokerDetailMother :input").removeAttr('value');
+                $("#exSmokerDetailMother :input").prop("readonly", true);
+                $("#exSmokerDetailMother :input").prop("checked", false);
+                $("#exSmokerDetailMother :input").prop("required", false);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+
+                $("#smokerDetailMother").addClass('hidden');
+                $("#smokerDetailMother :input").removeAttr('value');
+                $("#smokerDetailMother :input").prop("readonly", true);
+                $("#smokerDetailMother :input").prop("checked", false);
+                $("#smokerDetailMother :input").prop("required", false);
+                $("#smokerDetailMother :checkbox").prop("required", false);
+            }
+
+
+            $("#smokerMother").click(function(){
+                $("#exSmokerDetailMother").addClass('hidden');
+                $("#exSmokerDetailMother :input").removeAttr('value');
+                $("#exSmokerDetailMother :input").prop("readonly", true);
+                $("#exSmokerDetailMother :input").prop("checked", false);
+                $("#exSmokerDetailMother :input").prop("required", false);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+
+                $("#smokerDetailMother").removeClass('hidden');
+                $("#smokerDetailMother :input").prop("readonly", false);
+                $("#smokerDetailMother :input").prop("required", true);
+                $("#smokerDetailMother :checkbox").prop("required", false);
+                console.log("smokerMother");
+            });
+
+            $("#exSmokerMother").click(function(){
+                $("#smokerDetailMother").addClass('hidden');
+                $("#smokerDetailMother :input").removeAttr('value');
+                $("#smokerDetailMother :input").prop("readonly", true);
+                $("#smokerDetailMother :input").prop("checked", false);
+                $("#smokerDetailMother :input").prop("required", false);
+                $("#smokerDetailMother :checkbox").prop("required", false);
+
+                $("#exSmokerDetailMother").removeClass('hidden');
+                $("#exSmokerDetailMother :input").prop("readonly", false);
+                $("#exSmokerDetailMother :input").prop("required", true);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+                console.log("exSmokerMother");
+            });
+
+             $("#neverSmokeMother").click(function(){
+                $("#exSmokerDetailMother").addClass('hidden');
+                $("#exSmokerDetailMother :input").removeAttr('value');
+                $("#exSmokerDetailMother :input").prop("readonly", true);
+                $("#exSmokerDetailMother :input").prop("checked", false);
+                $("#exSmokerDetailMother :input").prop("required", false);
+                $("#exSmokerDetailMother :checkbox").prop("required", false);
+
+                $("#smokerDetailMother").addClass('hidden');
+                $("#smokerDetailMother :input").removeAttr('value');
+                $("#smokerDetailMother :input").prop("readonly", true);
+                $("#smokerDetailMother :input").prop("checked", false);
+                $("#smokerDetailMother :input").prop("required", false);
+                $("#smokerDetailMother :checkbox").prop("required", false);
+                console.log("neverSmokeMother");
+            });
+
+            if($("#yesQuittingSmokeMother").is(':checked')){
+                $("#quittingDurationMother").removeClass('hidden');
+                $("#quittingDurationMother :input").prop("readonly", false);
+                $("#quittingDurationMother :input").prop("required", true);
+                $("#quittingDurationMother :checkbox").prop("required", false);         
+            }
+            else{
+                $("#quittingDurationMother").addClass('hidden');
+                $("#quittingDurationMother :input").removeAttr('value');
+                $("#quittingDurationMother :input").prop("readonly", true);
+                $("#quittingDurationMother :input").prop("checked", false);
+                $("#quittingDurationMother :input").prop("required", false);
+                $("#quittingDurationMother :checkbox").prop("required", false);
+            } 
+
+            $("#yesQuittingSmokeMother").click(function(){
+                $("#quittingDurationMother").removeClass('hidden');
+                $("#quittingDurationMother :input").prop("readonly", false);
+                $("#quittingDurationMother :input").prop("required", true);
+                $("#quittingDurationMother :checkbox").prop("required", false);
+            });
+
+            $("#noQuittingSmokeMother").click(function(){
+                $("#quittingDurationMother").addClass('hidden');
+                $("#quittingDurationMother :input").removeAttr('value');
+                $("#quittingDurationMother :input").prop("readonly", true);
+                $("#quittingDurationMother :input").prop("checked", false);
+                $("#quittingDurationMother :input").prop("required", false);
+                $("#quittingDurationMother :checkbox").prop("required", false);
+            }); 
+
+            if($("#yesHouseholdSmoke").is(':checked')){
+                console.log("tes");
+                $("#householdSmoke").removeClass('hidden');
+                $("#householdSmoke :input").prop("readonly", false);
+                $("#householdSmoke :input").prop("required", true);
+                $("#householdSmoke :checkbox").prop("required", false);
+            }
+            else{
+                $("#householdSmoke").addClass('hidden');
+                $("#householdSmoke :input").removeAttr('value');
+                $("#householdSmoke :input").prop("readonly", true);
+                $("#householdSmoke :input").prop("checked", false);
+                $("#householdSmoke :input").prop("required", false);
+                $("#householdSmoke :checkbox").prop("required", false);
+            }
+
+            $("#yesHouseholdSmoke").click(function(){
+                $("#householdSmoke").removeClass('hidden');
+                $("#householdSmoke :input").prop("readonly", false);
+                $("#householdSmoke :input").prop("required", true);
+                $("#householdSmoke :checkbox").prop("required", false);
+            });
+
+            $("#noHouseholdSmoke").click(function(){
+                $("#householdSmoke").addClass('hidden');
+                $("#householdSmoke :input").removeAttr('value');
+                $("#householdSmoke :input").prop("readonly", true);
+                $("#householdSmoke :input").prop("checked", false);
+                $("#householdSmoke :input").prop("required", false);
+                $("#householdSmoke :checkbox").prop("required", false);
+            });
+
+
+
+
+            // father 
+            if($("#smokerFather").is(':checked')){
+                $("#exSmokerDetailFather").addClass('hidden');
+                $("#exSmokerDetailFather :input").removeAttr('value');
+                $("#exSmokerDetailFather :input").prop("readonly", true);
+                $("#exSmokerDetailFather :input").prop("checked", false);
+                $("#exSmokerDetailFather :input").prop("required", false);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+
+                $("#smokerDetailFather").removeClass('hidden');
+                $("#smokerDetailFather :input").prop("readonly", false);
+                $("#smokerDetailFather :input").prop("required", true);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+
+                console.log("smokerfather")         
+            }
+            else if($("#exSmokerFather").is(':checked')) {
+                $("#smokerDetailFather").addClass('hidden');
+                $("#smokerDetailFather :input").removeAttr('value');
+                $("#d6f_smoking_frequency_daily").val('1');
+                $("#d6f_smoking_frequency_weekly").val('2');
+                $("#d6f_smoking_frequency_monthly").val('3');
+                $("#d6f_smoking_frequency_never").val('0');
+
+                $("#smokerDetailFather :input").prop("readonly", true);
+                $("#smokerDetailFather :input").prop("checked", false);
+                $("#smokerDetailFather :input").prop("required", false);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+
+                $("#exSmokerDetailFather").removeClass('hidden');
+                $("#exSmokerDetailFather :input").prop("readonly", false);
+                $("#exSmokerDetailFather :input").prop("required", true);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+                console.log("exSmokerfather");
+            }
+            else{
+                $("#exSmokerDetailFather").addClass('hidden');
+                $("#exSmokerDetailFather :input").removeAttr('value');
+                $("#exSmokerDetailFather :input").prop("readonly", true);
+                $("#exSmokerDetailFather :input").prop("checked", false);
+                $("#exSmokerDetailFather :input").prop("required", false);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+
+                $("#smokerDetailFather").addClass('hidden');
+                $("#smokerDetailFather :input").removeAttr('value');
+                $("#d6f_smoking_frequency_daily").val('1');
+                $("#d6f_smoking_frequency_weekly").val('2');
+                $("#d6f_smoking_frequency_monthly").val('3');
+                $("#d6f_smoking_frequency_never").val('0');
+                
+                $("#smokerDetailFather :input").prop("readonly", true);
+                $("#smokerDetailFather :input").prop("checked", false);
+                $("#smokerDetailFather :input").prop("required", false);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+            }
+
+
+            $("#smokerFather").click(function(){
+                $("#exSmokerDetailFather").addClass('hidden');
+                $("#exSmokerDetailFather :input").removeAttr('value');
+                $("#exSmokerDetailFather :input").prop("readonly", true);
+                $("#exSmokerDetailFather :input").prop("checked", false);
+                $("#exSmokerDetailFather :input").prop("required", false);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+
+                $("#smokerDetailFather").removeClass('hidden');
+                $("#smokerDetailFather :input").prop("readonly", false);
+                $("#smokerDetailFather :input").prop("required", true);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+                console.log("smokerfather");
+            });
+
+            $("#exSmokerFather").click(function(){
+                $("#smokerDetailFather").addClass('hidden');
+                $("#smokerDetailFather :input").removeAttr('value');
+                $("#d6f_smoking_frequency_daily").val('1');
+                $("#d6f_smoking_frequency_weekly").val('2');
+                $("#d6f_smoking_frequency_monthly").val('3');
+                $("#d6f_smoking_frequency_never").val('0');
+
+                $("#smokerDetailFather :input").prop("readonly", true);
+                $("#smokerDetailFather :input").prop("checked", false);
+                $("#smokerDetailFather :input").prop("required", false);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+
+                $("#exSmokerDetailFather").removeClass('hidden');
+                $("#exSmokerDetailFather :input").prop("readonly", false);
+                $("#exSmokerDetailFather :input").prop("required", true);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+                console.log("exSmokerfather");
+            });
+
+             $("#neverSmokeFather").click(function(){
+                $("#exSmokerDetailFather").addClass('hidden');
+                $("#exSmokerDetailFather :input").removeAttr('value');
+                $("#d6f_smoking_frequency_daily").val('1');
+                $("#d6f_smoking_frequency_weekly").val('2');
+                $("#d6f_smoking_frequency_monthly").val('3');
+                $("#d6f_smoking_frequency_never").val('0');
+
+                $("#exSmokerDetailFather :input").prop("readonly", true);
+                $("#exSmokerDetailFather :input").prop("checked", false);
+                $("#exSmokerDetailFather :input").prop("required", false);
+                $("#exSmokerDetailFather :checkbox").prop("required", false);
+
+                $("#smokerDetailFather").addClass('hidden');
+                $("#smokerDetailFather :input").removeAttr('value');
+                $("#smokerDetailFather :input").prop("readonly", true);
+                $("#smokerDetailFather :input").prop("checked", false);
+                $("#smokerDetailFather :input").prop("required", false);
+                $("#smokerDetailFather :checkbox").prop("required", false);
+                console.log("neverSmokefather");
+            }); 
+
+
+        });
+    </script>
+
+
             <div class="col-md-4 section-list">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"> List of Sections  </div>
@@ -52,9 +332,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if d6.d6m_smoking_status  == "1" %}
-                                    <input type="radio" name="d6m_smoking_status" id="smoker" value="1" checked>
+                                    <input type="radio" name="d6m_smoking_status" id="smokerMother" value="1" checked>
                                     {% else %}
-                                    <input type="radio" name="d6m_smoking_status" id="smoker" value="1">
+                                    <input type="radio" name="d6m_smoking_status" id="smokerMother" value="1">
                                     {% endif %}
                                     Smoker (at least 1 cigarette per day)
                                 </label>
@@ -72,23 +352,24 @@
                             <div class="radio">
                                 <label>
                                     {% if d6.d6m_smoking_status == "3" %}
-                                    <input type="radio" name="d6m_smoking_status" id="neverSmoke" value="3" checked>
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="3" checked>
                                     {% else %}
-                                    <input type="radio" name="d6m_smoking_status" id="neverSmoke" value="3">
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="3">
                                     {% endif %}
                                     Never smoke
                                 </label>
                             </div>
                         </div>
 
+                        <div id="exSmokerDetailMother">
                         <div class="form-group" id="">                        
                             <label> Have you quitted smoking after the birth of your baby? </label>
                             <div class="radio">                                
                                 <label>
                                 {% if d6.d6m_quitting_smoke %}
-                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d6m_quitting_smoke" id="yesQuittingSmokeMother" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios1" value="1">
+                                <input type="radio" name="d6m_quitting_smoke" id="yesQuittingSmokeMother" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -96,21 +377,23 @@
                             <div class="radio">
                                 <label>
                                 {% if d6.d6m_quitting_smoke %}
-                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios2" value="0">
+                                <input type="radio" name="d6m_quitting_smoke" id="noQuittingSmokeMother" value="0">
                                 {% else %}
-                                <input type="radio" name="d6m_quitting_smoke" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d6m_quitting_smoke" id="noQuittingSmokeMother" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
-                        <div class="form-group" id="">
+                        <div class="form-group" id="quittingDurationMother">
                             <label for="d6m_quitting_durationr"> How long have you quitted now?
                             </label>
                             <input class="form-control" type="number" name="d6m_quitting_duration" value="{{ d6.d6m_quitting_duration }}">
                         </div>
+                        </div>
 
+                    <div id="smokerDetailMother">
                         <div class="form-group" id="averageCigars">
                             <label for="d6m_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
                             </label>
@@ -141,7 +424,7 @@
                             </div>                        
                         </div>
                     
-                    <div class="form-group">                        
+                        <div class="form-group">                        
                         <label> Besides you, is there any other household member who smokes? </label>
                         <div class="radio">                                
                             <label>
@@ -163,43 +446,44 @@
                             No
                             </label>
                         </div>                        
-                    </div>
-
-                    <!-- if there is any member who smokes -->
-                    <div id="householdSmoke">
-                    <div class="form-group">
-                        <label for="d6m_household_number"> How many Person ? </label>
-                        <input class="form-control" type="number" name="d6m_household_number" value="{{ d6.d6m_household_number }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="d6m_household_cigar_number"> How many cigarettes per day are smoked in the home? </label>
-                        <input class="form-control" type="number" name="d6m_household_cigar_number" value="{{ d6.d6m_household_cigar_number }}">
-                    </div>
-
-                    <div class="form-group">                        
-                        <label> Do they smoke in front of you ? </label>
-                        <div class="radio">                                
-                            <label>
-                            {% if d6.d6m_household_presence %}
-                            <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1" checked>
-                            {% else %}
-                            <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1">
-                            {% endif %}
-                            Yes
-                            </label>
                         </div>
-                        <div class="radio">
-                            <label>
-                            {% if d6.d6m_household_presence %}
-                            <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0">
-                            {% else %}
-                            <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0" checked>
-                            {% endif %}
-                            No
-                            </label>
-                        </div>                        
-                    </div>
+
+                        <!-- if there is any member who smokes -->
+                        <div id="householdSmoke">
+                        <div class="form-group">
+                            <label for="d6m_household_number"> How many Person ? </label>
+                            <input class="form-control" type="number" name="d6m_household_number" value="{{ d6.d6m_household_number }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="d6m_household_cigar_number"> How many cigarettes per day are smoked in the home? </label>
+                            <input class="form-control" type="number" name="d6m_household_cigar_number" value="{{ d6.d6m_household_cigar_number }}">
+                        </div>
+
+                        <div class="form-group">                        
+                            <label> Do they smoke in front of you ? </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if d6.d6m_household_presence %}
+                                <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="d6m_household_presence" id="optionsRadios1" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                {% if d6.d6m_household_presence %}
+                                <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0">
+                                {% else %}
+                                <input type="radio" name="d6m_household_presence" id="optionsRadios2" value="0" checked>
+                                {% endif %}
+                                No
+                                </label>
+                            </div>                        
+                        </div>
+                        </div>
                     </div>    
 
                     <div class="form-group">
@@ -208,9 +492,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if d6.d6f_smoking_status  == "1" %}
-                                    <input type="radio" name="d6f_smoking_status" id="smoker" value="1" checked>
+                                    <input type="radio" name="d6f_smoking_status" id="smokerFather" value="1" checked>
                                     {% else %}
-                                    <input type="radio" name="d6f_smoking_status" id="smoker" value="1">
+                                    <input type="radio" name="d6f_smoking_status" id="smokerFather" value="1">
                                     {% endif %}
                                     Smoker (at least 1 cigarette per day)
                                 </label>
@@ -218,9 +502,9 @@
                             <div class="radio">
                                 <label>
                                     {% if d6.d6f_smoking_status == "2" %}
-                                    <input type="radio" name="d6f_smoking_status" id="exSmokerMother" value="2" checked>
+                                    <input type="radio" name="d6f_smoking_status" id="exSmokerFather" value="2" checked>
                                     {% else %}
-                                    <input type="radio" name="d6f_smoking_status" id="exSmokerMother" value="2">
+                                    <input type="radio" name="d6f_smoking_status" id="exSmokerFather" value="2">
                                     {% endif %}
                                     Ex-smoker
                                 </label>
@@ -228,21 +512,22 @@
                             <div class="radio">
                                 <label>
                                     {% if d6.d6f_smoking_status == "3" %}
-                                    <input type="radio" name="d6f_smoking_status" id="neverSmoke" value="3" checked>
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="3" checked>
                                     {% else %}
-                                    <input type="radio" name="d6f_smoking_status" id="neverSmoke" value="3">
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="3">
                                     {% endif %}
                                     Never smoke
                                 </label>
                             </div>
                     </div>
-
-                        <div class="form-group" id="">
+                    <div id="exSmokerDetailFather">
+                        <div class="form-group">
                             <label for="d6f_quitting_duration"> How long have you quitted now?
                             </label>
                             <input class="form-control" type="number" name="d6f_quitting_duration" value="{{ d6.d6f_quitting_duration }}">
                         </div>
-
+                    </div>    
+                    <div id="smokerDetailFather">
                         <div class="form-group" id="averageCigars">
                             <label for="d6f_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
                             </label>
@@ -274,13 +559,13 @@
                         </div>
 
                         <div class="form-group">                        
-                        <label> How often do you some inside your house? </label>
+                        <label> How often do you smoke inside your house? </label>
                         <div class="radio">                                
                             <label>
                             {% if d6.d6f_smoking_frequency == "1" %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios1" value="1" checked>
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_daily" value="1" checked>
                             {% else %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios1" value="1">
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_daily" value="1">
                             {% endif %}
                             Daily
                             </label>
@@ -288,9 +573,9 @@
                         <div class="radio">
                             <label>
                             {% if d6.d6f_smoking_frequency == "2" %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="2" checked>
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_weekly" value="2" checked>
                             {% else %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="2">
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_weekly" value="2">
                             {% endif %}
                             Weekly
                             </label>
@@ -299,9 +584,9 @@
                         <div class="radio">
                             <label>
                             {% if d6.d6f_smoking_frequency == "3" %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="3" checked>
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_monthly" value="3" checked>
                             {% else %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="3">
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_monthly" value="3">
                             {% endif %}
                             Monthly
                             </label>
@@ -310,9 +595,9 @@
                         <div class="radio">
                             <label>
                             {% if d6.d6f_smoking_frequency == "0" %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="0" checked>
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_never" value="0" checked>
                             {% else %}
-                            <input type="radio" name="d6f_smoking_frequency" id="optionsRadios2" value="0">
+                            <input type="radio" name="d6f_smoking_frequency" id="d6f_smoking_frequency_never" value="0">
                             {% endif %}
                             Never
                             </label>
@@ -341,7 +626,8 @@
                                 No
                                 </label>
                             </div>                        
-                        </div>    
+                        </div>
+                    </div>    
                        
                         <div class="form-group">
                             <div class="row">

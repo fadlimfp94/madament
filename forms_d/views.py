@@ -65,6 +65,7 @@ def create_form(request):
 		d_obj.date_data_entered = request.POST.get('date_data_entered')
 		d_obj.save()
 		request.session['form_id'] = d_obj.id
+		
 		return process_section1(request)
 	else:
 		participant = Participant.objects.get(id=request.session['participant_id'])
@@ -159,61 +160,70 @@ def save_section1(d1_obj, request):
 		d1_obj.d1c_vaccination_history = True
 	else:
 		d1_obj.d1c_vaccination_history = False	
-	
+
 	if request.POST.get('d1c_bcg') == "on":
 		d1_obj.d1c_bcg = True
+		d1_obj.d1c_bcg_date = request.POST.get('d1c_bcg_date')
 	else:
 		d1_obj.d1c_bcg = False
-	d1_obj.d1c_bcg_date = request.POST.get('d1c_bcg_date')
-	
+		d1_obj.d1c_bcg_date = None
+		
 	if request.POST.get('d1c_hep_b') == "on":
 		d1_obj.d1c_hep_b = True
+		d1_obj.d1c_hep_b_date = request.POST.get('d1c_hep_b_date')
 	else:
-		d1_obj.d1c_hep_b = False	
-	d1_obj.d1c_hep_b_date = request.POST.get('d1c_hep_b_date')
-	
+		d1_obj.d1c_hep_b = False
+		d1_obj.d1c_hep_b_date = None	
+				
 	if request.POST.get('d1c_dpt') == "on":
 		d1_obj.d1c_dpt = True
+		d1_obj.d1c_dpt_date = request.POST.get('d1c_dpt_date')
 	else:
-		d1_obj.d1c_dpt = False	
-	d1_obj.d1c_dpt_date = request.POST.get('d1c_dpt_date')
-	
+		d1_obj.d1c_dpt = False
+		d1_obj.d1c_dpt_date = None	
+				
 	if request.POST.get('d1c_ipv') == "on":
 		d1_obj.d1c_ipv = True
+		d1_obj.d1c_ipv_date = request.POST.get('d1c_ipv_date')
 	else:
 		d1_obj.d1c_ipv = False
-	d1_obj.d1c_ipv_date = request.POST.get('d1c_ipv_date')
-	
+		d1_obj.d1c_ipv_date = None
+				
 	if request.POST.get('d1c_opv') == "on":
 		d1_obj.d1c_opv = True
+		d1_obj.d1c_opv_date = request.POST.get('d1c_opv_date')
 	else:
 		d1_obj.d1c_opv = False
-	d1_obj.d1c_opv_date = request.POST.get('d1c_opv_date')
-	
+		d1_obj.d1c_opv_date = None
+			
 	if request.POST.get('d1c_hib') == "on":
 		d1_obj.d1c_hib = True
+		d1_obj.d1c_hib_date = request.POST.get('d1c_hib_date')
 	else:
 		d1_obj.d1c_hib = False
-	d1_obj.d1c_hib_date = request.POST.get('d1c_hib_date')
-	
+		d1_obj.d1c_hib_date = None
+				
 	if request.POST.get('d1c_rotavirus') == "on":
 		d1_obj.d1c_rotavirus = True
+		d1_obj.d1c_rotavirus_date = request.POST.get('d1c_rotavirus_date')
 	else:
-		d1_obj.d1c_rotavirus = False	
-	d1_obj.d1c_rotavirus_date = request.POST.get('d1c_rotavirus_date')
-	
+		d1_obj.d1c_rotavirus = False
+		d1_obj.d1c_rotavirus_date = None	
+			
 	if request.POST.get('d1c_pneumococcus') == "on":
 		d1_obj.d1c_pneumococcus = True
+		d1_obj.d1c_pneumococcus_date = request.POST.get('d1c_pneumococcus_date')
 	else:
 		d1_obj.d1c_pneumococcus = False
-	d1_obj.d1c_pneumococcus_date = request.POST.get('d1c_pneumococcus_date')
-	
+		d1_obj.d1c_pneumococcus_date = None
+
 	if request.POST.get('d1c_influenza') == "on":
 		d1_obj.d1c_influenza = True
+		d1_obj.d1c_influenza_date = request.POST.get('d1c_influenza_date')
 	else:
 		d1_obj.d1c_influenza = False
-	d1_obj.d1c_influenza_date = request.POST.get('d1c_influenza_date')
-	
+		d1_obj.d1c_influenza_date = None
+
 	d1_obj.save()
 	if request.user.is_staff:
 		d1_obj.d_form.is_save_all = True
@@ -287,25 +297,25 @@ def show_section2(request, is_save):
 def save_section2(d2_obj, request):
 	if request.POST.get('d2c_breast_feeding_status') == "1":
 		d2_obj.d2c_breast_feeding_status = True
+		d2_obj.d2c_supplementary_food = False
 	else:
 		d2_obj.d2c_breast_feeding_status = False	
-	
-	if request.POST.get('d2c_supplementary_food') == "1":
 		d2_obj.d2c_supplementary_food = True
-	else:
-		d2_obj.d2c_supplementary_food = False
+
 
 	if request.POST.get('d2c_infant_formula') == "on":		
 		d2_obj.d2c_infant_formula = True
+		d2_obj.d2c_age_formula = request.POST.get('d2c_age_formula')	
 	else:
-		d2_obj.d2c_infant_formula = False	
-	d2_obj.d2c_age_formula = request.POST.get('d2c_age_formula')
+		d2_obj.d2c_infant_formula = False
+		d2_obj.d2c_age_formula = None				
+	
 
 	if request.POST.get('d2c_cows_milk_formula') == "on":
 		d2_obj.d2c_cows_milk_formula = True
 	else:
 		d2_obj.d2c_cows_milk_formula = False
-	
+				
 	if request.POST.get('d2c_soy_formula') == "on":	
 		d2_obj.d2c_soy_formula = True
 	else:
@@ -313,8 +323,10 @@ def save_section2(d2_obj, request):
 
 	if request.POST.get('d2c_hypo_allergen_formula') == "on":
 		d2_obj.d2c_hypo_allergen_formula = True
+		print "on"
 	else:
-		d2_obj.d2c_hypo_allergen_formula = True
+		d2_obj.d2c_hypo_allergen_formula = False
+		print "off"
 
 	if request.POST.get('d2c_hydrolized_formula') == "on":
 		d2_obj.d2c_hydrolized_formula = True
@@ -323,13 +335,17 @@ def save_section2(d2_obj, request):
 	if request.POST.get('d2c_amino_formula') == "on":
 		d2_obj.d2c_amino_formula = True
 	else:
-		d2_obj.d2c_amino_formula = False
+		d2_obj.d2c_amino_formula = False	
+
 
 	if request.POST.get('d2c_weaning_food') == "on":	
 		d2_obj.d2c_weaning_food = True
+		d2_obj.d2c_age_weaning_food = request.POST.get('d2c_age_weaning_food')
 	else:
 		d2_obj.d2c_weaning_food = False
-	d2_obj.d2c_age_weaning_food = request.POST.get('d2c_age_weaning_food')
+		d2_obj.d2c_age_weaning_food = None
+		
+		
 	d2_obj.save()
 	if request.user.is_staff:
 		d2_obj.d_form.is_save_all = True
@@ -381,9 +397,7 @@ def show_section3(request, is_save):
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d3_obj = D3InfantCardiovascular.objects.get(d_form_id=form.id) 
-		#dob = d3_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d3_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d3_obj = D3InfantCardiovascular.objects.get(d_form_id=form.id)
 		if form.date_data_checked is not None:
 			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
 			if is_save:
@@ -417,9 +431,10 @@ def save_section3(d3_obj, request):
 	
 	if request.POST.get('d3c_heart_abnormality') == "1":
 		d3_obj.d3c_heart_abnormality = True
-		d3c_heart_abnormality_detail = request.POST.get('d3c_heart_abnormality_detail')
+		d3_obj.d3c_heart_abnormality_detail = request.POST.get('d3c_heart_abnormality_detail')
 	else:
 		d3_obj.d3c_heart_abnormality = False
+		d3_obj.d3c_heart_abnormality_detail = ""
 			
 	d3_obj.d3c_lvidd_1st = request.POST.get('d3c_lvidd_1st')
 	d3_obj.d3c_lvidd_2nd = request.POST.get('d3c_lvidd_2nd')
@@ -575,7 +590,7 @@ def save_section4(d4_obj, request):
 	d4_obj.d4c_date_lung = request.POST.get('d4c_date_lung')
 	d4_obj.d4c_examiner_lung = request.POST.get('d4c_examiner_lung')
 	d4_obj.d4c_resistance_1st = request.POST.get('d4c_resistance_1st')
-	d4_obj.d4c_resistance_2nd = request.POST.get('d4c_resistance_2nd ')
+	d4_obj.d4c_resistance_2nd = request.POST.get('d4c_resistance_2nd')
 	d4_obj.d4c_compliance_1st = request.POST.get('d4c_compliance_1st')
 	d4_obj.d4c_compliance_2nd = request.POST.get('d4c_compliance_2nd')
 	d4_obj.d4c_time_constant_1st = request.POST.get('d4c_time_constant_1st')
@@ -584,19 +599,57 @@ def save_section4(d4_obj, request):
 	d4_obj.d4c_fvc_2nd = request.POST.get('d4c_fvc_2nd')
 	d4_obj.d4c_fev_1st = request.POST.get('d4c_fev_1st')
 	d4_obj.d4c_fev_2nd = request.POST.get('d4c_fev_2nd')
+	
 	if request.POST.get('d4c_respiratory_symptom') == "1":
 		d4_obj.d4c_respiratory_symptom = True
 	else:
 		d4_obj.d4c_respiratory_symptom = False
-	d4_obj.d4c_dry_cough = request.POST.get('d4c_dry_cough')
-	d4_obj.d4c_phlegmy_cough = request.POST.get('d4c_phlegmy_cough')
-	d4_obj.d4c_runny_nose = request.POST.get('d4c_runny_nose')
-	d4_obj.d4c_stuffed_nose = request.POST.get('d4c_stuffed_nose')
-	d4_obj.d4c_wheeze = request.POST.get('d4c_wheeze')
-	d4_obj.d4c_breath_shortness = request.POST.get('d4c_breath_shortness')
-	d4_obj.d4c_rattly_chest = request.POST.get('d4c_rattly_chest')
-	d4_obj.d4c_snoring = request.POST.get('d4c_snoring')
-	d4_obj.d4c_stridor = request.POST.get('d4c_stridor')
+	
+	if request.POST.get('d4c_dry_cough'):	
+		d4_obj.d4c_dry_cough = request.POST.get('d4c_dry_cough')
+	else:
+		d4_obj.d4c_dry_cough = ""
+
+	if request.POST.get('d4c_phlegmy_cough'): 	
+		d4_obj.d4c_phlegmy_cough = request.POST.get('d4c_phlegmy_cough')
+	else:
+		d4_obj.d4c_phlegmy_cough = ""
+
+	if request.POST.get('d4c_runny_nose'):	
+		d4_obj.d4c_runny_nose = request.POST.get('d4c_runny_nose')
+	else:
+		d4_obj.d4c_runny_nose = ""
+
+	if request.POST.get('d4c_stuffed_nose'):	
+		d4_obj.d4c_stuffed_nose = request.POST.get('d4c_stuffed_nose')
+	else:
+		d4_obj.d4c_stuffed_nose = ""
+
+	if request.POST.get('d4c_wheeze'):
+		d4_obj.d4c_wheeze = request.POST.get('d4c_wheeze')
+	else:
+		d4_obj.d4c_wheeze = ""
+
+	if request.POST.get('d4c_breath_shortness'):	
+		d4_obj.d4c_breath_shortness = request.POST.get('d4c_breath_shortness')
+	else:
+		d4_obj.d4c_breath_shortness = ""
+
+	if request.POST.get('d4c_rattly_chest'):	
+		d4_obj.d4c_rattly_chest = request.POST.get('d4c_rattly_chest')
+	else:
+		d4_obj.d4c_rattly_chest = ""
+	
+	if request.POST.get('d4c_snoring'): 	
+		d4_obj.d4c_snoring = request.POST.get('d4c_snoring')
+	else:
+		d4_obj.d4c_snoring = ""
+	
+	if request.POST.get('d4c_stridor'):	
+		d4_obj.d4c_stridor = request.POST.get('d4c_stridor')
+	else:
+		d4_obj.d4c_stridor = ""
+
 	d4_obj.save()
 	if request.user.is_staff:
 		d4_obj.d_form.is_save_all = True
@@ -669,57 +722,66 @@ def show_section5(request, is_save):
 def save_section5(d5_obj, request):
 	if request.POST.get('d5c_blood') == "on":
 		d5_obj.d5c_blood = True
+		d5_obj.d5c_blood_date = request.POST.get('d5c_blood_date')
 	else:
 		d5_obj.d5c_blood = False	
-	d5_obj.d5c_blood_date = request.POST.get('d5c_blood_date')
+		d5_obj.d5c_blood_date = None
 	
 	if request.POST.get('d5c_buccal_swab') == "on":
 		d5_obj.d5c_buccal_swab = True
+		d5_obj.d5c_buccal_swab_date = request.POST.get('d5c_buccal_swab_date')
 	else:
 		d5_obj.d5c_buccal_swab = False
-	d5_obj.d5c_buccal_swab_date = request.POST.get('d5c_buccal_swab_date')
+		d5_obj.d5c_buccal_swab_date = None
 	
 	if request.POST.get('d5c_hair_1') == "on":
 		d5_obj.d5c_hair_1 = True
+		d5_obj.d5c_hair_1_date = request.POST.get('d5c_hair_1_date')
 	else:
 		d5_obj.d5c_hair_1 = False
-	d5_obj.d5c_hair_1_date = request.POST.get('d5c_hair_1_date')
+		d5_obj.d5c_hair_1_date = None
 
 	if request.POST.get('d5c_hair_6') == "on":
 		d5_obj.d5c_hair_6 = True
+		d5_obj.d5c_hair_6_date = request.POST.get('d5c_hair_6_date')
 	else:
 		d5_obj.d5c_hair_6 = False
-	d5_obj.d5c_hair_6_date = request.POST.get('d5c_hair_6_date')
+		d5_obj.d5c_hair_6_date = None
 
 	if request.POST.get('d5c_nail_1') == "on":
 		d5_obj.d5c_nail_1 = True
+		d5_obj.d5c_nail_1_date = request.POST.get('d5c_nail_1_date')
 	else:
 		d5_obj.d5c_nail_1 = False
-	d5_obj.d5c_nail_1_date = request.POST.get('d5c_nail_1_date')
+		d5_obj.d5c_nail_1_date = None
 
 	if request.POST.get('d5c_nail_6') == "on":
 		d5_obj.d5c_nail_6 = True
+		d5_obj.d5c_nail_6_date = request.POST.get('d5c_nail_6_date')
 	else:
 		d5_obj.d5c_nail_6 = False
-	d5_obj.d5c_nail_6_date = request.POST.get('d5c_nail_6_date')
+		d5_obj.d5c_nail_6_date = None
 
 	if request.POST.get('d5c_nasopharyngeal_2') == "on":
 		d5_obj.d5c_nasopharyngeal_2 = True
+		d5_obj.d5c_nasopharyngeal_2_date = request.POST.get('d5c_nasopharyngeal_2_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_2 = False
-	d5_obj.d5c_nasopharyngeal_2_date = request.POST.get('d5c_nasopharyngeal_2_date')
+		d5_obj.d5c_nasopharyngeal_2_date = None
 
 	if request.POST.get('d5c_nasopharyngeal_4') == "on":
 		d5_obj.d5c_nasopharyngeal_4 = True
+		d5_obj.d5c_nasopharyngeal_4_date = request.POST.get('d5c_nasopharyngeal_4_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_4 = False
-	d5_obj.d5c_nasopharyngeal_4_date = request.POST.get('d5c_nasopharyngeal_4_date')
+		d5_obj.d5c_nasopharyngeal_4_date = None
 
 	if request.POST.get('d5c_nasopharyngeal_6') == "on":
 		d5_obj.d5c_nasopharyngeal_6 = True
+		d5_obj.d5c_nasopharyngeal_6_date = request.POST.get('d5c_nasopharyngeal_6_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_6 = False
-	d5_obj.d5c_nasopharyngeal_6_date = request.POST.get('d5c_nasopharyngeal_6_date')
+		d5_obj.d5c_nasopharyngeal_6_date = None
 
 	d5_obj.save()
 	if request.user.is_staff:
@@ -794,36 +856,70 @@ def save_section6(d6_obj, request):
 	d6_obj.d6m_smoking_status = request.POST.get('d6m_smoking_status')
 	if request.POST.get('d6m_quitting_smoke') == "1":
 		d6_obj.d6m_quitting_smoke = True
+		d6_obj.d6m_quitting_duration = request.POST.get('d6m_quitting_duration')
 	else:
 		d6_obj.d6m_quitting_smoke = False
-	d6_obj.d6m_quitting_duration = request.POST.get('d6m_quitting_duration')
-	d6_obj.d6m_cigar_number = request.POST.get('d6m_cigar_number')
+		d6_obj.d6m_quitting_duration = None
+
+	if request.POST.get('d6m_cigar_number'):
+		d6_obj.d6m_cigar_number = request.POST.get('d6m_cigar_number')
+	else:
+		d6_obj.d6m_cigar_number = None
+
 	if request.POST.get('d6m_cigar_type') == "1":
 		d6_obj.d6m_cigar_type = True
 	else:
 		d6_obj.d6m_cigar_type = False
+
+		
 	if request.POST.get('d6m_smoking_household') == "1":
 		d6_obj.d6m_smoking_household = True
 	else:
 		d6_obj.d6m_smoking_household = False	
-	d6_obj.d6m_household_number = request.POST.get('d6m_household_number')
-	d6_obj.d6m_household_cigar_number = request.POST.get('d6m_household_cigar_number')
+	
+	if request.POST.get('d6m_household_number'):
+		d6_obj.d6m_household_number = request.POST.get('d6m_household_number')
+	else:
+		d6_obj.d6m_household_number = None
+
+	if request.POST.get('d6m_household_cigar_number'):
+		d6_obj.d6m_household_cigar_number = request.POST.get('d6m_household_cigar_number')
+	else:
+		d6_obj.d6m_household_cigar_number = None	
+	
 	if request.POST.get('d6m_household_presence') == "1":
 		d6_obj.d6m_household_presence = True
 	else:
 		d6_obj.d6m_household_presence = False
+	
+
 	d6_obj.d6f_smoking_status = request.POST.get('d6f_smoking_status')
-	d6_obj.d6f_quitting_duration = request.POST.get('d6f_quitting_duration')
-	d6_obj.d6f_cigar_number = request.POST.get('d6f_cigar_number')
+
+	if request.POST.get('d6f_quitting_duration'):	
+		d6_obj.d6f_quitting_duration = request.POST.get('d6f_quitting_duration')
+	else:
+		d6_obj.d6f_quitting_duration = None
+
+	if request.POST.get('d6f_cigar_number'):	
+		d6_obj.d6f_cigar_number = request.POST.get('d6f_cigar_number')
+	else:
+		d6_obj.d6f_cigar_number = None
+
 	if request.POST.get('d6f_cigar_type') == "1":
 		d6_obj.d6f_cigar_type = True
 	else:
-		d6_obj.d6f_cigar_type = False	
-	d6_obj.d6f_smoking_frequency = request.POST.get('d6f_smoking_frequency')
+		d6_obj.d6f_cigar_type = False
+	
+	if request.POST.get('d6f_smoking_frequency'):	
+		d6_obj.d6f_smoking_frequency = request.POST.get('d6f_smoking_frequency')
+	else:
+		d6_obj.d6f_smoking_frequency = ""
+
 	if request.POST.get('d6f_smoking_presence') == "1":
 		d6_obj.d6f_smoking_presence = True
 	else:
 		d6_obj.d6f_smoking_presence = False	
+	
 	d6_obj.save()
 	if request.user.is_staff:
 		d6_obj.d_form.is_save_all = True
@@ -972,18 +1068,24 @@ def save_section7(d7_obj, request):
 	else:
 		d7_obj.d7c_symptoms_nervous = False
 
-	if request.POST.get('d7c_hospitalization'):		
+	if request.POST.get('d7c_hospitalization') == "1":		
 		d7_obj.d7c_hospitalization = True
+		d7_obj.d7c_admission_date = request.POST.get('d7c_admission_date')
+		d7_obj.d7c_discharged_date = request.POST.get('d7c_discharged_date')
 	else:
-		d7_obj.d7c_hospitalization = False		
-	d7_obj.d7c_admission_date = request.POST.get('d7c_admission_date')
-	d7_obj.d7c_discharged_date = request.POST.get('d7c_discharged_date')
+		d7_obj.d7c_hospitalization = False
+		d7_obj.d7c_admission_date = None
+		d7_obj.d7c_discharged_date = None
+	
 	d7_obj.d7c_hospital = request.POST.get('d7c_hospital')
 	d7_obj.d7c_physician = request.POST.get('d7c_physician')
 	d7_obj.d7c_hospital_contact = request.POST.get('d7c_hospital_contact')
 		
-	d7_obj.d7c_ward = request.POST.get('d7c_ward')
-
+	if request.POST.get('d7c_ward'):
+		d7_obj.d7c_ward = request.POST.get('d7c_ward')
+	else:
+		d7_obj.d7c_ward = ""	
+		
 	if request.POST.get('d7c_additional_test') == "on":
 		d7_obj.d7c_additional_test = True
 	else:
@@ -1011,9 +1113,10 @@ def save_section7(d7_obj, request):
 
 	if request.POST.get('d7c_blood_culture') == "on":		
 		d7_obj.d7c_blood_culture = True
+		d7_obj.d7c_blood_culture_date = request.POST.get('d7c_blood_culture_date')
 	else:
-		d7_obj.d7c_blood_culture = False	
-	d7_obj.d7c_blood_culture_date = request.POST.get('d7c_blood_culture_date')
+		d7_obj.d7c_blood_culture = False
+		d7_obj.d7c_blood_culture_date = None
 
 	d7_obj.d7c_blood_microorganism = request.POST.get('d7c_blood_microorganism')
 
@@ -1044,29 +1147,36 @@ def save_section7(d7_obj, request):
 
 	if request.POST.get('d7c_urinalysis ') == "on": 		
 		d7_obj.d7c_urinalysis = True
+		d7_obj.d7c_urinalysis_date = request.POST.get('d7c_urinalysis_date')
 	else:
 		d7_obj.d7c_urinalysis = False		
-	d7_obj.d7c_urinalysis_date = request.POST.get('d7c_urinalysis_date')
+		d7_obj.d7c_urinalysis_date = None
 	
 	if request.POST.get('d7c_urine_culture') == "on": 
 		d7_obj.d7c_urine_culture = True
+		d7_obj.d7c_urine_date = request.POST.get('d7c_urine_date')
 	else:
 		d7_obj.d7c_urine_culture = False		
-	d7_obj.d7c_urine_date = request.POST.get('d7c_urine_date')
+		d7_obj.d7c_urine_date = None
+
 	d7_obj.d7c_urine_microorganism = request.POST.get('d7c_urine_microorganism')
 	
 	if request.POST.get('d7c_csf') == "on":
 		d7_obj.d7c_csf = True
+		d7_obj.d7c_csf_date = request.POST.get('d7c_csf_date')
 	else:
 		d7_obj.d7c_csf = False	
-	d7_obj.d7c_csf_date = request.POST.get('d7c_csf_date')
+		d7_obj.d7c_csf_date = None
+
 	d7_obj.d7c_csf_microorganism = request.POST.get('d7c_csf_microorganism')
 	
 	if request.POST.get('d7c_faecal_culture') == "on":
 		d7_obj.d7c_faecal_culture = True
+		d7_obj.d7c_faecal_date = request.POST.get('d7c_faecal_date')
 	else:
 		d7_obj.d7c_faecal_culture = False		
-	d7_obj.d7c_faecal_date = request.POST.get('d7c_faecal_date')
+		d7_obj.d7c_faecal_date = None
+
 	d7_obj.d7c_faecal_microorganism = request.POST.get('d7c_faecal_microorganism')
 	
 	if request.POST.get('d7c_chest_xray') == "on":
@@ -1077,26 +1187,33 @@ def save_section7(d7_obj, request):
 	
 	if request.POST.get('d7c_usg') == "on":
 		d7_obj.d7c_usg = True
+		d7_obj.d7c_usg_date = None
 	else:
-		d7_obj.d7c_usg = False	
+		d7_obj.d7c_usg = False
+		d7_obj.d7c_usg_date = None
+
 	d7_obj.d7c_usg_type = request.POST.get('d7c_usg_type')
-	d7_obj.d7c_usg_date = request.POST.get('d7c_usg_date')
 	d7_obj.d7c_usg_findings = request.POST.get('d7c_usg_findings')
 	
 	if request.POST.get('d7c_mri') == "on":
 		d7_obj.d7c_mri = True
+		d7_obj.d7c_mri_date = request.POST.get('d7c_mri_date')
 	else:
 		d7_obj.d7c_mri = False	
+		d7_obj.d7c_mri_date = None
+
 	d7_obj.d7c_mri_type = request.POST.get('d7c_mri_type')
-	d7_obj.d7c_mri_date = request.POST.get('d7c_mri_date')
+	
 	d7_obj.d7c_mri_findings = request.POST.get('d7c_mri_findings')
 	
 	if request.POST.get('d7c_other_test') == "on":
 		d7_obj.d7c_other_test = True
+		d7_obj.d7c_other_test_date = request.POST.get('d7c_other_test_date')
 	else:
-		d7_obj.d7c_other_test = False	
+		d7_obj.d7c_other_test = False
+		d7_obj.d7c_other_test_date = None	
 	d7_obj.d7c_other_test_type = request.POST.get('d7c_other_test_type')
-	d7_obj.d7c_other_test_date = request.POST.get('d7c_other_test_date')
+	
 	d7_obj.d7c_other_test_findings = request.POST.get('d7c_other_test_findings')
 	
 	if request.POST.get('d7c_medication') == "yes":
@@ -1106,28 +1223,49 @@ def save_section7(d7_obj, request):
 
 	d7_obj.d7c_med1_name = request.POST.get('d7c_med1_name')
 	d7_obj.d7c_med1_dosage = request.POST.get('d7c_med1_dosage')
-	d7_obj.d7c_med1_start_date = request.POST.get('d7c_med1_start_date')
-	d7_obj.d7c_med1_end_date = request.POST.get('d7c_med1_end_date')
-	
+	if request.POST.get('d7c_med1_name'):
+		d7_obj.d7c_med1_start_date = request.POST.get('d7c_med1_start_date')
+		d7_obj.d7c_med1_end_date = request.POST.get('d7c_med1_end_date')
+	else:
+		d7_obj.d7c_med1_start_date = None
+		d7_obj.d7c_med1_end_date = None
+
 	d7_obj.d7c_med2_name = request.POST.get('d7c_med2_name')
 	d7_obj.d7c_med2_dosage = request.POST.get('d7c_med2_dosage')
-	d7_obj.d7c_med2_start_date = request.POST.get('d7c_med2_start_date')
-	d7_obj.d7c_med2_end_date = request.POST.get('d7c_med2_end_date')
-	
+	if request.POST.get('d7c_med2_name'):
+		d7_obj.d7c_med2_start_date = request.POST.get('d7c_med2_start_date')
+		d7_obj.d7c_med2_end_date = request.POST.get('d7c_med2_end_date')
+	else:
+		d7_obj.d7c_med2_start_date = None
+		d7_obj.d7c_med2_end_date = None
+
 	d7_obj.d7c_med3_name = request.POST.get('d7c_med3_name')
 	d7_obj.d7c_med3_dosage = request.POST.get('d7c_med3_dosage')
-	d7_obj.d7c_med3_start_date = request.POST.get('d7c_med3_start_date')
-	d7_obj.d7c_med3_end_date = request.POST.get('d7c_med3_end_date')
-	
+	if request.POST.get('d7c_med3_name'):
+		d7_obj.d7c_med3_start_date = request.POST.get('d7c_med3_start_date')
+		d7_obj.d7c_med3_end_date = request.POST.get('d7c_med3_end_date')
+	else:
+		d7_obj.d7c_med3_start_date = None
+		d7_obj.d7c_med3_end_date = None
+
 	d7_obj.d7c_med4_name = request.POST.get('d7c_med4_name')
 	d7_obj.d7c_med4_dosage = request.POST.get('d7c_med4_dosage')
-	d7_obj.d7c_med4_start_date = request.POST.get('d7c_med4_start_date')
-	d7_obj.d7c_med4_end_date = request.POST.get('d7c_med4_end_date')
-	
+	if request.POST.get('d7c_med4_name'):
+		d7_obj.d7c_med4_start_date = request.POST.get('d7c_med4_start_date')
+		d7_obj.d7c_med4_end_date = request.POST.get('d7c_med4_end_date')
+	else:
+		d7_obj.d7c_med4_start_date = None
+		d7_obj.d7c_med4_end_date = None
+
 	d7_obj.d7c_med5_name = request.POST.get('d7c_med5_name')
 	d7_obj.d7c_med5_dosage = request.POST.get('d7c_med5_dosage')
-	d7_obj.d7c_med5_start_date = request.POST.get('d7c_med5_start_date')
-	d7_obj.d7c_med5_end_date = request.POST.get('d7c_med5_end_date')
+	if request.POST.get('d7c_med5_name'):
+		d7_obj.d7c_med5_start_date = request.POST.get('d7c_med5_start_date')
+		d7_obj.d7c_med5_end_date = request.POST.get('d7c_med5_end_date')
+	else:
+		d7_obj.d7c_med5_start_date = None
+		d7_obj.d7c_med5_end_date = None
+
 	d7_obj.save()
 	if request.user.is_staff:
 		d7_obj.d_form.is_save_all = True
@@ -1244,10 +1382,13 @@ def save_section8(d8_obj, request):
 		d8_obj.d8m_pet = False	
 	
 	d8_obj.d8m_housing_type = request.POST.get('d8m_housing_type')
+	print d8_obj.d8m_housing_type
 	if request.POST.get('d8m_housing_type') == "1":
 		d8_obj.d8m_landed_house_type = request.POST.get('d8m_landed_house_type')
+		d8_obj.d8m_apartment_level_number = None
 	else:
 		d8_obj.d8m_apartment_level_number = request.POST.get('d8m_apartment_level_number')
+		d8_obj.d8m_landed_house_type = ""
 	
 	if request.POST.get('d8m_dampness_house'):
 		d8_obj.d8m_dampness_house = True
