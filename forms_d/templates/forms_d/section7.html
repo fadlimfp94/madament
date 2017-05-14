@@ -6,6 +6,26 @@
             if($("#yesChildHadFever").is(':checked')){
                 $("#childHadFever").removeClass('hidden');
                 $("#childHadFever :input").prop("readonly", false);
+                if($("#d7c_infection_others").is(':checked')){
+                    $("#d7c_infection_others_detail").removeClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", false);
+                }
+                else{
+                    $("#d7c_infection_others_detail").addClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", true);   
+                }
+
+                if($("#d7c_infection_unknown").is(':checked')){
+                    $("#unknownDiagnosis").removeClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", false);
+                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis :checkbox").prop("required", false);
+                }
+                else{
+                    $("#unknownDiagnosis").addClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", true);
+                    $("#unknownDiagnosis :input").prop("required", false);   
+                }
             }
             else{
                 $("#childHadFever").addClass('hidden');
@@ -18,6 +38,28 @@
             $("#yesChildHadFever").click(function(){
                 $("#childHadFever").removeClass('hidden');
                 $("#childHadFever :input").prop("readonly", false);
+                if($("#d7c_infection_others").is(':checked')){
+                    $("#d7c_infection_others_detail").removeClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", false);
+                }
+                else{
+                    console.log("tes");
+                    $("#d7c_infection_others_detail").addClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", true);   
+                }
+                if($("#d7c_infection_unknown").is(':checked')){
+                    $("#unknownDiagnosis").removeClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", false);
+                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis :checkbox").prop("required", false);
+                }
+                else{
+                    $("#unknownDiagnosis").addClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", true);
+                    $("#unknownDiagnosis :input").prop("required", false);   
+                }
+
+
             });
 
             $("#noChildHadFever").click(function(){
@@ -28,10 +70,185 @@
                 $("#childHadFever :input").prop("checked", false);
             });
 
-
+            $("#d7c_infection_others").click(function(){
+                if($("#d7c_infection_others").is(':checked')){
+                    $("#d7c_infection_others_detail").removeClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", false);
+                }
+                else{
+                    console.log("tes");
+                    $("#d7c_infection_others_detail").addClass('hidden');
+                    $("#d7c_infection_others_detail").prop("readonly", true);   
+                }
+            });
+            
+            $("#d7c_infection_unknown").click(function(){
+                if($("#d7c_infection_unknown").is(':checked')){
+                    $("#unknownDiagnosis").removeClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", false);
+                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis :checkbox").prop("required", false);
+                }
+                else{
+                    $("#unknownDiagnosis").addClass('hidden');
+                    $("#unknownDiagnosis").prop("readonly", true);
+                    $("#unknownDiagnosis :input").prop("required", false);   
+                }
+            });         
+            
             if($("#yesBeenHospitalised").is(':checked')){
                 $("#childBeenHospitalised").removeClass('hidden');
                 $("#childBeenHospitalised :input").prop("readonly", false);
+                
+                if($("#yesAdditionalTest").is(':checked')){
+                    $("#additionalTest").removeClass('hidden');
+                    $("#additionalTest").prop("readonly", false);
+                    $("#additionalTest :input").prop("required", true);
+                    $("#additionalTest :checkbox").prop("required", false);
+                    
+                    if($("#d7c_blood_test").is(':checked')){
+                        $("#bloodTest").removeClass('hidden');
+                        $("#bloodTest").prop("readonly", false);
+                        $("#bloodTest :input").prop("required", true);
+                        $("#bloodTest :checkbox").prop("required", false);
+
+                        if($("#d7c_blood_culture").is(':checked')){
+                            $("#bloodCulture").removeClass('hidden');
+                            $("#bloodCulture").prop("readonly", false);
+                            $("#bloodCulture :input").prop("required", true);
+                            $("#bloodCulture :checkbox").prop("required", false);       
+                        }
+                        else{
+                            $("#bloodCulture").addClass('hidden');
+                            $("#bloodCulture").prop("readonly", true);
+                            $("#bloodCulture :input").prop("required", false);   
+                        }
+                    }
+                    else{
+                        $("#bloodTest").addClass('hidden');
+                        $("#bloodTest").prop("readonly", true);
+                        $("#bloodTest :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_urine").is(':checked')){
+                        $("#urine").removeClass('hidden');
+                        $("#urine").prop("readonly", false);
+                        $("#urine :input").prop("required", true);
+                        $("#urine :checkbox").prop("required", false);
+
+                        if($("#d7c_urinalysis").is(':checked')){
+                            $("#d7c_urinalysis_date").removeClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", false);
+                            $("#d7c_urinalysis_date :input").prop("required", true);
+                            $("#d7c_urinalysis_date :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#d7c_urinalysis_date").addClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", true);
+                            $("#d7c_urinalysis_date :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }
+
+                        if($("#d7c_urine_culture").is(':checked')){
+                            $("#urineCulture").removeClass('hidden');
+                            $("#urineCulture").prop("readonly", false);
+                            $("#urineCulture :input").prop("required", true);
+                            $("#urineCulture :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#urineCulture").addClass('hidden');
+                            $("#urineCulture").prop("readonly", true);
+                            $("#urineCulture :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }
+
+
+                    }
+                    else{
+                        $("#urine").addClass('hidden');
+                        $("#urine").prop("readonly", true);
+                        $("#urine :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_csf").is(':checked')){
+                        $("#csf").removeClass('hidden');
+                        $("#csf").prop("readonly", false);
+                        $("#csf :input").prop("required", true);
+                        $("#csf :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#csf").addClass('hidden');
+                        $("#csf").prop("readonly", true);
+                        $("#csf :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_faecal_culture").is(':checked')){
+                        $("#faecal").removeClass('hidden');
+                        $("#faecal").prop("readonly", false);
+                        $("#faecal :input").prop("required", true);
+                        $("#faecal :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#faecal").addClass('hidden');
+                        $("#faecal").prop("readonly", true);
+                        $("#faecal :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_chest_xray").is(':checked')){
+                        $("#chestXRay").removeClass('hidden');
+                        $("#chestXRay").prop("readonly", false);
+                        $("#chestXRay :input").prop("required", true);
+                        $("#chestXRay :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#chestXRay").addClass('hidden');
+                        $("#chestXRay").prop("readonly", true);
+                        $("#chestXRay :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_usg").is(':checked')){
+                        $("#usg").removeClass('hidden');
+                        $("#usg").prop("readonly", false);
+                        $("#usg :input").prop("required", true);
+                        $("#usg :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#usg").addClass('hidden');
+                        $("#usg").prop("readonly", true);
+                        $("#usg :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_mri").is(':checked')){
+                        $("#mri").removeClass('hidden');
+                        $("#mri").prop("readonly", false);
+                        $("#mri :input").prop("required", true);
+                        $("#mri :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#mri").addClass('hidden');
+                        $("#mri").prop("readonly", true);
+                        $("#mri :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_other_test").is(':checked')){
+                        $("#otherTest").removeClass('hidden');
+                        $("#otherTest").prop("readonly", false);
+                        $("#otherTest:input").prop("required", true);
+                        $("#otherTest :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#otherTest").addClass('hidden');
+                        $("#otherTest").prop("readonly", true);
+                        $("#otherTest :input").prop("required", false);   
+                    }
+
+                }
+                else{
+                    $("#additionalTest").addClass('hidden');
+                    $("#additionalTest").prop("readonly", true);
+                    $("#additionalTest :input").prop("required", false);
+                    console.log("aman");   
+                }
             }
             else{
                 $("#childBeenHospitalised").addClass('hidden');
@@ -42,10 +259,492 @@
                 $("#childBeenHospitalised :input[type='date']").prop("required", false);
 
             }
+            $("#d7c_blood_test").click(function(){
+                if($("#d7c_blood_test").is(':checked')){
+                    $("#bloodTest").removeClass('hidden');
+                    $("#bloodTest").prop("readonly", false);
+                    $("#bloodTest :input").prop("required", true);
+                    $("#bloodTest :checkbox").prop("required", false); 
+
+                    if($("#d7c_blood_culture").is(':checked')){
+                            $("#bloodCulture").removeClass('hidden');
+                            $("#bloodCulture").prop("readonly", false);
+                            $("#bloodCulture :input").prop("required", true);
+                            $("#bloodCulture :checkbox").prop("required", false);       
+                        }
+                        else{
+                            $("#bloodCulture").addClass('hidden');
+                            $("#bloodCulture").prop("readonly", true);
+                            $("#bloodCulture :input").prop("required", false);   
+                        }   
+                }
+                else{
+                    $("#bloodTest").addClass('hidden');
+                    $("#bloodTest").prop("readonly", true);
+                    $("#bloodTest :input").prop("required", false);  
+                }
+            });
+            $("#d7c_blood_culture").click(function(){
+                        if($("#d7c_blood_culture").is(':checked')){
+                            $("#bloodCulture").removeClass('hidden');
+                            $("#bloodCulture").prop("readonly", false);
+                            $("#bloodCulture :input").prop("required", true);
+                            $("#bloodCulture :checkbox").prop("required", false);       
+                        }
+                        else{
+                            $("#bloodCulture").addClass('hidden');
+                            $("#bloodCulture").prop("readonly", true);
+                            $("#bloodCulture :input").prop("required", false);   
+                        }
+            });
+
+            $("#d7c_urine").click(function(){
+                if($("#d7c_urine").is(':checked')){
+                    $("#urine").removeClass('hidden');
+                    $("#urine").prop("readonly", false);
+                    $("#urine :input").prop("required", true);
+                    $("#urine :checkbox").prop("required", false);
+
+                    if($("#d7c_urinalysis").is(':checked')){
+                            $("#d7c_urinalysis_date").removeClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", false);
+                            $("#d7c_urinalysis_date :input").prop("required", true);
+                            $("#d7c_urinalysis_date :checkbox").prop("required", false);  
+                        }
+                    else{
+                            $("#d7c_urinalysis_date").addClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", true);
+                            $("#d7c_urinalysis_date :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                    }
+
+                    if($("#d7c_urine_culture").is(':checked')){
+                            $("#urineCulture").removeClass('hidden');
+                            $("#urineCulture").prop("readonly", false);
+                            $("#urineCulture :input").prop("required", true);
+                            $("#urineCulture :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#urineCulture").addClass('hidden');
+                            $("#urineCulture").prop("readonly", true);
+                            $("#urineCulture :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }    
+                }
+                else{
+                    $("#urine").addClass('hidden');
+                    $("#urine").prop("readonly", true);
+                    $("#urine :input").prop("required", false);   
+                }
+            });
+            $("#d7c_urinalysis").click(function(){
+                        if($("#d7c_urinalysis").is(':checked')){
+                            $("#d7c_urinalysis_date").removeClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", false);
+                            $("#d7c_urinalysis_date :input").prop("required", true);
+                            $("#d7c_urinalysis_date :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#d7c_urinalysis_date").addClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", true);
+                            $("#d7c_urinalysis_date :input").prop("required", false);   
+                        }
+            });
+            $("#d7c_urine_culture").click(function(){
+                        if($("#d7c_urine_culture").is(':checked')){
+                            $("#urineCulture").removeClass('hidden');
+                            $("#urineCulture").prop("readonly", false);
+                            $("#urineCulture :input").prop("required", true);
+                            $("#urineCulture :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#urineCulture").addClass('hidden');
+                            $("#urineCulture").prop("readonly", true);
+                            $("#urineCulture :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }
+             });
+
+            $("#d7c_csf").click(function(){
+                console.log("oke oce");
+                if($("#d7c_csf").is(':checked')){
+                    $("#csf").removeClass('hidden');
+                    $("#csf").prop("readonly", false);
+                    $("#csf :input").prop("required", true);
+                    $("#csf :checkbox").prop("required", false);    
+                }
+                else{
+                    console.log("oke oce2");
+                    $("#csf").addClass('hidden');
+                    $("#csf").prop("readonly", true);
+                    $("#csf :input").prop("required", false);   
+                }
+            });
+
+            $("#d7c_faecal_culture").click(function(){
+                if($("#d7c_faecal_culture").is(':checked')){
+                            $("#faecal").removeClass('hidden');
+                            $("#faecal").prop("readonly", false);
+                            $("#faecal :input").prop("required", true);
+                            $("#faecal :checkbox").prop("required", false);    
+                }
+                else{
+                            $("#faecal").addClass('hidden');
+                            $("#faecal").prop("readonly", true);
+                            $("#faecal :input").prop("required", false);   
+                }
+            });
+
+            $("#d7c_chest_xray").click(function(){
+                    if($("#d7c_chest_xray").is(':checked')){
+                        $("#chestXRay").removeClass('hidden');
+                        $("#chestXRay").prop("readonly", false);
+                        $("#chestXRay :input").prop("required", true);
+                        $("#chestXRay :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#chestXRay").addClass('hidden');
+                        $("#chestXRay").prop("readonly", true);
+                        $("#chestXRay :input").prop("required", false);   
+                    }
+             });
+            $("#d7c_usg").click(function(){
+                    if($("#d7c_usg").is(':checked')){
+                        $("#usg").removeClass('hidden');
+                        $("#usg").prop("readonly", false);
+                        $("#usg :input").prop("required", true);
+                        $("#usg :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#usg").addClass('hidden');
+                        $("#usg").prop("readonly", true);
+                        $("#usg :input").prop("required", false);   
+                    }
+            });
+
+            $("#d7c_mri").click(function(){
+                    if($("#d7c_mri").is(':checked')){
+                        $("#mri").removeClass('hidden');
+                        $("#mri").prop("readonly", false);
+                        $("#mri :input").prop("required", true);
+                        $("#mri :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#mri").addClass('hidden');
+                        $("#mri").prop("readonly", true);
+                        $("#mri :input").prop("required", false);   
+                    }
+            });        
+                    
+            $("#d7c_other_test").click(function(){     
+                    if($("#d7c_other_test").is(':checked')){
+                        $("#otherTest").removeClass('hidden');
+                        $("#otherTest").prop("readonly", false);
+                        $("#otherTest:input").prop("required", true);
+                        $("#otherTest :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#otherTest").addClass('hidden');
+                        $("#otherTest").prop("readonly", true);
+                        $("#otherTest :input").prop("required", false);   
+                    }
+            });                                                
+
+            $("#yesAdditionalTest").click(function(){
+                $("#additionalTest").removeClass('hidden');
+                $("#additionalTest").prop("readonly", false);
+                $("#additionalTest :input").prop("required", true);
+                $("#additionalTest :checkbox").prop("required", false);
+
+                if($("#d7c_blood_test").is(':checked')){
+                    $("#bloodTest").removeClass('hidden');
+                    $("#bloodTest").prop("readonly", false);
+                    $("#bloodTest :input").prop("required", true);
+                    $("#bloodTest :checkbox").prop("required", false);
+
+                    if($("#d7c_blood_culture").is(':checked')){
+                            $("#bloodCulture").removeClass('hidden');
+                            $("#bloodCulture").prop("readonly", false);
+                            $("#bloodCulture :input").prop("required", true);
+                            $("#bloodCulture :checkbox").prop("required", false);       
+                        }
+                        else{
+                            $("#bloodCulture").addClass('hidden');
+                            $("#bloodCulture").prop("readonly", true);
+                            $("#bloodCulture :input").prop("required", false);   
+                        }    
+                }
+                else{
+                    $("#bloodTest").addClass('hidden');
+                    $("#bloodTest").prop("readonly", true);
+                    $("#bloodTest :input").prop("required", false);  
+                }
+
+                if($("#d7c_urine").is(':checked')){
+                    $("#urine").removeClass('hidden');
+                    $("#urine").prop("readonly", false);
+                    $("#urine :input").prop("required", true);
+                    $("#urine :checkbox").prop("required", false); 
+
+                    if($("#d7c_urinalysis").is(':checked')){
+                            $("#d7c_urinalysis_date").removeClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", false);
+                            $("#d7c_urinalysis_date :input").prop("required", true);
+                            $("#d7c_urinalysis_date :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#d7c_urinalysis_date").addClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", true);
+                            $("#d7c_urinalysis_date :input").prop("required", false);   
+                        }
+
+                    if($("#d7c_urine_culture").is(':checked')){
+                            $("#urineCulture").removeClass('hidden');
+                            $("#urineCulture").prop("readonly", false);
+                            $("#urineCulture :input").prop("required", true);
+                            $("#urineCulture :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#urineCulture").addClass('hidden');
+                            $("#urineCulture").prop("readonly", true);
+                            $("#urineCulture :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }   
+                }
+                else{
+                    $("#urine").addClass('hidden');
+                    $("#urine").prop("readonly", true);
+                    $("#urine :input").prop("required", false);   
+                }
+
+                if($("#d7c_csf").is(':checked')){
+                        $("#csf").removeClass('hidden');
+                        $("#csf").prop("readonly", false);
+                        $("#csf :input").prop("required", true);
+                        $("#csf :checkbox").prop("required", false);    
+                    }
+                    else{
+                        console.log("hari ini");
+                        $("#csf").addClass('hidden');
+                        $("#csf").prop("readonly", true);
+                        $("#csf :input").prop("required", false);   
+                    }
+
+                if($("#d7c_faecal_culture").is(':checked')){
+                        $("#faecal").removeClass('hidden');
+                        $("#faecal").prop("readonly", false);
+                        $("#faecal :input").prop("required", true);
+                        $("#faecal :checkbox").prop("required", false);    
+                }
+                else{
+                        $("#faecal").addClass('hidden');
+                        $("#faecal").prop("readonly", true);
+                        $("#faecal :input").prop("required", false);   
+                }
+
+                if($("#d7c_chest_xray").is(':checked')){
+                        $("#chestXRay").removeClass('hidden');
+                        $("#chestXRay").prop("readonly", false);
+                        $("#chestXRay :input").prop("required", true);
+                        $("#chestXRay :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#chestXRay").addClass('hidden');
+                        $("#chestXRay").prop("readonly", true);
+                        $("#chestXRay :input").prop("required", false);   
+                    }
+
+                if($("#d7c_usg").is(':checked')){
+                        $("#usg").removeClass('hidden');
+                        $("#usg").prop("readonly", false);
+                        $("#usg :input").prop("required", true);
+                        $("#usg :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#usg").addClass('hidden');
+                        $("#usg").prop("readonly", true);
+                        $("#usg :input").prop("required", false);   
+                    }
+
+                if($("#d7c_mri").is(':checked')){
+                        $("#mri").removeClass('hidden');
+                        $("#mri").prop("readonly", false);
+                        $("#mri :input").prop("required", true);
+                        $("#mri :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#mri").addClass('hidden');
+                        $("#mri").prop("readonly", true);
+                        $("#mri :input").prop("required", false);   
+                    }
+
+                if($("#d7c_other_test").is(':checked')){
+                        $("#otherTest").removeClass('hidden');
+                        $("#otherTest").prop("readonly", false);
+                        $("#otherTest:input").prop("required", true);
+                        $("#otherTest :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#otherTest").addClass('hidden');
+                        $("#otherTest").prop("readonly", true);
+                        $("#otherTest :input").prop("required", false);   
+                    }        
+            });
+
+            $("#noAdditionalTest").click(function(){
+                $("#additionalTest").addClass('hidden');
+                $("#additionalTest").prop("readonly", true);
+                $("#additionalTest :input").prop("required", false);
+            });
 
             $("#yesBeenHospitalised").click(function(){
                 $("#childBeenHospitalised").removeClass('hidden');
                 $("#childBeenHospitalised :input").prop("readonly", false);
+                if($("#yesAdditionalTest").is(':checked')){
+                    $("#additionalTest").removeClass('hidden');
+                    $("#additionalTest").prop("readonly", false);
+                    $("#additionalTest :input").prop("required", true);
+                    $("#additionalTest :checkbox").prop("required", false);
+
+                    if($("#d7c_blood_test").is(':checked')){
+                        $("#bloodTest").removeClass('hidden');
+                        $("#bloodTest").prop("readonly", false);
+                        $("#bloodTest :input").prop("required", true);
+                        $("#bloodTest :checkbox").prop("required", false);
+
+                        if($("#d7c_blood_culture").is(':checked')){
+                            $("#bloodCulture").removeClass('hidden');
+                            $("#bloodCulture").prop("readonly", false);
+                            $("#bloodCulture :input").prop("required", true);
+                            $("#bloodCulture :checkbox").prop("required", false);       
+                        }
+                        else{
+                            $("#bloodCulture").addClass('hidden');
+                            $("#bloodCulture").prop("readonly", true);
+                            $("#bloodCulture :input").prop("required", false);   
+                        }    
+                    }
+                    else{
+                        $("#bloodTest").addClass('hidden');
+                        $("#bloodTest").prop("readonly", true);
+                        $("#bloodTest :input").prop("required", false);  
+                    }
+
+                    if($("#d7c_urine").is(':checked')){
+                        $("#urine").removeClass('hidden');
+                        $("#urine").prop("readonly", false);
+                        $("#urine :input").prop("required", true);
+                        $("#urine :checkbox").prop("required", false);
+
+                        if($("#d7c_urinalysis").is(':checked')){
+                            $("#d7c_urinalysis_date").removeClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", false);
+                            $("#d7c_urinalysis_date :input").prop("required", true);
+                            $("#d7c_urinalysis_date :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#d7c_urinalysis_date").addClass('hidden');
+                            $("#d7c_urinalysis_date").prop("readonly", true);
+                            $("#d7c_urinalysis_date :input").prop("required", false);   
+                        }
+
+                        if($("#d7c_urine_culture").is(':checked')){
+                            $("#urineCulture").removeClass('hidden');
+                            $("#urineCulture").prop("readonly", false);
+                            $("#urineCulture :input").prop("required", true);
+                            $("#urineCulture :checkbox").prop("required", false);  
+                        }
+                        else{
+                            $("#urineCulture").addClass('hidden');
+                            $("#urineCulture").prop("readonly", true);
+                            $("#urineCulture :input").prop("required", false);
+                            console.log("oke okeo oke")   
+                        }    
+                    }
+                    else{
+                        $("#urine").addClass('hidden');
+                        $("#urine").prop("readonly", true);
+                        $("#urine :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_csf").is(':checked')){
+                            $("#csf").removeClass('hidden');
+                            $("#csf").prop("readonly", false);
+                            $("#csf :input").prop("required", true);
+                            $("#csf :checkbox").prop("required", false);    
+                        }
+                    else{
+                            $("#csf").addClass('hidden');
+                            $("#csf").prop("readonly", true);
+                            $("#csf :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_faecal_culture").is(':checked')){
+                        $("#faecal").removeClass('hidden');
+                        $("#faecal").prop("readonly", false);
+                        $("#faecal :input").prop("required", true);
+                        $("#faecal :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#faecal").addClass('hidden');
+                        $("#faecal").prop("readonly", true);
+                        $("#faecal :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_chest_xray").is(':checked')){
+                        $("#chestXRay").removeClass('hidden');
+                        $("#chestXRay").prop("readonly", false);
+                        $("#chestXRay :input").prop("required", true);
+                        $("#chestXRay :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#chestXRay").addClass('hidden');
+                        $("#chestXRay").prop("readonly", true);
+                        $("#chestXRay :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_usg").is(':checked')){
+                        $("#usg").removeClass('hidden');
+                        $("#usg").prop("readonly", false);
+                        $("#usg :input").prop("required", true);
+                        $("#usg :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#usg").addClass('hidden');
+                        $("#usg").prop("readonly", true);
+                        $("#usg :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_mri").is(':checked')){
+                        $("#mri").removeClass('hidden');
+                        $("#mri").prop("readonly", false);
+                        $("#mri :input").prop("required", true);
+                        $("#mri :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#mri").addClass('hidden');
+                        $("#mri").prop("readonly", true);
+                        $("#mri :input").prop("required", false);   
+                    }
+
+                    if($("#d7c_other_test").is(':checked')){
+                        $("#otherTest").removeClass('hidden');
+                        $("#otherTest").prop("readonly", false);
+                        $("#otherTest:input").prop("required", true);
+                        $("#otherTest :checkbox").prop("required", false);    
+                    }
+                    else{
+                        $("#otherTest").addClass('hidden');
+                        $("#otherTest").prop("readonly", true);
+                        $("#otherTest :input").prop("required", false);   
+                    }
+                }
+                else{
+                    $("#additionalTest").addClass('hidden');
+                    $("#additionalTest").prop("readonly", true);
+                    $("#additionalTest :input").prop("required", false);
+                    console.log("aman");   
+                }
             });
 
             $("#noBeenHospitalised").click(function(){
@@ -133,7 +832,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="context" value="SAVE">
                         <div class="form-group" id="">                        
-                            <label> Since the last visit, has the child had a fever? </label>
+                            <h4> Since the last visit, has the child had a fever? </h4>
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_infection %}
@@ -147,6 +846,8 @@
                             <div class="radio">
                                 <label>
                                 {% if d7.d7c_infection %}
+                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
+                                {% elif d7.d7c_infection == None %}
                                 <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
                                 {% else %}
                                 <input type="radio" name="d7c_infection" id="noChildHadFever" value="0" checked>
@@ -230,24 +931,25 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7c_infection_others %}
-                                <input class="form-check-input" name="d7c_infection_others" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_infection_others" type="checkbox" id="d7c_infection_others" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_infection_others" type="checkbox">
+                                <input class="form-check-input" name="d7c_infection_others" type="checkbox" id="d7c_infection_others">
                                 {% endif %}
                                 Other, specify
                                 </label>
                             </div>
-                            <input class="form-control" type="text" name="d7c_infection_others_detail" value="{{d7c_infection_others_detail}}" required>
+                            <input class="form-control" type="text" name="d7c_infection_others_detail" id="d7c_infection_others_detail" value="{{d7c_infection_others_detail}}" required>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_infection_unknown %}
-                                <input class="form-check-input" name="d7c_infection_unknown" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_infection_unknown" type="checkbox" id="d7c_infection_unknown" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_infection_unknown" type="checkbox">
+                                <input class="form-check-input" name="d7c_infection_unknown" type="checkbox" id="d7c_infection_unknown">
                                 {% endif %}
                                 Unknown diagnosis
                                 </label>
                             </div>
+                            <div class="form-group" id="unknownDiagnosis">
                             <label>Physician Clinic</label>
                             <input class="form-control" type="text" name="d7c_physician_clinic" value="{{d7.d7c_physician_clinic}}" required>
                             <label>Contact</label>
@@ -302,10 +1004,11 @@
                                 Nervous system: seizure
                                 </label>
                             </div>
+                            </div>
                         </div>
 
                         <div class="form-group" id="">                        
-                            <label> Has the child been hospitalised since the last visit? </label>
+                            <h4> Has the child been hospitalised since the last visit? </h4>
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_hospitalization %}
@@ -320,14 +1023,15 @@
                                 <label>
                                 {% if d7.d7c_hospitalization %}
                                 <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0">
+                                {% elif d7.d7c_hospitalization == None %}
+                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0">
                                 {% else %}
                                 <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
-                            </div>                        
+                            </div>                          
                         </div>
-
                         <div class="form-group" id="childBeenHospitalised">
                         <div class="form-group">
                             <label for="d7c_admission_date"> Date of admission </label>
@@ -356,29 +1060,58 @@
 
                         <div class="form-group" id="">
                             <label>In which ward that the child is admitted?</label>
+                            {{ d7.d7c_ward }}
                             <div class="radio">                                
+                                {% if d7.d7c_ward == "1" %}
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_1" value="1" checked>
+                                Emergency room only
+                                </label>
+                                {% else %}
                                 <label>
                                 <input type="radio" name="d7c_ward" id="d7c_ward_1" value="1">
                                 Emergency room only
                                 </label>
+                                {% endif %}
                             </div>
                             <div class="radio">                                
+                                {% if d7.d7c_ward == "2" %}
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_2" value="2" checked>
+                                One day care
+                                </label>
+                                {% else %}
                                 <label>
                                 <input type="radio" name="d7c_ward" id="d7c_ward_2" value="2">
                                 One day care
                                 </label>
+                                {% endif %}
                             </div>
                             <div class="radio">                                
+                                {% if d7.d7c_ward == "3" %}
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_3" value="3" checked>
+                                General Ward
+                                </label>
+                                {% else %}
                                 <label>
                                 <input type="radio" name="d7c_ward" id="d7c_ward_3" value="3">
                                 General Ward
                                 </label>
+                                {% endif %}
                             </div>
                             <div class="radio">                                
+                                {% if d7.d7c_ward == "4" %}
+                                <label>
+                                <input type="radio" name="d7c_ward" id="d7c_ward_4" value="4" checked>
+                                High care/intensive care
+                                </label>
+                                {% else %}
                                 <label>
                                 <input type="radio" name="d7c_ward" id="d7c_ward_4" value="4">
                                 High care/intensive care
                                 </label>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -387,9 +1120,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_additional_test %}
-                                <input type="radio" name="d7c_additional_test" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d7c_additional_test" id="yesAdditionalTest" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="d7c_additional_test" id="optionsRadios1" value="1">
+                                <input type="radio" name="d7c_additional_test" id="yesAdditionalTest" value="1">
                                 {% endif %}
                                 Yes
                                 </label>
@@ -397,103 +1130,107 @@
                             <div class="radio">
                                 <label>
                                 {% if d7.d7c_additional_test %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios2" value="0">
+                                <input type="radio" name="d7c_additional_test"  id="noAdditionalTest" value="0">
                                 {% else %}
-                                <input type="radio" name="d7c_hospitalization" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d7c_additional_test"  id="noAdditionalTest" value="0" checked>
                                 {% endif %}
                                 No
                                 </label>
                             </div>                        
                         </div>
 
-                        <div class="form-group" id="">
+                        <div class="form-group" id="additionalTest">
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_blood_test %}
-                                <input class="form-check-input" name="d7c_blood_test" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_blood_test" id="d7c_blood_test" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_blood_test" type="checkbox">
+                                <input class="form-check-input" name="d7c_blood_test" id="d7c_blood_test" type="checkbox">
                                 {% endif %}
                                 Blood test
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_blood_count %}
-                                <input class="form-check-input" name="d7c_blood_count" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_blood_count" type="checkbox">
-                                {% endif %}
-                                Complete blood count
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_crp %}
-                                <input class="form-check-input" name="d7c_crp" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_crp" type="checkbox">
-                                {% endif %}
-                                CRP
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_procalcitonin %}
-                                <input class="form-check-input" name="d7c_procalcitonin" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_procalcitonin" type="checkbox">
-                                {% endif %}
-                                Procalcitonin
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_blood_culture %}
-                                <input class="form-check-input" name="d7c_blood_culture" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_blood_culture" type="checkbox">
-                                {% endif %}
-                                Blood culture
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_blood_culture_date"> Blood culture date </label>
-                                <input class="form-control" type="date" name="d7c_blood_culture_date" value="{{ d7.d7c_blood_culture_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_blood_microorganism"> Microorganism growth </label>
-                                <input class="form-control" type="text" name="d7c_blood_microorganism" value="{{ d7.d7c_blood_microorganism }}" required>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_typhoid %}
-                                <input class="form-check-input" name="d7c_typhoid" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_typhoid" type="checkbox">
-                                {% endif %}
-                                Typhoid serology
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_dengue_ns_1 %}
-                                <input class="form-check-input" name="d7c_dengue_ns_1" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_dengue_ns_1" type="checkbox">
-                                {% endif %}
-                                Dengue NS 1
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_dengue %}
-                                <input class="form-check-input" name="d7c_dengue" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_dengue" type="checkbox">
-                                {% endif %}
-                                Dengue serology
-                                </label>
+                            <div class="form-group" id="bloodTest">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_blood_count %}
+                                    <input class="form-check-input" name="d7c_blood_count" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_blood_count" type="checkbox">
+                                    {% endif %}
+                                    Complete blood count
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_crp %}
+                                    <input class="form-check-input" name="d7c_crp" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_crp" type="checkbox">
+                                    {% endif %}
+                                    CRP
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_procalcitonin %}
+                                    <input class="form-check-input" name="d7c_procalcitonin" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_procalcitonin" type="checkbox">
+                                    {% endif %}
+                                    Procalcitonin
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_blood_culture %}
+                                    <input class="form-check-input" name="d7c_blood_culture" id="d7c_blood_culture" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_blood_culture" id="d7c_blood_culture" type="checkbox">
+                                    {% endif %}
+                                    Blood culture
+                                    </label>
+                                </div>
+                                <div class="form-group" id="bloodCulture">
+                                <div class="form-group">
+                                    <label for="d7c_blood_culture_date"> Blood culture date </label>
+                                    <input class="form-control" type="date" name="d7c_blood_culture_date" value="{{ d7.d7c_blood_culture_date | date:'Y-m-d' }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="d7c_blood_microorganism"> Microorganism growth </label>
+                                    <input class="form-control" type="text" name="d7c_blood_microorganism" value="{{ d7.d7c_blood_microorganism }}" required>
+                                </div>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_typhoid %}
+                                    <input class="form-check-input" name="d7c_typhoid" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_typhoid" type="checkbox">
+                                    {% endif %}
+                                    Typhoid serology
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_dengue_ns_1 %}
+                                    <input class="form-check-input" name="d7c_dengue_ns_1" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_dengue_ns_1" type="checkbox">
+                                    {% endif %}
+                                    Dengue NS 1
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_dengue %}
+                                    <input class="form-check-input" name="d7c_dengue" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_dengue" type="checkbox">
+                                    {% endif %}
+                                    Dengue serology
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -508,73 +1245,80 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_urine %}
-                                <input class="form-check-input" name="d7c_urine" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_urine" id="d7c_urine"type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_urine" type="checkbox">
+                                <input class="form-check-input" name="d7c_urine" id="d7c_urine" type="checkbox">
                                 {% endif %}
                                 Urine
                                 </label>
                             </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_urinalysis %}
-                                <input class="form-check-input" name="d7c_urinalysis" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_urinalysis" type="checkbox">
-                                {% endif %}
-                                Urinalysis
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_urinalysis_date"> Urinalysis date </label>
-                                <input class="form-control" type="date" name="d7c_urinalysis_date" value="{{ d7.d7c_urinalysis_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if d7.d7c_urine_culture %}
-                                <input class="form-check-input" name="d7c_urine_culture" type="checkbox" checked>
-                                {% else %}
-                                <input class="form-check-input" name="d7c_urine_culture" type="checkbox">
-                                {% endif %}
-                                Urine culture
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_urine_date"> Urine culture date </label>
-                                <input class="form-control" type="date" name="d7c_urine_date" value="{{ d7.d7c_urine_date  | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_urine_microorganism"> Microorganism growth </label>
-                                <input class="form-control" type="text" name="d7c_urine_microorganism" value="{{ d7.d7c_urine_microorganism }}" required>
+                            <div class="form-group" id="urine">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_urinalysis %}
+                                    <input class="form-check-input" name="d7c_urinalysis" id="d7c_urinalysis" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_urinalysis" id="d7c_urinalysis" type="checkbox">
+                                    {% endif %}
+                                    Urinalysis
+                                    </label>
+                                </div>
+                                <div class="form-group"  id="d7c_urinalysis_date">
+                                    <label for="d7c_urinalysis_date"> Urinalysis date </label>
+                                    <input class="form-control" type="date" name="d7c_urinalysis_date" value="{{ d7.d7c_urinalysis_date | date:'Y-m-d' }}" required>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                    {% if d7.d7c_urine_culture %}
+                                    <input class="form-check-input" name="d7c_urine_culture" id="d7c_urine_culture" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="d7c_urine_culture" id="d7c_urine_culture" type="checkbox">
+                                    {% endif %}
+                                    Urine culture
+                                    </label>
+                                </div>
+                                <div class="form-group" id="urineCulture">
+                                <div class="form-group">
+                                    <label for="d7c_urine_date"> Urine culture date </label>
+                                    <input class="form-control" type="date" name="d7c_urine_date" value="{{ d7.d7c_urine_date  | date:'Y-m-d' }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="d7c_urine_microorganism"> Microorganism growth </label>
+                                    <input class="form-control" type="text" name="d7c_urine_microorganism" value="{{ d7.d7c_urine_microorganism }}" required>
+                                </div>
+                                </div>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_csf %}
-                                <input class="form-check-input" name="d7c_csf" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_csf" id="d7c_csf" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_csf" type="checkbox">
+                                <input class="form-check-input" name="d7c_csf" id="d7c_csf" type="checkbox">
                                 {% endif %}
                                 CSF
                                 </label>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_csf_date"> CSF date </label>
-                                <input class="form-control" type="date" name="d7c_csf_date" value="{{ d7.d7c_csf_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_csf_microorganism"> Microorganism growth </label>
-                                <input class="form-control" type="text" name="d7c_csf_microorganism" value="{{ d7.d7c_csf_microorganism }}" required>
+                            <div class="form-group" id="csf">
+                                <div class="form-group">
+                                    <label for="d7c_csf_date"> CSF date </label>
+                                    <input class="form-control" type="date" name="d7c_csf_date" value="{{ d7.d7c_csf_date | date:'Y-m-d' }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="d7c_csf_microorganism"> Microorganism growth </label>
+                                    <input class="form-control" type="text" name="d7c_csf_microorganism" value="{{ d7.d7c_csf_microorganism }}" required>
+                                </div>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_faecal_culture %}
-                                <input class="form-check-input" name="d7c_faecal_culture" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_faecal_culture" id="d7c_faecal_culture" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_faecal_culture" type="checkbox">
+                                <input class="form-check-input" name="d7c_faecal_culture" id="d7c_faecal_culture" type="checkbox">
                                 {% endif %}
                                 Faecal Culture
                                 </label>
                             </div>
+                            <div class="form-group "id="faecal">
                             <div class="form-group">
                                 <label for="d7c_faecal_date"> Faecal date </label>
                                 <input class="form-control" type="date" name="d7c_faecal_date" value="{{ d7.d7c_faecal_date | date:'Y-m-d' }}" required>
@@ -583,30 +1327,32 @@
                                 <label for="d7c_faecal_microorganism"> Microorganism growth </label>
                                 <input class="form-control" type="text" name="d7c_faecal_microorganism" value="{{ d7.d7c_faecal_microorganism }}" required>
                             </div>
+                            </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_chest_xray %}
-                                <input class="form-check-input" name="d7c_chest_xray" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_chest_xray" id="d7c_chest_xray" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_chest_xray" type="checkbox">
+                                <input class="form-check-input" name="d7c_chest_xray" id="d7c_chest_xray" type="checkbox">
                                 {% endif %}
                                 Chest x-ray
                                 </label>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="chestXRay">
                                 <label for="d7c_chest_xray_findings"> Chest x-ray findings </label>
                                 <input class="form-control" type="text" name="d7c_chest_xray_findings" value="{{ d7.d7c_chest_xray_findings }}" required>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_usg %}
-                                <input class="form-check-input" name="d7c_usg" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_usg" id="d7c_usg" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_usg" type="checkbox">
+                                <input class="form-check-input" name="d7c_usg" id="d7c_usg" type="checkbox">
                                 {% endif %}
                                 USG
                                 </label>
                             </div>
+                            <div class="form-group" id="usg">
                             <div class="form-group">
                                 <label for="d7c_usg_type"> USG type </label>
                                 <input class="form-control" type="text" name="d7c_usg_type" value="{{ d7.d7c_usg_type }}" required>
@@ -619,17 +1365,19 @@
                                 <label for="d7c_usg_findings"> USG findings </label>
                                 <input class="form-control" type="text" name="d7c_usg_findings" value="{{ d7.d7c_usg_findings }}" required>
                             </div>
+                            </div>
 
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_mri %}
-                                <input class="form-check-input" name="d7c_mri" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_mri" id="d7c_mri" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_mri" type="checkbox">
+                                <input class="form-check-input" name="d7c_mri" id="d7c_mri" type="checkbox">
                                 {% endif %}
                                 MRI or CT Scan
                                 </label>
                             </div>
+                            <div class="form-group" id="mri">
                             <div class="form-group">
                                 <label for="d7c_mri_type"> MRI type </label>
                                 <input class="form-control" type="text" name="d7c_mri_type" value="{{ d7.d7c_mri_type }}" required>
@@ -642,17 +1390,19 @@
                                 <label for="d7c_mri_findings"> MRI findings </label>
                                 <input class="form-control" type="text" name="d7c_mri_findings" value="{{ d7.d7c_mri_findings }}" required>
                             </div>
+                            </div>
 
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_other_test %}
-                                <input class="form-check-input" name="d7c_other_test" type="checkbox" checked>
+                                <input class="form-check-input" name="d7c_other_test" id="d7c_other_test" type="checkbox" checked>
                                 {% else %}
-                                <input class="form-check-input" name="d7c_other_test" type="checkbox">
+                                <input class="form-check-input" name="d7c_other_test" id="d7c_other_test" type="checkbox">
                                 {% endif %}
                                 Other test
                                 </label>
                             </div>
+                            <div class="form-group" id="otherTest">
                             <div class="form-group">
                                 <label for="d7c_other_test_type"> Type of the test </label>
                                 <input class="form-control" type="text" name="d7c_other_test_type" value="{{ d7.d7c_other_test_type }}" required>
@@ -665,11 +1415,12 @@
                                 <label for="d7c_other_test_findings"> Findings </label>
                                 <input class="form-control" type="text" name="d7c_other_test_findings" value="{{ d7.d7c_other_test_findings }}" required>
                             </div>
+                            </div>
                         </div>
                         </div>
 
                         <div class="form-group" id="">                        
-                            <label> Has the child took any medications since the last visit? </label>
+                            <h4> Has the child took any medications since the last visit? </h4>
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_medication %}
@@ -684,6 +1435,8 @@
                                 <label>
                                 {% if d7.d7c_medication %}
                                 <input type="radio" name="d7c_medication" id="noMedication" value="0">
+                                {% elif d7.d7c_medication == None %}
+                                <input type="radio" name="d7c_medication" id="noMedication" value="0">
                                 {% else %}
                                 <input type="radio" name="d7c_medication" id="noMedication" value="0" checked>
                                 {% endif %}
@@ -694,103 +1447,134 @@
 
                         <div class="form-group" id="medicationHistory" >
                         <div class="form-group" id="">                        
-                            <label> List of medications taken since the last visit? </label>
+                            <h4> List of medications taken since the last visit </h4>
                         </div>    
 
-                        <div class="form-group" id="">
-                            <div class="form-group">
-                                <label for="d7c_med1_name"> Medication name </label>
-                                <input class="form-control" type="text" name="d7c_med1_name" value="{{ d7.d7c_med1_name }}" required>
+                        <div style="margin-top: 3%;" class="form-group">
+                            <label style="font-size: 110%;"> Medication 1 </label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med1_name"> Medication name </label>
+                                    <input class="form-control" type="text" name="d7c_med1_name" value="{{ d7.d7c_med1_name }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med1_dosage"> Dosage </label>
+                                    <input class="form-control" type="text" name="d7c_med1_dosage" value="{{ d7.d7c_med1_dosage }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med1_start_date"> Star date </label>
+                                    <input class="form-control" type="date" name="d7c_med1_start_date" value="{{ d7.d7c_med1_start_date | date:'Y-m-d' }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med1_end_date"> End date </label>
+                                    <input class="form-control" type="date" name="d7c_med1_end_date" value="{{ d7.d7c_med1_end_date | date:'Y-m-d' }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_med1_dosage"> Dosage </label>
-                                <input class="form-control" type="text" name="d7c_med1_dosage" value="{{ d7.d7c_med1_dosage }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med1_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med1_start_date" value="{{ d7.d7c_med1_start_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med1_end_date"> End date </label>
-                                <input class="form-control" type="date" name="d7c_med1_end_date" value="{{ d7.d7c_med1_end_date }}" required>
-                            </div>                            
                         </div>
 
-                        <div class="form-group" id="">
-                            <div class="form-group">
-                                <label for="d7c_med2_name"> Medication name </label>
-                                <input class="form-control" type="text" name="d7c_med2_name" value="{{ d7.d7c_med2_name }}" required>
+                        <div style="margin-top: 3%;" class="form-group">
+                            <label style="font-size: 110%;"> Medication 2 </label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med2_name"> Medication name </label>
+                                    <input class="form-control" type="text" name="d7c_med2_name" value="{{ d7.d7c_med2_name }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med2_dosage"> Dosage </label>
+                                    <input class="form-control" type="text" name="d7c_med2_dosage" value="{{ d7.d7c_med2_dosage }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med2_start_date"> Star date </label>
+                                    <input class="form-control" type="date" name="d7c_med2_start_date" value="{{ d7.d7c_med2_start_date | date:'Y-m-d' }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med2_end_date"> End date </label>
+                                    <input class="form-control" type="date" name="d7c_med2_end_date" value="{{ d7.d7c_med2_end_date | date:'Y-m-d' }}" >
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_med2_dosage"> Dosage </label>
-                                <input class="form-control" type="text" name="d7c_med2_dosage" value="{{ d7.d7c_med2_dosage }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med2_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med2_start_date" value="{{ d7.d7c_med2_start_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med2_end_date"> End date </label>
-                                <input class="form-control" type="date" name="d7c_med2_end_date" value="{{ d7.d7c_med2_end_date }}" required>
-                            </div>                            
                         </div>
 
-                        <div class="form-group" id="">
-                            <div class="form-group">
-                                <label for="d7c_med3_name"> Medication name </label>
-                                <input class="form-control" type="text" name="d7c_med3_name" value="{{ d7.d7c_med3_name }}" required>
+                        <div style="margin-top: 3%;" class="form-group">
+                            <label style="font-size: 110%;"> Medication 3 </label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med3_name"> Medication name </label>
+                                    <input class="form-control" type="text" name="d7c_med3_name" value="{{ d7.d7c_med3_name }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med3_dosage"> Dosage </label>
+                                    <input class="form-control" type="text" name="d7c_med3_dosage" value="{{ d7.d7c_med3_dosage }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med3_start_date"> Star date </label>
+                                    <input class="form-control" type="date" name="d7c_med3_start_date" value="{{ d7.d7c_med3_start_date | date:'Y-m-d' }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med3_end_date"> End date </label>
+                                    <input class="form-control" type="date" name="d7c_med3_end_date" value="{{ d7.d7c_med3_end_date | date:'Y-m-d' }}" >
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_med3_dosage"> Dosage </label>
-                                <input class="form-control" type="text" name="d7c_med3_dosage" value="{{ d7.d7c_med3_dosage }}" required>
+                        </div>
+                        
+                        <div style="margin-top: 3%;" class="form-group">
+                            <label style="font-size: 110%;"> Medication 4 </label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med4_name"> Medication name </label>
+                                    <input class="form-control" type="text" name="d7c_med4_name" value="{{ d7.d7c_med4_name }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med4_dosage"> Dosage </label>
+                                    <input class="form-control" type="text" name="d7c_med4_dosage" value="{{ d7.d7c_med4_dosage }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med4_start_date"> Star date </label>
+                                    <input class="form-control" type="date" name="d7c_med4_start_date" value="{{ d7.d7c_med4_start_date | date:'Y-m-d' }}">
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med4_end_date"> End date </label>
+                                    <input class="form-control" type="date" name="d7c_med4_end_date" value="{{ d7.d7c_med4_end_date | date:'Y-m-d' }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_med3_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med3_start_date" value="{{ d7.d7c_med3_start_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med3_end_date"> End date </label>
-                                <input class="form-control" type="date" name="d7c_med3_end_date" value="{{ d7.d7c_med3_end_date }}" required>
-                            </div>                            
                         </div>
 
-                        <div class="form-group" id="">
-                            <div class="form-group">
-                                <label for="d7c_med4_name"> Medication name </label>
-                                <input class="form-control" type="text" name="d7c_med4_name" value="{{ d7.d7c_med4_name }}" required>
+                        <div style="margin-top: 3%;" class="form-group">
+                            <label style="font-size: 110%;"> Medication 5 </label>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med5_name"> Medication name </label>
+                                    <input class="form-control" type="text" name="d7c_med5_name" value="{{ d7.d7c_med5_name }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med5_dosage"> Dosage </label>
+                                    <input class="form-control" type="text" name="d7c_med5_dosage" value="{{ d7.d7c_med5_dosage }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med5_start_date"> Star date </label>
+                                    <input class="form-control" type="date" name="d7c_med5_start_date" value="{{ d7.d7c_med5_start_date | date:'Y-m-d' }}" >
+                                </div>
+
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="d7c_med5_end_date"> End date </label>
+                                    <input class="form-control" type="date" name="d7c_med5_end_date" value="{{ d7.d7c_med5_end_date | date:'Y-m-d' }}" >
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="d7c_med4_dosage"> Dosage </label>
-                                <input class="form-control" type="text" name="d7c_med4_dosage" value="{{ d7.d7c_med4_dosage }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med4_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med4_start_date" value="{{ d7.d7c_med4_start_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med4_end_date"> End date </label>
-                                <input class="form-control" type="date" name="d7c_med4_end_date" value="{{ d7.d7c_med4_end_date }}" required>
-                            </div>                            
                         </div>
 
-                        <div class="form-group" id="">
-                            <div class="form-group">
-                                <label for="d7c_med5_name"> Medication name </label>
-                                <input class="form-control" type="text" name="d7c_med5_name" value="{{ d7.d7c_med5_name }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med5_dosage"> Dosage </label>
-                                <input class="form-control" type="text" name="d7c_med5_dosage" value="{{ d7.d7c_med5_dosage }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med5_start_date"> Star date </label>
-                                <input class="form-control" type="date" name="d7c_med5_start_date" value="{{ d7.d7c_med5_start_date | date:'Y-m-d' }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="d7c_med5_end_date"> End date </label>
-                                <input class="form-control" type="date" name="d7c_med5_end_date" value="{{ d7.d7c_med5_end_date | date:'Y-m-d' }}" required>
-                            </div>                            
-                        </div>
                         </div>
 
                         <div class="form-group">

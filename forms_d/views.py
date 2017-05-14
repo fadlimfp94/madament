@@ -79,13 +79,10 @@ def process_section1(request):
 	if request.POST.get('form_id'):
 		request.session['form_id'] = request.POST.get('form_id')
 	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
-	print "ok"
 	try:
 		d1_obj = D1InfantGrowth.objects.get(d_form=d_form_obj)
-		print 1
 		return update_section1(request)	
 	except:
-		print 2
 		return create_section1(request)
 
 @login_required(login_url='core:login')
@@ -95,7 +92,6 @@ def create_section1(request):
 		d1_obj = D1InfantGrowth()
 		d1_obj.d_form = d_form_obj
 		d1_obj = save_section1(d1_obj, request)
-		print 3
 		return show_section1(request, True)	
 	else:
 		return show_section1(request, False)
@@ -323,10 +319,8 @@ def save_section2(d2_obj, request):
 
 	if request.POST.get('d2c_hypo_allergen_formula') == "on":
 		d2_obj.d2c_hypo_allergen_formula = True
-		print "on"
 	else:
 		d2_obj.d2c_hypo_allergen_formula = False
-		print "off"
 
 	if request.POST.get('d2c_hydrolized_formula') == "on":
 		d2_obj.d2c_hydrolized_formula = True
@@ -336,7 +330,6 @@ def save_section2(d2_obj, request):
 		d2_obj.d2c_amino_formula = True
 	else:
 		d2_obj.d2c_amino_formula = False	
-
 
 	if request.POST.get('d2c_weaning_food') == "on":	
 		d2_obj.d2c_weaning_food = True
@@ -607,6 +600,7 @@ def save_section4(d4_obj, request):
 	
 	if request.POST.get('d4c_dry_cough'):	
 		d4_obj.d4c_dry_cough = request.POST.get('d4c_dry_cough')
+		print "ok oce"
 	else:
 		d4_obj.d4c_dry_cough = ""
 
@@ -989,7 +983,7 @@ def show_section7(request, is_save):
 		return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section7(d7_obj, request):
+def save_section7(d7_obj, request): 
 	if request.POST.get('d7c_infection') == "1":
 		d7_obj.d7c_infection = True
 	else:
@@ -1068,6 +1062,7 @@ def save_section7(d7_obj, request):
 	else:
 		d7_obj.d7c_symptoms_nervous = False
 
+	print "hospitalization" + request.POST.get('d7c_hospitalization')	
 	if request.POST.get('d7c_hospitalization') == "1":		
 		d7_obj.d7c_hospitalization = True
 		d7_obj.d7c_admission_date = request.POST.get('d7c_admission_date')
@@ -1081,6 +1076,7 @@ def save_section7(d7_obj, request):
 	d7_obj.d7c_physician = request.POST.get('d7c_physician')
 	d7_obj.d7c_hospital_contact = request.POST.get('d7c_hospital_contact')
 		
+	print "ward "+request.POST.get('d7c_ward')	
 	if request.POST.get('d7c_ward'):
 		d7_obj.d7c_ward = request.POST.get('d7c_ward')
 	else:
@@ -1216,7 +1212,7 @@ def save_section7(d7_obj, request):
 	
 	d7_obj.d7c_other_test_findings = request.POST.get('d7c_other_test_findings')
 	
-	if request.POST.get('d7c_medication') == "yes":
+	if request.POST.get('d7c_medication') == "1":
 		d7_obj.d7c_medication = True
 	else:
 		d7_obj.d7c_medication = False

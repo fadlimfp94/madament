@@ -132,6 +132,115 @@
                 $("#vaccinationHistory :input").prop("readonly", false);
                 $("#vaccinationHistory :checkbox").prop("required", false);
                 $("#vaccinationHistory :input[type='date']").prop("required", false);
+
+                if($('#d1c_bcg').is(':checked')){
+                        $("#d1c_bcg_date").removeClass('hidden');
+                        $("#d1c_bcg_date :input[type='date']").prop("readonly", false);
+                        $("#d1c_bcg_date :input[type='date']").prop("required", true);
+                }
+                else{
+                        $("#d1c_bcg_date").addClass('hidden');
+                        $("#d1c_bcg_date :input[type='date']").removeAttr('value');
+                        $("#d1c_bcg_date :input[type='date']").prop("readonly", true);
+                        $("#d1c_bcg_date :input[type='date']").prop("required", false);
+                }
+
+                if($('#d1c_hep_b').is(':checked')){
+                        $("#d1c_hep_b_date").removeClass('hidden');
+                        $('#d1c_hep_b_date :input').prop("readonly", false);
+                        $('#d1c_hep_b_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_hep_b_date").addClass('hidden');
+                        $("#d1c_hep_b_date :input").removeAttr('value');
+                        $('#d1c_hep_b_date :input').prop("readonly", true);
+                        $('#d1c_hep_b_date :input').prop("required", false);
+                }
+
+                if($('#d1c_dpt').is(':checked')){
+                        $("#d1c_dpt_date").removeClass('hidden');
+                        $('#d1c_dpt_date :input').prop("readonly", false);
+                        $('#d1c_dpt_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_dpt_date").addClass('hidden');
+                        $("#d1c_dpt_date :input").removeAttr('value');
+                        $('#d1c_dpt_date :input').prop("readonly", true);
+                        $('#d1c_dpt_date :input').prop("required", false);
+                }
+
+                if($('#d1c_ipv').is(':checked')){
+                        $("#d1c_ipv_date").removeClass('hidden');
+                        $('#d1c_ipv_date :input').prop("readonly", false);
+                        $('#d1c_ipv_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_ipv_date").addClass('hidden');
+                        $("#d1c_ipv_date :input").removeAttr('value');
+                        $('#d1c_ipv_date :input').prop("readonly", true);
+                        $('#d1c_ipv_date :input').prop("required", false);
+                }
+
+                if($('#d1c_opv').is(':checked')){
+                        $("#d1c_opv_date").removeClass('hidden');
+                        $('#d1c_opv_date :input').prop("readonly", false);
+                        $('#d1c_opv_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_opv_date").addClass('hidden');
+                        $("#d1c_opv_date :input").removeAttr('value');
+                        $('#d1c_opv_date :input').prop("readonly", true);
+                        $('#d1c_opv_date :input').prop("required", false);
+                }
+
+                if($('#d1c_hib').is(':checked')){
+                        $("#d1c_hib_date").removeClass('hidden');
+                        $('#d1c_hib_date :input').prop("readonly", false);
+                        $('#d1c_hib_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_hib_date").addClass('hidden');
+                        $("#d1c_hib_date :input").removeAttr('value');
+                        $('#d1c_hib_date :input').prop("readonly", true);
+                        $('#d1c_hib_date :input').prop("required", false);
+                }
+
+                if($('#d1c_rotavirus').is(':checked')){
+                        $("#d1c_rotavirus_date").removeClass('hidden');
+                        $('#d1c_rotavirus_date :input').prop("readonly", false);
+                        $('#d1c_rotavirus_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_rotavirus_date").addClass('hidden');
+                        $("#d1c_rotavirus_date :input").removeAttr('value');
+                        $('#d1c_rotavirus_date :input').prop("readonly", true);
+                        $('#d1c_rotavirus_date :input').prop("required", false);
+                }
+
+                if($('#d1c_pneumococcus').is(':checked')){
+                        $("#d1c_pneumococcus_date").removeClass('hidden');
+                        $('#d1c_pneumococcus_date :input').prop("readonly", false);
+                        $('#d1c_pneumococcus_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_pneumococcus_date").addClass('hidden');
+                        $("#d1c_pneumococcus_date :input").removeAttr('value');
+                        $('#d1c_pneumococcus_date :input').prop("readonly", true);
+                        $('#d1c_pneumococcus_date :input').prop("required", false);
+                }
+
+                if($('#d1c_influenza').is(':checked')){
+                        $("#d1c_influenza_date").removeClass('hidden');
+                        $('#d1c_influenza_date :input').prop("readonly", false);
+                        $('#d1c_influenza_date :input').prop("required", true);
+                }
+                else{
+                        $("#d1c_influenza_date").addClass('hidden');
+                        $("#d1c_influenza_date :input").removeAttr('value');
+                        $('#d1c_influenza_date :input').prop("readonly", true);
+                        $('#d1c_influenza_date :input').prop("required", false);
+                }
+
                 console.log( "Yes" );
             });
 

@@ -11,7 +11,6 @@
             }
             else{
                 $("#respiratory_symptom").addClass('hidden');
-                $("#respiratory_symptom :input").removeAttr('value');
                 $("#respiratory_symptom :input").prop("readonly", true);
                 $("#respiratory_symptom :input").prop("checked", false);
                 $("#respiratory_symptom :input").prop("required", false);
@@ -29,7 +28,6 @@
 
             $("#noRespiratory").click(function(){
                 $("#respiratory_symptom").addClass('hidden');
-                $("#respiratory_symptom :input").removeAttr('value');
                 $("#respiratory_symptom :input").prop("readonly", true);
                 $("#respiratory_symptom :input").prop("checked", false);
                 $("#respiratory_symptom :input").prop("required", false);
