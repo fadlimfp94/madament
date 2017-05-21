@@ -310,10 +310,13 @@ def save_section2(a2_obj, request):
 			a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
 		else:
 			a2_obj.a2m_maternal_leave_duration = None
-		a2m_maternal_leave = True
+		a2_obj.a2m_maternal_leave = True
+		print "hahaha"
 	else:
 		a2_obj.a2m_maternal_leave_duration = None
-		a2m_maternal_leave = False	
+		print "haohoho"
+		a2_obj.a2m_maternal_leave = False
+	print "a2m_maternal_leave " + str(a2_obj.a2m_maternal_leave)		
 	a2_obj.a2m_work_street = request.POST.get('a2m_work_street')
 	a2_obj.a2m_work_rt = request.POST.get('a2m_work_rt')
 	a2_obj.a2m_work_rw = request.POST.get('a2m_work_rw')
@@ -964,20 +967,46 @@ def save_section5(a5_obj, request):
 	a5_obj.a5m_mother_smoking_status = request.POST.get('a5m_presmoking_status')
 	if request.POST.get('a5m_quitting_duration'):
 		a5_obj.a5m_mother_quit_duration = request.POST.get('a5m_quitting_duration')
+		print "hallo aaaa"
 	else:
-		a5_obj.a5m_mother_quit_duration = 0	
-	a5_obj.a5m_mother_start_smoke_age = request.POST.get('a5m_starting_age')
-	a5_obj.a5m_mother_cigarretes_per_day = request.POST.get('a5m_cigar_number')
+		a5_obj.a5m_mother_quit_duration = None	
+		print "hallo bbbb"
+	print "1" +str(a5_obj.a5m_mother_quit_duration)	
+	
+	if request.POST.get('a5m_starting_age'):
+		a5_obj.a5m_mother_start_smoke_age = request.POST.get('a5m_starting_age')
+	else:
+		a5_obj.a5m_mother_start_smoke_age = None
+	print "2" +str(a5_obj.a5m_mother_start_smoke_age)	
+		
+	if request.POST.get('a5m_cigar_number'):		
+		a5_obj.a5m_mother_cigarretes_per_day = request.POST.get('a5m_cigar_number')
+	else:
+		a5_obj.a5m_mother_cigarretes_per_day = None
+	print "3" +str(a5_obj.a5m_mother_cigarretes_per_day)	
+		
 	if request.POST.get('a5m_cigar_type') == "1":
 		a5_obj.a5m_mother_smoke_pipes = True
 	else:
 		a5_obj.a5m_mother_smoke_pipes = False
+
 	if request.POST.get('a5m_household_smoker') == "1":
 		a5_obj.a5m_other_member_smoke = True
 	else:
 		a5_obj.a5m_other_member_smoke = False
-	a5_obj.a5m_other_member_smoke_number = request.POST.get('a5m_household_smoker_number')
-	a5_obj.a5m_total_cigarretes_per_day = request.POST.get('a5m_household_total_cigar')
+		
+	if request.POST.get('a5m_household_smoker_number'):
+		a5_obj.a5m_other_member_smoke_number = request.POST.get('a5m_household_smoker_number')
+	else:
+		a5_obj.a5m_other_member_smoke_number = None
+	print "4" +str(a5_obj.a5m_other_member_smoke_number)
+
+	if request.POST.get('a5m_household_total_cigar'):
+		a5_obj.a5m_total_cigarretes_per_day = request.POST.get('a5m_household_total_cigar')
+	else:
+		a5_obj.a5m_total_cigarretes_per_day = None
+	print "5" +str(a5_obj.a5m_total_cigarretes_per_day)
+
 	if request.POST.get('a5m_household_presence') == "1":
 		a5_obj.a5m_smoke_in_front_of = True
 	else:
@@ -988,14 +1017,30 @@ def save_section5(a5_obj, request):
 	if request.POST.get('a5f_quitting_duration'):
 		a5_obj.a5f_father_quit_duration = request.POST.get('a5f_quitting_duration')
 	else:
-		a5_obj.a5f_father_quit_duration = 0	
-	a5_obj.a5f_father_start_smoke_age = request.POST.get('a5f_starting_age')
-	a5_obj.a5f_father_cigarretes_per_day = request.POST.get('a5f_cigar_number')
+		a5_obj.a5f_father_quit_duration = None	
+	print "6" +str(a5_obj.a5f_father_quit_duration)
+
+	if request.POST.get('a5f_starting_age'):
+		a5_obj.a5f_father_start_smoke_age = request.POST.get('a5f_starting_age')
+	else:
+		a5_obj.a5f_father_start_smoke_age = None
+	print "7" +str(a5_obj.a5f_father_start_smoke_age)
+
+
+	if request.POST.get('a5f_cigar_number'):	
+		a5_obj.a5f_father_cigarretes_per_day = request.POST.get('a5f_cigar_number')
+	else:
+		a5_obj.a5f_father_cigarretes_per_day = None
+	print "8" +str(a5_obj.a5f_father_cigarretes_per_day)
+
 	if request.POST.get('a5f_cigar_type') == "1":
 		a5_obj.a5f_father_smoke_pipes = True
 	else:
 		a5_obj.a5f_father_smoke_pipes = False
+	
 	a5_obj.a5f_father_smoke_frequency = request.POST.get('a5f_smoking_frequency')
+	print request.POST.get('a5f_smoking_frequency')
+	
 	if request.POST.get('a5f_smoking_presence') == "1":
 		a5_obj.a5f_smoke_in_front_of_mother = True
 	else:
@@ -1004,10 +1049,29 @@ def save_section5(a5_obj, request):
 	if request.POST.get('a5c_smoking_presence') == "1":
 		a5_obj.a5c_colleagues_smoking_status = True
 	else:
-		a5_obj.a5c_colleagues_smoking_status = False	
-	a5_obj.a5c_colleagues_smoke = request.POST.get('a5c_smoker_number')
-	a5_obj.a5c_duration_with_smokers_per_day = request.POST.get('a5c_daily_duration')
-	a5_obj.a5c_month_duration_with_smokers = request.POST.get('a5c_monthly_duration')
+		a5_obj.a5c_colleagues_smoking_status = False
+	print a5_obj.a5c_colleagues_smoking_status
+		
+	
+	if request.POST.get('a5c_smoker_number'):
+		a5_obj.a5c_colleagues_smoke = request.POST.get('a5c_smoker_number')
+	else:
+		a5_obj.a5c_colleagues_smoke = None
+	print "9" +str(a5_obj.a5c_colleagues_smoke)
+
+	if request.POST.get('a5c_daily_duration'): 	
+		a5_obj.a5c_duration_with_smokers_per_day = request.POST.get('a5c_daily_duration')
+	else:
+		a5_obj.a5c_duration_with_smokers_per_day = None
+	print "10" +str(a5_obj.a5c_duration_with_smokers_per_day)
+
+
+	if request.POST.get('a5c_monthly_duration'):	
+		a5_obj.a5c_month_duration_with_smokers = request.POST.get('a5c_monthly_duration')
+	else:
+		a5_obj.a5c_month_duration_with_smokers = None		
+	print "11" +str(a5_obj.a5c_month_duration_with_smokers)
+
 	a5_obj.save()
 	if request.user.is_staff:
 		a5_obj.a_form.is_save_all = True

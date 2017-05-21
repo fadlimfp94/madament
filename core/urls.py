@@ -6,7 +6,9 @@ app_name = 'core'
 
 urlpatterns = [
 	url(r'^$', views.home, name='home'),
+	#url(r'^$', views.back, name='back'),
 	url(r'^participant/create', views.create_participant, name='create_participant'),
+	#url(r'^participant/children', views.children, name='children'),
 	url(r'^participant/forms', views.forms, name='forms'),
 	url(r'^participant/form_a', views.form_a, name='form_a'),
 	url(r'^participant/form_b1', views.form_b1, name='form_b1'),

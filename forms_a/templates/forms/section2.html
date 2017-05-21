@@ -3,12 +3,179 @@
     <script>
     $(document).ready(function(){
 
+        if($("#employed").is(':checked')){
+            $("#job").removeClass('hidden');
+            $("#job :input").prop("readonly", false);
+            $("#job :input").prop("required", true);
+            $("#job :checkbox").prop("required", false);
+            $("#a2m_public_transport").prop("required", false);
+
+            if($("#yesWorkingPregnancy").is(':checked')){
+                $("#yesWorkingPregnancy").val('1');
+                $("#workingPregnancy").removeClass('hidden');
+                $("#workingPregnancy :input").prop("readonly", false);
+                $("#workingPregnancy :input").prop("required", true);
+                $("#workingPregnancy :checkbox").prop("required", false);
+
+                if($("#yesMaternalLeave").is(':checked')){
+                    $("#yesMaternalLeave").val('1');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+                    $("#a2m_maternal_leave_duration :input").prop("required", true);
+                }
+                else{
+                    $("#noMaternalLeave").val('0');
+                    $("#a2m_maternal_leave_duration :input").removeAttr('value');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+                    $("#a2m_maternal_leave_duration :input").prop("required", false);
+                }    
+            }
+            else{
+                $("#noWorkingPregnancy").val('0');
+                $("#workingPregnancy").addClass('hidden');
+                $("#workingPregnancy :input").removeAttr('value');
+                $("#workingPregnancy :input").prop("readonly", true);
+                $("#workingPregnancy :input").prop("checked", false);
+                $("#workingPregnancy :input").prop("required", false);
+                $("#workingPregnancy :checkbox").prop("required", false);
+            }
+
+
+            if($("#a2m_public").is(':checked')){
+                $("#a2m_public_transport").removeClass('hidden');
+                $("#a2m_public_transport :input").prop("readonly", false);
+                $("#a2m_public_transport :input").prop("required", true);
+                $("#a2m_public_transport :checkbox").prop("required", false);    
+            }
+            else{
+                $("#a2m_public_transport").addClass('hidden');
+                $("#a2m_public_transport :input").removeAttr('value');
+                $("#a2m_public_transport :input").prop("readonly", true);
+                $("#a2m_public_transport :input").prop("checked", false);
+                $("#a2m_public_transport :input").prop("required", false);
+                $("#a2m_public_transport :checkbox").prop("required", false);
+            }
+
+
+            
+
+        }
+        else if($("#self-employed").is(':checked')){
+            $("#job").removeClass('hidden');
+            $("#job :input").prop("readonly", false);
+            $("#job :input").prop("required", true);
+            $("#job :checkbox").prop("required", false);
+            $("#a2m_public_transport").prop("required", false);
+
+            if($("#yesWorkingPregnancy").is(':checked')){
+                $("#yesWorkingPregnancy").val('1');
+                $("#workingPregnancy").removeClass('hidden');
+                $("#workingPregnancy :input").prop("readonly", false);
+                $("#workingPregnancy :input").prop("required", true);
+                $("#workingPregnancy :checkbox").prop("required", false);
+
+                if($("#yesMaternalLeave").is(':checked')){
+                    $("#yesMaternalLeave").val('1');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+                    $("#a2m_maternal_leave_duration :input").prop("required", true);
+                }
+                else{
+                    $("#noMaternalLeave").val('0');
+                    $("#a2m_maternal_leave_duration :input").removeAttr('value');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+                    $("#a2m_maternal_leave_duration :input").prop("required", false);
+                }    
+            }
+            else{
+                $("#noWorkingPregnancy").val('0');
+                $("#workingPregnancy").addClass('hidden');
+                $("#workingPregnancy :input").removeAttr('value');
+                $("#workingPregnancy :input").prop("readonly", true);
+                $("#workingPregnancy :input").prop("checked", false);
+                $("#workingPregnancy :input").prop("required", false);
+                $("#workingPregnancy :checkbox").prop("required", false);
+            }
+
+
+            if($("#a2m_public").is(':checked')){
+                $("#a2m_public_transport").removeClass('hidden');
+                $("#a2m_public_transport :input").prop("readonly", false);
+                $("#a2m_public_transport :input").prop("required", true);
+                $("#a2m_public_transport :checkbox").prop("required", false);    
+            }
+            else{
+                $("#a2m_public_transport").addClass('hidden');
+                $("#a2m_public_transport :input").removeAttr('value');
+                $("#a2m_public_transport :input").prop("readonly", true);
+                $("#a2m_public_transport :input").prop("checked", false);
+                $("#a2m_public_transport :input").prop("required", false);
+                $("#a2m_public_transport :checkbox").prop("required", false);
+            }
+
+        }
+        else{
+            $("#job").addClass('hidden');
+            $("#job :input").removeAttr('value');
+            $("#job :input").prop("readonly", true);
+            $("#job :input").prop("checked", false);
+            $("#job :input").prop("required", false);
+            $("#job :checkbox").prop("required", false);
+            $("#indoor").val('1');
+            $("#outdoor").val('2');
+            $("#yesExposed").val('1');
+            $("#noExposed").val('0');
+
+        }
+
         $("#employed").click(function(){
             $("#job").removeClass('hidden');
             $("#job :input").prop("readonly", false);
             $("#job :input").prop("required", true);
             $("#job :checkbox").prop("required", false);
             $("#a2m_public_transport").prop("required", false);
+
+            if($("#yesWorkingPregnancy").is(':checked')){
+                $("#yesWorkingPregnancy").val('1');
+                $("#workingPregnancy").removeClass('hidden');
+                $("#workingPregnancy :input").prop("readonly", false);
+                $("#workingPregnancy :input").prop("required", true);
+                $("#workingPregnancy :checkbox").prop("required", false);
+
+                if($("#yesMaternalLeave").is(':checked')){
+                    $("#yesMaternalLeave").val('1');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+                    $("#a2m_maternal_leave_duration :input").prop("required", true);
+                }
+                else{
+                    $("#noMaternalLeave").val('0');
+                    $("#a2m_maternal_leave_duration :input").removeAttr('value');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+                    $("#a2m_maternal_leave_duration :input").prop("required", false);
+                }    
+            }
+            else{
+                $("#noWorkingPregnancy").val('0');
+                $("#workingPregnancy").addClass('hidden');
+                $("#workingPregnancy :input").removeAttr('value');
+                $("#workingPregnancy :input").prop("readonly", true);
+                $("#workingPregnancy :input").prop("checked", false);
+                $("#workingPregnancy :input").prop("required", false);
+                $("#workingPregnancy :checkbox").prop("required", false);
+            }
+
+            if($("#a2m_public").is(':checked')){
+                $("#a2m_public_transport").removeClass('hidden');
+                $("#a2m_public_transport :input").prop("readonly", false);
+                $("#a2m_public_transport :input").prop("required", true);
+                $("#a2m_public_transport :checkbox").prop("required", false);    
+            }
+            else{
+                $("#a2m_public_transport").addClass('hidden');
+                $("#a2m_public_transport :input").removeAttr('value');
+                $("#a2m_public_transport :input").prop("readonly", true);
+                $("#a2m_public_transport :input").prop("checked", false);
+                $("#a2m_public_transport :input").prop("required", false);
+                $("#a2m_public_transport :checkbox").prop("required", false);
+            }
             
         });
 
@@ -18,6 +185,68 @@
             $("#job :input").prop("required", true);
             $("#job :checkbox").prop("required", false);
             $("#a2m_public_transport").prop("required", false);
+
+            if($("#yesWorkingPregnancy").is(':checked')){
+                $("#yesWorkingPregnancy").val('1');
+                $("#workingPregnancy").removeClass('hidden');
+                $("#workingPregnancy :input").prop("readonly", false);
+                $("#workingPregnancy :input").prop("required", true);
+                $("#workingPregnancy :checkbox").prop("required", false);
+
+                if($("#yesMaternalLeave").is(':checked')){
+                    $("#yesMaternalLeave").val('1');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+                    $("#a2m_maternal_leave_duration :input").prop("required", true);
+                }
+                else{
+                    $("#noMaternalLeave").val('0');
+                    $("#a2m_maternal_leave_duration :input").removeAttr('value');
+                    $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+                    $("#a2m_maternal_leave_duration :input").prop("required", false);
+                }    
+            }
+            else{
+                $("#noWorkingPregnancy").val('0');
+                $("#workingPregnancy").addClass('hidden');
+                $("#workingPregnancy :input").removeAttr('value');
+                $("#workingPregnancy :input").prop("readonly", true);
+                $("#workingPregnancy :input").prop("checked", false);
+                $("#workingPregnancy :input").prop("required", false);
+                $("#workingPregnancy :checkbox").prop("required", false);
+            }
+
+            if($("#a2m_public").is(':checked')){
+                $("#a2m_public_transport").removeClass('hidden');
+                $("#a2m_public_transport :input").prop("readonly", false);
+                $("#a2m_public_transport :input").prop("required", true);
+                $("#a2m_public_transport :checkbox").prop("required", false);    
+            }
+            else{
+                $("#a2m_public_transport").addClass('hidden');
+                $("#a2m_public_transport :input").removeAttr('value');
+                $("#a2m_public_transport :input").prop("readonly", true);
+                $("#a2m_public_transport :input").prop("checked", false);
+                $("#a2m_public_transport :input").prop("required", false);
+                $("#a2m_public_transport :checkbox").prop("required", false);
+            }
+
+        });
+
+        $("#a2m_public").click(function(){
+            if($("#a2m_public").is(':checked')){
+                $("#a2m_public_transport").removeClass('hidden');
+                $("#a2m_public_transport :input").prop("readonly", false);
+                $("#a2m_public_transport :input").prop("required", true);
+                $("#a2m_public_transport :checkbox").prop("required", false);    
+            }
+            else{
+                $("#a2m_public_transport").addClass('hidden');
+                $("#a2m_public_transport :input").removeAttr('value');
+                $("#a2m_public_transport :input").prop("readonly", true);
+                $("#a2m_public_transport :input").prop("checked", false);
+                $("#a2m_public_transport :input").prop("required", false);
+                $("#a2m_public_transport :checkbox").prop("required", false);
+            }
         });
 
         $("#unemployed").click(function(){
@@ -30,6 +259,7 @@
         });
         
         $("#noWorkingPregnancy").click(function(){
+            $("#noWorkingPregnancy").val('0');
             $("#workingPregnancy").addClass('hidden');
             $("#workingPregnancy :input").removeAttr('value');
             $("#workingPregnancy :input").prop("readonly", true);
@@ -39,30 +269,45 @@
         });
 
         $("#yesWorkingPregnancy").click(function(){
+            $("#yesWorkingPregnancy").val('1');
             $("#workingPregnancy").removeClass('hidden');
             $("#workingPregnancy :input").prop("readonly", false);
             $("#workingPregnancy :input").prop("required", true);
-            $("#workingPregnancy :checkbox").prop("required", false);    
+            $("#workingPregnancy :checkbox").prop("required", false);
+
+            if($("#yesMaternalLeave").is(':checked')){
+                $("#yesMaternalLeave").val('1');
+                $("#a2m_maternal_leave_duration :input").prop("readonly", false);
+                $("#a2m_maternal_leave_duration :input").prop("required", true);
+            }
+            else{
+                $("#noMaternalLeave").val('0');
+                $("#a2m_maternal_leave_duration :input").removeAttr('value');
+                $("#a2m_maternal_leave_duration :input").prop("readonly", true);
+                $("#a2m_maternal_leave_duration :input").prop("required", false);
+            }    
         });
 
         $("#noMaternalLeave").click(function(){
+            $("#noMaternalLeave").val('0');
             $("#a2m_maternal_leave_duration :input").removeAttr('value');
             $("#a2m_maternal_leave_duration :input").prop("readonly", true);
             $("#a2m_maternal_leave_duration :input").prop("required", false);
         });
 
         $("#yesMaternalLeave").click(function(){
+            $("#yesMaternalLeave").val('1');
             $("#a2m_maternal_leave_duration :input").prop("readonly", false);
             $("#a2m_maternal_leave_duration :input").prop("required", true);
         });
 
-        $("#a2m_public").click(function(){
+        /*$("#a2m_public").click(function(){
             if($(this).is(':checked')) {
                 $("#a2m_public_transport").prop("required", true);
             } else {
                 $("#a2m_public_transport").prop("required", false);
             }  
-        });
+        });*/
 
     });
     </script>
@@ -169,7 +414,7 @@
                                 <label for="a2m_maternal_leave"> If yes, please specify whether you will have a maternal leave? </label>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                    {% if a2.a2m_maternal_leave_duration == 0 %}
+                                    {% if a2.a2m_maternal_leave == False %}
                                     <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
                                     id="noMaternalLeave" value="0" checked>
                                     {% else %}
@@ -183,7 +428,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="form-check-label">
-                                            {% if a2.a2m_maternal_leave_duration > 0 %}
+                                            {% if a2.a2m_maternal_leave %}
                                             <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
                                             id="yesMaternalLeave" value="1" checked>
                                             {% else %}
@@ -307,12 +552,12 @@
                                         Public transport
                                 </label>                                        
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="a2m_public_transport">
                                 <label for="a2m_public_transport">Public transport type : </label>
                                         {% if a2.a2m_travel_by_public_transport %}
-                                        <input class="form-control" type="text" name="a2m_public_transport" value="{{a2.a2m_public_transport_type}}" id="a2m_public_transport">
+                                        <input class="form-control" type="text" name="a2m_public_transport"  value="{{a2.a2m_public_transport_type}}" >
                                         {% else %}
-                                        <input class="form-control" type="text" name="a2m_public_transport" id="a2m_public_transport">
+                                        <input class="form-control" type="text" name="a2m_public_transport">
                                         {% endif %}
                             </div>                                    
                             
@@ -331,9 +576,9 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                     {% if a2.a2m_is_exposed_to_pollution %}
-                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="yesExposed" value="1" checked>
                                     {% else %}
-                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios1" value="1">
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="yesExposed" value="1">
                                     {% endif %}
                                     Yes
                                     </label>
@@ -341,9 +586,9 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                     {% if a2.a2m_is_exposed_to_pollution %}
-                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios2" value="0">
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="noExposed" value="0">
                                     {% else %}
-                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="optionsRadios2" value="0" checked>
+                                    <input type="radio" class="form-check-input" name="a2m_pollutant" id="noExposed" value="0" checked>
                                     {% endif %}
                                     No
                                     </label>
@@ -364,9 +609,9 @@
                                 <div class="form-check">
                                     <label class="form-check-label">
                                     {% if a2.a2m_working_area == '1' %}
-                                    <input type="radio" class="form-check-input" name="a2m_working_area" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" class="form-check-input" name="a2m_working_area" value="1" id="indoor"checked>
                                     {% else %}
-                                    <input type="radio" class="form-check-input" name="a2m_working_area" id="optionsRadios1" value="1">
+                                    <input type="radio" class="form-check-input" name="a2m_working_area" id="indoor" value="1">
                                     {% endif %}
                                     Indoor
                                     </label>
@@ -374,9 +619,9 @@
                                 <div class="form-check">
                                     <label>
                                     {% if a2.a2m_working_area == '2' %}
-                                    <input type="radio" name="a2m_working_area" id="optionsRadios2" value="2" checked>
+                                    <input type="radio" name="a2m_working_area" value="2" id="outdoor" checked>
                                     {% else %}
-                                    <input type="radio" name="a2m_working_area" id="optionsRadios2" value="2">
+                                    <input type="radio" name="a2m_working_area" id="outdoor" value="2">
                                     {% endif %}
                                     Outdoor
                                     </label>

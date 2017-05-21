@@ -78,7 +78,14 @@
                                    <input type="hidden" name="participant_id" value={{participant.id}}>
                                    <input type="submit" class="btn btn-detail" value="Detail"/>
                                 </form>
-                             </td>
+                            </td>
+                            <td>
+                                <form action=""  method="POST">
+                                   {% csrf_token %}
+                                   <input type="hidden" name="participant_id" value={{participant.id}}>
+                                   <input type="submit" class="btn btn-detail" value="Children"/>
+                                </form>
+                            </td>
                         </tr>                      
                     {% endfor %}     
                 </tbody>

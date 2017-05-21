@@ -3,6 +3,25 @@
     <script>
     $(document).ready(function(){
 
+        if($("#yesPreviousCompilation").is(':checked')){
+            $("#previousCompilation").removeClass('hidden');
+            $("#previousCompilation :input").prop("readonly", false);
+            $("#previousCompilation :input").prop("required", true);
+            $("#previousCompilation :checkbox").prop("required", false);
+            $("#a3m_other_complication_name").prop("required", false);
+             
+        }
+        else{
+            console.log("huba huba");
+            $("#previousCompilation").addClass('hidden');
+            $("#previousCompilation :input").removeAttr('value');
+            $("#previousCompilation :input").prop("readonly", true);
+            $("#previousCompilation :input").prop("checked", false);
+            $("#previousCompilation :input").prop("required", false);
+            $("#previousCompilation :checkbox").prop("required", false);
+        }
+
+
         $("#yesPreviousCompilation").click(function(){
             $("#previousCompilation").removeClass('hidden');
             $("#previousCompilation :input").prop("readonly", false);
@@ -22,6 +41,23 @@
 
         });
 
+        if($("#yesPreviousMedicalHistory").is(':checked')){
+            $("#previousMedicalHistory").removeClass('hidden');
+            $("#previousMedicalHistory :input").prop("readonly", false);
+            $("#previousMedicalHistory :input").prop("required", true);
+            $("#previousMedicalHistory :checkbox").prop("required", false); 
+            $("#a3m_allergyhis").prop("required", false);
+            $("#a3m_otherhis").prop("required", false);
+        }
+        else{
+            $("#previousMedicalHistory").addClass('hidden');
+            $("#previousMedicalHistory :input").removeAttr('value');
+            $("#previousMedicalHistory :input").prop("readonly", true);
+            $("#previousMedicalHistory :input").prop("checked", false);
+            $("#previousMedicalHistory :input").prop("required", false);
+            $("#previousMedicalHistory :checkbox").prop("required", false);
+        }
+        
         $("#yesPreviousMedicalHistory").click(function(){
             $("#previousMedicalHistory").removeClass('hidden');
             $("#previousMedicalHistory :input").prop("readonly", false);
@@ -39,6 +75,23 @@
             $("#previousMedicalHistory :input").prop("required", false);
             $("#previousMedicalHistory :checkbox").prop("required", false);
         });
+
+        if($("#yesFamilyHistoryDisease").is(':checked')){
+            $("#familyHistoryDisease").removeClass('hidden');
+            $("#familyHistoryDisease :input").prop("readonly", false);
+            $("#familyHistoryDisease :input").prop("required", true);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
+            $("#a3m_other_desease").prop("required", false);
+            
+        }
+        else{
+            $("#familyHistoryDisease").addClass('hidden');  
+            $("#familyHistoryDisease :input").removeAttr('value');
+            $("#familyHistoryDisease :input").prop("readonly", true);
+            $("#familyHistoryDisease :input").prop("checked", false);
+            $("#familyHistoryDisease :input").prop("required", false);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
+        }
 
         $("#yesFamilyHistoryDisease").click(function(){
             $("#familyHistoryDisease").removeClass('hidden');
@@ -147,8 +200,10 @@
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_premature %}
                                 <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0">
-                                {% else %}
+                                {% elif a3.a3m_previous_premature == False %}
                                 <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -171,8 +226,10 @@
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_miscarriage %}
                                 <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0">
-                                {% else %}
+                                {% elif a3.a3m_previous_miscarriage == False %}
                                 <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage"id="optionsRadios2" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -195,8 +252,10 @@
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_complication %}
                                 <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0">
-                                {% else %}
+                                {% elif a3.a3m_previous_complication == False %}
                                 <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -280,8 +339,10 @@
                                 <label class="form-check-label">
                                 {% if a3.a3m_medical_history %}
                                 <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0">
-                                {% else %}
+                                {% elif a3.a3m_medical_history == False %}
                                 <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -441,8 +502,10 @@
                                 <label class="form-check-label">
                                 {% if a3.a3m_family_disease %}
                                 <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0">
-                                {% else %}
+                                {% elif a3.a3m_family_disease == False %}
                                 <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -620,8 +683,11 @@
                                     </label>
                                 </div>
 
-                                <h4>Other</h4>                         
+                                <h4>Other Disease</h4>                         
                                    <input class="form-control" type="text" id="a3m_other_desease" name="a3m_other_desease" value="{{ a3.a3m_other_disease_name }}">
+                                   <label>
+                                       Who hast that?
+                                   </label>
                                    <div class="form-check">
                                     <label class="form-check-label">
                                         {% if a3.a3m_other_mother %}

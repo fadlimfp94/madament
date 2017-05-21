@@ -4,6 +4,23 @@
 
     $(document).ready(function(){
 
+        if($("#employed").is(':checked') ||  $("#self-employed").is(':checked')){
+            $("#job").removeClass('hidden');
+            $("#job :input").prop("readonly", false);
+            $("#job :input").prop("required", true);
+            $("#job :checkbox").prop("required", false);
+            $("#a2m_public_transport").prop("required", false);   
+        }
+        else{
+            $("#job").addClass('hidden');
+            $("#job :input").removeAttr('value');
+            $("#job :input").prop("readonly", true);
+            $("#job :input").prop("checked", false);
+            $("#job :input").prop("required", false);
+            $("#job :checkbox").prop("required", false);
+        }    
+
+
         $("#employed").click(function(){
             $("#job").removeClass('hidden');
             $("#job :input").prop("readonly", false);
@@ -30,6 +47,25 @@
             $("#job :checkbox").prop("required", false);
         });
 
+        if($("#yesPreviousMedicalHistory").is(':checked')){
+            $("#previousMedicalHistory").removeClass('hidden');
+            $("#previousMedicalHistory :input").prop("readonly", false);
+            $("#previousMedicalHistory :input").prop("required", true);
+            $("#previousMedicalHistory :checkbox").prop("required", false); 
+            $("#a4f_allergyhis").prop("required", false);
+            $("#a4f_otherhis").prop("required", false);
+            
+        }
+        else{
+            $("#previousMedicalHistory").addClass('hidden');
+            $("#previousMedicalHistory :input").removeAttr('value');
+            $("#previousMedicalHistory :input").prop("readonly", true);
+            $("#previousMedicalHistory :input").prop("checked", false);
+            $("#previousMedicalHistory :input").prop("required", false);
+            $("#previousMedicalHistory :checkbox").prop("required", false);
+        }
+
+
         $("#yesPreviousMedicalHistory").click(function(){
             $("#previousMedicalHistory").removeClass('hidden');
             $("#previousMedicalHistory :input").prop("readonly", false);
@@ -48,6 +84,23 @@
             $("#previousMedicalHistory :input").prop("required", false);
             $("#previousMedicalHistory :checkbox").prop("required", false);
         });
+
+        if($("#yesFamilyHistoryDisease").is(':checked')){
+            $("#familyHistoryDisease").removeClass('hidden');
+            $("#familyHistoryDisease :input").prop("readonly", false);
+            $("#familyHistoryDisease :input").prop("required", true);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
+            $("#a4f_other_desease").prop("required", false);
+            
+        }
+        else{
+            $("#familyHistoryDisease").addClass('hidden');  
+            $("#familyHistoryDisease :input").removeAttr('value');
+            $("#familyHistoryDisease :input").prop("readonly", true);
+            $("#familyHistoryDisease :input").prop("checked", false);
+            $("#familyHistoryDisease :input").prop("required", false);
+            $("#familyHistoryDisease :checkbox").prop("required", false);
+        }
 
         $("#yesFamilyHistoryDisease").click(function(){
             $("#familyHistoryDisease").removeClass('hidden');
@@ -105,7 +158,7 @@
                             {% if a4 %}
                             <input class="form-control" type="text" name="a4f_name" value="{{ a4.a4f_name }}" required>
                             {% else %}
-                            <input class="form-control" type="text" name="a4f_name" value="{{form.participant.name}}" required>
+                            <input class="form-control" type="text" name="a4f_name" required>
                             {% endif %}      
                         </div>
 

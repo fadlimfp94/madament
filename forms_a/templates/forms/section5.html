@@ -6,12 +6,44 @@
 
             /* starting of mother part 
             */
-            $("#smoker").click(function(){
+            if($("#smoker").is(':checked')){
                 $("#motherEverSmoke").removeClass('hidden');
                 $("#yesExSmoker").addClass("hidden");
+                $("#yesExSmoker :input[type=text], #yesExSmoker :input[type=checkbox], #yesExSmoker :input[type=number], #yesExSmoker :input[type=date]").removeAttr('value');
                 $("#motherEverSmoke :input").prop("readonly", false); 
                 $("#motherEverSmoke :input").prop("required", true);
                 $("#motherEverSmoke :checkbox").prop("required", false);
+                $("#yesExSmoker :input").prop("readonly", true); 
+                $("#yesExSmoker :input").prop("required", false);
+                $("#yesExSmoker :checkbox").prop("required", false);
+
+            }
+            else if ($("#exSmokerMother").is(':checked')){
+                $("#motherEverSmoke").removeClass('hidden');
+                $("#yesExSmoker").removeClass("hidden");
+                $("#motherEverSmoke :input").prop("readonly", false); 
+                $("#motherEverSmoke :input").prop("required", true);
+                $("#motherEverSmoke :checkbox").prop("required", false);
+            }
+            else{
+                $("#motherEverSmoke").addClass('hidden');
+                $("#motherEverSmoke :input[type=text], #motherEverSmoke :input[type=checkbox], #motherEverSmoke :input[type=number], #motherEverSmoke :input[type=date]").removeAttr('value');
+                $("#motherEverSmoke :input").prop("readonly", true);
+                $("#motherEverSmoke :input").prop("checked", false);
+                $("#motherEverSmoke :input").prop("required", false);
+                $("#motherEverSmoke :checkbox").prop("required", false);
+            }    
+
+            $("#smoker").click(function(){
+                $("#motherEverSmoke").removeClass('hidden');
+                $("#yesExSmoker").addClass("hidden");
+                $("#yesExSmoker :input[type=text], #yesExSmoker :input[type=checkbox], #yesExSmoker :input[type=number], #yesExSmoker :input[type=date]").removeAttr('value');
+                $("#motherEverSmoke :input").prop("readonly", false); 
+                $("#motherEverSmoke :input").prop("required", true);
+                $("#motherEverSmoke :checkbox").prop("required", false);
+                $("#yesExSmoker :input").prop("readonly", true); 
+                $("#yesExSmoker :input").prop("required", false);
+                $("#yesExSmoker :checkbox").prop("required", false);
             });
 
             $("#exSmokerMother").click(function(){
@@ -24,16 +56,32 @@
 
             $("#neverSmoke").click(function(){
                 $("#motherEverSmoke").addClass('hidden');
-                $("#motherEverSmoke :input").removeAttr('value');
+                $("#motherEverSmoke :input[type=text], #motherEverSmoke :input[type=checkbox], #motherEverSmoke :input[type=number], #motherEverSmoke :input[type=date]").removeAttr('value');
                 $("#motherEverSmoke :input").prop("readonly", true);
                 $("#motherEverSmoke :input").prop("checked", false);
                 $("#motherEverSmoke :input").prop("required", false);
                 $("#motherEverSmoke :checkbox").prop("required", false);
             });
 
+            if($("#yesHouseholdSmoke").is(':checked')){
+                $("#householdSmoke").removeClass('hidden');
+                $("#householdSmoke :input").prop("readonly", false); 
+                $("#householdSmoke :input").prop("required", true);
+                $("#householdSmoke :checkbox").prop("required", false);
+            }
+            else{
+                $("#householdSmoke").addClass('hidden');
+                $("#householdSmoke :input[type=text], #householdSmoke :input[type=checkbox], #householdSmoke :input[type=number], #householdSmoke :input[type=date]").removeAttr('value');
+                $("#householdSmoke :input").prop("readonly", true);
+                $("#householdSmoke :input").prop("checked", false);
+                $("#householdSmoke :input").prop("required", false);
+                $("#householdSmoke :checkbox").prop("required", false);
+            }
+
+
             $("#noHouseholdSmoke").click(function(){
                 $("#householdSmoke").addClass('hidden');
-                $("#householdSmoke :input").removeAttr('value');
+                $("#householdSmoke :input[type=text], #householdSmoke :input[type=checkbox], #householdSmoke :input[type=number], #householdSmoke :input[type=date]").removeAttr('value');
                 $("#householdSmoke :input").prop("readonly", true);
                 $("#householdSmoke :input").prop("checked", false);
                 $("#householdSmoke :input").prop("required", false);
@@ -46,15 +94,49 @@
                 $("#householdSmoke :input").prop("required", true);
                 $("#householdSmoke :checkbox").prop("required", false);
             });
+
             // end of mother smoke
 
             // start of father
-            $("#smokerFather").click(function(){
+            if($("#smokerFather").is(':checked')){
                 $("#fatherEverSmoke").removeClass("hidden");
                 $("#exSmokerQuit").addClass("hidden");
+                $("#exSmokerQuit :input[type=text], #exSmokerQuit :input[type=checkbox], #exSmokerQuit :input[type=number], #exSmokerQuit :input[type=date]").removeAttr('value');
                 $("#fatherEverSmoke :input").prop("readonly", false); 
                 $("#fatherEverSmoke :input").prop("required", true);
                 $("#fatherEverSmoke :checkbox").prop("required", false);
+                $("#exSmokerQuit :input").prop("readonly", true); 
+                $("#exSmokerQuit :input").prop("required", false);
+                $("#exSmokerQuit :checkbox").prop("required", false);
+            }
+            else if($("#exSmokerFather").is(':checked')){
+                $("#fatherEverSmoke").removeClass("hidden");
+                $("#exSmokerQuit").removeClass("hidden");
+                $("#fatherEverSmoke :input").prop("readonly", false); 
+                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
+                
+            }
+            else{
+                $("#fatherEverSmoke").addClass("hidden");
+                $("#fatherEverSmoke :input[type=text], #fatherEverSmoke :input[type=checkbox], #fatherEverSmoke :input[type=number], #fatherEverSmoke :input[type=date]").removeAttr('value');
+                $("#fatherEverSmoke :input").prop("readonly", true);
+                $("#fatherEverSmoke :input").prop("checked", false);
+                $("#fatherEverSmoke :input").prop("required", false);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
+            }
+
+
+            $("#smokerFather").click(function(){
+                $("#fatherEverSmoke").removeClass("hidden");
+                $("#exSmokerQuit").addClass("hidden");
+                $("#exSmokerQuit :input[type=text], #exSmokerQuit :input[type=checkbox], #exSmokerQuit :input[type=number], #exSmokerQuit :input[type=date]").removeAttr('value');
+                $("#fatherEverSmoke :input").prop("readonly", false); 
+                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :checkbox").prop("required", false);
+                $("#exSmokerQuit :input").prop("readonly", true); 
+                $("#exSmokerQuit :input").prop("required", false);
+                $("#exSmokerQuit :checkbox").prop("required", false);
             });
 
             $("#exSmokerFather").click(function(){
@@ -68,7 +150,7 @@
 
             $("#neverSmokeFather").click(function(){
                 $("#fatherEverSmoke").addClass("hidden");
-                $("#fatherEverSmoke :input").removeAttr('value');
+                $("#fatherEverSmoke :input[type=text], #fatherEverSmoke :input[type=checkbox], #fatherEverSmoke :input[type=number], #fatherEverSmoke :input[type=date]").removeAttr('value');
                 $("#fatherEverSmoke :input").prop("readonly", true);
                 $("#fatherEverSmoke :input").prop("checked", false);
                 $("#fatherEverSmoke :input").prop("required", false);
@@ -77,21 +159,21 @@
             /* end of father part
             */
 
-            $("#yesHouseholdSmoke").click(function(){
-                $("#householdSmoke").removeClass("hidden");
-                $("#householdSmoke :input").prop("readonly", false);
-                $("#householdSmoke :input").prop("required", true);
-                $("#householdSmoke :checkbox").prop("required", false);
-            });
+            if($("#yesSmokingPresence").is(':checked')){
+                $("#ifWorkColleaguesSmoke").removeClass("hidden");
+                $("#ifWorkColleaguesSmoke :input").prop("readonly", false);
+                $("#ifWorkColleaguesSmoke :input").prop("required", true);
+                $("#ifWorkColleaguesSmoke :checkbox").prop("required", false);
+            }
+            else{
+                $("#ifWorkColleaguesSmoke").addClass("hidden");
+                $("#ifWorkColleaguesSmoke :input[type=text], #ifWorkColleaguesSmoke :input[type=checkbox], #ifWorkColleaguesSmoke :input[type=number], #ifWorkColleaguesSmoke :input[type=date]").removeAttr('value');
+                $("#ifWorkColleaguesSmoke :input").prop("readonly", true);
+                $("#ifWorkColleaguesSmoke :input").prop("checked", false);
+                $("#ifWorkColleaguesSmoke :input").prop("required", false);
+                $("#ifWorkColleaguesSmoke :checkbox").prop("required", false);
+            }
 
-            $("#noHouseholdSmoke").click(function(){
-                $("#householdSmoke").addClass("hidden");
-                $("#ifWorkColleaguesSmoke :input").removeAttr('value');
-                $("#householdSmoke :input").prop("readonly", true);
-                $("#householdSmoke :input").prop("checked", false);
-                $("#householdSmoke :input").prop("required", false);
-                $("#householdSmoke :checkbox").prop("required", false);
-            });
 
             $("#yesSmokingPresence").click(function(){
                 $("#ifWorkColleaguesSmoke").removeClass("hidden");
@@ -102,7 +184,7 @@
 
             $("#noSmokingPresence").click(function(){
                 $("#ifWorkColleaguesSmoke").addClass("hidden");
-                $("#ifWorkColleaguesSmoke :input").removeAttr('value');
+                $("#ifWorkColleaguesSmoke :input[type=text], #ifWorkColleaguesSmoke :input[type=checkbox], #ifWorkColleaguesSmoke :input[type=number], #ifWorkColleaguesSmoke :input[type=date]").removeAttr('value');
                 $("#ifWorkColleaguesSmoke :input").prop("readonly", true);
                 $("#ifWorkColleaguesSmoke :input").prop("checked", false);
                 $("#ifWorkColleaguesSmoke :input").prop("required", false);
@@ -240,8 +322,10 @@
                             <label>
                             {% if a5.a5m_other_member_smoke %}
                             <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0">
-                            {% else %}
+                            {% elif a5.a5m_other_member_smoke == False %}
                             <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0">
                             {% endif %}
                             No
                             </label>
@@ -438,11 +522,12 @@
 
                     <div class="form-group">
                         <h4>Work Colleagues</h4>
-                        <label> Is there any of your work colleagues (who work in the same room) who smoke in your presence? </label>                            
+                        <label> Is there any of your work colleagues (who work in the same room) who smoke in your presence?  </label> 
+                        {{ a5.a5c_colleagues_smoking_status }}                           
                         <div class="radio">                                
                             <label>
                             {% if a5.a5c_colleagues_smoking_status %}
-                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" checked>
+                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" checked>  
                             {% else %}
                             <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1">
                             {% endif %}
@@ -451,10 +536,10 @@
                         </div>
                         <div class="radio">
                             <label>
-                            {% if a5.a5c_colleagues_smoking_status %}
-                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0">
-                            {% else %}
+                            {% if a5.a5c_colleagues_smoking_status == False %}
                             <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0">
                             {% endif %}
                             No
                             </label>
