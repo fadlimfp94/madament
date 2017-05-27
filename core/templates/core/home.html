@@ -73,18 +73,7 @@
                             <td>{{ participant.name }}</td>
                             <td>{{ participant.date_admission }}</td>
                             <td>
-                                <form action="{% url 'core:forms' %}"  method="POST">
-                                   {% csrf_token %}
-                                   <input type="hidden" name="participant_id" value={{participant.id}}>
-                                   <input type="submit" class="btn btn-detail" value="Detail"/>
-                                </form>
-                            </td>
-                            <td>
-                                <form action=""  method="POST">
-                                   {% csrf_token %}
-                                   <input type="hidden" name="participant_id" value={{participant.id}}>
-                                   <input type="submit" class="btn btn-detail" value="Children"/>
-                                </form>
+                              <a href="/participant/{{participant.id}}" class="btn btn-info"> Detail </a>
                             </td>
                         </tr>                      
                     {% endfor %}     

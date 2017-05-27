@@ -9,7 +9,7 @@ import datetime
 
 
 @login_required(login_url='core:login')
-def check_form(request):
+def check_form(request, participant_id):
 	form = DInfant.objects.get(id=request.session['form_id'])
 	form.data_checked_id = request.user.username
 	form.date_data_checked = datetime.date.today()
@@ -17,14 +17,14 @@ def check_form(request):
 	return process_section1(request)
 
 @login_required(login_url='core:login')
-def save_form(request):
+def save_form(request, participant_id):
 	form = DInfant.objects.get(id=request.session['form_id'])
 	form.is_save_all = True
 	form.save()
 	return process_section1(request)
 
 @login_required(login_url='core:login')
-def edit_form(request):
+def edit_form(request participant_id):
 	form = DInfant.objects.get(id=request.session['form_id'])
 	form.is_save_all = False
 	form.save()
@@ -49,7 +49,7 @@ def edit_form(request):
 						
 
 @login_required(login_url='core:login')
-def create_form(request):
+def create_form(request, participant_id):
 	if request.method == "POST":
 		participant_id = request.session['participant_id']
 		child_id = 1
@@ -133,7 +133,12 @@ def show_section1(request, is_save):
 			else:
 				return render(request, 'forms_d/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd1' : d1_obj})	
 	except:
-		return render(request, 'forms_d/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section1.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		
 
 #@login_required(login_url='core:login')
 def save_section1(d1_obj, request):
@@ -287,7 +292,11 @@ def show_section2(request, is_save):
 			else:
 				return render(request, 'forms_d/section2.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd2' : d2_obj})	
 	except:
-		return render(request, 'forms_d/section2.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section2.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section2.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section2(d2_obj, request):
@@ -403,7 +412,11 @@ def show_section3(request, is_save):
 			else:
 				return render(request, 'forms_d/section3.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd3' : d3_obj})	
 	except:
-		return render(request, 'forms_d/section3.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section3.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section3.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section3(d3_obj, request):
@@ -576,7 +589,11 @@ def show_section4(request, is_save):
 			else:
 				return render(request, 'forms_d/section4.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd4' : d4_obj})	
 	except:
-		return render(request, 'forms_d/section4.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section4.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section4.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section4(d4_obj, request):
@@ -710,7 +727,11 @@ def show_section5(request, is_save):
 			else:
 				return render(request, 'forms_d/section5.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd5' : d5_obj})	
 	except:
-		return render(request, 'forms_d/section5.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section5.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section5.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section5(d5_obj, request):
@@ -843,7 +864,11 @@ def show_section6(request, is_save):
 			else:
 				return render(request, 'forms_d/section6.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd6' : d6_obj})	
 	except:
-		return render(request, 'forms_d/section6.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section6.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section6.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section6(d6_obj, request):
@@ -980,7 +1005,11 @@ def show_section7(request, is_save):
 			else:
 				return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd7' : d7_obj})	
 	except:
-		return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section7.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section7(d7_obj, request): 
@@ -1328,7 +1357,11 @@ def show_section8(request, is_save):
 			else:
 				return render(request, 'forms_d/section8.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd8' : d8_obj})	
 	except:
-		return render(request, 'forms_d/section8.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		if form.date_data_checked is not None:
+			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			return render(request, 'forms_d/section8.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
+		else:
+			return render(request, 'forms_d/section8.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
 def save_section8(d8_obj, request):

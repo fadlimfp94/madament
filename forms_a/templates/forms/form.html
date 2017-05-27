@@ -11,7 +11,7 @@
         <div class="jumbotron">
             <h2 class="text-center">Form A - Baseline Data</h2>
             <hr>         
-            <form class="patient-form-data" action="{% url 'forms_a:create_form' %}" method="post">
+            <form class="patient-form-data" action="{{request.get_full_path}}create" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_id" value={{form.id}}>
                 <div class="row">
@@ -103,7 +103,7 @@
                                 {% if is_save_all %}
 
                                 {% else %}
-                                    <form action="{% url 'forms_a:save_form' %}" method="post">
+                                    <form action="{{request.get_full_path}}save" method="post">
                                         {% csrf_token %}
                                         <input type="submit" class="btn btn-primary" value="Submit Form"/>
                                     </form>
@@ -112,7 +112,7 @@
                                 {% if date_data_checked %}
                                 
                                 {% else %}
-                                    <form action="{% url 'forms_a:check_form' %}" method="post">
+                                    <form action="{{request.get_full_path}}check" method="post">
                                     {% csrf_token %}
                                     <input type="submit" class="btn btn-success" value="Check Form"/> 
                                     </form>

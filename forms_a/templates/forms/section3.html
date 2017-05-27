@@ -116,20 +116,30 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                    <a href="{% url 'forms_a:process_section1' %}"> Mother Demographic Data </a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="{% url 'forms_a:process_section2'%}"> Mother Employment History </a>
-                                </li>
                                 <li class="list-group-item active">
-                                    <a href="{% url 'forms_a:process_section3'%}"> Obstetric History </a>
+                                    <a href="{{request.get_full_path}}/../section1"> 
+                                    Mother Demographic Data 
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{% url 'forms_a:process_section4'%}"> Father Data </a>
+                                    <a href="{{request.get_full_path}}/../section2"> 
+                                    Mother Employment History 
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{% url 'forms_a:process_section5'%}"> Pre-pregnancy Smoking Habits </a> 
+                                    <a href="{{request.get_full_path}}/../section3"> 
+                                    Obstetric History 
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{request.get_full_path}}/../section4"> 
+                                    Father Data 
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{request.get_full_path}}/../section5"> 
+                                    Pre-pregnancy Smoking Habits 
+                                    </a> 
                                 </li>
                             </ul>
                         </div>
@@ -137,7 +147,7 @@
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                 <!-- Tadinya pa-->
-                    <form class="sectionA3-question" action="{% url 'forms_a:process_section3' %}" method="post" id="form_a">
+                    <form class="sectionA3-question" action="{{request.get_full_path}}" method="post" id="form_a">
                         <h2>Obstetric History</h2>
                         <hr>
                         {% csrf_token %}
@@ -736,7 +746,7 @@
 
                             {% else %}
                                 {% if is_save_all %}
-                                <form action="{% url 'forms_a:edit_form' %}" method="post">
+                                <form action="{{request.get_full_path}}/../edit" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="section_number" value="3">
                                     <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>

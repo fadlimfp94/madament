@@ -19,10 +19,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    ## FADLI
+    url(r'^participant/(?P<participant_id>[0-9])/form_a/', include('forms_a.urls')),
+    url(r'^participant/(?P<participant_id>[0-9])/form_d/', include('forms_d.urls')),
+
+    ## GAMA
+    #url(r'^participant/(?P<participant_id>[0-9])/form_b/', include('forms_b.urls')),
+    #url(r'^participant/(?P<participant_id>[0-9])/form_c/', include('forms_c.urls')),
+
+    ## CORE
     url(r'^admin/', admin.site.urls),
-    url(r'^forms_a/', include('forms_a.urls')),
-    #url(r'^forms_b/', include('forms_b.urls')),
-    #url(r'^forms_c/', include('forms_c.urls')),
-    url(r'^forms_d/', include('forms_d.urls')),
     url(r'^', include('core.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

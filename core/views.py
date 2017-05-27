@@ -34,12 +34,17 @@ def format_number(number):
 
 @login_required(login_url='core:login')
 def home(request):
+	return redirect('/participant')
+
+@login_required(login_url='core:login')
+def participant_list(request):
 	participants = Participant.objects.all()
 	puskesmas_list = Puskesmas.objects.all()
 	number_of_participants_list = []
 	for puskesmas in puskesmas_list:
 		number_of_participants_list.append(puskesmas.name + ": " + str(Participant.objects.filter(puskesmas=puskesmas).count()))	
 	return render(request, 'core/home.html', {'number_of_participants_list' : number_of_participants_list,'participants' : participants, 'puskesmas_list' : puskesmas_list})
+
 
 @login_required(login_url='core:login')
 def children(request):
@@ -71,40 +76,77 @@ def add_children(request):
 	return render(request, 'core/children.html', {'children' : children,'participant' : participant, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
-def forms(request):
-	request.session['participant_id'] = request.POST.get('participant_id')
-	participant = Participant.objects.get(id=request.POST.get('participant_id'))
+def forms(request, participant_id):
+	request.session['participant_id'] = participant_id
+	participant = Participant.objects.get(id=participant_id)
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/forms.html', {'participant' : participant, 'date_admission' : date_admission})
 
 
 # form fadli
 @login_required(login_url='core:login')
-def form_a(request):
+def form_a(request, participant_id):
 	participant = Participant.objects.get(id=request.session['participant_id'])
 	forms = ABaseLine.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/form_a.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
-def form_d(request):
+def form_d1(request, participant_id):
 	participant = Participant.objects.get(id=request.session['participant_id'])
 	forms = DInfant.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
+@login_required(login_url='core:login')
+def form_d2(request, participant_id):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = DInfant2.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_d3(request, participant_id):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = DInfant3.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_d4(request, participant_id):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = DInfant4.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_d.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+
+
 ##################################
 
 # form gama
 @login_required(login_url='core:login')
-def form_c(request):	
+def form_c(request, participant_id):	
 	participant = Participant.objects.get(id=request.session['participant_id'])
 	forms = CBirth.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
 	return render(request, 'core/form_c.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
-def form_b1(request):
+def form_b1(request, participant_id):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = BPregnancy.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_b1.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_b2(request, participant_id):
+	participant = Participant.objects.get(id=request.session['participant_id'])
+	forms = BPregnancy.objects.filter(participant_id=request.session['participant_id'])
+	date_admission = participant.date_admission.strftime('%Y-%m-%d')
+	return render(request, 'core/form_b1.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
+
+@login_required(login_url='core:login')
+def form_b3(request, participant_id):
 	participant = Participant.objects.get(id=request.session['participant_id'])
 	forms = BPregnancy.objects.filter(participant_id=request.session['participant_id'])
 	date_admission = participant.date_admission.strftime('%Y-%m-%d')
