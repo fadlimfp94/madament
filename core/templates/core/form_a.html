@@ -3,6 +3,8 @@
  <!-- Page Content -->
  
         <!-- Form Umum Section -->
+
+        {% if forms.count < 1 %}
         <div class="mycenter">
         <div class="form-group row">
             <div class="col-md-8 col-md-offset-2">
@@ -10,7 +12,8 @@
                     Create Form A
                 </a>
             </div>
-        </div>    
+        </div>
+        {% endif %}    
         <h4 style="text-align: center; margin-top: 10%;"> List Form A ( Baseline Data) of {{ participant.name }} </h4>
         </div>
         <div class="list_all_form">
@@ -18,11 +21,12 @@
                 {% for form in forms %}
                     <div class="col-md-8 col-md-offset-2">
                         <a href="{{request.get_full_path}}{{form.id}}" class="btn btn-primary btn-lg btn-block">
-                            Form A - Baseline 
+                            Form A ( Baseline Data ) - {{ participant.name }} 
                         </a>
                     </div>
                 {% endfor %}
             </div>            
-        </div>      
+        </div>
+
 
 {% endblock %}

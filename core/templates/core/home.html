@@ -51,19 +51,55 @@
         </div> 
         <!-- End of Modal Create Participant-->
 
+        <!-- Modal Edit Participant --> 
+         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="createModallabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="editModal">Edit Participant</h4>
+              </div>
+              <form action="{% url 'core:edit_participant' participant_id=1%}"  method="POST">
+                  {% csrf_token %}
+                  <div class="modal-body">
+                        <div class="form-group">
+                                <label for="participant_name"> Participant Name </label>
+                                <input class="form-control " type="text" name="participant_name_edit" id="participant_name_edit">
+                        </div>
+                        <div class="form-group">
+                                <label for="date_admission"> Date Admission </label>
+                                <input class="form-control" type="date" id="participant_date_edit" name="participant_date_edit" required>
+                        </div>
+                                
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save"/>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div> 
+        <!-- End of Modal Edit Participant-->
+
+
         <div class="row">         
-           <h3> List of Patient </h3>
+           <h3> List of Participants </h3>
            <h4> Number of Registered Participant: {{ participants.count }} </h4>
            {% for item in number_of_participants_list %}
               <h4>{{ item }}</h4>
-           {% endfor %} 
-           <table id="myTable" cellspacing="0" width="100%">
+           {% endfor %}
+         
+           <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th>Participant_ID</th>
                         <th>Name</th>
                         <th>Date Admission </th>
-                        <th> </th>
+                        <th>Created by</th>
+                        <th>Forms</th>
                     </tr>
                 </thead>            
                 <tbody>
@@ -72,14 +108,18 @@
                             <td>{{ participant.participant_id }}</td>
                             <td>{{ participant.name }}</td>
                             <td>{{ participant.date_admission }}</td>
+                            <td>{{ participant.created_by }}</td>
                             <td>
-                              <a href="/participant/{{participant.id}}" class="btn btn-info"> Detail </a>
+                              <a href="{{request.get_full_path}}{{participant.id}}" class="btn btn-info"> &nbsp; &nbsp; &nbsp; Forms &nbsp; &nbsp; &nbsp;</a>
                             </td>
+                            <!-- <td>
+                              <a class="btn btn-info" data-toggle="modal" data-target="#editModal"> Edit Participant </a>
+                            </td> -->
                         </tr>                      
                     {% endfor %}     
                 </tbody>
            </table>
-        </div>
+        </div> 
     </div>
     <!-- /.container -->
 {% endblock %}

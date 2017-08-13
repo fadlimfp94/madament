@@ -6,18 +6,20 @@
             if($("#yesHeartAbnormality").is(':checked')){
                 $("#heartAbnormalityDetail").removeClass('hidden');
                 $("#heartAbnormalityDetail :input").prop("readonly", false);
+                $("#heartAbnormalityDetail :input").prop("required", true);
             }
             else{
                 $("#heartAbnormalityDetail").addClass('hidden');
                 $("#heartAbnormalityDetail :input").removeAttr('value');
                 $("#heartAbnormalityDetail :input").prop("readonly", true);
-                $("#vaccinationHistory :input").prop("required", false);
+                $("#heartAbnormalityDetail :input").prop("required", false);
             }
 
 
             $("#yesHeartAbnormality").click(function(){
                 $("#heartAbnormalityDetail").removeClass('hidden');
                 $("#heartAbnormalityDetail :input").prop("readonly", false);
+                $("#heartAbnormalityDetail :input").prop("required", true);
                 console.log( "Yes" );
             });
 
@@ -25,7 +27,7 @@
                 $("#heartAbnormalityDetail").addClass('hidden');
                 $("#heartAbnormalityDetail :input").removeAttr('value');
                 $("#heartAbnormalityDetail :input").prop("readonly", true);
-                $("#vaccinationHistory :input").prop("required", false);
+                $("#heartAbnormalityDetail :input").prop("required", false);
                 console.log( "No" );
 
             });
@@ -40,28 +42,28 @@
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                            <a href="{{request.get_full_path}}/../section1"> Infant Growth / Immunisation Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                            <a href="{{request.get_full_path}}/../section2"> Infant Feeding Data </a>
                         </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                            <a href="{{request.get_full_path}}/../section3"> Infant Cardiovascular Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                            <a href="{{request.get_full_path}}/../section4"> Infant Lung Function and Respiratory Symptoms </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                            <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                            <a href="{{request.get_full_path}}/../section6"> Current Second Hand Smoking Exposure </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                            <a href="{{request.get_full_path}}/../section7"> Infection Episode </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{{request.get_full_path}}/../section8"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -71,83 +73,89 @@
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
                     {% if context == "create" %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section3' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% else %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section3' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% endif %}
                         <h2>Infant Cardiovascular Data</h2>
                         <hr> 
                         {% csrf_token %}
                         <input type="hidden" name="context" value="SAVE">
-                        <h4>Blood Pressure</h4>
                         <div class="form-group">
-                                    <label for="d3c_date_blood_pressure"> Date of Measurement </label>
-                                    <input class="form-control" type="date" name="d3c_date_blood_pressure" value = "{{ d3.d3c_date_blood_pressure | date:'Y-m-d' }}" required>
-                        </div>
-                        <div class="form-group">
-                                    <label for="d3c_examiner_bp"> Examiner initial </label>
-                                    <input class="form-control" type="text" name="d3c_examiner_bp" value = "{{ d3.d3c_examiner_bp }}" required>
-                        </div>
-                        <div class="form-group">
+                        <label><h4>Blood Pressure</h4></label>
+                            <div class="form-group">
+                                        <label for="d3c_date_blood_pressure"> Date of Measurement </label>
+                                        <input class="form-control" type="date" name="d3c_date_blood_pressure" value = "{{ d3.d3c_date_blood_pressure  }}" >
+                            </div>
+                            <div class="form-group">
+                                        <label for="d3c_examiner_bp"> Examiner initial </label>
+                                        <input class="form-control" type="text" name="d3c_examiner_bp" value = "{{ d3.d3c_examiner_bp }}" >
+                            </div>
+                            <div class="form-group">
+                                    <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_1st">Systolic blood pressure 1 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_1st" value = "{{ d3.d3c_systolic_1st }}"  step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_2nd">Systolic blood pressure 2 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_2nd" value = "{{ d3.d3c_systolic_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_3rd">Systolic blood pressure 3 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_3rd" value = "{{ d3.d3c_systolic_3rd }}" step="0.01" >
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_1st">Systolic blood pressure 1 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_1st" value = "{{ d3.d3c_systolic_1st }}" required>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_1st">Diastolic blood pressure 1 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_1st" value = "{{ d3.d3c_diastolic_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_2nd">Diastolic blood pressure 2 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_2nd" value = "{{ d3.d3c_diastolic_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_3rd">Diastolic blood pressure 3 (mmHg)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_3rd" value = "{{ d3.d3c_diastolic_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_2nd">Systolic blood pressure 2 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_2nd" value = "{{ d3.d3c_systolic_2nd }}" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_pulse_1st">Pulse rate 1 (/min)</label>
+                                        <input class="form-control" type="number" name="d3c_pulse_1st" value = "{{ d3.d3c_pulse_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_pulse_2nd">Pulse rate 2 (/min)</label>
+                                        <input class="form-control" type="number" name="d3c_pulse_2nd" value = "{{ d3.d3c_pulse_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_pulse_3rd">Pulse rate 3 (/min)</label>
+                                        <input class="form-control" type="number" name="d3c_pulse_3rd" value = "{{ d3.d3c_pulse_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_3rd">Systolic blood pressure 3 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_3rd" value = "{{ d3.d3c_systolic_3rd }}" required>
-                                </div>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_1st">Diastolic blood pressure 1 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_1st" value = "{{ d3.d3c_diastolic_1st }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_2nd">Diastolic blood pressure 2 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_2nd" value = "{{ d3.d3c_diastolic_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_3rd">Diastolic blood pressure 3 (mmHg)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_3rd" value = "{{ d3.d3c_diastolic_3rd }}" required>
-                                </div>      
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_pulse_1st">Pulse rate 1 (/min)</label>
-                                    <input class="form-control" type="number" name="d3c_pulse_1st" value = "{{ d3.d3c_pulse_1st }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_pulse_2nd">Pulse rate 2 (/min)</label>
-                                    <input class="form-control" type="number" name="d3c_pulse_2nd" value = "{{ d3.d3c_pulse_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_pulse_3rd">Pulse rate 3 (/min)</label>
-                                    <input class="form-control" type="number" name="d3c_pulse_3rd" value = "{{ d3.d3c_pulse_3rd }}" required>
-                                </div>      
+                        <div class="form-group">    
+                            <label>
+                            <h4>Echocardiography and Vascular Ultrasound (at 1 month of age)</h4>
+                            </label>
+                            <div class="form-group">
+                                        <label for="d3c_date_echo"> Date of Measurement </label>
+                                        <input class="form-control" type="date" name="d3c_date_echo" value = "{{ d3.d3c_date_echo }}" >
+                            </div>
+                            <div class="form-group">
+                                
+                                        <label for="d3c_examiner_echo"> Examiner initial </label>
+                                        <input class="form-control" type="text" name="d3c_examiner_echo" value = "{{ d3.d3c_examiner_echo }}" >
+                                
                             </div>
                         </div>
-                        <h4>Echocardiography and Vascular Ultrasound (at 1 month of age)</h4>
-                        <div class="form-group">
-                                    <label for="d3c_date_echo"> Date of Measurement </label>
-                                    <input class="form-control" type="date" name="d3c_date_echo" value = "{{ d3.d3c_date_echo | date:'Y-m-d' }}" required>
-                        </div>
-                        <div class="form-group">
-                            
-                                    <label for="d3c_examiner_echo"> Examiner initial </label>
-                                    <input class="form-control" type="text" name="d3c_examiner_echo" value = "{{ d3.d3c_examiner_echo }}" required>
-                            
-                        </div>
-                        <div class="form-group" id="">                        
+                        <div class="form-group">                        
                             <label> <h4>Cineloops obtained </h4></label>
                             <div class="radio">                                
                                 <label>
@@ -190,6 +198,7 @@
                                 </label>
                             </div>                        
                         </div>
+                        </div>
                         <div class="form-group" id="">                        
                             <label> <h4>Any heart structure abnormality? </h4></label>
                             <div class="radio">                                
@@ -203,14 +212,16 @@
                                 </label>
                             </div>
                             <div class="form-group" id="heartAbnormalityDetail">
-                                    <input class="form-control" type="text" name="d3c_heart_abnormality_detail" value="{{ d3.d3c_heart_abnormality_detail }}" required>       
+                                    <input class="form-control" type="text" name="d3c_heart_abnormality_detail" value="{{ d3.d3c_heart_abnormality_detail }}" >       
                             </div>
                             <div class="radio">
                                 <label>
                                 {% if d3.d3c_heart_abnormality %}
                                 <input type="radio" name="d3c_heart_abnormality" id="noHeartAbnormality" value="0">
-                                {% else %}
+                                {% elif d3.d3c_heart_abnormality == False %}
                                 <input type="radio" name="d3c_heart_abnormality" id="noHeartAbnormality" value="0" checked>
+                                {% else %}
+                                <input type="radio" name="d3c_heart_abnormality" id="noHeartAbnormality" value="0" >
                                 {% endif %}
                                 No
                                 </label>
@@ -224,15 +235,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvidd_1st">LVIDd 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvidd_1st" value = "{{ d3.d3c_lvidd_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvidd_1st" value = "{{ d3.d3c_lvidd_1st }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvidd_2nd">LVIDd 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvidd_2nd" value = "{{ d3.d3c_lvidd_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvidd_2nd" value = "{{ d3.d3c_lvidd_2nd }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvidd_3rd">LVIDd 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvidd_3rd" value = "{{ d3.d3c_lvidd_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvidd_3rd" value = "{{ d3.d3c_lvidd_3rd }}" step="0.01"  >
                                 </div>      
                             </div>
                         </div>
@@ -241,15 +252,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvids_1st">LVIDs 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvids_1st" value = "{{ d3.d3c_lvids_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvids_1st" value = "{{ d3.d3c_lvids_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvids_2nd">LVIDs 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvids_2nd" value = "{{ d3.d3c_lvids_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvids_2nd" value = "{{ d3.d3c_lvids_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvids_3rd">LVIDs 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvids_3rd" value = "{{ d3.d3c_lvids_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvids_3rd" value = "{{ d3.d3c_lvids_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -258,15 +269,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivsd_1st">IVSd 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivsd_1st" value = "{{ d3.d3c_ivsd_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivsd_1st" value = "{{ d3.d3c_ivsd_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivsd_2nd">IVSd 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivsd_2nd" value = "{{ d3.d3c_ivsd_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivsd_2nd" value = "{{ d3.d3c_ivsd_2nd }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivsd_3rd">IVSd 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivsd_3rd" value = "{{ d3.d3c_ivsd_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivsd_3rd" value = "{{ d3.d3c_ivsd_3rd }}" step="0.01"  >
                                 </div>      
                             </div>
                         </div>                        
@@ -275,15 +286,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivss_1st">IVSs 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivss_1st" value = "{{ d3.d3c_ivss_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivss_1st" value = "{{ d3.d3c_ivss_1st }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivss_2nd">IVSs 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivss_2nd" value = "{{ d3.d3c_ivss_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivss_2nd" value = "{{ d3.d3c_ivss_2nd }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_ivss_3rd">IVSs 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_ivss_3rd" value = "{{ d3.d3c_ivss_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_ivss_3rd" value = "{{ d3.d3c_ivss_3rd }}" step="0.01"  >
                                 </div>      
                             </div>
                         </div>
@@ -292,15 +303,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpws_1st">LVPWs 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_1st" value = "{{ d3.d3c_lvpws_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpws_1st" value = "{{ d3.d3c_lvpws_1st }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpws_2nd">LVPWs 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_2nd" value = "{{ d3.d3c_lvpws_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpws_2nd" value = "{{ d3.d3c_lvpws_2nd }}" step="0.01"  >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpws_3rd">LVPWs 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_3rd" value = "{{ d3.d3c_lvpws_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpws_3rd" value = "{{ d3.d3c_lvpws_3rd }}" step="0.01"  >
                                 </div>      
                             </div>
                         </div>
@@ -309,15 +320,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpwd_1st">LVPWd 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpwd_1st" value = "{{ d3.d3c_lvpwd_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpwd_1st" value = "{{ d3.d3c_lvpwd_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpwd_2nd">LVPWd 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpwd_2nd" value = "{{ d3.d3c_lvpwd_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpwd_2nd" value = "{{ d3.d3c_lvpwd_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpwd_3rd">LVPWd 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpwd_3rd" value = "{{ d3.d3c_lvpwd_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvpwd_3rd" value = "{{ d3.d3c_lvpwd_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -326,15 +337,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvef_1st">LV ejection fraction 1 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvef_1st" value = "{{ d3.d3c_lvef_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvef_1st" value = "{{ d3.d3c_lvef_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvef_2nd">LV ejection fraction 1 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvef_2nd" value = "{{ d3.d3c_lvef_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvef_2nd" value = "{{ d3.d3c_lvef_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvef_3rd">LV ejection fraction 1 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvef_3rd" value = "{{ d3.d3c_lvef_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvef_3rd" value = "{{ d3.d3c_lvef_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -343,255 +354,262 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvfs_1st">LV fraction shortening 1 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvfs_1st" value = "{{ d3.d3c_lvfs_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvfs_1st" value = "{{ d3.d3c_lvfs_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvfs_2nd">LV fraction shortening 2 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvfs_2nd" value = "{{ d3.d3c_lvfs_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvfs_2nd" value = "{{ d3.d3c_lvfs_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvfs_3rd">LV fraction shortening 3 (%)</label>
-                                    <input class="form-control" type="number" name="d3c_lvfs_3rd" value = "{{ d3.d3c_lvfs_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_lvfs_3rd" value = "{{ d3.d3c_lvfs_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tvr_1st">TVR jet velocity 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_tvr_1st" value = "{{ d3.d3c_tvr_1st }}" required>
+                            <label> <h4>Pulmonary artery pressure estimation and right ventricular function</h4></label>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tvr_1st">TVR jet velocity 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_tvr_1st" value = "{{ d3.d3c_tvr_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tvr_2nd">TVR jet velocity 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_tvr_2nd" value = "{{ d3.d3c_tvr_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tvr_3rd">TVR jet velocity 3 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_tvr_3rd" value = "{{ d3.d3c_tvr_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tvr_2nd">TVR jet velocity 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_tvr_2nd" value = "{{ d3.d3c_tvr_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tvr_3rd">TVR jet velocity 3 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_tvr_3rd" value = "{{ d3.d3c_tvr_3rd }}" required>
-                                </div>      
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_lv_1st">Systolic LV eccentricity index 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_lv_1st" value = "{{ d3.d3c_systolic_lv_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_lv_1st">Systolic LV eccentricity index 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_lv_1st" value = "{{ d3.d3c_systolic_lv_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_lv_2nd">Systolic LV eccentricity index 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_lv_2nd" value = "{{ d3.d3c_systolic_lv_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_systolic_lv_3rd">Systolic LV eccentricity index 3 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_systolic_lv_3rd" value = "{{ d3.d3c_systolic_lv_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_lv_2nd">Systolic LV eccentricity index 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_lv_2nd" value = "{{ d3.d3c_systolic_lv_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_systolic_lv_3rd">Systolic LV eccentricity index 3 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_systolic_lv_3rd" value = "{{ d3.d3c_systolic_lv_3rd }}" required>
-                                </div>      
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_lv_1st">Diastolic LV eccentricity index 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_lv_1st" value = "{{ d3.d3c_diastolic_lv_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_lv_1st">Diastolic LV eccentricity index 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_lv_1st" value = "{{ d3.d3c_diastolic_lv_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_lv_2nd">Diastolic LV eccentricity index 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_lv_2nd" value = "{{ d3.d3c_diastolic_lv_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_diastolic_lv_3rd">Diastolic LV eccentricity index 3 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_diastolic_lv_3rd" value = "{{ d3.d3c_diastolic_lv_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_lv_2nd">Diastolic LV eccentricity index 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_lv_2nd" value = "{{ d3.d3c_diastolic_lv_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_diastolic_lv_3rd">Diastolic LV eccentricity index 3 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_diastolic_lv_3rd" value = "{{ d3.d3c_diastolic_lv_3rd }}" required>
-                                </div>      
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tapse_1st">TAPSE 1 (cm)</label>
-                                    <input class="form-control" type="number" name="d3c_tapse_1st" value = "{{ d3.d3c_tapse_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tapse_1st">TAPSE 1 (cm)</label>
+                                        <input class="form-control" type="number" name="d3c_tapse_1st" value = "{{ d3.d3c_tapse_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tapse_2nd">TAPSE 2 (cm)</label>
+                                        <input class="form-control" type="number" name="d3c_tapse_2nd" value = "{{ d3.d3c_tapse_2nd }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_tapse_3rd">TAPSE 3 (cm)</label>
+                                        <input class="form-control" type="number" name="d3c_tapse_3rd" value = "{{ d3.d3c_tapse_3rd }}" step="0.01" >
+                                    </div>      
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tapse_2nd">TAPSE 2 (cm)</label>
-                                    <input class="form-control" type="number" name="d3c_tapse_2nd" value = "{{ d3.d3c_tapse_2nd }}" required>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_tapse_3rd">TAPSE 3 (cm)</label>
-                                    <input class="form-control" type="number" name="d3c_tapse_3rd" value = "{{ d3.d3c_tapse_3rd }}" required>
-                                </div>      
                             </div>
-                        </div>
-
+                        </div>    
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_e_1st">LV free wall E` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_e_1st" value = "{{ d3.d3c_lvwall_e_1st }}" required>
+                            <label><h4> Tissue dopler velocities </h4></label>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_e_1st">LV free wall E` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_e_1st" value = "{{ d3.d3c_lvwall_e_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_e_2nd">LV free wall E` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_e_2nd" value = "{{ d3.d3c_lvwall_e_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_e_2nd">LV free wall E` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_e_2nd" value = "{{ d3.d3c_lvwall_e_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_a_1st">LV free wall A` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_a_1st" value = "{{ d3.d3c_lvwall_a_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_a_1st">LV free wall A` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_a_1st" value = "{{ d3.d3c_lvwall_a_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_a_2nd">LV free wall A` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_a_2nd" value = "{{ d3.d3c_lvwall_a_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_a_2nd">LV free wall A` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_a_2nd" value = "{{ d3.d3c_lvwall_a_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_s_1st">LV free wall S` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_s_1st" value = "{{ d3.d3c_lvwall_s_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_s_1st">LV free wall S` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_s_1st" value = "{{ d3.d3c_lvwall_s_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvwall_s_2nd">LV free wall S` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvwall_s_2nd" value = "{{ d3.d3c_lvwall_s_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvwall_s_2nd">LV free wall S` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvwall_s_2nd" value = "{{ d3.d3c_lvwall_s_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_e_1st">LV septal E` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_e_1st" value = "{{ d3.d3c_lvseptal_e_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_e_1st">LV septal E` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_e_1st" value = "{{ d3.d3c_lvseptal_e_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_e_2nd">LV septal E` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_e_2nd" value = "{{ d3.d3c_lvseptal_e_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_e_2nd">LV septal E` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_e_2nd" value = "{{ d3.d3c_lvseptal_e_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_a_1st">LV septal A` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_a_1st" value = "{{ d3.d3c_lvseptal_a_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_a_1st">LV septal A` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_a_1st" value = "{{ d3.d3c_lvseptal_a_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_a_2nd">LV septal A` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_a_2nd" value = "{{ d3.d3c_lvseptal_a_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_a_2nd">LV septal A` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_a_2nd" value = "{{ d3.d3c_lvseptal_a_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_s_1st">LV septal S` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_s_1st" value = "{{ d3.d3c_lvseptal_s_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_s_1st">LV septal S` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_s_1st" value = "{{ d3.d3c_lvseptal_s_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_lvseptal_s_2nd">LV septal S` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_lvseptal_s_2nd" value = "{{ d3.d3c_lvseptal_s_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvseptal_s_2nd">LV septal S` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_lvseptal_s_2nd" value = "{{ d3.d3c_lvseptal_s_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_e_1st">RV free wall E` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_e_1st" value = "{{ d3.d3c_rvwall_e_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_e_1st">RV free wall E` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_e_1st" value = "{{ d3.d3c_rvwall_e_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_e_2nd">RV free wall E` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_e_2nd" value = "{{ d3.d3c_rvwall_e_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_e_2nd">RV free wall E` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_e_2nd" value = "{{ d3.d3c_rvwall_e_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_a_1st">RV free wall A` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_a_1st" value = "{{ d3.d3c_rvwall_a_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_a_1st">RV free wall A` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_a_1st" value = "{{ d3.d3c_rvwall_a_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_a_2nd">RV free wall A` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_a_2nd" value = "{{ d3.d3c_rvwall_a_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_a_2nd">RV free wall A` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_a_2nd" value = "{{ d3.d3c_rvwall_a_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_s_1st">RV free wall S` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_s_1st" value = "{{ d3.d3c_rvwall_s_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_s_1st">RV free wall S` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_s_1st" value = "{{ d3.d3c_rvwall_s_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvwall_s_2nd">RV free wall S` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvwall_s_2nd" value = "{{ d3.d3c_rvwall_s_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvwall_s_2nd">RV free wall S` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvwall_s_2nd" value = "{{ d3.d3c_rvwall_s_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_e_1st">RV septal E` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_e_1st" value = "{{ d3.d3c_rvseptal_e_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_e_1st">RV septal E` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_e_1st" value = "{{ d3.d3c_rvseptal_e_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_e_2nd">RV septal E` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_e_2nd" value = "{{ d3.d3c_rvseptal_e_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_e_2nd">RV septal E` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_e_2nd" value = "{{ d3.d3c_rvseptal_e_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_a_1st">RV septal A` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_a_1st" value = "{{ d3.d3c_rvseptal_a_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_a_1st">RV septal A` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_a_1st" value = "{{ d3.d3c_rvseptal_a_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_a_2nd">RV septal A` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_a_2nd" value = "{{ d3.d3c_rvseptal_a_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_a_2nd">RV septal A` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_a_2nd" value = "{{ d3.d3c_rvseptal_a_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_s_1st">RV septal S` 1 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_s_1st" value = "{{ d3.d3c_rvseptal_s_1st }}" required>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_s_1st">RV septal S` 1 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_s_1st" value = "{{ d3.d3c_rvseptal_s_1st }}" step="0.01" >
+                                    </div>
+                                    <div class="col-md-4 col-sm-4">
+                                        <label for="d3c_rvseptal_s_2nd">RV septal S` 2 (m/s)</label>
+                                        <input class="form-control" type="number" name="d3c_rvseptal_s_2nd" value = "{{ d3.d3c_rvseptal_s_2nd }}" step="0.01" >
+                                    </div>    
                                 </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_rvseptal_s_2nd">RV septal S` 2 (m/s)</label>
-                                    <input class="form-control" type="number" name="d3c_rvseptal_s_2nd" value = "{{ d3.d3c_rvseptal_s_2nd }}" required>
-                                </div>    
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                                    <label for="d3c_date_vaskular"> Date of Measurement </label>
-                                    <input class="form-control" type="date" name="d3c_date_vaskular" value = "{{ d3.d3c_date_vaskular | date:'Y-m-d' }}" required>
-                        </div>
-                        <div class="form-group">
-                                    <label for="d3c_examiner_vaskular"> Examiner initial </label>
-                                    <input class="form-control" type="text" name="d3c_examiner_vaskular" value = "{{ d3.d3c_examiner_vaskular }}" required>
+                        </div>    
+                        <div class="form-group">    
+                            <label> <h4> Vascular Ultrasound (at 1 month of age) </h4> </label>
+                            <div class="form-group">
+                                        <label for="d3c_date_vaskular"> Date of Measurement </label>
+                                        <input class="form-control" type="date" name="d3c_date_vaskular" value = "{{ d3.d3c_date_vaskular  }}" >
+                            </div>
+                            <div class="form-group">
+                                        <label for="d3c_examiner_vaskular"> Examiner initial </label>
+                                        <input class="form-control" type="text" name="d3c_examiner_vaskular" value = "{{ d3.d3c_examiner_vaskular }}" >
+                            </div>
                         </div>
 
                         <div class="form-group" id="">                        
-                            <label> Cineloops (abdominal aorta) obtained </label>
+                            <label> <h4> Cineloops (abdominal aorta) obtained </h4> </label>
                             <div class="radio">                                
                                 <label>
                                 {% if d3.d3c_cineloops_abdominal %}
@@ -606,8 +624,10 @@
                                 <label>
                                 {% if d3.d3c_cineloops_abdominal %}
                                 <input type="radio" name="d3c_cineloops_abdominal" id="optionsRadios1" value="0">
-                                {% else %}
+                                {% elif d3.d3c_cineloops_abdominal == False %}
                                 <input type="radio" name="d3c_cineloops_abdominal" id="optionsRadios1" value="0" checked>
+                                {% else %}
+                                <input type="radio" name="d3c_cineloops_abdominal" id="optionsRadios1" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -618,15 +638,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_imt_1st">Intima media thickness 1 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_imt_1st" value = "{{ d3.d3c_imt_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_imt_1st" value = "{{ d3.d3c_imt_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_imt_2nd">Intima media thickness 2 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_imt_2nd" value = "{{ d3.d3c_imt_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_imt_2nd" value = "{{ d3.d3c_imt_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_imt_3rd">Intima media thickness 3 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_imt_3rd" value = "{{ d3.d3c_imt_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_imt_3rd" value = "{{ d3.d3c_imt_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -635,15 +655,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_sdimt_1st">SD of intima media thickness 1 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_sdimt_1st" value = "{{ d3.d3c_sdimt_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_sdimt_1st" value = "{{ d3.d3c_sdimt_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_sdimt_2nd">SD of intima media thickness 2 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_sdimt_2nd" value = "{{ d3.d3c_sdimt_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_sdimt_2nd" value = "{{ d3.d3c_sdimt_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_sdimt_3rd">SD of intima media thickness 3 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_sdimt_3rd" value = "{{ d3.d3c_sdimt_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_sdimt_3rd" value = "{{ d3.d3c_sdimt_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -652,15 +672,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_distension_1st">Distension (Dd - Ds) 1 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_distension_1st" value = "{{ d3.d3c_distension_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_distension_1st" value = "{{ d3.d3c_distension_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_distension_2nd">Distension (Dd - Ds) 2 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_distension_2nd" value = "{{ d3.d3c_distension_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_distension_2nd" value = "{{ d3.d3c_distension_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_distension_3rd">Distension (Dd - Ds) 3 (&mu;m)</label>
-                                    <input class="form-control" type="number" name="d3c_distension_3rd" value = "{{ d3.d3c_distension_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_distension_3rd" value = "{{ d3.d3c_distension_3rd }}" step="0.01" >
                                 </div>      
                             </div>
                         </div>
@@ -669,16 +689,25 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_diameter_1st">Diameter 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_diameter_1st" value = "{{ d3.d3c_diameter_1st }}" required>
+                                    <input class="form-control" type="number" name="d3c_diameter_1st" value = "{{ d3.d3c_diameter_1st }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_diameter_2nd">Diameter 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_diameter_2nd" value = "{{ d3.d3c_diameter_2nd }}" required>
+                                    <input class="form-control" type="number" name="d3c_diameter_2nd" value = "{{ d3.d3c_diameter_2nd }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_diameter_3rd">Diameter 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_diameter_3rd" value = "{{ d3.d3c_diameter_3rd }}" required>
+                                    <input class="form-control" type="number" name="d3c_diameter_3rd" value = "{{ d3.d3c_diameter_3rd }}" step="0.01" >
                                 </div>      
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="d3_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="d3_notes"> {{ d3.d3_notes }} </textarea>
+                                </div>   
                             </div>
                         </div>
 
@@ -700,9 +729,9 @@
                 </div>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                        <form action="{{request.get_full_path}}/../edit" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="section_number" value=1>
+                            <input type="hidden" name="form_id" value={{form.id}}>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
                         </form>
                         {% endif %}

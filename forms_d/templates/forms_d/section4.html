@@ -44,28 +44,28 @@
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                            <a href="{{request.get_full_path}}/../section1"> Infant Growth / Immunisation Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                            <a href="{{request.get_full_path}}/../section2"> Infant Feeding Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                            <a href="{{request.get_full_path}}/../section3"> Infant Cardiovascular Data </a>
                         </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                            <a href="{{request.get_full_path}}/../section4"> Infant Lung Function and Respiratory Symptoms </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                            <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                            <a href="{{request.get_full_path}}/../section6"> Current Second Hand Smoking Exposure </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                            <a href="{{request.get_full_path}}/../section7"> Infection Episode </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{{request.get_full_path}}/../section8"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -75,9 +75,9 @@
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
                     {% if context == "create" %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section4' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% else %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section4' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% endif %}
                         <h2>Infant Lung Function and Respiratory Symptoms</h2>
                         <hr> 
@@ -85,15 +85,15 @@
                         <input type="hidden" name="context" value="SAVE">
                         <div class="form-group">
                             <label for="d4c_date_lung"> Date of measurement </label>
-                            <input class="form-control" type="date" name="d4c_date_lung" value="{{ d4.d4c_date_lung | date:'Y-m-d' }}" required>
+                            <input class="form-control" type="date" name="d4c_date_lung" value="{{ d4.d4c_date_lung }}">
                         </div>
 
                         <div class="form-group">
                             <label for="d4c_examiner_lung"> Examiner initial </label>
                             {% if d4 %}
-                            <input class="form-control" type="text" name="d4c_examiner_lung" value="{{ d4.d4c_examiner_lung }}" required>
+                            <input class="form-control" type="text" name="d4c_examiner_lung" value="{{ d4.d4c_examiner_lung }}">
                             {% else %}
-                            <input class="form-control" type="text" name="d4c_examiner_lung" value="{{ d4.d4c_examiner_lung }}" required>
+                            <input class="form-control" type="text" name="d4c_examiner_lung" value="{{ d4.d4c_examiner_lung }}">
                             {% endif %}      
                         </div>
 
@@ -101,12 +101,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_resistance_1st"> Resistance (kPa.s/L) 1st</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_resistance_1st" value = "{{ d4.d4c_resistance_1st }}" required>
+                                    <input class="form-control" type="number" name="d4c_resistance_1st" value = "{{ d4.d4c_resistance_1st }}" step="0.01">
                                 </div>
 
                                  <div class="col-md-6 col-sm-6">
                                     <label for="d4c_resistance_2nd"> Resistance (kPa.s/L) 2nd</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_resistance_2nd" value = "{{ d4.d4c_resistance_2nd }}" required>
+                                    <input class="form-control" type="number" name="d4c_resistance_2nd" value = "{{ d4.d4c_resistance_2nd }}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -115,12 +115,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_compliance_1st"> Compliance (ml/kPa) 1st</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_compliance_1st" value = "{{ d4.d4c_compliance_1st }}" required>
+                                    <input class="form-control" type="number" name="d4c_compliance_1st" value = "{{ d4.d4c_compliance_1st }}" step="0.01">
                                 </div>
 
                                  <div class="col-md-6 col-sm-6">
                                     <label for="d4c_compliance_1st"> Compliance (ml/kPa) 2nd</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_compliance_2nd" value = "{{ d4.d4c_compliance_2nd }}" required>
+                                    <input class="form-control" type="number" name="d4c_compliance_2nd" value = "{{ d4.d4c_compliance_2nd }}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -129,12 +129,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_time_constant_1st"> Time constant 1st</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_time_constant_1st" value = "{{ d4.d4c_time_constant_1st }}" required>
+                                    <input class="form-control" type="number" name="d4c_time_constant_1st" value = "{{ d4.d4c_time_constant_1st }}" step="0.01">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_time_constant_2nd"> Time constant 2nd</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_time_constant_2nd" value = "{{ d4.d4c_time_constant_2nd }}" required>
+                                    <input class="form-control" type="number" name="d4c_time_constant_2nd" value = "{{ d4.d4c_time_constant_2nd }}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -143,12 +143,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_fvc_1st"> FVC 1st</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_fvc_1st" value = "{{ d4.d4c_fvc_1st }}" required>
+                                    <input class="form-control" type="number" name="d4c_fvc_1st" value = "{{ d4.d4c_fvc_1st }}" step="0.01">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_fvc_2nd"> FVC 2nd</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_fvc_2nd" value = "{{ d4.d4c_fvc_2nd }}" required>
+                                    <input class="form-control" type="number" name="d4c_fvc_2nd" value = "{{ d4.d4c_fvc_2nd }}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -157,12 +157,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_fev_1st"> FEV 1st</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_fev_1st" value = "{{ d4.d4c_fev_1st }}" required>
+                                    <input class="form-control" type="number" name="d4c_fev_1st" value = "{{ d4.d4c_fev_1st }}" step="0.01">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="d4c_fev_2nd"> FEV 2nd</label>
-                                    <input class="form-control" type="number" step="any" name="d4c_fev_2nd" value = "{{ d4.d4c_fev_2nd }}" required>
+                                    <input class="form-control" type="number" name="d4c_fev_2nd" value = "{{ d4.d4c_fev_2nd }}" step="0.01">
                                 </div>
                             </div>
                         </div>
@@ -183,8 +183,10 @@
                                 <label>
                                     {% if d4.d4c_respiratory_symptom %}
                                     <input type="radio" name="d4c_respiratory_symptom" id="noRespiratory" value="0">
-                                    {% else %}
+                                    {% elif d4.d4c_respiratory_symptom == False %}
                                     <input type="radio" name="d4c_respiratory_symptom" id="noRespiratory" value="0" checked>
+                                    {% else %}
+                                    <input type="radio" name="d4c_respiratory_symptom" id="noRespiratory" value="0">
                                     {% endif %}
                                     No
                                 </label>
@@ -681,6 +683,15 @@
 
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="d4_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="d4_notes"> {{ d4.d4_notes }} </textarea>
+                                </div>   
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
                                 {% if is_save_all %}
 
                                 {% else %}
@@ -696,9 +707,9 @@
                     </form>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                        <form action="{{request.get_full_path}}/../edit" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="section_number" value=1>
+                            <input type="hidden" name="form_id" value={{form.id}}>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
                         </form>
                         {% endif %}

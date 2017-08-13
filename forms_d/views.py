@@ -9,120 +9,197 @@ import datetime
 
 
 @login_required(login_url='core:login')
-def check_form(request, participant_id):
-	form = DInfant.objects.get(id=request.session['form_id'])
+def check_form(request, participant_id, visiting_id, form_id):
+	form = DInfant.objects.get(id=int(form_id))
 	form.data_checked_id = request.user.username
 	form.date_data_checked = datetime.date.today()
 	form.save()
-	return process_section1(request)
+	return process_section1(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def save_form(request, participant_id):
-	form = DInfant.objects.get(id=request.session['form_id'])
+def save_form(request, participant_id, visiting_id, form_id):
+	form = DInfant.objects.get(id=int(form_id))
 	form.is_save_all = True
 	form.save()
-	return process_section1(request)
+	return process_section1(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def edit_form(request participant_id):
-	form = DInfant.objects.get(id=request.session['form_id'])
+def edit_form(request, participant_id, visiting_id, form_id):
+	form = DInfant.objects.get(id=int(form_id))
 	form.is_save_all = False
 	form.save()
 	request.session['edit_mode'] = True
 	section_number = request.POST.get('section_number')	
 	if section_number == "2":	
-		return process_section2(request)
+		return process_section2(request, participant_id, visiting_id, form_id)
 	elif section_number == "3":
-		return process_section3(request)
+		return process_section3(request, participant_id, visiting_id, form_id)
 	elif section_number == "4":
-		return process_section4(request)
+		return process_section4(request, participant_id, visiting_id, form_id)
 	elif section_number == "5":
-		return process_section5(request)
+		return process_section5(request, participant_id, visiting_id, form_id)
 	elif section_number == "6":
-		return process_section6(request)
+		return process_section6(request, participant_id, visiting_id, form_id)
 	elif section_number == "7":
-		return process_section7(request)
+		return process_section7(request, participant_id, visiting_id, form_id)
 	elif section_number == "8":
-		return process_section8(request)	
+		return process_section8(request, participant_id, visiting_id, form_id)	
 	else:
-		return process_section1(request)
+		return process_section1(request, participant_id, visiting_id, form_id)
 						
 
 @login_required(login_url='core:login')
-def create_form(request, participant_id):
+def process_form(request, participant_id, visiting_id, form_id):
+	#return redirect('/participant/'+str(participant_id)+'/form_a/'+str(form_id)+'/section1')
+	return redirect(request.get_full_path()+'/section1')
+
+@login_required(login_url='core:login')
+def process_create_form(request, participant_id, visiting_id, form_id):
+	#return redirect('/participant/'+str(participant_id)+'/form_a/'+str(form_id)+'/section1')
+	return redirect(request.get_full_path()+'/../' + str(form_id) + '/section1')	
+
+@login_required(login_url='core:login')
+def create_form(request, participant_id, visiting_id):
 	if request.method == "POST":
-		participant_id = request.session['participant_id']
-		child_id = 1
-		d_obj = DInfant()
+		participant_id = participant_id
+		child = Child.objects.get(child_id=request.POST.get('child_id')) 
+		d_obj = None
+		if visiting_id == "1":
+			d_obj = DInfant()
+		elif visiting_id == "2":
+			d_obj = DInfant2()
+		elif visiting_id == "3":
+			d_obj = DInfant3()
+		else:
+			d_obj = DInfant4()			
 		d_obj.participant_id = participant_id
-		d_obj.child_id = child_id	#sesuikan lagi child id nya agar bisa milih dari tabel infant
+		d_obj.child_id = child.child_id	#sesuikan lagi child id nya agar bisa milih dari tabel infant
+		d_obj.child_name = child.name
 		d_obj.interviewer_id = request.POST.get('interviewer_id')
 		d_obj.data_entry_id = request.user.username
-		number_of_visit = DInfant.objects.filter(participant_id=participant_id, child_id=child_id).count()
+		"""number_of_visit = DInfant.objects.filter(participant_id=participant_id, child_id=child.child_id).count()
 		d_obj.number_child_visit = (number_of_visit+1)
+		"""
 		d_obj.date_admission = request.POST.get('date_admission')
 		d_obj.date_interviewed = request.POST.get('date_interviewed')
 		d_obj.date_data_entered = request.POST.get('date_data_entered')
 		d_obj.save()
 		request.session['form_id'] = d_obj.id
-		
-		return process_section1(request)
+		return process_create_form(request, participant_id, visiting_id, d_obj.id)
 	else:
-		participant = Participant.objects.get(id=request.session['participant_id'])
-		date_admission = participant.date_admission.strftime('%Y-%m-%d')
+		participant = Participant.objects.get(id=int(participant_id))
+		date_admission = participant.date_admission
 		staff_list = User.objects.filter(is_staff=False)
-		return render(request, 'forms_d/form.html', {'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission})
+		child_list = Child.objects.filter(mother=participant)
+		print child_list
+		return render(request, 'forms_d/form.html', {'child_list' : child_list, 'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission})
 
 ###### CONTROLLER SECTION1
 @login_required(login_url='core:login')
-def process_section1(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
-	try:
-		d1_obj = D1InfantGrowth.objects.get(d_form=d_form_obj)
-		return update_section1(request)	
-	except:
-		return create_section1(request)
+def process_section1(request, participant_id, visiting_id, form_id):
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+		try:
+			d1_obj = D1InfantGrowth.objects.get(d_form=d_form_obj)
+			return update_section1(request, participant_id, visiting_id, form_id)	
+		except:
+			return create_section1(request, participant_id, visiting_id, form_id)
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+		try:
+			d1_obj = D1InfantGrowth2.objects.get(d_form=d_form_obj)
+			return update_section1(request, participant_id, visiting_id, form_id)	
+		except:
+			return create_section1(request, participant_id, visiting_id, form_id)
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+		try:
+			d1_obj = D1InfantGrowth3.objects.get(d_form=d_form_obj)
+			return update_section1(request, participant_id, visiting_id, form_id)	
+		except:
+			return create_section1(request, participant_id, visiting_id, form_id)
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))
+		try:
+			d1_obj = D1InfantGrowth4.objects.get(d_form=d_form_obj)
+			return update_section1(request, participant_id, visiting_id, form_id)	
+		except:
+			return create_section1(request, participant_id, visiting_id, form_id)		
 
 @login_required(login_url='core:login')
-def create_section1(request):
+def create_section1(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d1_obj = D1InfantGrowth()
+		d_form_obj = None
+		d1_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d1_obj = D1InfantGrowth()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d1_obj = D1InfantGrowth2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d1_obj = D1InfantGrowth3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d1_obj = D1InfantGrowth4()			
 		d1_obj.d_form = d_form_obj
-		d1_obj = save_section1(d1_obj, request)
-		return show_section1(request, True)	
+		d1_obj.participant_id = d_form_obj.participant.participant_id
+		d1_obj = save_section1(d1_obj, request, participant_id, visiting_id, form_id)
+		return show_section1(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section1(request, False)
+		return show_section1(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section1(request):
+def update_section1(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d1_obj = D1InfantGrowth.objects.get(d_form_id=request.session['form_id'])
-		d1_obj = save_section1(d1_obj, request)
-		return show_section1(request, True)	
+		d1_obj = None
+		if visiting_id == "1":
+			d1_obj = D1InfantGrowth.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d1_obj = D1InfantGrowth2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d1_obj = D1InfantGrowth3.objects.get(d_form_id=int(form_id))
+		else:
+			d1_obj = D1InfantGrowth4.objects.get(d_form_id=int(form_id))		
+		d1_obj = save_section1(d1_obj, request, participant_id, visiting_id, form_id)
+		return show_section1(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section1(request, False)		
+		return show_section1(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section1(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section1(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
-	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	is_save_all = form.is_save_all
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d1_obj = D1InfantGrowth.objects.get(d_form_id=form.id) 
-		#dob = d1_obj.d1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d1_obj.d1m_moving_date.strftime('%Y-%m-%d')
+		if visiting_id == "1":
+			d1_obj = D1InfantGrowth.objects.get(d_form_id=form.id) 
+		elif visiting_id == "2":
+			d1_obj = D1InfantGrowth2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d1_obj = D1InfantGrowth3.objects.get(d_form_id=form.id)
+		else:
+			d1_obj = D1InfantGrowth4.objects.get(d_form_id=form.id)		 
+		#dob = d1_obj.d1m_dob
+		#moving_date = d1_obj.d1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section1.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd1' : d1_obj})
 			else:
@@ -134,14 +211,14 @@ def show_section1(request, is_save):
 				return render(request, 'forms_d/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd1' : d1_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section1.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section1.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		
 
 #@login_required(login_url='core:login')
-def save_section1(d1_obj, request):
+def save_section1(d1_obj, request, participant_id, visiting_id, form_id):
 	d1_obj.d1c_ur_number = request.POST.get('d1c_ur_number')
 	d1_obj.d1c_first_name = request.POST.get('d1c_first_name')
 	d1_obj.d1c_surname = request.POST.get('d1c_surname')
@@ -159,71 +236,73 @@ def save_section1(d1_obj, request):
 
 	if request.POST.get('d1c_vaccination_history') == "1":
 		d1_obj.d1c_vaccination_history = True
-	else:
+	elif request.POST.get('d1c_vaccination_history') == "0":
 		d1_obj.d1c_vaccination_history = False	
+	else:
+		d1_obj.d1c_vaccination_history = None
 
 	if request.POST.get('d1c_bcg') == "on":
 		d1_obj.d1c_bcg = True
 		d1_obj.d1c_bcg_date = request.POST.get('d1c_bcg_date')
 	else:
 		d1_obj.d1c_bcg = False
-		d1_obj.d1c_bcg_date = None
+		d1_obj.d1c_bcg_date = ""
 		
 	if request.POST.get('d1c_hep_b') == "on":
 		d1_obj.d1c_hep_b = True
 		d1_obj.d1c_hep_b_date = request.POST.get('d1c_hep_b_date')
 	else:
 		d1_obj.d1c_hep_b = False
-		d1_obj.d1c_hep_b_date = None	
+		d1_obj.d1c_hep_b_date = ""
 				
 	if request.POST.get('d1c_dpt') == "on":
 		d1_obj.d1c_dpt = True
 		d1_obj.d1c_dpt_date = request.POST.get('d1c_dpt_date')
 	else:
 		d1_obj.d1c_dpt = False
-		d1_obj.d1c_dpt_date = None	
+		d1_obj.d1c_dpt_date = ""	
 				
 	if request.POST.get('d1c_ipv') == "on":
 		d1_obj.d1c_ipv = True
 		d1_obj.d1c_ipv_date = request.POST.get('d1c_ipv_date')
 	else:
 		d1_obj.d1c_ipv = False
-		d1_obj.d1c_ipv_date = None
+		d1_obj.d1c_ipv_date = ""
 				
 	if request.POST.get('d1c_opv') == "on":
 		d1_obj.d1c_opv = True
 		d1_obj.d1c_opv_date = request.POST.get('d1c_opv_date')
 	else:
 		d1_obj.d1c_opv = False
-		d1_obj.d1c_opv_date = None
+		d1_obj.d1c_opv_date = ""
 			
 	if request.POST.get('d1c_hib') == "on":
 		d1_obj.d1c_hib = True
 		d1_obj.d1c_hib_date = request.POST.get('d1c_hib_date')
 	else:
 		d1_obj.d1c_hib = False
-		d1_obj.d1c_hib_date = None
+		d1_obj.d1c_hib_date = ""
 				
 	if request.POST.get('d1c_rotavirus') == "on":
 		d1_obj.d1c_rotavirus = True
 		d1_obj.d1c_rotavirus_date = request.POST.get('d1c_rotavirus_date')
 	else:
 		d1_obj.d1c_rotavirus = False
-		d1_obj.d1c_rotavirus_date = None	
+		d1_obj.d1c_rotavirus_date = ""	
 			
 	if request.POST.get('d1c_pneumococcus') == "on":
 		d1_obj.d1c_pneumococcus = True
 		d1_obj.d1c_pneumococcus_date = request.POST.get('d1c_pneumococcus_date')
 	else:
 		d1_obj.d1c_pneumococcus = False
-		d1_obj.d1c_pneumococcus_date = None
+		d1_obj.d1c_pneumococcus_date = ""
 
 	if request.POST.get('d1c_influenza') == "on":
 		d1_obj.d1c_influenza = True
 		d1_obj.d1c_influenza_date = request.POST.get('d1c_influenza_date')
 	else:
 		d1_obj.d1c_influenza = False
-		d1_obj.d1c_influenza_date = None
+		d1_obj.d1c_influenza_date = ""
 
 	d1_obj.save()
 	if request.user.is_staff:
@@ -234,54 +313,104 @@ def save_section1(d1_obj, request):
 
 ###### CONTROLLER SECTION2
 @login_required(login_url='core:login')
-def process_section2(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section2(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	elif visiting_id == "4":
+		d_form_obj = DInfant4.objects.get(id=int(form_id)) 	 
 	try:
-		d2_obj = D2InfantFeeding.objects.get(d_form=d_form_obj)
-		return update_section2(request)	
+		if visiting_id == "1":
+			d2_obj = D2InfantFeeding.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d2_obj = D2InfantFeeding2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d2_obj = D2InfantFeeding3.objects.get(d_form=d_form_obj)
+		else:
+			d2_obj = D2InfantFeeding4.objects.get(d_form=d_form_obj)			
+		return update_section2(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section2(request)
+		return create_section2(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section2(request):
+def create_section2(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d2_obj = D2InfantFeeding()
+		d_form_obj = None
+		d2_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d2_obj = D2InfantFeeding()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d2_obj = D2InfantFeeding2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d2_obj = D2InfantFeeding3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d2_obj = D2InfantFeeding4()			
 		d2_obj.d_form = d_form_obj
-		d2_obj = save_section2(d2_obj, request)
-		return show_section2(request, True)	
+		d2_obj.participant_id = d_form_obj.participant.participant_id
+		d2_obj = save_section2(d2_obj, request, participant_id, visiting_id, form_id)
+		return show_section2(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section2(request, False)
+		return show_section2(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section2(request):
+def update_section2(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d2_obj = D2InfantFeeding.objects.get(d_form_id=request.session['form_id'])
-		d2_obj = save_section2(d2_obj, request)
-		return show_section2(request, True)	
+		d2_obj = None
+		if visiting_id == "1":
+			d2_obj = D2InfantFeeding.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d2_obj = D2InfantFeeding2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d2_obj = D2InfantFeeding3.objects.get(d_form_id=int(form_id))
+		else:
+			d2_obj = D2InfantFeeding4.objects.get(d_form_id=int(form_id))		
+		d2_obj = save_section2(d2_obj, request, participant_id, visiting_id, form_id)
+		return show_section2(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section2(request, False)		
+		return show_section2(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section2(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section2(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d2_obj = D2InfantFeeding.objects.get(d_form_id=form.id) 
-		#dob = d2_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d2_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d2_obj = None
+		if visiting_id == "1":
+			d2_obj = D2InfantFeeding.objects.get(d_form_id=form.id)
+		elif visiting_id == "2":
+			d2_obj = D2InfantFeeding2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d2_obj = D2InfantFeeding3.objects.get(d_form_id=form.id)
+		else:
+			d2_obj = D2InfantFeeding4.objects.get(d_form_id=form.id)			 
+		#dob = d2_obj.a1m_dob
+		#moving_date = d2_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section2.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd2' : d2_obj})
 			else:
@@ -293,27 +422,29 @@ def show_section2(request, is_save):
 				return render(request, 'forms_d/section2.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd2' : d2_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section2.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section2.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section2(d2_obj, request):
+def save_section2(d2_obj, request, participant_id, visiting_id, form_id):
 	if request.POST.get('d2c_breast_feeding_status') == "1":
 		d2_obj.d2c_breast_feeding_status = True
 		d2_obj.d2c_supplementary_food = False
-	else:
+	elif request.POST.get('d2c_breast_feeding_status') == "0":
 		d2_obj.d2c_breast_feeding_status = False	
 		d2_obj.d2c_supplementary_food = True
-
+	else:
+		d2_obj.d2c_breast_feeding_status = None	
+		d2_obj.d2c_supplementary_food = None	
 
 	if request.POST.get('d2c_infant_formula') == "on":		
 		d2_obj.d2c_infant_formula = True
 		d2_obj.d2c_age_formula = request.POST.get('d2c_age_formula')	
 	else:
 		d2_obj.d2c_infant_formula = False
-		d2_obj.d2c_age_formula = None				
+		d2_obj.d2c_age_formula = ""				
 	
 
 	if request.POST.get('d2c_cows_milk_formula') == "on":
@@ -345,8 +476,7 @@ def save_section2(d2_obj, request):
 		d2_obj.d2c_age_weaning_food = request.POST.get('d2c_age_weaning_food')
 	else:
 		d2_obj.d2c_weaning_food = False
-		d2_obj.d2c_age_weaning_food = None
-		
+		d2_obj.d2c_age_weaning_food = ""
 		
 	d2_obj.save()
 	if request.user.is_staff:
@@ -356,70 +486,125 @@ def save_section2(d2_obj, request):
 
 ###### CONTROLLER SECTION3
 @login_required(login_url='core:login')
-def process_section3(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section3(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))			
 	try:
-		d3_obj = D3InfantCardiovascular.objects.get(d_form=d_form_obj)
-		return update_section3(request)	
+		if visiting_id == "1":
+			d3_obj = D3InfantCardiovascular.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d3_obj = D3InfantCardiovascular2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d3_obj = D3InfantCardiovascular3.objects.get(d_form=d_form_obj)
+		else:
+			d3_obj = D3InfantCardiovascular4.objects.get(d_form=d_form_obj)			
+		return update_section3(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section3(request)
+		return create_section3(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section3(request):
+def create_section3(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d3_obj = D3InfantCardiovascular()
+		d_form_obj = None
+		d3_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d3_obj = D3InfantCardiovascular()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d3_obj = D3InfantCardiovascular2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d3_obj = D3InfantCardiovascular3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d3_obj = D3InfantCardiovascular4()			
 		d3_obj.d_form = d_form_obj
-		d3_obj = save_section3(d3_obj, request)
-		return show_section3(request, True)	
+		d3_obj.participant_id = d_form_obj.participant.participant_id
+		d3_obj = save_section3(d3_obj, request, participant_id, visiting_id, form_id)
+		return show_section3(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section3(request, False)
+		return show_section3(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section3(request):
+def update_section3(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d3_obj = D3InfantCardiovascular.objects.get(d_form_id=request.session['form_id'])
-		d3_obj = save_section3(d3_obj, request)
-		return show_section3(request, True)	
+		d3_obj = None
+		if visiting_id == "1":
+			d3_obj = D3InfantCardiovascular.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d3_obj = D3InfantCardiovascular2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d3_obj = D3InfantCardiovascular3.objects.get(d_form_id=int(form_id))
+		else:
+			d3_obj = D3InfantCardiovascular4.objects.get(d_form_id=int(form_id))		
+		d3_obj = save_section3(d3_obj, request, participant_id, visiting_id, form_id)
+		return show_section3(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section3(request, False)		
+		return show_section3(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section3(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section3(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))	
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
+	print "show_section3"
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d3_obj = D3InfantCardiovascular.objects.get(d_form_id=form.id)
+		d3_obj = None
+		if visiting_id == "1":
+			d3_obj = D3InfantCardiovascular.objects.get(d_form_id=form.id)
+			print "visit 1"
+		elif visiting_id == "2":
+			d3_obj = D3InfantCardiovascular2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d3_obj = D3InfantCardiovascular3.objects.get(d_form_id=form.id)
+		else:
+			d3_obj = D3InfantCardiovascular4.objects.get(d_form_id=form.id)			
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
+			print "date data not none"
 			if is_save:
 				return render(request, 'forms_d/section3.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd3' : d3_obj})
 			else:
 				return render(request, 'forms_d/section3.html', {'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd3' : d3_obj})
 		else:
+			print "date data is none"
 			if is_save:	
 				return render(request, 'forms_d/section3.html', {'success' : True, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd3' : d3_obj})
 			else:
 				return render(request, 'forms_d/section3.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd3' : d3_obj})	
 	except:
+		print "error found"
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section3.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section3.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section3(d3_obj, request):
+def save_section3(d3_obj, request, participant_id, visiting_id, form_id):
 	d3_obj.d3c_date_blood_pressure = request.POST.get('d3c_date_blood_pressure')
 	d3_obj.d3c_examiner_bp = request.POST.get('d3c_examiner_bp')
 	d3_obj.d3c_systolic_1st = request.POST.get('d3c_systolic_1st')
@@ -433,14 +618,24 @@ def save_section3(d3_obj, request):
 	d3_obj.d3c_pulse_3rd = request.POST.get('d3c_pulse_3rd')
 	d3_obj.d3c_date_echo = request.POST.get('d3c_date_echo')
 	d3_obj.d3c_examiner_echo = request.POST.get('d3c_examiner_echo')
-	d3_obj.d3c_cineloops = request.POST.get('d3c_cineloops')
+	
+	if request.POST.get('d3c_cineloops') != None:
+		d3_obj.d3c_cineloops = request.POST.get('d3c_cineloops')
+	else:
+		d3_obj.d3c_cineloops = ""
+
+	print "d3c_cineloops"
+	print request.POST.get('d3c_cineloops')
 	
 	if request.POST.get('d3c_heart_abnormality') == "1":
 		d3_obj.d3c_heart_abnormality = True
 		d3_obj.d3c_heart_abnormality_detail = request.POST.get('d3c_heart_abnormality_detail')
-	else:
+	elif request.POST.get('d3c_heart_abnormality') == "0":
 		d3_obj.d3c_heart_abnormality = False
 		d3_obj.d3c_heart_abnormality_detail = ""
+	else:
+		d3_obj.d3c_heart_abnormality = None
+		d3_obj.d3c_heart_abnormality_detail = ""	
 			
 	d3_obj.d3c_lvidd_1st = request.POST.get('d3c_lvidd_1st')
 	d3_obj.d3c_lvidd_2nd = request.POST.get('d3c_lvidd_2nd')
@@ -508,9 +703,11 @@ def save_section3(d3_obj, request):
 	
 	if request.POST.get('d3c_cineloops_abdominal') == "1":
 		d3_obj.d3c_cineloops_abdominal = True
-	else:
+	elif request.POST.get('d3c_cineloops_abdominal') == "0":
 		d3_obj.d3c_cineloops_abdominal = False	
-
+	else:
+		d3_obj.d3c_cineloops_abdominal = None
+			
 	d3_obj.d3c_imt_1st = request.POST.get('d3c_imt_1st')
 	d3_obj.d3c_imt_2nd = request.POST.get('d3c_imt_2nd')
 	d3_obj.d3c_imt_3rd = request.POST.get('d3c_imt_3rd')
@@ -531,54 +728,104 @@ def save_section3(d3_obj, request):
 
 ###### CONTROLLER SECTION4
 @login_required(login_url='core:login')
-def process_section4(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section4(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))			
 	try:
-		d4_obj = D4InfantLungFunction.objects.get(d_form=d_form_obj)
-		return update_section4(request)	
+		if visiting_id == "1":
+			d4_obj = D4InfantLungFunction.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d4_obj = D4InfantLungFunction2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d4_obj = D4InfantLungFunction3.objects.get(d_form=d_form_obj)
+		else:
+			d4_obj = D4InfantLungFunction4.objects.get(d_form=d_form_obj)
+		return update_section4(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section4(request)
+		return create_section4(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section4(request):
+def create_section4(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d4_obj = D4InfantLungFunction()
+		d_form_obj = None
+		d4_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d4_obj = D4InfantLungFunction()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d4_obj = D4InfantLungFunction2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d4_obj = D4InfantLungFunction3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d4_obj = D4InfantLungFunction4()		
 		d4_obj.d_form = d_form_obj
-		d4_obj = save_section4(d4_obj, request)
-		return show_section4(request, True)	
+		d4_obj.participant_id = d_form_obj.participant.participant_id
+		d4_obj = save_section4(d4_obj, request, participant_id, visiting_id, form_id)
+		return show_section4(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section4(request, False)
+		return show_section4(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section4(request):
+def update_section4(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d4_obj = D4InfantLungFunction.objects.get(d_form_id=request.session['form_id'])
-		d4_obj = save_section4(d4_obj, request)
-		return show_section4(request, True)	
+		d4_obj = None
+		if visiting_id == "1":
+			d4_obj = D4InfantLungFunction.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d4_obj = D4InfantLungFunction2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d4_obj = D4InfantLungFunction3.objects.get(d_form_id=int(form_id))
+		else:
+			d4_obj = D4InfantLungFunction4.objects.get(d_form_id=int(form_id))			
+		d4_obj = save_section4(d4_obj, request, participant_id, visiting_id, form_id)
+		return show_section4(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section4(request, False)		
+		return show_section4(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section4(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section4(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d4_obj = D4InfantLungFunction.objects.get(d_form_id=form.id) 
-		#dob = d4_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d4_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d4_obj = None
+		if visiting_id == "1":
+			d4_obj = D4InfantLungFunction.objects.get(d_form_id=form.id)
+		elif visiting_id == "2":
+			d4_obj = D4InfantLungFunction2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d4_obj = D4InfantLungFunction3.objects.get(d_form_id=form.id)
+		else:
+			d4_obj = D4InfantLungFunction4.objects.get(d_form_id=form.id)			 
+		#dob = d4_obj.a1m_dob
+		#moving_date = d4_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section4.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd4' : d4_obj})
 			else:
@@ -590,13 +837,13 @@ def show_section4(request, is_save):
 				return render(request, 'forms_d/section4.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd4' : d4_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section4.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section4.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section4(d4_obj, request):
+def save_section4(d4_obj, request, participant_id, visiting_id, form_id):
 	d4_obj.d4c_date_lung = request.POST.get('d4c_date_lung')
 	d4_obj.d4c_examiner_lung = request.POST.get('d4c_examiner_lung')
 	d4_obj.d4c_resistance_1st = request.POST.get('d4c_resistance_1st')
@@ -612,12 +859,13 @@ def save_section4(d4_obj, request):
 	
 	if request.POST.get('d4c_respiratory_symptom') == "1":
 		d4_obj.d4c_respiratory_symptom = True
-	else:
+	elif request.POST.get('d4c_respiratory_symptom') == "0":
 		d4_obj.d4c_respiratory_symptom = False
+	else:
+		d4_obj.d4c_respiratory_symptom = None	
 	
 	if request.POST.get('d4c_dry_cough'):	
 		d4_obj.d4c_dry_cough = request.POST.get('d4c_dry_cough')
-		print "ok oce"
 	else:
 		d4_obj.d4c_dry_cough = ""
 
@@ -669,54 +917,104 @@ def save_section4(d4_obj, request):
 
 ###### CONTROLLER SECTION5
 @login_required(login_url='core:login')
-def process_section5(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section5(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))			
 	try:
-		d5_obj = D5InfantBiological.objects.get(d_form=d_form_obj)
-		return update_section5(request)	
+		if visiting_id == "1":
+			d5_obj = D5InfantBiological.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d5_obj = D5InfantBiological2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d5_obj = D5InfantBiological3.objects.get(d_form=d_form_obj)
+		else:
+			d5_obj = D5InfantBiological4.objects.get(d_form=d_form_obj)			
+		return update_section5(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section5(request)
+		return create_section5(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section5(request):
+def create_section5(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d5_obj = D5InfantBiological()
+		d_form_obj = None
+		d5_obj = None
+		if visiting_id == "1":	
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d5_obj = D5InfantBiological()
+		elif visiting_id == "2":	
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d5_obj = D5InfantBiological2()
+		elif visiting_id == "3":	
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d5_obj = D5InfantBiological3()
+		else:	
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d5_obj = D5InfantBiological4()			
 		d5_obj.d_form = d_form_obj
-		d5_obj = save_section5(d5_obj, request)
-		return show_section5(request, True)	
+		d5_obj.participant_id = d_form_obj.participant.participant_id
+		d5_obj = save_section5(d5_obj, request, participant_id, visiting_id, form_id)
+		return show_section5(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section5(request, False)
+		return show_section5(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section5(request):
+def update_section5(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d5_obj = D5InfantBiological.objects.get(d_form_id=request.session['form_id'])
-		d5_obj = save_section5(d5_obj, request)
-		return show_section5(request, True)	
+		d5_obj = None
+		if visiting_id == "1":
+			d5_obj = D5InfantBiological.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d5_obj = D5InfantBiological2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d5_obj = D5InfantBiological3.objects.get(d_form_id=int(form_id))
+		else:
+			d5_obj = D5InfantBiological4.objects.get(d_form_id=int(form_id))			
+		d5_obj = save_section5(d5_obj, request, participant_id, visiting_id, form_id)
+		return show_section5(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section5(request, False)		
+		return show_section5(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section5(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section5(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))	
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d5_obj = D5InfantBiological.objects.get(d_form_id=form.id) 
-		#dob = d5_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d5_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d5_obj = None
+		if visiting_id == "1":
+			d5_obj = D5InfantBiological.objects.get(d_form_id=form.id) 
+		elif visiting_id == "2":
+			d5_obj = D5InfantBiological2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d5_obj = D5InfantBiological3.objects.get(d_form_id=form.id)
+		else:
+			d5_obj = D5InfantBiological4.objects.get(d_form_id=form.id)		
+		#dob = d5_obj.a1m_dob
+		#moving_date = d5_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section5.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd5' : d5_obj})
 			else:
@@ -728,75 +1026,75 @@ def show_section5(request, is_save):
 				return render(request, 'forms_d/section5.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd5' : d5_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section5.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section5.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section5(d5_obj, request):
+def save_section5(d5_obj, request, participant_id, visiting_id, form_id):
 	if request.POST.get('d5c_blood') == "on":
 		d5_obj.d5c_blood = True
 		d5_obj.d5c_blood_date = request.POST.get('d5c_blood_date')
 	else:
 		d5_obj.d5c_blood = False	
-		d5_obj.d5c_blood_date = None
+		d5_obj.d5c_blood_date = ""
 	
 	if request.POST.get('d5c_buccal_swab') == "on":
 		d5_obj.d5c_buccal_swab = True
 		d5_obj.d5c_buccal_swab_date = request.POST.get('d5c_buccal_swab_date')
 	else:
 		d5_obj.d5c_buccal_swab = False
-		d5_obj.d5c_buccal_swab_date = None
+		d5_obj.d5c_buccal_swab_date = ""
 	
 	if request.POST.get('d5c_hair_1') == "on":
 		d5_obj.d5c_hair_1 = True
 		d5_obj.d5c_hair_1_date = request.POST.get('d5c_hair_1_date')
 	else:
 		d5_obj.d5c_hair_1 = False
-		d5_obj.d5c_hair_1_date = None
+		d5_obj.d5c_hair_1_date = ""
 
 	if request.POST.get('d5c_hair_6') == "on":
 		d5_obj.d5c_hair_6 = True
 		d5_obj.d5c_hair_6_date = request.POST.get('d5c_hair_6_date')
 	else:
 		d5_obj.d5c_hair_6 = False
-		d5_obj.d5c_hair_6_date = None
+		d5_obj.d5c_hair_6_date = ""
 
 	if request.POST.get('d5c_nail_1') == "on":
 		d5_obj.d5c_nail_1 = True
 		d5_obj.d5c_nail_1_date = request.POST.get('d5c_nail_1_date')
 	else:
 		d5_obj.d5c_nail_1 = False
-		d5_obj.d5c_nail_1_date = None
+		d5_obj.d5c_nail_1_date = ""
 
 	if request.POST.get('d5c_nail_6') == "on":
 		d5_obj.d5c_nail_6 = True
 		d5_obj.d5c_nail_6_date = request.POST.get('d5c_nail_6_date')
 	else:
 		d5_obj.d5c_nail_6 = False
-		d5_obj.d5c_nail_6_date = None
+		d5_obj.d5c_nail_6_date = ""
 
 	if request.POST.get('d5c_nasopharyngeal_2') == "on":
 		d5_obj.d5c_nasopharyngeal_2 = True
 		d5_obj.d5c_nasopharyngeal_2_date = request.POST.get('d5c_nasopharyngeal_2_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_2 = False
-		d5_obj.d5c_nasopharyngeal_2_date = None
+		d5_obj.d5c_nasopharyngeal_2_date = ""
 
 	if request.POST.get('d5c_nasopharyngeal_4') == "on":
 		d5_obj.d5c_nasopharyngeal_4 = True
 		d5_obj.d5c_nasopharyngeal_4_date = request.POST.get('d5c_nasopharyngeal_4_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_4 = False
-		d5_obj.d5c_nasopharyngeal_4_date = None
+		d5_obj.d5c_nasopharyngeal_4_date = ""
 
 	if request.POST.get('d5c_nasopharyngeal_6') == "on":
 		d5_obj.d5c_nasopharyngeal_6 = True
 		d5_obj.d5c_nasopharyngeal_6_date = request.POST.get('d5c_nasopharyngeal_6_date')
 	else:
 		d5_obj.d5c_nasopharyngeal_6 = False
-		d5_obj.d5c_nasopharyngeal_6_date = None
+		d5_obj.d5c_nasopharyngeal_6_date = ""
 
 	d5_obj.save()
 	if request.user.is_staff:
@@ -806,54 +1104,112 @@ def save_section5(d5_obj, request):
 
 ###### CONTROLLER SECTION6
 @login_required(login_url='core:login')
-def process_section6(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section6(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))			
 	try:
-		d6_obj = D6CurrentSmoking.objects.get(d_form=d_form_obj)
-		return update_section6(request)	
+		d6_obj = None
+		if visiting_id == "1":
+			d6_obj = D6CurrentSmoking.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d6_obj = D6CurrentSmoking2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d6_obj = D6CurrentSmoking3.objects.get(d_form=d_form_obj)
+		else:
+			d6_obj = D6CurrentSmoking4.objects.get(d_form=d_form_obj)
+		print "update 6"			
+		return update_section6(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section6(request)
+		print "create 6"
+		return create_section6(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section6(request):
+def create_section6(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d6_obj = D6CurrentSmoking()
+		d_form_obj = None
+		d6_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d6_obj = D6CurrentSmoking()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d6_obj = D6CurrentSmoking2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d6_obj = D6CurrentSmoking3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d6_obj = D6CurrentSmoking4()
 		d6_obj.d_form = d_form_obj
-		d6_obj = save_section6(d6_obj, request)
-		return show_section6(request, True)	
+		d6_obj.participant_id = d_form_obj.participant.participant_id
+		d6_obj = save_section6(d6_obj, request, participant_id, visiting_id, form_id)
+		return show_section6(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section6(request, False)
+		return show_section6(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section6(request):
+def update_section6(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d6_obj = D6CurrentSmoking.objects.get(d_form_id=request.session['form_id'])
-		d6_obj = save_section6(d6_obj, request)
-		return show_section6(request, True)	
+		d6_obj = None
+		if visiting_id == "1":
+			d6_obj = D6CurrentSmoking.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d6_obj = D6CurrentSmoking2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d6_obj = D6CurrentSmoking3.objects.get(d_form_id=int(form_id))
+		else:
+			d6_obj = D6CurrentSmoking4.objects.get(d_form_id=int(form_id))
+		d6_obj = save_section6(d6_obj, request, participant_id, visiting_id, form_id)
+		print "update"
+		return show_section6(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section6(request, False)		
+		print "show"
+		return show_section6(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section6(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section6(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
-	try:
-		d6_obj = D6CurrentSmoking.objects.get(d_form_id=form.id) 
-		#dob = d6_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d6_obj.a1m_moving_date.strftime('%Y-%m-%d')
+	try:	
+		d6_obj = None
+		if visiting_id == "1":
+			print "masuk sini"
+			d6_obj = D6CurrentSmoking.objects.get(d_form=form)
+			print "masuk sini2"
+		elif visiting_id == "2":
+			d6_obj = D6CurrentSmoking2.objects.get(d_form=form)
+		elif visiting_id == "3":
+			d6_obj = D6CurrentSmoking3.objects.get(d_form=form)
+		else:
+			d6_obj = D6CurrentSmoking4.objects.get(d_form=form)
+		print "ada objek 6"	 
+		#dob = d6_obj.a1m_dob
+		#moving_date = d6_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section6.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd6' : d6_obj})
 			else:
@@ -864,52 +1220,62 @@ def show_section6(request, is_save):
 			else:
 				return render(request, 'forms_d/section6.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd6' : d6_obj})	
 	except:
+		print "objek 6 not found"
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section6.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section6.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section6(d6_obj, request):
+def save_section6(d6_obj, request, participant_id, visiting_id, form_id):
 	d6_obj.d6m_smoking_status = request.POST.get('d6m_smoking_status')
 	if request.POST.get('d6m_quitting_smoke') == "1":
 		d6_obj.d6m_quitting_smoke = True
 		d6_obj.d6m_quitting_duration = request.POST.get('d6m_quitting_duration')
-	else:
+	elif request.POST.get('d6m_quitting_smoke') == "0":
 		d6_obj.d6m_quitting_smoke = False
-		d6_obj.d6m_quitting_duration = None
+		d6_obj.d6m_quitting_duration = ""
+	else:
+		d6_obj.d6m_quitting_smoke = None	
+		d6_obj.d6m_quitting_duration = ""
 
 	if request.POST.get('d6m_cigar_number'):
 		d6_obj.d6m_cigar_number = request.POST.get('d6m_cigar_number')
 	else:
-		d6_obj.d6m_cigar_number = None
+		d6_obj.d6m_cigar_number = ""
 
 	if request.POST.get('d6m_cigar_type') == "1":
 		d6_obj.d6m_cigar_type = True
-	else:
+	elif request.POST.get('d6m_cigar_type') == "0":
 		d6_obj.d6m_cigar_type = False
+	else:
+		d6_obj.d6m_cigar_type = None
 
 		
 	if request.POST.get('d6m_smoking_household') == "1":
 		d6_obj.d6m_smoking_household = True
+	elif request.POST.get('d6m_smoking_household') == "0":
+		d6_obj.d6m_smoking_household = False
 	else:
-		d6_obj.d6m_smoking_household = False	
+		d6_obj.d6m_smoking_household = None		
 	
 	if request.POST.get('d6m_household_number'):
 		d6_obj.d6m_household_number = request.POST.get('d6m_household_number')
 	else:
-		d6_obj.d6m_household_number = None
+		d6_obj.d6m_household_number = ""
 
 	if request.POST.get('d6m_household_cigar_number'):
 		d6_obj.d6m_household_cigar_number = request.POST.get('d6m_household_cigar_number')
 	else:
-		d6_obj.d6m_household_cigar_number = None	
+		d6_obj.d6m_household_cigar_number = ""	
 	
 	if request.POST.get('d6m_household_presence') == "1":
 		d6_obj.d6m_household_presence = True
-	else:
+	elif request.POST.get('d6m_household_presence') == "0":
 		d6_obj.d6m_household_presence = False
+	else:
+		d6_obj.d6m_household_presence = None	
 	
 
 	d6_obj.d6f_smoking_status = request.POST.get('d6f_smoking_status')
@@ -917,17 +1283,19 @@ def save_section6(d6_obj, request):
 	if request.POST.get('d6f_quitting_duration'):	
 		d6_obj.d6f_quitting_duration = request.POST.get('d6f_quitting_duration')
 	else:
-		d6_obj.d6f_quitting_duration = None
+		d6_obj.d6f_quitting_duration = ""
 
 	if request.POST.get('d6f_cigar_number'):	
 		d6_obj.d6f_cigar_number = request.POST.get('d6f_cigar_number')
 	else:
-		d6_obj.d6f_cigar_number = None
+		d6_obj.d6f_cigar_number = ""
 
 	if request.POST.get('d6f_cigar_type') == "1":
 		d6_obj.d6f_cigar_type = True
-	else:
+	elif request.POST.get('d6f_cigar_type') == "0":
 		d6_obj.d6f_cigar_type = False
+	else:
+		d6_obj.d6f_cigar_type = None	
 	
 	if request.POST.get('d6f_smoking_frequency'):	
 		d6_obj.d6f_smoking_frequency = request.POST.get('d6f_smoking_frequency')
@@ -936,8 +1304,10 @@ def save_section6(d6_obj, request):
 
 	if request.POST.get('d6f_smoking_presence') == "1":
 		d6_obj.d6f_smoking_presence = True
+	elif request.POST.get('d6f_smoking_presence') == "0":
+		d6_obj.d6f_smoking_presence = False
 	else:
-		d6_obj.d6f_smoking_presence = False	
+		d6_obj.d6f_smoking_presence = None		
 	
 	d6_obj.save()
 	if request.user.is_staff:
@@ -947,54 +1317,104 @@ def save_section6(d6_obj, request):
 
 ###### CONTROLLER SECTION7
 @login_required(login_url='core:login')
-def process_section7(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section7(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))
 	try:
-		d7_obj = D7Infection.objects.get(d_form=d_form_obj)
-		return update_section7(request)	
+		if visiting_id == "1":	
+			d7_obj = D7Infection.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":	
+			d7_obj = D7Infection2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":	
+			d7_obj = D7Infection3.objects.get(d_form=d_form_obj)
+		else:	
+			d7_obj = D7Infection4.objects.get(d_form=d_form_obj)			
+		return update_section7(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section7(request)
+		return create_section7(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section7(request):
+def create_section7(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d7_obj = D7Infection()
+		d_form_obj = None
+		d7_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d7_obj = D7Infection()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d7_obj = D7Infection2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d7_obj = D7Infection3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d7_obj = D7Infection4()	
 		d7_obj.d_form = d_form_obj
-		d7_obj = save_section7(d7_obj, request)
-		return show_section7(request, True)	
+		d7_obj.participant_id = d_form_obj.participant.participant_id
+		d7_obj = save_section7(d7_obj, request, participant_id, visiting_id, form_id)
+		return show_section7(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section7(request, False)
+		return show_section7(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section7(request):
+def update_section7(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d7_obj = D7Infection.objects.get(d_form_id=request.session['form_id'])
-		d7_obj = save_section7(d7_obj, request)
-		return show_section7(request, True)	
+		d7_obj = None
+		if visiting_id == "1":	
+			d7_obj = D7Infection.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":	
+			d7_obj = D7Infection2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":	
+			d7_obj = D7Infection3.objects.get(d_form_id=int(form_id))
+		else:	
+			d7_obj = D7Infection4.objects.get(d_form_id=int(form_id))
+		d7_obj = save_section7(d7_obj, request, participant_id, visiting_id, form_id)
+		return show_section7(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section7(request, False)		
+		return show_section7(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section7(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section7(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d7_obj = D7Infection.objects.get(d_form_id=form.id) 
-		#dob = d7_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d7_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d7_obj = None
+		if visiting_id == "1":	
+			d7_obj = D7Infection.objects.get(d_form_id=form.id)
+		elif visiting_id == "2":	
+			d7_obj = D7Infection2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":	
+			d7_obj = D7Infection3.objects.get(d_form_id=form.id)
+		else:	
+			d7_obj = D7Infection4.objects.get(d_form_id=form.id) 
+		#dob = d7_obj.a1m_dob
+		#moving_date = d7_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section7.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd7' : d7_obj})
 			else:
@@ -1006,13 +1426,13 @@ def show_section7(request, is_save):
 				return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd7' : d7_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section7.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section7.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section7(d7_obj, request): 
+def save_section7(d7_obj, request, participant_id, visiting_id, form_id): 
 	if request.POST.get('d7c_infection') == "1":
 		d7_obj.d7c_infection = True
 	else:
@@ -1055,41 +1475,49 @@ def save_section7(d7_obj, request):
 	
 	if request.POST.get('d7c_infection_others') == "on":
 		d7_obj.d7c_infection_others = True
+		d7_obj.d7c_infection_others_detail = request.POST.get('d7c_infection_others_detail')
 	else:
 		d7_obj.d7c_infection_others = False
-	d7_obj.d7c_infection_others_detail = request.POST.get('d7c_infection_others_detail')	
-	
+		d7_obj.d7c_infection_others_detail = ""
+		
 	if request.POST.get('d7c_infection_unknown') == "on":		
 		d7_obj.d7c_infection_unknown = True
+		d7_obj.d7c_physician_clinic = request.POST.get('d7c_physician_clinic')
+		d7_obj.d7c_contact = request.POST.get('d7c_contact')
+		if request.POST.get('d7c_infection_symptoms') == "on":
+			d7_obj.d7c_infection_symptoms = True
+		else:
+			d7_obj.d7c_infection_symptoms = False
+
+		if request.POST.get('d7c_symptoms_respi') == "on":
+			d7_obj.d7c_symptoms_respi = True
+		else:
+			d7_obj.d7c_symptoms_respi = False
+
+		if request.POST.get('d7c_symptoms_gastro') == "on":	
+			d7_obj.d7c_symptoms_gastro = True
+		else:
+			d7_obj.d7c_symptoms_gastro = False
+
+		if request.POST.get('d7c_symptoms_skin') == "on":	
+			d7_obj.d7c_symptoms_skin = True
+		else:
+			d7_obj.d7c_symptoms_skin = False
+
+		if request.POST.get('d7c_symptoms_nervous') == "on":		
+			d7_obj.d7c_symptoms_nervous = True
+		else:
+			d7_obj.d7c_symptoms_nervous = False
 	else:
 		d7_obj.d7c_infection_unknown = False
-	d7_obj.d7c_physician_clinic = request.POST.get('d7c_physician_clinic')
-	d7_obj.d7c_contact = request.POST.get('d7c_contact')
-
-	if request.POST.get('d7c_infection_symptoms') == "on":
-		d7_obj.d7c_infection_symptoms = True
-	else:
+		d7_obj.d7c_physician_clinic = ""
+		d7_obj.d7c_contact = ""
 		d7_obj.d7c_infection_symptoms = False
-
-	if request.POST.get('d7c_symptoms_respi') == "on":
-		d7_obj.d7c_symptoms_respi = True
-	else:
 		d7_obj.d7c_symptoms_respi = False
-
-	if request.POST.get('d7c_symptoms_gastro') == "on":	
-		d7_obj.d7c_symptoms_gastro = True
-	else:
 		d7_obj.d7c_symptoms_gastro = False
-
-	if request.POST.get('d7c_symptoms_skin') == "on":	
-		d7_obj.d7c_symptoms_skin = True
-	else:
 		d7_obj.d7c_symptoms_skin = False
-
-	if request.POST.get('d7c_symptoms_nervous') == "on":		
-		d7_obj.d7c_symptoms_nervous = True
-	else:
 		d7_obj.d7c_symptoms_nervous = False
+
 
 	print "hospitalization" + request.POST.get('d7c_hospitalization')	
 	if request.POST.get('d7c_hospitalization') == "1":		
@@ -1098,14 +1526,15 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_discharged_date = request.POST.get('d7c_discharged_date')
 	else:
 		d7_obj.d7c_hospitalization = False
-		d7_obj.d7c_admission_date = None
-		d7_obj.d7c_discharged_date = None
+		d7_obj.d7c_admission_date = ""
+		d7_obj.d7c_discharged_date = ""
 	
 	d7_obj.d7c_hospital = request.POST.get('d7c_hospital')
 	d7_obj.d7c_physician = request.POST.get('d7c_physician')
 	d7_obj.d7c_hospital_contact = request.POST.get('d7c_hospital_contact')
-		
-	print "ward "+request.POST.get('d7c_ward')	
+			
+	print "ini ward"
+	print request.POST.get('d7c_ward')  
 	if request.POST.get('d7c_ward'):
 		d7_obj.d7c_ward = request.POST.get('d7c_ward')
 	else:
@@ -1141,7 +1570,7 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_blood_culture_date = request.POST.get('d7c_blood_culture_date')
 	else:
 		d7_obj.d7c_blood_culture = False
-		d7_obj.d7c_blood_culture_date = None
+		d7_obj.d7c_blood_culture_date = ""
 
 	d7_obj.d7c_blood_microorganism = request.POST.get('d7c_blood_microorganism')
 
@@ -1175,14 +1604,14 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_urinalysis_date = request.POST.get('d7c_urinalysis_date')
 	else:
 		d7_obj.d7c_urinalysis = False		
-		d7_obj.d7c_urinalysis_date = None
+		d7_obj.d7c_urinalysis_date = ""
 	
 	if request.POST.get('d7c_urine_culture') == "on": 
 		d7_obj.d7c_urine_culture = True
 		d7_obj.d7c_urine_date = request.POST.get('d7c_urine_date')
 	else:
 		d7_obj.d7c_urine_culture = False		
-		d7_obj.d7c_urine_date = None
+		d7_obj.d7c_urine_date = ""
 
 	d7_obj.d7c_urine_microorganism = request.POST.get('d7c_urine_microorganism')
 	
@@ -1191,7 +1620,7 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_csf_date = request.POST.get('d7c_csf_date')
 	else:
 		d7_obj.d7c_csf = False	
-		d7_obj.d7c_csf_date = None
+		d7_obj.d7c_csf_date = ""
 
 	d7_obj.d7c_csf_microorganism = request.POST.get('d7c_csf_microorganism')
 	
@@ -1200,7 +1629,7 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_faecal_date = request.POST.get('d7c_faecal_date')
 	else:
 		d7_obj.d7c_faecal_culture = False		
-		d7_obj.d7c_faecal_date = None
+		d7_obj.d7c_faecal_date = ""
 
 	d7_obj.d7c_faecal_microorganism = request.POST.get('d7c_faecal_microorganism')
 	
@@ -1212,10 +1641,10 @@ def save_section7(d7_obj, request):
 	
 	if request.POST.get('d7c_usg') == "on":
 		d7_obj.d7c_usg = True
-		d7_obj.d7c_usg_date = None
+		d7_obj.d7c_usg_date = ""
 	else:
 		d7_obj.d7c_usg = False
-		d7_obj.d7c_usg_date = None
+		d7_obj.d7c_usg_date = ""
 
 	d7_obj.d7c_usg_type = request.POST.get('d7c_usg_type')
 	d7_obj.d7c_usg_findings = request.POST.get('d7c_usg_findings')
@@ -1225,7 +1654,7 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_mri_date = request.POST.get('d7c_mri_date')
 	else:
 		d7_obj.d7c_mri = False	
-		d7_obj.d7c_mri_date = None
+		d7_obj.d7c_mri_date = ""
 
 	d7_obj.d7c_mri_type = request.POST.get('d7c_mri_type')
 	
@@ -1236,7 +1665,7 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_other_test_date = request.POST.get('d7c_other_test_date')
 	else:
 		d7_obj.d7c_other_test = False
-		d7_obj.d7c_other_test_date = None	
+		d7_obj.d7c_other_test_date = ""	
 	d7_obj.d7c_other_test_type = request.POST.get('d7c_other_test_type')
 	
 	d7_obj.d7c_other_test_findings = request.POST.get('d7c_other_test_findings')
@@ -1252,17 +1681,17 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_med1_start_date = request.POST.get('d7c_med1_start_date')
 		d7_obj.d7c_med1_end_date = request.POST.get('d7c_med1_end_date')
 	else:
-		d7_obj.d7c_med1_start_date = None
-		d7_obj.d7c_med1_end_date = None
-
+		d7_obj.d7c_med1_start_date = ""
+		d7_obj.d7c_med1_end_date = ""
+		
 	d7_obj.d7c_med2_name = request.POST.get('d7c_med2_name')
 	d7_obj.d7c_med2_dosage = request.POST.get('d7c_med2_dosage')
 	if request.POST.get('d7c_med2_name'):
 		d7_obj.d7c_med2_start_date = request.POST.get('d7c_med2_start_date')
 		d7_obj.d7c_med2_end_date = request.POST.get('d7c_med2_end_date')
 	else:
-		d7_obj.d7c_med2_start_date = None
-		d7_obj.d7c_med2_end_date = None
+		d7_obj.d7c_med2_start_date = ""
+		d7_obj.d7c_med2_end_date = ""
 
 	d7_obj.d7c_med3_name = request.POST.get('d7c_med3_name')
 	d7_obj.d7c_med3_dosage = request.POST.get('d7c_med3_dosage')
@@ -1270,8 +1699,8 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_med3_start_date = request.POST.get('d7c_med3_start_date')
 		d7_obj.d7c_med3_end_date = request.POST.get('d7c_med3_end_date')
 	else:
-		d7_obj.d7c_med3_start_date = None
-		d7_obj.d7c_med3_end_date = None
+		d7_obj.d7c_med3_start_date = ""
+		d7_obj.d7c_med3_end_date = ""
 
 	d7_obj.d7c_med4_name = request.POST.get('d7c_med4_name')
 	d7_obj.d7c_med4_dosage = request.POST.get('d7c_med4_dosage')
@@ -1279,8 +1708,8 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_med4_start_date = request.POST.get('d7c_med4_start_date')
 		d7_obj.d7c_med4_end_date = request.POST.get('d7c_med4_end_date')
 	else:
-		d7_obj.d7c_med4_start_date = None
-		d7_obj.d7c_med4_end_date = None
+		d7_obj.d7c_med4_start_date = ""
+		d7_obj.d7c_med4_end_date = ""
 
 	d7_obj.d7c_med5_name = request.POST.get('d7c_med5_name')
 	d7_obj.d7c_med5_dosage = request.POST.get('d7c_med5_dosage')
@@ -1288,8 +1717,8 @@ def save_section7(d7_obj, request):
 		d7_obj.d7c_med5_start_date = request.POST.get('d7c_med5_start_date')
 		d7_obj.d7c_med5_end_date = request.POST.get('d7c_med5_end_date')
 	else:
-		d7_obj.d7c_med5_start_date = None
-		d7_obj.d7c_med5_end_date = None
+		d7_obj.d7c_med5_start_date = ""
+		d7_obj.d7c_med5_end_date = ""
 
 	d7_obj.save()
 	if request.user.is_staff:
@@ -1299,54 +1728,104 @@ def save_section7(d7_obj, request):
 
 ###### CONTROLLER SECTION8
 @login_required(login_url='core:login')
-def process_section8(request):
-	if request.POST.get('form_id'):
-		request.session['form_id'] = request.POST.get('form_id')
-	d_form_obj = DInfant.objects.get(id=int(request.session['form_id']))
+def process_section8(request, participant_id, visiting_id, form_id):
+	d_form_obj = None
+	if visiting_id == "1":
+		d_form_obj = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		d_form_obj = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		d_form_obj = DInfant3.objects.get(id=int(form_id))
+	else:
+		d_form_obj = DInfant4.objects.get(id=int(form_id))
 	try:
-		d8_obj = D8PollutantExposure.objects.get(d_form=d_form_obj)
-		return update_section8(request)	
+		if visiting_id == "1":
+			d8_obj = D8PollutantExposure.objects.get(d_form=d_form_obj)
+		elif visiting_id == "2":
+			d8_obj = D8PollutantExposure2.objects.get(d_form=d_form_obj)
+		elif visiting_id == "3":
+			d8_obj = D8PollutantExposure3.objects.get(d_form=d_form_obj)
+		else:
+			d8_obj = D8PollutantExposure4.objects.get(d_form=d_form_obj)			
+		return update_section8(request, participant_id, visiting_id, form_id)	
 	except:
-		return create_section8(request)
+		return create_section8(request, participant_id, visiting_id, form_id)
 
 @login_required(login_url='core:login')
-def create_section8(request):
+def create_section8(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d_form_obj = DInfant.objects.get(id=request.session['form_id'])
-		d8_obj = D8PollutantExposure()
+		d_form_obj = None
+		d8_obj = None
+		if visiting_id == "1":
+			d_form_obj = DInfant.objects.get(id=int(form_id))
+			d8_obj = D8PollutantExposure()
+		elif visiting_id == "2":
+			d_form_obj = DInfant2.objects.get(id=int(form_id))
+			d8_obj = D8PollutantExposure2()
+		elif visiting_id == "3":
+			d_form_obj = DInfant3.objects.get(id=int(form_id))
+			d8_obj = D8PollutantExposure3()
+		else:
+			d_form_obj = DInfant4.objects.get(id=int(form_id))
+			d8_obj = D8PollutantExposure4()
 		d8_obj.d_form = d_form_obj
-		d8_obj = save_section8(d8_obj, request)
-		return show_section8(request, True)	
+		d8_obj.participant_id = d_form_obj.participant.participant_id
+		d8_obj = save_section8(d8_obj, request, participant_id, visiting_id, form_id)
+		return show_section8(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section8(request, False)
+		return show_section8(request, participant_id, visiting_id, form_id, False)
 		
 @login_required(login_url='core:login')
-def update_section8(request):
+def update_section8(request, participant_id, visiting_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		d8_obj = D8PollutantExposure.objects.get(d_form_id=request.session['form_id'])
-		d8_obj = save_section8(d8_obj, request)
-		return show_section8(request, True)	
+		d8_obj = None
+		if visiting_id == "1":
+			d8_obj = D8PollutantExposure.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "2":
+			d8_obj = D8PollutantExposure2.objects.get(d_form_id=int(form_id))
+		elif visiting_id == "3":
+			d8_obj = D8PollutantExposure3.objects.get(d_form_id=int(form_id))
+		else:
+			d8_obj = D8PollutantExposure4.objects.get(d_form_id=int(form_id))
+		d8_obj = save_section8(d8_obj, request, participant_id, visiting_id, form_id)
+		return show_section8(request, participant_id, visiting_id, form_id, True)	
 	else:
-		return show_section8(request, False)		
+		return show_section8(request, participant_id, visiting_id, form_id, False)		
 
 @login_required(login_url='core:login')
-def show_section8(request, is_save):
-	form = DInfant.objects.get(id=request.session['form_id'])
-	participant = Participant.objects.get(id=request.session['participant_id'])
+def show_section8(request, participant_id, visiting_id, form_id, is_save):
+	form = None
+	if visiting_id == "1":
+		form = DInfant.objects.get(id=int(form_id))
+	elif visiting_id == "2":
+		form = DInfant2.objects.get(id=int(form_id))
+	elif visiting_id == "3":
+		form = DInfant3.objects.get(id=int(form_id))
+	else:
+		form = DInfant4.objects.get(id=int(form_id))			
+	participant = Participant.objects.get(id=int(participant_id))
 	interviewer = User.objects.get(id=form.interviewer_id)
 	is_save_all = form.is_save_all	
-	date_interviewed = form.date_interviewed.strftime('%Y-%m-%d')
-	date_data_entered = form.date_data_entered.strftime('%Y-%m-%d')
-	date_admission = form.date_admission.strftime('%Y-%m-%d')
+	date_interviewed = form.date_interviewed
+	date_data_entered = form.date_data_entered
+	date_admission = form.date_admission
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		d8_obj = D8PollutantExposure.objects.get(d_form_id=form.id) 
-		#dob = d8_obj.a1m_dob.strftime('%Y-%m-%d')
-		#moving_date = d8_obj.a1m_moving_date.strftime('%Y-%m-%d')
+		d8_obj = None
+		if visiting_id == "1":
+			d8_obj = D8PollutantExposure.objects.get(d_form_id=form.id)
+		elif visiting_id == "2":
+			d8_obj = D8PollutantExposure2.objects.get(d_form_id=form.id)
+		elif visiting_id == "3":
+			d8_obj = D8PollutantExposure3.objects.get(d_form_id=form.id)
+		else:
+			d8_obj = D8PollutantExposure4.objects.get(d_form_id=form.id) 
+		#dob = d8_obj.a1m_dob
+		#moving_date = d8_obj.a1m_moving_date
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			if is_save:
 				return render(request, 'forms_d/section8.html', {'success' : True, 'participant' : participant,'date_data_checked' : date_data_checked, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd8' : d8_obj})
 			else:
@@ -1358,13 +1837,13 @@ def show_section8(request, is_save):
 				return render(request, 'forms_d/section8.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'update', 'form' : form,'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission, 'd8' : d8_obj})	
 	except:
 		if form.date_data_checked is not None:
-			date_data_checked = form.date_data_checked.strftime('%Y-%m-%d')
+			date_data_checked = form.date_data_checked
 			return render(request, 'forms_d/section8.html', {'date_data_checked' : date_data_checked, 'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 		else:
 			return render(request, 'forms_d/section8.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 #@login_required(login_url='core:login')
-def save_section8(d8_obj, request):
+def save_section8(d8_obj, request, participant_id, visiting_id, form_id):
 	if request.POST.get('d8m_charcoal') == "on":
 		d8_obj.d8m_charcoal = True
 	else:

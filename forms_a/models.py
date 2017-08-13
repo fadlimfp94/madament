@@ -17,61 +17,63 @@ from core.models import *
 
 class ABaseLine(models.Model):
 	participant = models.ForeignKey(Participant, on_delete=models.PROTECT)
-	interviewer_id = models.CharField(max_length=25)
-	data_entry_id = models.CharField(max_length=25)
-	data_checked_id = models.CharField(max_length=25, null=True)
-	date_admission = models.DateField()
-	date_interviewed = models.DateField()
-	date_data_entered = models.DateField()
-	date_data_checked = models.DateField(null=True)
-	is_save_all = models.NullBooleanField(default=False)
+	interviewer_id = models.CharField(max_length=25, blank=True)
+	data_entry_id = models.CharField(max_length=25, blank=True)
+	data_checked_id = models.CharField(max_length=25, blank=True, null=True)
+	date_admission = models.CharField(max_length=15, blank=True)
+	date_interviewed = models.CharField(max_length=15, blank=True)
+	date_data_entered = models.CharField(max_length=15, blank=True)
+	date_data_checked = models.CharField(max_length=15, blank=True)
+	is_save_all = models.NullBooleanField(default=False, blank=True)
 
 class A1MotherDemographic(models.Model):
 	a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
+	participant_id = models.CharField(max_length=10)
 	a1m_name = models.CharField(max_length=25)
 	a1m_pob = models.CharField(max_length=25)
-	a1m_dob = models.DateField()
+	a1m_dob = models.CharField(max_length=15)
 	a1m_residence_street = models.CharField(max_length=25)
 	a1m_residence_rt = models.CharField(max_length=3)
 	a1m_residence_rw = models.CharField(max_length=3)
 	a1m_residence_district = models.CharField(max_length=25)
 	a1m_residence_city = models.CharField(max_length=25)
 	a1m_residence_zipcode = models.CharField(max_length=10)
-	a1m_moving_date = models.DateField()
-	a1m_residing_duration = models.IntegerField(null=True)
+	a1m_moving_date = models.CharField(max_length=15)
+	a1m_residing_duration = models.CharField(max_length=15)
 	RESIDENTIAL_STATUS_LIST = (
+						('', ''),
 						('1', 'Personal property'),
 						('2', 'Rent'),
 						('3', 'Family house'),	
 		)
 	a1m_residential_status = models.CharField(choices=RESIDENTIAL_STATUS_LIST, max_length=1, default="")
 	###
-	a1m_previous_residence_1st_start_year = models.IntegerField(null=True)
-	a1m_previous_residence_1st_end_year = models.IntegerField(null=True)
+	a1m_previous_residence_1st_start_year = models.CharField(max_length=15)
+	a1m_previous_residence_1st_end_year = models.CharField(max_length=15)
 	a1m_previous_residence_1st_district = models.CharField(max_length=25)
 	a1m_previous_residence_1st_city = models.CharField(max_length=25)
 	a1m_previous_residence_1st_zipcode = models.CharField(max_length=10)
 	###
-	a1m_previous_residence_2nd_start_year = models.IntegerField(null=True)
-	a1m_previous_residence_2nd_end_year = models.IntegerField(null=True)
+	a1m_previous_residence_2nd_start_year = models.CharField(max_length=15)
+	a1m_previous_residence_2nd_end_year = models.CharField(max_length=15)
 	a1m_previous_residence_2nd_district = models.CharField(max_length=25)
 	a1m_previous_residence_2nd_city = models.CharField(max_length=25)
 	a1m_previous_residence_2nd_zipcode = models.CharField(max_length=10)
 	##
-	a1m_previous_residence_3rd_start_year = models.IntegerField(null=True)
-	a1m_previous_residence_3rd_end_year = models.IntegerField(null=True)
+	a1m_previous_residence_3rd_start_year = models.CharField(max_length=15)
+	a1m_previous_residence_3rd_end_year = models.CharField(max_length=15)
 	a1m_previous_residence_3rd_district = models.CharField(max_length=25)
 	a1m_previous_residence_3rd_city = models.CharField(max_length=25)
 	a1m_previous_residence_3rd_zipcode = models.CharField(max_length=10)
 	##
-	a1m_previous_residence_4th_start_year = models.IntegerField(null=True)
-	a1m_previous_residence_4th_end_year = models.IntegerField(null=True)
+	a1m_previous_residence_4th_start_year = models.CharField(max_length=15)
+	a1m_previous_residence_4th_end_year = models.CharField(max_length=15)
 	a1m_previous_residence_4th_district = models.CharField(max_length=25)
 	a1m_previous_residence_4th_city = models.CharField(max_length=25)
 	a1m_previous_residence_4th_zipcode = models.CharField(max_length=10)
 	##
-	a1m_previous_residence_5th_start_year = models.IntegerField(null=True)
-	a1m_previous_residence_5th_end_year = models.IntegerField(null=True)
+	a1m_previous_residence_5th_start_year = models.CharField(max_length=15)
+	a1m_previous_residence_5th_end_year = models.CharField(max_length=15)
 	a1m_previous_residence_5th_district = models.CharField(max_length=25)
 	a1m_previous_residence_5th_city = models.CharField(max_length=25)
 	a1m_previous_residence_5th_zipcode = models.CharField(max_length=10)
@@ -80,6 +82,7 @@ class A1MotherDemographic(models.Model):
 	a1m_mobile_phone_number = models.CharField(max_length=25)
 	a1m_email = models.EmailField()
 	EDUCATION_LEVEL_LIST = (
+						('', ''),
 						('1', 'Illiterate'),
 						('2', 'Elementary'),
 						('3', 'High School'),
@@ -87,8 +90,9 @@ class A1MotherDemographic(models.Model):
 						('5', 'Postgraduate'),	
 		)
 	a1m_education_level = models.CharField(choices=EDUCATION_LEVEL_LIST, max_length=1, default="")
-	a1m_family_income = models.IntegerField(null=True)
+	a1m_family_income = models.CharField(max_length=15)
 	MARITAL_STATUS_LIST = (
+						('', ''),
 						('1', 'Married'),
 						('2', 'Divorced/Unmaried'),	
 		)
@@ -103,11 +107,14 @@ class A1MotherDemographic(models.Model):
 	a1m_relative_zipcode = models.CharField(max_length=10)
 	a1m_relative_home_phone_number = models.CharField(max_length=25)
 	a1m_relative_mobile_phone_number = models.CharField(max_length=25)
+	a1m_notes = models.TextField()
 
 
 class A2MotherEmployment(models.Model):
 	a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
+	participant_id = models.CharField(max_length=10)
 	EMPLOYMENT_STATUS_LIST = (
+						('', ''),
 						('1', 'Employed'),
 						('2', 'Self-employed'),
 						('3', 'Unemployed'),	
@@ -134,21 +141,24 @@ class A2MotherEmployment(models.Model):
 	a2m_is_exposed_to_pollution = models.NullBooleanField(default=False)
 	a2m_working_hours = models.IntegerField(null=True)
 	WORKING_AREA_LIST = (
+						('', ''),
 						('1', 'Indoor'),
 						('2', 'Outdoor'),	
 		)
 	a2m_working_area = models.CharField(choices=WORKING_AREA_LIST, max_length=1, default="")
+	a2m_notes = models.TextField()
 
 ## A3 sampao A5 belum diperbaiki nama fieldnya ##
 class A3Obstetric(models.Model):
 	a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
-	a3m_pre_pregnancy_weight = models.IntegerField(null=True)
-	a3m_pre_pregnancy_height = models.IntegerField(null=True)
-	a3m_first_day_last_menstruation = models.DateField()
-	a3m_estimated_due_date = models.DateField()
-	a3m_gravida = models.IntegerField(null=True)
-	a3m_parity = models.IntegerField(null=True)
-	a3m_abortus = models.IntegerField(null=True)
+	participant_id = models.CharField(max_length=10)
+	a3m_pre_pregnancy_weight = models.CharField(max_length=25)
+	a3m_pre_pregnancy_height = models.CharField(max_length=25)
+	a3m_first_day_last_menstruation = models.CharField(max_length=15)
+	a3m_estimated_due_date = models.CharField(max_length=15)
+	a3m_gravida = models.CharField(max_length=25)
+	a3m_parity = models.CharField(max_length=25)
+	a3m_abortus = models.CharField(max_length=25)
 	a3m_previous_premature = models.NullBooleanField()
 	a3m_previous_miscarriage = models.NullBooleanField()
 	a3m_previous_complication = models.NullBooleanField()
@@ -197,12 +207,14 @@ class A3Obstetric(models.Model):
 	a3m_other_mother = models.NullBooleanField()
 	a3m_other_father = models.NullBooleanField()
 	a3m_other_sibling = models.NullBooleanField()
+	a3m_notes = models.TextField()
 
 class A4Father(models.Model):
 	a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
+	participant_id = models.CharField(max_length=10)
 	a4f_name = models.CharField(max_length=25)
 	a4f_pob = models.CharField(max_length=25)
-	a4f_dob = models.DateField()
+	a4f_dob = models.CharField(max_length=15)
 	a4f_residence_street = models.CharField(max_length=25)
 	a4f_residence_rt = models.CharField(max_length=3)
 	a4f_residence_rw = models.CharField(max_length=3)
@@ -213,6 +225,7 @@ class A4Father(models.Model):
 	a4f_mobile_phone_number = models.CharField(max_length=25)
 	a4f_email = models.EmailField()
 	EDUCATION_LEVEL_LIST = (
+						('', ''),
 						('1', 'Illiterate'),
 						('2', 'Elementary'),
 						('3', 'High School'),
@@ -220,9 +233,10 @@ class A4Father(models.Model):
 						('5', 'Postgraduate'),	
 		)
 	a4f_education_level = models.CharField(choices=EDUCATION_LEVEL_LIST, max_length=1, default="")
-	a4f_weight = models.IntegerField(null=True)
-	a4f_height = models.IntegerField(null=True)
+	a4f_weight = models.CharField(max_length=25)
+	a4f_height = models.CharField(max_length=25)
 	EMPLOYMENT_STATUS_LIST = (
+						('', ''),
 						('1', 'Employed'),
 						('2', 'Unemployed'),
 						('3', 'Self-employed'),	
@@ -274,11 +288,14 @@ class A4Father(models.Model):
 	a4f_other_mother = models.NullBooleanField()
 	a4f_other_father = models.NullBooleanField()
 	a4f_other_sibling = models.NullBooleanField()
+	a4m_notes = models.TextField()
 
 
 class A5PrePregnancySmoking(models.Model):
 	a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
+	participant_id = models.CharField(max_length=10)
 	SMOKING_STATUS_LIST = (
+					('', ''),	
 					('1', 'Smoker'),
 					('2', 'Ex-smoker'),
 					('3', 'Never smoke'),
@@ -299,6 +316,7 @@ class A5PrePregnancySmoking(models.Model):
 	a5f_father_cigarretes_per_day = models.IntegerField(null=True)
 	a5f_father_smoke_pipes = models.NullBooleanField()
 	SMOKING_FREQUENCY_LIST = (
+						('', ''),
 						('1','Daily'),
 						('2','Weekly'),
 						('3', 'Monthly'),
@@ -310,4 +328,5 @@ class A5PrePregnancySmoking(models.Model):
 	a5c_colleagues_smoking_status = models.NullBooleanField()
 	a5c_colleagues_smoke = models.IntegerField(null=True)
 	a5c_duration_with_smokers_per_day = models.IntegerField(null=True)
-	a5c_month_duration_with_smokers = models.IntegerField(null=True) 
+	a5c_month_duration_with_smokers = models.IntegerField(null=True)
+	a5m_notes = models.TextField() 

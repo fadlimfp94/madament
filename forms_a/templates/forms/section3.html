@@ -116,7 +116,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item active">
+                                <li class="list-group-item">
                                     <a href="{{request.get_full_path}}/../section1"> 
                                     Mother Demographic Data 
                                     </a>
@@ -126,7 +126,7 @@
                                     Mother Employment History 
                                     </a>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item active">
                                     <a href="{{request.get_full_path}}/../section3"> 
                                     Obstetric History 
                                     </a>
@@ -155,11 +155,11 @@
                         <div class="form-group row">
                             <div class="col-md-6 col-sm-6">                            
                                 <label for="a3m_pre_weight"> Pre-pregnancy weight (in kg) </label>              
-                                <input class="form-control" type="number" name="a3m_pre_weight" placeholder="in Kg" value="{{a3.a3m_pre_pregnancy_weight}}">  
+                                <input class="form-control" type="number" name="a3m_pre_weight" placeholder="in Kg" value="{{a3.a3m_pre_pregnancy_weight}}" step="0.01">  
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label for="a3m_pre_height"> Pre-pregnancy Height (in cm) </label>            
-                                <input class="form-control" type="number" name="a3m_pre_height" placeholder="in cm" value="{{a3.a3m_pre_pregnancy_height}}">
+                                <input class="form-control" type="number" name="a3m_pre_height" placeholder="in cm" value="{{a3.a3m_pre_pregnancy_height}}" step="0.01">
                             </div>
                         </div>   
            
@@ -167,11 +167,11 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a3m_fdlm"> First Day of Last Menstruation </label>
-                                    <input class="form-control" type="date" name="a3m_fdlm" value="{{first_day_last_menstruation}}" required>
+                                    <input class="form-control" type="date" name="a3m_fdlm" value="{{first_day_last_menstruation}}" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a3m_edd"> Estimated Due Date </label>
-                                    <input class="form-control" type="date" name="a3m_edd" value="{{estimated_due_date}}"required>
+                                    <input class="form-control" type="date" name="a3m_edd" value="{{estimated_due_date}}" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
                                 </div>
                             </div>
                         </div> 
@@ -181,15 +181,15 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a3m_gravida"> Gravida </label>
-                                    <input class="form-control" type="number" id="a3m_gravida" name="a3m_gravida" value="{{ a3.a3m_gravida }}" required>
+                                    <input class="form-control" type="number" id="a3m_gravida" name="a3m_gravida" value="{{ a3.a3m_gravida }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a3m_parity"> Parity </label>
-                                    <input class="form-control" type="number" name="a3m_parity" value="{{ a3.a3m_parity }}" required>
+                                    <input class="form-control" type="number" name="a3m_parity" value="{{ a3.a3m_parity }}" step="0.01" >
                                 </div>
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a3m_abortus"> Abortus </label>
-                                    <input class="form-control" type="number" name="a3m_abortus" value="{{ a3.a3m_abortus }}" required>
+                                    <input class="form-control" type="number" name="a3m_abortus" value="{{ a3.a3m_abortus }}" step="0.01" >
                                 </div>
                             </div>
                         </div> 
@@ -199,9 +199,9 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_premature %}
-                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1" checked>
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1">
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -209,11 +209,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_premature %}
-                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" required>
                                 {% elif a3.a3m_previous_premature == False %}
-                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_premature" id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -225,9 +225,9 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_miscarriage %}
-                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1" checked>
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1">
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -235,11 +235,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_miscarriage %}
-                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0" required>
                                 {% elif a3.a3m_previous_miscarriage == False %}
-                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_miscarriage"id="optionsRadios2" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_miscarriage"id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -251,9 +251,9 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_complication %}
-                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1" checked>
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1">
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="yesPreviousCompilation" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -261,11 +261,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_previous_complication %}
-                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" required>
                                 {% elif a3.a3m_previous_complication == False %}
-                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_compilation" id="noPreviousCompilation" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -338,9 +338,9 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_medical_history %}
-                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked>
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1">
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="yesPreviousMedicalHistory" value="1" required>
                                 {% endif %}
                                 Yes 
                                 </label>
@@ -348,11 +348,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_medical_history %}
-                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" required>
                                 {% elif a3.a3m_medical_history == False %}
-                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_medicalhistory" id="noPreviousMedicalHistory" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -495,15 +495,15 @@
                         <hr>
 
                         <fieldset class="form-group">
-                            <label for="a3m_premature"> Is there any of your first degree family have the following disease ? </label>
+                            <label for="a3m_premature"> Is there any of your first degree family have the following disease? (click yes to see the deseases)</label>
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_family_disease %}
                                 <input type="radio" class="form-check-input" name="a3m_diseaseFam" 
-                                id="yesFamilyHistoryDisease" value="1" checked>
+                                id="yesFamilyHistoryDisease" value="1" checked required>
                                 {% else %}
                                 <input type="radio" class="form-check-input" name="a3m_diseaseFam" 
-                                id="yesFamilyHistoryDisease" value="1">
+                                id="yesFamilyHistoryDisease" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -511,11 +511,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a3.a3m_family_disease %}
-                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" required>
                                 {% elif a3.a3m_family_disease == False %}
-                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0">
+                                <input type="radio" class="form-check-input" name="a3m_diseaseFam" id="noFamilyHistoryDisease" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -729,6 +729,14 @@
                                         {% endif %}
                                         Siblings
                                     </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label for="a3m_notes">Notes</label>          
+                                        <textarea class="form-control" rows="5" name="a3m_notes"> {{ a3.a3m_notes }} </textarea>
+                                    </div>   
                                 </div>
                             </div>
                             <div class="form-group">

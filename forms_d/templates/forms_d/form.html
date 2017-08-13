@@ -5,13 +5,13 @@
         <!-- Form Umum Section -->
         {% if success %}
             <div class="alert alert-success text-center">
-              <strong>Success!</strong>
+              <strong>Success! Your data has been saved</strong>
             </div>
         {% endif %}
         <div class="jumbotron">
             <h2 class="text-center">Form D - Infant Data</h2>
             <hr>         
-            <form class="patient-form-data" action="{% url 'forms_d:create_form' %}" method="post">
+            <form class="patient-form-data" action="{{request.get_full_path}}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_id" value={{form.id}}>
                 <div class="row">
@@ -59,7 +59,7 @@
                     <div class="col-md-6 col-xs-6 col-sm-6">                                            
                         <div class="form-group">
                             <label for="created_id"> Created By  </label>
-                            <input class="form-control" type="text" name="data_entry_id" value="{{request.user.username}}" readonly>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{form.data_entry_id}}" readonly>
                         </div>
                         {% if context == "create_new_form" %}
                             <div class="form-group">
@@ -81,6 +81,24 @@
                             <label for="checked_date"> Checked Date </label>
                             <input class="form-control" type="date" name="date_data_checked" value="{{ date_data_checked }}" readonly>
                         </div>
+
+                        {% if context == "create_new_form" %}
+                            <div class="form-group">
+                                <label for="child_id"> Child </label>
+                                <!--<input class="form-control" type="text" name="interviewer_id">-->
+                                <select class="form-control selectpicker" name="child_id" required>
+                                    {% for child in child_list %}
+                                        <option value={{child.child_id}}>{{ child.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="child_name"> Child </label>
+                                <input class="form-control" type="text" name="child_name" value="{{form.child_name}}" readonly>
+                            </div>
+                        {% endif %}
+                                       
                     </div>                  
                 </div> <!-- end row -->
 
@@ -97,29 +115,41 @@
             {% if context == "create_new_form" %}
     
             {% else %}
+                <div class="form-group">
                 <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                    <!-- <div class="col-md-6 col-xs-6 col-sm-6"> -->
                             {% if role == 'staff' %}
                                 {% if is_save_all %}
 
                                 {% else %}
-                                    <form action="{% url 'forms_d:save_form' %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" class="btn btn-primary" value="Submit Form"/>
-                                    </form>
+                                   <!--  <div class="col-md-6 col-xs-6 col-sm-6">
+                                        <a href="{{request.get_full_path}}/../edit/interview" class="btn btn-primary" style="margin: 0px 30% 0px 65%;"> 
+                                        &nbsp; &nbsp; Edit Interview &nbsp; &nbsp; </a>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 col-sm-6">    
+                                        <a href="{{request.get_full_path}}/../save" class="btn btn-primary" style="margin: 0px 35% 0px 0%;"> 
+                                        &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
+                                    </div> -->
+                                    <div class="col-md-6 col-xs-6 col-sm-6">    
+                                        <a href="{{request.get_full_path}}/../save" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
+                                    </div> 
                                 {% endif %}
                             {% else %}
                                 {% if date_data_checked %}
                                 
+                                {% elif is_save_all %}
+                                    <div class="col-md-6 col-xs-6 col-sm-6">    
+                                        <a href="{{request.get_full_path}}/../check" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        &nbsp; &nbsp; Check Form &nbsp; &nbsp; </a>
+                                    </div>
                                 {% else %}
-                                    <form action="{% url 'forms_d:check_form' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-success" value="Check Form"/> 
-                                    </form>
+                                        
                                 {% endif %}
                             {% endif %}
-                    </div> 
+                    <!-- </div> --> 
                 </div> <!-- End Row -->
+                </div>
             {% endif %}
         </div> <!-- End of Form  -->
         {% if context == "create_new_form" %}

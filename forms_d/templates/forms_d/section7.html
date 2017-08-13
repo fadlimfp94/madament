@@ -18,12 +18,14 @@
                 if($("#d7c_infection_unknown").is(':checked')){
                     $("#unknownDiagnosis").removeClass('hidden');
                     $("#unknownDiagnosis").prop("readonly", false);
-                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis").prop("disabled", false);
+                    $("#unknownDiagnosis :input").prop("required", false);
                     $("#unknownDiagnosis :checkbox").prop("required", false);
                 }
                 else{
                     $("#unknownDiagnosis").addClass('hidden');
                     $("#unknownDiagnosis").prop("readonly", true);
+                    $("#unknownDiagnosis").prop("disabled", true);
                     $("#unknownDiagnosis :input").prop("required", false);   
                 }
             }
@@ -50,7 +52,7 @@
                 if($("#d7c_infection_unknown").is(':checked')){
                     $("#unknownDiagnosis").removeClass('hidden');
                     $("#unknownDiagnosis").prop("readonly", false);
-                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis :input").prop("required", false);
                     $("#unknownDiagnosis :checkbox").prop("required", false);
                 }
                 else{
@@ -86,7 +88,7 @@
                 if($("#d7c_infection_unknown").is(':checked')){
                     $("#unknownDiagnosis").removeClass('hidden');
                     $("#unknownDiagnosis").prop("readonly", false);
-                    $("#unknownDiagnosis :input").prop("required", true);
+                    $("#unknownDiagnosis :input").prop("required", false);
                     $("#unknownDiagnosis :checkbox").prop("required", false);
                 }
                 else{
@@ -253,6 +255,10 @@
             else{
                 $("#childBeenHospitalised").addClass('hidden');
                 $("#childBeenHospitalised :input").removeAttr('value');
+                $("#d7c_ward_1").prop("value",  "1");
+                $("#d7c_ward_2").prop("value",  "2");
+                $("#d7c_ward_3").prop("value",  "3");
+                $("#d7c_ward_4").prop("value",  "4");
                 $("#childBeenHospitalised :input").prop("readonly", true);
                 $("#childBeenHospitalised :input").prop("required", false);
                 $("#childBeenHospitalised :input").prop("checked", false);
@@ -750,6 +756,10 @@
             $("#noBeenHospitalised").click(function(){
                 $("#childBeenHospitalised").addClass('hidden');
                 $("#childBeenHospitalised :input").removeAttr('value');
+                $("#d7c_ward_1").prop("value",  "1");
+                $("#d7c_ward_2").prop("value",  "2");
+                $("#d7c_ward_3").prop("value",  "3");
+                $("#d7c_ward_4").prop("value",  "4");
                 $("#childBeenHospitalised :input").prop("readonly", true);
                 $("#childBeenHospitalised :input").prop("required", false);
                 $("#childBeenHospitalised :input").prop("checked", false);
@@ -792,28 +802,28 @@
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                            <a href="{{request.get_full_path}}/../section1"> Infant Growth / Immunisation Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                            <a href="{{request.get_full_path}}/../section2"> Infant Feeding Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                            <a href="{{request.get_full_path}}/../section3"> Infant Cardiovascular Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                            <a href="{{request.get_full_path}}/../section4"> Infant Lung Function and Respiratory Symptoms </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                            <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                            <a href="{{request.get_full_path}}/../section6"> Current Second Hand Smoking Exposure </a> 
                         </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                            <a href="{{request.get_full_path}}/../section7"> Infection Episode </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{{request.get_full_path}}/../section8"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -823,9 +833,9 @@
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
                     {% if context == "create" %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section7' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% else %}
-                    <form class="formD-question" action="{% url 'forms_d:process_section7' %}" method="post" id="form_d">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d">
                     {% endif %}
                         <h2>Infection Episode</h2>
                         <hr> 
@@ -836,21 +846,19 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_infection %}
-                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1" checked>
+                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1">
+                                <input type="radio" name="d7c_infection" id="yesChildHadFever" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if d7.d7c_infection %}
-                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
-                                {% elif d7.d7c_infection == None %}
-                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
+                                {% if d7.d7c_infection == False %}
+                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0" required checked>
                                 {% else %}
-                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0" checked>
+                                <input type="radio" name="d7c_infection" id="noChildHadFever" value="0">
                                 {% endif %}
                                 No
                                 </label>
@@ -930,7 +938,7 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                {% if d7c_infection_others %}
+                                {% if d7.d7c_infection_others %}
                                 <input class="form-check-input" name="d7c_infection_others" type="checkbox" id="d7c_infection_others" checked>
                                 {% else %}
                                 <input class="form-check-input" name="d7c_infection_others" type="checkbox" id="d7c_infection_others">
@@ -938,7 +946,8 @@
                                 Other, specify
                                 </label>
                             </div>
-                            <input class="form-control" type="text" name="d7c_infection_others_detail" id="d7c_infection_others_detail" value="{{d7c_infection_others_detail}}" required>
+                            <input class="form-control" type="text" name="d7c_infection_others_detail" id="d7c_infection_others_detail" value="{{ d7.d7c_infection_others_detail }}" required>
+                            
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if d7.d7c_infection_unknown %}
@@ -1012,21 +1021,19 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_hospitalization %}
-                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1" checked>
+                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1">
+                                <input type="radio" name="d7c_hospitalization" id="yesBeenHospitalised" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if d7.d7c_hospitalization %}
-                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0">
-                                {% elif d7.d7c_hospitalization == None %}
-                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0">
+                                {% if d7.d7c_hospitalization == False%}
+                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0" required checked>
                                 {% else %}
-                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0" checked>
+                                <input type="radio" name="d7c_hospitalization" id="noBeenHospitalised" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -1424,21 +1431,19 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d7.d7c_medication %}
-                                <input type="radio" name="d7c_medication" id="yesMedication" value="1" checked>
+                                <input type="radio" name="d7c_medication" id="yesMedication" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d7c_medication" id="yesMedication" value="1">
+                                <input type="radio" name="d7c_medication" id="yesMedication" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                {% if d7.d7c_medication %}
-                                <input type="radio" name="d7c_medication" id="noMedication" value="0">
-                                {% elif d7.d7c_medication == None %}
-                                <input type="radio" name="d7c_medication" id="noMedication" value="0">
+                                {% if d7.d7c_medication == False %}
+                                <input type="radio" name="d7c_medication" id="noMedication" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d7c_medication" id="noMedication" value="0" checked>
+                                <input type="radio" name="d7c_medication" id="noMedication" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -1579,6 +1584,15 @@
 
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="d7_notes">Notes</label>          
+                                    <textarea class="form-control" rows="4" name="d7_notes"> {{ d7.d7_notes }} </textarea>
+                                </div>   
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
                                 {% if is_save_all %}
 
                                 {% else %}
@@ -1595,9 +1609,9 @@
                 </div>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                        <form action="{{request.get_full_path}}/../edit" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="section_number" value=1>
+                            <input type="hidden" name="form_id" value={{form.id}}>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
                         </form>
                         {% endif %}

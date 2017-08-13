@@ -4,3 +4,4 @@ from .models import *
 # Register your models here.
 admin.site.register(Puskesmas)
 admin.site.register(Participant)
+admin.site.register(Child)

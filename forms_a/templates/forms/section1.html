@@ -1,6 +1,18 @@
 {% extends 'forms/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
+    <script>
+    $(document).ready(function(){
+
+        $("#a1m_moving_date").on("change keyup paste click", function(){
+            /// hitung jumlah bulan yang telah berlalu sampai sekarang
+            var moving_date =  $("#a1m_moving_date").val();
+            var today = new Date();
+            
+        })
+       
+    });
+    </script>
     
             <div class="col-md-4 section-list">
                         <div class="panel panel-primary">
@@ -73,17 +85,17 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_residence_street"> Address </label>
-                                    <input class="form-control" type="text" name="a1m_residence_street" value = "{{ a1.a1m_residence_street }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_street" value = "{{ a1.a1m_residence_street }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_residence_rt"> RT </label>
-                                    <input class="form-control" type="text" name="a1m_residence_rt" value = "{{ a1.a1m_residence_rt }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_rt" value = "{{ a1.a1m_residence_rt }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_residence_rw"> RW </label>
-                                    <input class="form-control" type="text" name="a1m_residence_rw" value = "{{ a1.a1m_residence_rw }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_rw" value = "{{ a1.a1m_residence_rw }}">
                                 </div>
                             </div>
                         </div>
@@ -92,17 +104,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_district"> District </label>
-                                    <input class="form-control" type="text" name="a1m_residence_district" value = "{{ a1.a1m_residence_district }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_district" value = "{{ a1.a1m_residence_district }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_city"> City </label>
-                                    <input class="form-control" type="text" name="a1m_residence_city" value = "{{ a1.a1m_residence_city }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_city" value = "{{ a1.a1m_residence_city }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_residence_zipcode"> Zip Code </label>
-                                    <input class="form-control" type="text" name="a1m_residence_zipcode" value = "{{ a1.a1m_residence_zipcode }}" required>
+                                    <input class="form-control" type="text" name="a1m_residence_zipcode" value = "{{ a1.a1m_residence_zipcode }}">
                                 </div>
                             </div>
                         </div>
@@ -111,12 +123,12 @@
                             <div class="row">
                                 <div class="col-md-5 col-sm-5">
                                     <label for="a1m_moving_date"> Date you moved into current address </label>
-                                    <input class="form-control" type="date" name="a1m_moving_date" value = "{{ moving_date }}" required>
+                                    <input class="form-control" type="date" id="a1m_moving_date" name="a1m_moving_date" value = "{{ moving_date }}" required>
                                 </div>
                                 <div class="col-md-7 col-sm-7">
-                                    <label for="a1m_residing_duration"> How long have your resided in the current address 
+                                    <label for="a1m_residing_duration"> How long have your resided in the current address (in month)
                                     </label>
-                                    <input class="form-control" type="number" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}" required>
+                                    <input class="form-control" type="number" id= "a1m_residing_duration" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}">
                                 </div>
                             </div>
                         </div>
@@ -305,20 +317,20 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
-                                    <label for="a1m_home_phone_number">Home Phone Number </label>                                    
-                                    <input class="form-control" type="text" name="a1m_home_phone_number" value = "{{ a1.a1m_home_phone_number }}" required>
+                                    <label for="a1m_home_phone_number">Home Phone Number </label>
+                                    <input class="form-control" type="text" name="a1m_home_phone_number" value = "{{ a1.a1m_home_phone_number }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_mobile_phone_number"> Mobile Phone Number</label>
-                                    <input class="form-control" type="text" name="a1m_mobile_phone_number" value = "{{ a1.a1m_mobile_phone_number }}" required>
+                                    <input class="form-control" type="text" name="a1m_mobile_phone_number" value = "{{ a1.a1m_mobile_phone_number }}">
                                 </div>                                
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="a1m_email"> Email </label>
-                            <input class="form-control" type="email" name="a1m_email" value = "{{ a1.a1m_email }}" required>
+                            <input class="form-control" type="email" name="a1m_email" value = "{{ a1.a1m_email }}">
                         </div>
 
                         <div class="form-group">
@@ -377,7 +389,7 @@
 
                         <div class="form-group">
                             <label for="a1m_family_income"> Family Income </label>
-                            <input class="form-control" type="number" name="a1m_family_income" value = "{{ a1.a1m_family_income }}" required>
+                            <input class="form-control" type="number" name="a1m_family_income" value = "{{ a1.a1m_family_income }}">
                         </div>
 
                         <div class="form-group">
@@ -408,24 +420,24 @@
                         <h3> Closest Relative </h3>
                         <div class="form-group">
                             <label for="a1m_relative_name">  Name </label>
-                            <input class="form-control" type="text" name="a1m_relative_name" value = "{{ a1.a1m_relative_name }}" required>
+                            <input class="form-control" type="text" name="a1m_relative_name" value = "{{ a1.a1m_relative_name }}">
                         </div>
 
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_relative_street"> Address </label>
-                                    <input class="form-control" type="text" name="a1m_relative_street" value = "{{ a1.a1m_relative_street }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_street" value = "{{ a1.a1m_relative_street }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_relative_rt"> RT </label>
-                                    <input class="form-control" type="text" name="a1m_relative_rt" value = "{{ a1.a1m_relative_rt }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_rt" value = "{{ a1.a1m_relative_rt }}">
                                 </div>
 
                                 <div class="col-md-3 col-sm-3">
                                     <label for="a1m_relative_rw"> RW </label>
-                                    <input class="form-control" type="text" name="a1m_relative_rw" value = "{{ a1.a1m_relative_rw }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_rw" value = "{{ a1.a1m_relative_rw }}">
                                 </div>
                             </div>
                         </div>
@@ -434,17 +446,17 @@
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_relative_district"> District </label>
-                                    <input class="form-control" type="text" name="a1m_relative_district" value = "{{ a1.a1m_relative_district }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_district" value = "{{ a1.a1m_relative_district }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_relative_city"> City </label>
-                                    <input class="form-control" type="text" name="a1m_relative_city" value = "{{ a1.a1m_relative_city }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_city" value = "{{ a1.a1m_relative_city }}">
                                 </div>
 
                                 <div class="col-md-4 col-sm-4">
                                     <label for="a1m_relative_zipcode"> Zip Code </label>
-                                    <input class="form-control" type="text" name="a1m_relative_zipcode" value = "{{ a1.a1m_relative_zipcode }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_zipcode" value = "{{ a1.a1m_relative_zipcode }}">
                                 </div>
                             </div>
                         </div>
@@ -453,15 +465,25 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_relative_home_phone_number">Home Phone Number </label>                              
-                                    <input class="form-control" type="text" name="a1m_relative_home_phone_number" value = "{{ a1.a1m_relative_home_phone_number }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_home_phone_number" value = "{{ a1.a1m_relative_home_phone_number }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a1m_relative_mobile_phone_number"> Mobile Phone Number</label>
-                                    <input class="form-control" type="text" name="a1m_relative_mobile_phone_number" value = "{{ a1.a1m_relative_mobile_phone_number }}" required>
+                                    <input class="form-control" type="text" name="a1m_relative_mobile_phone_number" value = "{{ a1.a1m_relative_mobile_phone_number }}">
                                 </div>                                
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="a1m_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="a1m_notes"> {{ a1.a1m_notes }} </textarea>
+                                </div>   
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="row">
                                 {% if is_save_all %}

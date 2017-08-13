@@ -24,7 +24,7 @@
                 $("#foodsGiven :checkbox").prop("required", false);
 
             }
-            else{
+            else if($("#noBreastfed").is(':checked')){
                 $("#foodsGiven").removeClass('hidden');
                 $("#foodsGiven :input").prop("readonly", false);
                 $("#foodsGiven :input").prop("required", true);
@@ -59,6 +59,9 @@
                     $("#weaning_food :input").prop("required", false);
                     $("#weaning_food :checkbox").prop("required", false);
                 }
+            }
+            else{
+                $("#foodsGiven").addClass('hidden');
             }
 
 
@@ -155,28 +158,28 @@
                     <div class="panel-heading text-center"> List of Sections  </div>
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section1' %}"> Infant Growth / Immunisation Data </a>
+                            <a href="{{request.get_full_path}}/../section1"> Infant Growth / Immunisation Data </a>
                         </li>
                         <li class="list-group-item active">
-                            <a href="{% url 'forms_d:process_section2'%}"> Infant Feeding Data </a>
+                            <a href="{{request.get_full_path}}/../section2"> Infant Feeding Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section3'%}"> Infant Cardiovascular Data </a>
+                            <a href="{{request.get_full_path}}/../section3"> Infant Cardiovascular Data </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section4'%}"> Infant Lung Function and Respiratory Symptoms </a>
+                            <a href="{{request.get_full_path}}/../section4"> Infant Lung Function and Respiratory Symptoms </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section5'%}"> Infant Biological Samples </a> 
+                            <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section6'%}"> Current Second Hand Smoking Exposure </a> 
+                            <a href="{{request.get_full_path}}/../section6"> Current Second Hand Smoking Exposure </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section7'%}"> Infection Episode </a> 
+                            <a href="{{request.get_full_path}}/../section7"> Infection Episode </a> 
                         </li>
                         <li class="list-group-item">
-                            <a href="{% url 'forms_d:process_section8'%}"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
+                            <a href="{{request.get_full_path}}/../section8"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
                 </div>
@@ -185,7 +188,7 @@
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
-                    <form class="formD-question" action="{% url 'forms_d:process_section2' %}" method="post" id="form_d" onsubmit="return validateForm()">
+                    <form class="formD-question" action="{{request.get_full_path}}" method="post" id="form_d" onsubmit="return validateForm()">
                         <h2>Infant Feeding Data</h2>
                         <hr> 
                         {% csrf_token %}
@@ -195,39 +198,39 @@
                                 {% if d2.d2c_breast_feeding_status == None %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed" required>
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed" required>
                                         No
                                         </label>
                                     </div>
                                 {% elif d2.d2c_breast_feeding_status %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed" checked>
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed" checked required>
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed" required>
                                         No
                                         </label>
                                     </div>
                                 {% else %}
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed">
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="1" id="yesBreastfed" required>
                                         Yes
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed" checked>
+                                        <input type="radio" class="form-check-input" name="d2c_breast_feeding_status" value="0" id="noBreastfed" checked required>
                                         No
                                         </label>
                                     </div>
@@ -236,7 +239,7 @@
                         </fieldset>
 
                         <fieldset class="form-group" id="foodsGiven">
-                                <label id="foodsGivenQuestion">What sort of foods that you have started to give? (at least one option should be choosed)</label> 
+                                <label id="foodsGivenQuestion">What sort of foods that you have started to give? (at least one option should be chosen)</label> 
                                 <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d2.d2c_infant_formula %}
@@ -329,8 +332,16 @@
                                     <input class="form-control" type="number" name="d2c_age_weaning_food" placeholder="in weeks">
                                     {% endif %}  
                                 </div>
-                                </div>        
-                        </fieldset>    
+                                </div>         
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="d2_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="d2_notes"> {{ d2.d2_notes }} </textarea>
+                                </div>   
+                            </div>
+                        </div>
+                        </fieldset>   
 
                         <div class="form-group">
                             <div class="row">
@@ -346,7 +357,7 @@
                     </form>
                         {% if role != 'staff' %}
                         {% if is_save_all %}
-                        <form action="{% url 'forms_d:edit_form' %}" method="post">
+                        <form action="{{request.get_full_path}}/../edit" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="form_id" value={{form.id}}>
                             <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>

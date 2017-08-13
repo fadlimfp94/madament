@@ -6,10 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Muhammad Fadli Putra dan Vasko Dagama">
 
     <title>PEER</title>
 
+    <!-- 
+    === CSS dan JC yg Lama ===
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.css">
@@ -18,10 +20,22 @@
     <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.js">
     </script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
 
-        <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/9dcbecd42ad/integration/jqueryui/dataTables.jqueryui.css"> -->
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> 
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Custom CSS -->
     <style>
         .mycenter {
             margin: auto;
@@ -33,6 +47,12 @@
             padding-top: 70px;
             /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
         }
+
+        #myTable th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
     </style>
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -45,6 +65,7 @@
     <script>
      $(document).ready(function(){
            $("#form_a :input").prop("disabled", true);
+           $("#form_d :input").prop("disabled", true);
            $("#submit_button").prop("disabled", false);
 
         });
@@ -92,7 +113,7 @@
     {% endblock %}
     <script type="text/JavaScript">
         $(document).ready(function(){
-        $('#myTable').DataTable();
+            $('#myTable').DataTable();
     });
     </script>
     <!--{% block javascript %}

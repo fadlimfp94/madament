@@ -8,7 +8,7 @@
         <div class="list_all_form">
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="{{ request.path }}form_a" class="btn btn-primary btn-lg btn-block" >
+                    <a href="{{request.get_full_path}}form_a" class="btn btn-primary btn-lg btn-block" >
                         Form A - Baseline
                     </a>
                 </div>
@@ -48,7 +48,7 @@
 
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="{{ request.path }}form_d1" class="btn btn-primary btn-lg btn-block" >
+                    <a href="{{request.get_full_path}}form_d/visit/1/"  class="btn btn-primary btn-lg btn-block" >
                         Form D - Infant First Visit
                     </a>
                 </div>
@@ -56,7 +56,7 @@
 
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="{{ request.path }}form_d2" class="btn btn-primary btn-lg btn-block" >
+                    <a href="{{ request.path }}form_d/visit/2/" class="btn btn-primary btn-lg btn-block" >
                         Form D - Infant Second Visit
                     </a>
                 </div>
@@ -64,7 +64,7 @@
 
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="{{ request.path }}form_d3" class="btn btn-primary btn-lg btn-block" >
+                    <a href="{{ request.path }}form_d/visit/3/" class="btn btn-primary btn-lg btn-block" >
                         Form D - Infant Third Visit
                     </a>
                 </div>
@@ -72,7 +72,7 @@
 
             <div class="form-group row">
                 <div class="col-md-8 col-md-offset-2">
-                    <a href="{{ request.path }}form_d4" class="btn btn-primary btn-lg btn-block" >
+                    <a href="{{ request.path }}form_d/visit/4/" class="btn btn-primary btn-lg btn-block" >
                         Form D - Infant Fourth Visit
                     </a>
                 </div>

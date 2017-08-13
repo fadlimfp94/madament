@@ -55,9 +55,7 @@
                 $("#a2m_public_transport :checkbox").prop("required", false);
             }
 
-
-            
-
+            $("#officeAddres :input").prop("required", false);
         }
         else if($("#self-employed").is(':checked')){
             $("#job").removeClass('hidden');
@@ -110,6 +108,7 @@
                 $("#a2m_public_transport :input").prop("required", false);
                 $("#a2m_public_transport :checkbox").prop("required", false);
             }
+            $("#officeAddres :input").prop("required", false);
 
         }
         else{
@@ -176,7 +175,7 @@
                 $("#a2m_public_transport :input").prop("required", false);
                 $("#a2m_public_transport :checkbox").prop("required", false);
             }
-            
+            $("#officeAddres :input").prop("required", false);
         });
 
         $("#self-employed").click(function(){
@@ -229,6 +228,7 @@
                 $("#a2m_public_transport :input").prop("required", false);
                 $("#a2m_public_transport :checkbox").prop("required", false);
             }
+            $("#officeAddres :input").prop("required", false);
 
         });
 
@@ -315,12 +315,12 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item active">
+                                <li class="list-group-item">
                                     <a href="{{request.get_full_path}}/../section1"> 
                                     Mother Demographic Data 
                                     </a>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item active">
                                     <a href="{{request.get_full_path}}/../section2"> 
                                     Mother Employment History 
                                     </a>
@@ -357,9 +357,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a2.a2m_working_status == "1" %}
-                                    <input type="radio" name="a2m_working_status" id="employed" value="1" checked>
+                                    <input type="radio" name="a2m_working_status" id="employed" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a2m_working_status" id="employed" value="1">
+                                    <input type="radio" name="a2m_working_status" id="employed" value="1" required>
                                     {% endif %}
                                     Employed
                                 </label>
@@ -367,9 +367,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a2.a2m_working_status == "2" %}
-                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2" checked>
+                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2">
+                                    <input type="radio" name="a2m_working_status" id="self-employed" value="2" required>
                                     {% endif %}
                                     Self-Employed
                                 </label>
@@ -377,9 +377,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a2.a2m_working_status == "3" %}
-                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" checked>
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3">
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" required>
                                     {% endif %}
                                     Unemployed
                                 </label>
@@ -436,7 +436,7 @@
                                 </div>                                
                                 <div class="form-check">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label class="form-check-label">
                                             {% if a2.a2m_maternal_leave %}
                                             <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
@@ -445,7 +445,7 @@
                                             <input type="radio" class="form-check-input" name="a2m_maternal_leave" 
                                             id="yesMaternalLeave" value="1">
                                             {% endif %}
-                                             Yes, How Long ?
+                                             Yes, How Long (in Weeks)?
                                             </label>
                                         </div>
                                         <div class="col-md-4">
@@ -463,7 +463,8 @@
                                 </div>                            
                         </fieldset>
 
-                        <div class="form-group">
+                        <div id="officeAddres">
+                        <div class="form-group" >
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a2m_work_street"> Work Address </label>
@@ -504,6 +505,7 @@
                         <div class="form-group">                            
                             <label for="a2m_work_phone">Work Phone Number </label>  
                             <input class="form-control" type="text" name= "a2m_work_phone" id="a2m_work_phone" value="{{a2.a2m_work_phone_number}}">
+                        </div>
                         </div>
 
                         <div class="form-group">
@@ -573,7 +575,7 @@
                             
                             <br>
                             <div class="form-group">
-                                <label for="a2m_time_travel"> How much time do you need for work travel (home to office) </label>
+                                <label for="a2m_time_travel"> How much time do you need for work travel (home to office, in minutes) </label>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input class="form-control" type="number" name="a2m_time_travel" placeholder="in minutes" value="{{a2.a2m_work_time_travel}}">
@@ -606,7 +608,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="a2m_working_hours"> How long is your working hours? </label>
+                                <label for="a2m_working_hours"> How long is your working hours?</label>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <input class="form-control" type="number" name="a2m_working_hours" value="{{a2.a2m_working_hours}}">
@@ -636,6 +638,14 @@
                                     Outdoor
                                     </label>
                                 </div>                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="a2m_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="a2m_notes"> {{ a2.a2m_notes }} </textarea>
+                                </div>   
                             </div>
                         </div>
                         </div>

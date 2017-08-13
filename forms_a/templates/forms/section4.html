@@ -7,7 +7,7 @@
         if($("#employed").is(':checked') ||  $("#self-employed").is(':checked')){
             $("#job").removeClass('hidden');
             $("#job :input").prop("readonly", false);
-            $("#job :input").prop("required", true);
+            $("#job :input").prop("required", false);
             $("#job :checkbox").prop("required", false);
             $("#a2m_public_transport").prop("required", false);   
         }
@@ -24,7 +24,7 @@
         $("#employed").click(function(){
             $("#job").removeClass('hidden');
             $("#job :input").prop("readonly", false);
-            $("#job :input").prop("required", true);
+            $("#job :input").prop("required", false);
             $("#job :checkbox").prop("required", false);
             $("#a2m_public_transport").prop("required", false);
             
@@ -33,7 +33,7 @@
         $("#self-employed").click(function(){
             $("#job").removeClass('hidden');
             $("#job :input").prop("readonly", false);
-            $("#job :input").prop("required", true);
+            $("#job :input").prop("required", false);
             $("#job :checkbox").prop("required", false);
             $("#a2m_public_transport").prop("required", false);
         });
@@ -50,7 +50,7 @@
         if($("#yesPreviousMedicalHistory").is(':checked')){
             $("#previousMedicalHistory").removeClass('hidden');
             $("#previousMedicalHistory :input").prop("readonly", false);
-            $("#previousMedicalHistory :input").prop("required", true);
+            $("#previousMedicalHistory :input").prop("required", false);
             $("#previousMedicalHistory :checkbox").prop("required", false); 
             $("#a4f_allergyhis").prop("required", false);
             $("#a4f_otherhis").prop("required", false);
@@ -69,7 +69,7 @@
         $("#yesPreviousMedicalHistory").click(function(){
             $("#previousMedicalHistory").removeClass('hidden');
             $("#previousMedicalHistory :input").prop("readonly", false);
-            $("#previousMedicalHistory :input").prop("required", true);
+            $("#previousMedicalHistory :input").prop("required", false);
             $("#previousMedicalHistory :checkbox").prop("required", false); 
             $("#a4f_allergyhis").prop("required", false);
             $("#a4f_otherhis").prop("required", false);
@@ -88,7 +88,7 @@
         if($("#yesFamilyHistoryDisease").is(':checked')){
             $("#familyHistoryDisease").removeClass('hidden');
             $("#familyHistoryDisease :input").prop("readonly", false);
-            $("#familyHistoryDisease :input").prop("required", true);
+            $("#familyHistoryDisease :input").prop("required", false);
             $("#familyHistoryDisease :checkbox").prop("required", false);
             $("#a4f_other_desease").prop("required", false);
             
@@ -105,7 +105,7 @@
         $("#yesFamilyHistoryDisease").click(function(){
             $("#familyHistoryDisease").removeClass('hidden');
             $("#familyHistoryDisease :input").prop("readonly", false);
-            $("#familyHistoryDisease :input").prop("required", true);
+            $("#familyHistoryDisease :input").prop("required", false);
             $("#familyHistoryDisease :checkbox").prop("required", false);
             $("#a4f_other_desease").prop("required", false);
             
@@ -126,7 +126,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item active">
+                                <li class="list-group-item">
                                     <a href="{{request.get_full_path}}/../section1"> 
                                     Mother Demographic Data 
                                     </a>
@@ -141,7 +141,7 @@
                                     Obstetric History 
                                     </a>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item active">
                                     <a href="{{request.get_full_path}}/../section4"> 
                                     Father Data 
                                     </a>
@@ -176,12 +176,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a4f_pob"> Place of Birth </label>
-                                    <input class="form-control" type="text" name="a4f_pob" value="{{ a4.a4f_pob }}" required>
+                                    <input class="form-control" type="text" name="a4f_pob" value="{{ a4.a4f_pob }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a4f_dob"> Date of Birth </label>
-                                    <input class="form-control" type="date" name="a4f_dob" value="{{ dob }}" required>
+                                    <input class="form-control" type="date" name="a4f_dob" value="{{ dob }}">
                                 </div>
                             </div>
                         </div>
@@ -229,12 +229,12 @@
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a4f_home_phone_number">Home Phone Number </label>                                    
-                                    <input class="form-control" type="text" name="a4f_home_phone_number" value = "{{ a4.a4f_home_phone_number }}" required>
+                                    <input class="form-control" type="text" name="a4f_home_phone_number" value = "{{ a4.a4f_home_phone_number }}">
                                 </div>
 
                                 <div class="col-md-6 col-sm-6">
                                     <label for="a4f_mobile_phone_number"> Mobile Phone Number</label>
-                                    <input class="form-control" type="text" name="a4f_mobile_phone_number" value = "{{ a4.a4f_mobile_phone_number }}" required>
+                                    <input class="form-control" type="text" name="a4f_mobile_phone_number" value = "{{ a4.a4f_mobile_phone_number }}">
                                 </div>                                
                             </div>
                         </div>
@@ -249,9 +249,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a4.a4f_education_level == "1" %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1" checked>
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1">
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios1" value="1" required>
                                     {% endif %}
                                     Illiterate
                                 </label>
@@ -259,9 +259,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_education_level == "2" %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2" checked>
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2">
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="2" required>
                                     {% endif %}
                                     Elementary
                                 </label>
@@ -269,9 +269,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_education_level == "3" %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3" checked>
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3">
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="3" required>
                                     {% endif %}
                                     High School
                                 </label>
@@ -279,9 +279,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_education_level == "4" %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4" checked>
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4">
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="4" required>
                                     {% endif %}
                                     Undergraduate
                                 </label>
@@ -289,9 +289,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_education_level == "5" %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5" checked>
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5">
+                                    <input type="radio" name="a4f_education_level" id="optionsRadios2" value="5" required>
                                     {% endif %}
                                     Postgraduate
                                 </label>
@@ -300,12 +300,12 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 col-sm-6">                            
-                                <label for="a4f_weight"> Father Weight </label>                         
-                                <input class="form-control" type="number" name="a4f_weight" value="{{a4.a4f_weight}}" required>  
+                                <label for="a4f_weight"> Father Weight (kg)</label>                         
+                                <input class="form-control" type="number" name="a4f_weight" value="{{a4.a4f_weight}}" step="0.01" >  
                             </div>
                             <div class="col-md-6 col-sm-6">
-                                <label for="a4f_height">Father Height </label>                         
-                                <input class="form-control" type="number" name="a4f_height" value="{{a4.a4f_height}}" required>
+                                <label for="a4f_height">Father Height (cm)</label>                         
+                                <input class="form-control" type="number" name="a4f_height" value="{{a4.a4f_height}}" step="0.01" >
                             </div>
                         </div> 
 
@@ -314,9 +314,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a4.a4f_employment_status == "1" %}
-                                    <input type="radio" name="a4f_working_status" id="employed" value="1" checked>
+                                    <input type="radio" name="a4f_working_status" id="employed" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_working_status" id="employed" value="1">
+                                    <input type="radio" name="a4f_working_status" id="employed" value="1" required>
                                     {% endif %}
                                     Employed
                                 </label>
@@ -324,9 +324,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_employment_status == "2" %}
-                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2" checked>
+                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2">
+                                    <input type="radio" name="a4f_working_status" id="self-employed" value="2" required>
                                     {% endif %}
                                     Self-Employed
                                 </label>
@@ -334,9 +334,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a4.a4f_employment_status == "3" %}
-                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3" checked>
+                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3">
+                                    <input type="radio" name="a4f_working_status" id="unemployed" value="3" required>
                                     {% endif %}
                                     Unemployed
                                 </label>
@@ -382,7 +382,7 @@
                             </div>
                             <div class="form-group">                            
                                 <label for="a4f_work_phone">Work Phone Number </label>  
-                                <input class="form-control" type="text" name= "a4f_work_phone" id="a4f_work_phone" value="{{a4.a4f_work_phone_number}}" required>
+                                <input class="form-control" type="text" name= "a4f_work_phone" id="a4f_work_phone" value="{{a4.a4f_work_phone_number}}">
                             </div>    
                         </div>
 
@@ -391,9 +391,9 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a4.a4f_medical_history %}
-                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked>
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1">
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="yesPreviousMedicalHistory" value="1" required>
                                 {% endif %}
                                 Yes 
                                 </label>
@@ -401,9 +401,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a4.a4f_medical_history %}
-                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0">
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0" required>
+                                {% elif a4.a4f_medical_history == False %}
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a4f_medicalhistory" id="noPreviousMedicalHistory" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -535,10 +537,10 @@
                             </div>                             
 
                             <label>Alergy, specify</label>
-                            <input class="form-control" type="text" name="a4f_allergyhis" value="{{ a4.a4f_allergy_detail }}" id="a4f_allergyhis" required>  
+                            <input class="form-control" type="text" name="a4f_allergyhis" value="{{ a4.a4f_allergy_detail }}" id="a4f_allergyhis">  
 
                             <label>Other, specify</label>
-                            <input class="form-control" type="text" name="a4f_otherhis" value="{{ a4.a4f_other_detail }}" id="a4f_otherhis" required>
+                            <input class="form-control" type="text" name="a4f_otherhis" value="{{ a4.a4f_other_detail }}" id="a4f_otherhis">
 
                         </div>
 
@@ -551,10 +553,10 @@
                                 <label class="form-check-label">
                                 {% if a4.a4f_family_disease %}
                                 <input type="radio" class="form-check-input" name="a4f_diseaseFam" 
-                                id="yesFamilyHistoryDisease" value="1" checked>
+                                id="yesFamilyHistoryDisease" value="1" checked required>
                                 {% else %}
                                 <input type="radio" class="form-check-input" name="a4f_diseaseFam" 
-                                id="yesFamilyHistoryDisease" value="1">
+                                id="yesFamilyHistoryDisease" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -562,9 +564,11 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                 {% if a4.a4f_family_disease %}
-                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0">
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0" required>
+                                {% elif a4.a4f_family_disease == False %}
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0" checked required>
                                 {% else %}
-                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0" checked>
+                                <input type="radio" class="form-check-input" name="a4f_diseaseFam" id="noFamilyHistoryDisease" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -775,6 +779,14 @@
                                         {% endif %}
                                         Siblings
                                     </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label for="a4m_notes">Notes</label>          
+                                        <textarea class="form-control" rows="5" name="a4m_notes"> {{ a4.a4m_notes }} </textarea>
+                                    </div>   
                                 </div>
                             </div>
                             <div class="form-group">

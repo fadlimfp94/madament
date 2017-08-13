@@ -103,7 +103,7 @@
                 $("#exSmokerQuit").addClass("hidden");
                 $("#exSmokerQuit :input[type=text], #exSmokerQuit :input[type=checkbox], #exSmokerQuit :input[type=number], #exSmokerQuit :input[type=date]").removeAttr('value');
                 $("#fatherEverSmoke :input").prop("readonly", false); 
-                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :input").prop("required", false);
                 $("#fatherEverSmoke :checkbox").prop("required", false);
                 $("#exSmokerQuit :input").prop("readonly", true); 
                 $("#exSmokerQuit :input").prop("required", false);
@@ -113,7 +113,7 @@
                 $("#fatherEverSmoke").removeClass("hidden");
                 $("#exSmokerQuit").removeClass("hidden");
                 $("#fatherEverSmoke :input").prop("readonly", false); 
-                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :input").prop("required", false);
                 $("#fatherEverSmoke :checkbox").prop("required", false);
                 
             }
@@ -132,7 +132,7 @@
                 $("#exSmokerQuit").addClass("hidden");
                 $("#exSmokerQuit :input[type=text], #exSmokerQuit :input[type=checkbox], #exSmokerQuit :input[type=number], #exSmokerQuit :input[type=date]").removeAttr('value');
                 $("#fatherEverSmoke :input").prop("readonly", false); 
-                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :input").prop("required", false);
                 $("#fatherEverSmoke :checkbox").prop("required", false);
                 $("#exSmokerQuit :input").prop("readonly", true); 
                 $("#exSmokerQuit :input").prop("required", false);
@@ -143,7 +143,7 @@
                 $("#fatherEverSmoke").removeClass("hidden");
                 $("#exSmokerQuit").removeClass("hidden");
                 $("#fatherEverSmoke :input").prop("readonly", false); 
-                $("#fatherEverSmoke :input").prop("required", true);
+                $("#fatherEverSmoke :input").prop("required", false);
                 $("#fatherEverSmoke :checkbox").prop("required", false);
                 
             });
@@ -200,7 +200,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item active">
+                                <li class="list-group-item">
                                     <a href="{{request.get_full_path}}/../section1"> 
                                     Mother Demographic Data 
                                     </a>
@@ -220,7 +220,7 @@
                                     Father Data 
                                     </a>
                                 </li>
-                                <li class="list-group-item">
+                                <li class="list-group-item active">
                                     <a href="{{request.get_full_path}}/../section5"> 
                                     Pre-pregnancy Smoking Habits 
                                     </a> 
@@ -241,9 +241,9 @@
                         <div class="radio">                                
                             <label>
                                 {% if a5.a5m_mother_smoking_status == "1" %}
-                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1" checked>
+                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1">
+                                <input type="radio" name="a5m_presmoking_status" id="smoker" value="1" required>
                                 {% endif %}
                                 Smoker (at least 1 cigarette per day)
                             </label>
@@ -251,9 +251,9 @@
                         <div class="radio">
                             <label>
                                 {% if a5.a5m_mother_smoking_status == "2" %}
-                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2" checked>
+                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2" checked required>
                                 {% else %}
-                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2">
+                                <input type="radio" name="a5m_presmoking_status" id="exSmokerMother" value="2" required>
                                 {% endif %}
                                 Ex-smoker
                             </label>
@@ -261,9 +261,9 @@
                         <div class="radio">
                             <label>
                                 {% if a5.a5m_mother_smoking_status == "3" %}
-                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" checked>
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" checked required>
                                 {% else %}
-                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3">
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" required>
                                 {% endif %}
                                 Never smoke
                             </label>
@@ -321,9 +321,9 @@
                         <div class="radio">                                
                             <label>
                             {% if a5.a5m_other_member_smoke %}
-                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1" checked>
+                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1" checked required>
                             {% else %}
-                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1">
+                            <input type="radio" name="a5m_household_smoker" id="yesHouseholdSmoke" value="1" required>
                             {% endif %}
                             Yes
                             </label>
@@ -331,11 +331,11 @@
                         <div class="radio">
                             <label>
                             {% if a5.a5m_other_member_smoke %}
-                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0">
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" required>
                             {% elif a5.a5m_other_member_smoke == False %}
-                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" checked>
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" checked required>
                             {% else %}
-                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0">
+                            <input type="radio" name="a5m_household_smoker" id="noHouseholdSmoke" value="0" required>
                             {% endif %}
                             No
                             </label>
@@ -386,9 +386,9 @@
                             <div class="radio">                                
                                 <label>
                                     {% if a5.a5f_father_smoking_status == "1" %}
-                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1" checked>
+                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1" checked required>
                                     {% else %}
-                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1">
+                                    <input type="radio" name="a5f_presmoking_status" id="smokerFather" value="1" required>
                                     {% endif %}
                                     Smoker (at least 1 cigarette per day)
                                 </label>
@@ -396,9 +396,9 @@
                             <div class="radio">
                                 <label>
                                 {% if a5.a5f_father_smoking_status == "2" %}
-                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2" checked >
+                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2" checked required>
                                 {% else %}
-                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2">
+                                <input type="radio" name="a5f_presmoking_status" id="exSmokerFather" value="2" required>
                                 {% endif %}
                                 Ex-smoker
                                 </label>
@@ -406,9 +406,9 @@
                             <div class="radio">
                                 <label>
                                     {% if a5.a5f_father_smoking_status == "3" %}
-                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" checked>
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" checked required>
                                     {% else %}
-                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3">
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" required>
                                     {% endif %}
                                     Never smoke
                                 </label>
@@ -537,9 +537,9 @@
                         <div class="radio">                                
                             <label>
                             {% if a5.a5c_colleagues_smoking_status %}
-                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" checked>  
+                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" checked required>  
                             {% else %}
-                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1">
+                            <input type="radio" name="a5c_smoking_presence" id="yesSmokingPresence" value="1" required>
                             {% endif %}
                             Yes
                             </label>
@@ -547,9 +547,9 @@
                         <div class="radio">
                             <label>
                             {% if a5.a5c_colleagues_smoking_status == False %}
-                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0" checked>
+                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0" checked required>
                             {% else %}
-                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0">
+                            <input type="radio" name="a5c_smoking_presence" id="noSmokingPresence" value="0" required>
                             {% endif %}
                             No
                             </label>
@@ -574,6 +574,14 @@
                         </div> 
                     </div>
                     <!-- Endif -->
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <label for="a5m_notes">Notes</label>          
+                                    <textarea class="form-control" rows="5" name="a5m_notes"> {{ a5.a5m_notes }} </textarea>
+                                </div>   
+                            </div>
+                        </div>
                     <div class="form-group">
                                 <div class="row">
                                     {% if is_save_all %}
