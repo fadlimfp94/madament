@@ -1,0 +1,47 @@
+{% extends 'brief-header.html' %}
+{% block content2 %}
+ <!-- Page Content -->
+ 
+        <!-- Form Umum Section -->
+    
+    <div class="mycenter">
+        <div class="form-group row">
+            {% if forms.count < 1 %}
+            
+            <h4 style="text-align: center; margin-top: 10px;"> List Form B ( Pregnancy Trimester III ) of {{ participant.name }} </h4>
+
+            <div class="col-md-8 col-md-offset-2">
+                <a href="{{request.get_full_path}}create" class="btn btn-primary btn-lg btn-block">
+                    Create Form B
+                </a>
+            </div>
+            
+            {% else %}
+            
+            <h4 style="text-align: center; margin-top: 10px;"> List Form B ( Pregnancy Trimester III ) of {{ participant.name }} </h4>
+            
+            {% endif %}
+        </div>
+    </div>
+
+        <div class="list_all_form">
+            
+                {% for form in forms %}
+                <div class="form-group row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <a href="{{request.get_full_path}}{{form.id}}" class="btn btn-primary btn-lg btn-block">
+                            {% if form.data_checked_id != None and form.data_checked_id != "" %}
+                                Form B Trimester III - {{ form.data_entry_id }}  - Checked
+                            {% elif form.is_save_all %}
+                                Form B Trimester III - {{ form.data_entry_id }} - Submitted
+                            {% else %}
+                                Form B Trimester III - {{ form.data_entry_id }} - On Progress    
+                            {% endif %}
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                        
+        </div>      
+
+{% endblock %}

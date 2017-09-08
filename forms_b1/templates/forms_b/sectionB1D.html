@@ -1,0 +1,872 @@
+{% extends 'forms_b/form.html' %}
+{% block form_section %}
+
+
+        <script>
+        $(document).ready(function(){
+
+            // This For Mother smoke
+            /*$("#yesExSmoker :input").prop("disabled", true);
+            $("#everSmoker :input").prop("disabled", true);
+            $("#averageCigars :input").prop("disabled", true);
+            $("#smokePipeOrCigars :input").prop("disabled", true);*/
+
+
+
+            $("#smoker").click(function(){
+                $("#yesExSmoker").addClass("hidden");
+                $("#everSmoker").removeClass("hidden");
+                $("#everSmoker :input").prop("disabled", false);
+                $("#averageCigars :input").prop("disabled", false);
+                $("#smokePipeOrCigars :input").prop("disabled", false);
+                $("#motherNeverSmoke").removeClass('hidden');
+                $("#motherNeverSmoke :input").prop('disabled', false);
+            });
+
+            $("#exSmokerMother").click(function(){
+                $("#yesExSmoker :input").prop("disabled", false);
+                $("#yesExSmoker").removeClass("hidden");
+                $("#motherNeverSmoke").removeClass('hidden');
+                $("#motherNeverSmoke :input").prop('disabled', false);
+                $("#everSmoker :input").prop("disabled", false);
+                $("#averageCigars :input").prop("disabled", false);
+                $("#smokePipeOrCigars :input").prop("disabled", false);
+            });
+
+            $("#neverSmoke").click(function(){
+                $("#motherNeverSmoke :input").prop('disabled', true);
+                $("#motherNeverSmoke").addClass('hidden');
+            });
+
+            $("#noHouseholdSmoke").click(function(){
+                $("#householdSmoke :input").prop("disabled", true);
+                $("#householdSmoke").addClass("hidden");    
+            });
+
+            $("#yesHouseholdSmoke").click(function(){                               
+                $("#householdSmoke :input").prop("disabled", false);
+                $("#householdSmoke").removeClass("hidden");                                
+            });
+            // end of mother smoke
+
+            /*$("#exSmokerQuit :input").prop("disabled", true);*/
+
+            $("#smokerFather").click(function(){
+                $("#exSmokerQuit").addClass("hidden");
+                $("#exSmokerQuit :input").prop("disabled", true);
+                $("#ifNeverSmoke").removeClass("hidden");
+                $("#ifNeverSmoke :input").prop("disabled", false);
+            });
+
+            $("#exSmokerFather").click(function(){
+                $("#exSmokerQuit").removeClass("hidden");
+                $("#exSmokerQuit :input").prop("disabled", false);
+                $("#ifNeverSmoke :input").prop("disabled", false);
+                $("#ifNeverSmoke").removeClass("hidden");
+            });
+
+            $("#neverSmokeFather").click(function(){
+                $("#ifNeverSmoke :input").prop("disabled", true);
+                $("#ifNeverSmoke").addClass("hidden");
+            });
+
+            $("#yesSmokingPresence").click(function(){
+                $("#ifWorkColleaguesSmoke :input").prop("disabled", false);
+                $("#ifWorkColleaguesSmoke").removeClass("hidden");
+            });
+
+            $("#noSmokingPresence").click(function(){
+                $("#ifWorkColleaguesSmoke :input").prop("disabled", true);
+                $("#ifWorkColleaguesSmoke").addClass("hidden");
+            });
+        });
+    </script>                   
+
+
+            {% if b1.b4m_smoking_status == '0' %}
+            <script>
+                $(document).ready(function(){
+                    $("#motherNeverSmoke :input").prop("disabled", true);
+                    $("#motherNeverSmoke").addClass("hidden");
+                });
+            </script>         
+            {% elif b1.b4m_smoking_status == '1' %}
+            <script>
+                $(document).ready(function(){
+                    $("#yesExSmoker :input").prop("disabled", true);
+                    $("#yesExSmoker").addClass("hidden");
+                   
+                });
+            </script>            
+            {% elif b1.b4m_smoking_status == '2' %}
+            <script>
+                $(document).ready(function(){
+                    $("#yesExSmoker :input").prop("disabled", false);
+                    $("#yesExSmoker").removeClass("hidden");
+                    /*$("#motherNeverSmoke :input").prop("disabled", false);
+                    $("#motherNeverSmoke").removeClass("hidden");*/
+                });
+            </script>
+            {% endif %}            
+            
+
+            {% if b1.b4f_smoking_status == '0' %}
+            <script>
+                $(document).ready(function(){
+                    $("#ifNeverSmoke :input").prop("disabled", true);
+                    $("#ifNeverSmoke").addClass("hidden");
+                });
+            </script>
+            {% elif b1.b4f_smoking_status == '1' %}
+            <script>
+                $(document).ready(function(){
+                    $("#exSmokerQuit :input").prop("disabled", true);
+                    $("#exSmokerQuit").addClass("hidden");
+                });
+            </script>
+            {% elif b1.b4f_smoking_status == '2' %}
+            <script>
+                $(document).ready(function(){
+                    $("#exSmokerQuit :input").prop("disabled", false);
+                    $("#exSmokerQuit").removeClass("hidden");
+                });
+            </script>
+            {% endif %}
+
+            
+            {% if b1.b4m_household_smoker == 0 %}            
+            <script>
+                $(document).ready(function(){
+                    $("#householdSmoke :input").prop("disabled", true);
+                    $("#householdSmoke").addClass('hidden');
+                });
+            </script>
+            {% elif b1.b4m_household_smoker == null %}
+            <script>
+                $(document).ready(function(){                    
+                    $("#householdSmoke").addClass("hidden");
+                    $("#householdSmoke :input").prop("disabled", true);
+                });
+            </script>
+            {% else %}
+
+            {% endif %}
+
+            
+            {% if b1.b4c_smoking_presence == 0 %}
+            <script>
+                $(document).ready(function(){
+                    $("#ifWorkColleaguesSmoke :input").prop("disabled", true);
+                $("#ifWorkColleaguesSmoke").addClass("hidden");
+                });
+            </script>
+            {% elif b1.b4c_smoking_presence == null %}
+             <script>
+                $(document).ready(function(){
+                    $("#ifWorkColleaguesSmoke :input").prop("disabled", true);
+                    $("#ifWorkColleaguesSmoke").addClass('hidden');
+                });
+            </script>
+            {% else %}
+            <script>
+                $(document).ready(function(){
+                    $("#ifWorkColleaguesSmoke :input").prop("disabled", false);
+                    $("#ifWorkColleaguesSmoke").removeClass('hidden');
+                });
+            </script>
+            {% endif %}
+
+            {% if is_save_all %}
+            <script >
+           $(document).ready(function(){
+           $("#form_b1 :input").prop("disabled", true);           
+            });
+            </script>    
+            {% endif %}
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <h2 class="panel-warning"> Current Smoking Habits </h2>
+                <hr>
+                
+                <form class="sectionB1-question" action="{{request.get_full_path}}" method="POST" id="form_b1">
+                <input type="hidden" name="context" value="SAVE"> 
+                {% csrf_token %}
+                    <div class="form-group">
+                        <h4> Mother</h4>
+                        <label> What is your current smoking status? </label>
+
+                        {% if b1.b4m_smoking_status == '1' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="smoker" value="1" checked required>
+                                Smoker (at least 1 cigarette per day)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_smoking_status" id="exSmokerMother" value="2">
+                            Ex-smoker
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="neverSmoke" value="0">
+                                Never smoke
+                            </label>
+                        </div>
+                        {% elif b1.b4m_smoking_status == '2' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="smoker" value="1" required>
+                                Smoker (at least 1 cigarette per day)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_smoking_status" id="exSmokerMother" value="2" checked>
+                            Ex-smoker
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="neverSmoke" value="0">
+                                Never smoke
+                            </label>
+                        </div>
+                        {% elif b1.b4m_smoking_status == '0' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="smoker" value="1" required>
+                                Smoker (at least 1 cigarette per day)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_smoking_status" id="exSmokerMother" value="2" >
+                            Ex-smoker
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="neverSmoke" value="0" checked>
+                                Never smoke
+                            </label>
+                        </div>
+                        
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="smoker" value="1" required>
+                                Smoker (at least 1 cigarette per day)
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_smoking_status" id="exSmokerMother" value="2" >
+                            Ex-smoker
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="b4m_smoking_status" id="neverSmoke" value="0">
+                                Never smoke
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="motherNeverSmoke">
+                    <!-- If you are an ex-smoker of cigarettes -->
+                        <div id="yesExSmoker">
+                            <div class="form-group">
+                                <label> For how long have you quitted smoking during this pregnancy period ? (month) </label>
+                                <input class="form-control" type="Number" step="0.01" id="b4m_quitting_duration" name="b4m_quitting_duration"placeholder="in month" 
+                                value="{{ b1.b4m_quitting_duration }}">
+                            </div>
+                        </div>
+
+                    <!-- endif -->                    
+
+                        <div id="averageCigars">
+                            <div class="form-group">
+                                <label for="b4m_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                                </label>
+                                <input class="form-control" type="Number" name="b4m_cigar_number" value="{{ b1.b4m_cigar_number }}">
+                            </div>
+                        </div>
+
+                    <div class="form-group">                        
+                        <label> Do you smoke pipes or cigars? </label>
+                        {% if b1.b4m_cigar_type == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div> 
+                        {% elif b1.b4m_cigar_type == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios1" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4m_cigar_type == 0 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_cigar_type" id="optionsRadios2" value="0" checked>
+                            No
+                            </label>
+                        </div>  
+                        {% endif %}                     
+                    </div>
+                    <!-- End of an active or ex-smoker -->
+                    </div>
+                
+                    
+                    <div class="form-group">                        
+                        <label> Besides you, is there any other household member who smokes? </label>
+                        {% if b1.b4m_household_smoker == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="yesHouseholdSmoke" value="1" required>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="noHouseholdSmoke" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4m_household_smoker == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="yesHouseholdSmoke" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="noHouseholdSmoke" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="yesHouseholdSmoke" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_smoker" id="noHouseholdSmoke" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        {% endif %}                      
+                    </div>
+
+                    <!-- if there is any member who smokes -->
+                <div id="householdSmoke">
+                    <div class="form-group">
+                        <label for="b4m_quitting_duration"> How many Person ? </label>
+                        <input class="form-control" type="number" name="b4m_household_smoker_number" value="{{ b1.b4m_household_smoker_number }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b4m_household_total_cigar"> How many cigarettes per day are smoked in the home? (Total number of cigarettes) </label>
+                        <input class="form-control" type="number" name="b4m_household_total_cigar" value="{{ b1.b4m_household_total_cigar }}" >
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do they smoke in front of you ? </label>
+                        {% if b1.b4m_household_presence == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4m_household_presence == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios1" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4m_household_presence" id="optionsRadios2" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        {% endif %}                        
+                    </div>
+                </div>
+
+
+                    <!--end of if there is any member who smokes -->
+
+                    <div class="form-group">
+                        <h4>Father</h4>
+                        <label> What is your smoking status? </label>
+                        {% if b1.b4f_smoking_status == "1" %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="smokerFather" value="1" required checked>
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b4f_smoking_status" id="exSmokerFather" value="2">
+                                Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="neverSmokeFather" value="0">
+                                    Never smoke
+                                </label>
+                            </div>
+                        {% elif b1.b4f_smoking_status == "2" %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="smokerFather" value="1" required >
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b4f_smoking_status" id="exSmokerFather" value="2" checked>
+                                Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="neverSmokeFather" value="0">
+                                    Never smoke
+                                </label>
+                            </div>
+                        {% elif b1.b4f_smoking_status == "0" %}
+                        <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="smokerFather" value="1" required >
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b4f_smoking_status" id="exSmokerFather" value="2" >
+                                Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="neverSmokeFather" value="0" checked>
+                                    Never smoke
+                                </label>
+                            </div>
+                        {% else %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="smokerFather" value="1" required >
+                                    Smoker (at least 1 cigarette per day)
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b4f_smoking_status" id="exSmokerFather" value="2" >
+                                Ex-smoker
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b4f_smoking_status" id="neverSmokeFather" value="0">
+                                    Never smoke
+                                </label>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    
+                    <div id="ifNeverSmoke">  <!-- ini untuk jika dia tidak merokok maka div ini di hidden -->
+                    <!-- If you were an ex-smoker -->
+                        <div id="exSmokerQuit">
+                            <div class="form-group">
+                                <label for="b4f_quitting_duration"> For how long have you quit now ? (month) </label>
+                                <input class="form-control" type="number" name="b4f_quitting_duration" placeholder="in month" value="{{ b1.b4f_quitting_duration }}" step="0.01">
+                            </div>
+                        </div>
+                    <!-- endif you were an ex-smoker -->
+                   
+
+                    <div class="form-group">
+                        <label for="b4f_cigar_number"> On average, how many cigarettes do/did you smoke per day ?
+                        </label>
+                        <input class="form-control" type="number" name="b4f_cigar_number" value="{{ b1.b4f_cigar_number }}">
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you smoke pipes or cigars? </label>
+                        {% if b1.b4f_cigar_type == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios1" value="1" required>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4f_cigar_type == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios1" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_cigar_type" id="optionsRadios2" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        {% endif %}                        
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> How often do you some inside your house? </label>
+                        {% if b1.b4f_smoking_inside_house == null  %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios1" value="1" required>
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios2" value="2">
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios3" value="3">
+                            Monthly
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios4" value="0">
+                            Never
+                            </label>
+                        </div>
+
+                        {% elif b1.b4f_smoking_inside_house == '1' %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios1" value="1" checked>
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios2" value="2">
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios3" value="3">
+                            Monthly
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios4" value="0">
+                            Never
+                            </label>
+                        </div>
+                        {% elif b1.b4f_smoking_inside_house == '2' %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios1" value="1">
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios2" value="2" checked>
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios3" value="3">
+                            Monthly
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios4" value="0">
+                            Never
+                            </label>
+                        </div>
+                        {% elif b1.b4f_smoking_inside_house == '3' %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios1" value="1">
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios2" value="2">
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios3" value="3" checked>
+                            Monthly
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios4" value="0">
+                            Never
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios1" value="1">
+                            Daily
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios2" value="2">
+                            Weekly
+                            </label>
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios3" value="3">
+                            Monthly
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_inside_house" id="optionsRadios4" value="0" checked>
+                            Never
+                            </label>
+                        </div>
+                        {% endif %}                                              
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you smoke in the presence of mother ? </label>
+                        {% if b1.b4f_smoking_presence == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4f_smoking_presence == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios1" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios2" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios1" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4f_smoking_presence" id="optionsRadios2" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        {% endif %}                        
+                    </div>
+                </div>
+                    <!-- End of an active or ex-smoker -->
+
+                    <div class="form-group">
+                        <h4>Work Colleagues</h4>
+                        <label> Is there any of your work colleagues (who work in the same room) who smoke in your presence? </label>
+                        {% if b1.b4c_smoking_presence == null %}                            
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="yesSmokingPresence" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="noSmokingPresence" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% elif b1.b4c_smoking_presence == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="yesSmokingPresence" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="noSmokingPresence" value="0">
+                            No
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="yesSmokingPresence" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b4c_smoking_presence" id="noSmokingPresence" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- If there are work colleagues smoke -->
+                    <div id="ifWorkColleaguesSmoke">
+                        <div class="form-group">
+                            <label for="a5c_smoker_number"> How many Person? </label>
+                            <input class="form-control" type="number" name="b4c_smoker_number" value="{{ b1.b4c_smoker_number }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="a5c_daily_duration"> On average, how many hours per day do you spend with smokers in the same room (in hours) </label>
+                            <input class="form-control" type="number" name="b4c_daily_duration" placeholder="in hours" value="{{ b1.b4c_daily_duration }}" >
+                        </div>                        
+                    </div>
+
+                    <div class="form-group">
+                                <label>Notes</label>
+                                {% if b1.b4m_notes == null %}
+                                <textarea class="form-control" name="b4m_notes" type="text" rows="5" 
+                                value=""></textarea>
+                                {% else %}
+                                <textarea class="form-control" name="b4m_notes" type="text" rows="5" 
+                                value="">{{ b1.b4m_notes }}</textarea>
+                                {% endif %}
+                    </div>
+
+                    <!-- Endif -->              
+                   {% if is_save_all %}
+                                    
+                        {% else %}
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                        {% endif %}    
+                    </form>
+
+                    {% if role != 'staff' %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="section_number" value="4">
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/> 
+                                </form>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+            </div>
+        </div>
+    </div> 
+</body>
+</html>
+{% endblock %}
+    

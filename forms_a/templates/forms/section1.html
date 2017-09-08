@@ -1,19 +1,6 @@
 {% extends 'forms/form.html' %}
 {% block form_section %}
     <!-- Page Content -->
-    <script>
-    $(document).ready(function(){
-
-        $("#a1m_moving_date").on("change keyup paste click", function(){
-            /// hitung jumlah bulan yang telah berlalu sampai sekarang
-            var moving_date =  $("#a1m_moving_date").val();
-            var today = new Date();
-            
-        })
-       
-    });
-    </script>
-    
             <div class="col-md-4 section-list">
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
@@ -49,11 +36,7 @@
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
-                    {% if context == "create" %}
                     <form class="formA-question" action="{{request.get_full_path}}" method="post" id="form_a">
-                    {% else %}
-                    <form class="formA-question" action="{{request.get_full_path}}" method="post" id="form_a">
-                    {% endif %}
                         <h2>Mother Demographic Data</h2>
                         <hr> 
                         {% csrf_token %}
@@ -128,7 +111,7 @@
                                 <div class="col-md-7 col-sm-7">
                                     <label for="a1m_residing_duration"> How long have your resided in the current address (in month)
                                     </label>
-                                    <input class="form-control" type="number" id= "a1m_residing_duration" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}">
+                                    <input class="form-control" type="number" id= "a1m_residing_duration" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}" placeholder="this field will be filled automatically when saved">
                                 </div>
                             </div>
                         </div>

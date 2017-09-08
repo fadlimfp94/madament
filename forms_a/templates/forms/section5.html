@@ -260,10 +260,10 @@
                         </div>
                         <div class="radio">
                             <label>
-                                {% if a5.a5m_mother_smoking_status == "3" %}
-                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" checked required>
+                                {% if a5.a5m_mother_smoking_status == "0" %}
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="3" required>
+                                <input type="radio" name="a5m_presmoking_status" id="neverSmoke" value="0" required>
                                 {% endif %}
                                 Never smoke
                             </label>
@@ -312,8 +312,6 @@
                             No
                             </label>
                         </div>                        
-                    </div>
-                    <!-- End of an active or ex-smoker -->
                     </div>
                     
                     <div class="form-group">                        
@@ -380,6 +378,9 @@
                     </div>
                     <!--end of if there is any member who smokes -->
 
+                    <!-- End of an active or ex-smoker -->
+                    </div>
+
                     <div class="form-group">
                         <h4>Father</h4>
                         <label> What was your smoking status before this pregnancy ? </label>
@@ -405,10 +406,10 @@
                             </div>
                             <div class="radio">
                                 <label>
-                                    {% if a5.a5f_father_smoking_status == "3" %}
-                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" checked required>
+                                    {% if a5.a5f_father_smoking_status == "0" %}
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="0" checked required>
                                     {% else %}
-                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="3" required>
+                                    <input type="radio" name="a5f_presmoking_status" id="neverSmokeFather" value="0" required>
                                     {% endif %}
                                     Never smoke
                                 </label>
@@ -450,8 +451,10 @@
                             <label>
                             {% if a5.a5f_father_smoke_pipes %}
                             <input type="radio" name="a5f_cigar_type" id="optionsRadios2" value="0">
-                            {% else %}
+                            {% elif a5.a5f_father_smoke_pipes == False %}
                             <input type="radio" name="a5f_cigar_type" id="optionsRadios2" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_cigar_type" id="optionsRadios2" value="0">
                             {% endif %}
                             No
                             </label>
@@ -459,7 +462,7 @@
                     </div>
 
                     <div class="form-group">                        
-                        <label> How often do you some inside your house? </label>
+                        <label> How often do you smoke inside your house? </label>
                         <div class="radio">                                
                             <label>
                             {% if a5.a5f_father_smoke_frequency == "1" %}
@@ -520,8 +523,10 @@
                             <label>
                             {% if a5.a5f_smoke_in_front_of_mother %}
                             <input type="radio" name="a5f_smoking_presence" id="optionsRadios2" value="0">
-                            {% else %}
+                            {% elif a5.a5f_smoke_in_front_of_mother == False %}
                             <input type="radio" name="a5f_smoking_presence" id="optionsRadios2" value="0" checked>
+                            {% else %}
+                            <input type="radio" name="a5f_smoking_presence" id="optionsRadios2" value="0">
                             {% endif %}
                             No
                             </label>

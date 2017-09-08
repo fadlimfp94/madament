@@ -1,0 +1,382 @@
+    {% extends 'forms_b/form.html' %}
+    {% block form_section %}
+    <script>
+        $(document).ready(function(){
+        
+        //$("#complicationDiagnosed :input").prop("disabled", true);
+
+        $("#noComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").addClass('hidden');
+            $("#complicationDiagnosed :checkbox").removeAttr('checked');
+            $("#complicationDiagnosed :input").removeAttr('value');
+        });
+
+        $("#yesComplicationDiagnosed").click(function(){
+            $("#complicationDiagnosed").removeClass('hidden');
+            $("#complicationDiagnosed :input").prop("disabled", false);
+        });
+
+    });        
+
+    </script>
+
+    {% if b1.b1m_complication == 0 %}
+        <script >
+           $(document).ready(function(){
+           $("#complicationDiagnosed :input").prop("disabled", true);
+           $("#complicationDiagnosed").addClass("hidden");
+        });
+        </script>
+    {% elif b1.b1m_complication == null %}
+        <script >
+           $(document).ready(function(){
+           $("#complicationDiagnosed :input").prop("disabled", true);
+           $("#complicationDiagnosed").addClass("hidden");
+        });
+        </script>
+    {% endif %}
+
+    {% if is_save_all %}
+        <script >
+           $(document).ready(function(){
+           $("#form_b1 :input").prop("disabled", true);           
+        });
+        </script>    
+    {% endif %}
+
+        
+
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question" action="{{request.get_full_path}}" method="POST" 
+                    id="form_b1">
+                    <h2>Medical Data</h2>
+                    <hr>
+                    <input type="hidden" name="context" value="SAVE"> 
+                     {% csrf_token %}                        
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Body Weight (kg) </label>                         
+                                <input class="form-control" type="number" name="b1m_weight" placeholder="in kg" required value="{{ b1.b1m_weight }}" step="0.01">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Fundal Height (in cm) </label>                         
+                                <input class="form-control" type="number" name="b1m_fundal" placeholder="in cm" required value="{{ b1.b1m_fundal }}" step="0.01">
+                            </div>
+                        </div> 
+
+                        <h4><b>Blood Pressure</b></h4>
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="number" name="b1m_systolic1st"  aria-describedby="basic-addon1" required value="{{ b1.b1m_systolic1st }}" step="0.01">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="number" name="b1m_systolic2nd" required value="{{ b1.b1m_systolic2nd }}" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label for="b1m_weight"> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="number" name="b1m_diastolic1st" aria-describedby="basic-addon1" required value="{{ b1.b1m_diastolic1st }}" step="0.01">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="b1m_pre_height"> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="number" name="b1m_diastolic2nd" required value="{{ b1.b1m_diastolic2nd }}" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                        <strong>Warning!</strong> If systolic blood pressure is greater or equal to 140 mmHg(systolic) or diastolic is >90 mmHg, repeat measurements within 1 week; if greater than or equal to 160 mm Hg systolic or greater than or equal to 110 mm Hg diastolic, hypertension can be confirmed within a short interval (minutes).
+                        </div> 
+                        
+
+                        <fieldset class="form-group">
+                            <label for="b1m_premature"> Has there been any morbidity or complication diagnosed in this pregnancy period ? </label>
+                            {% if b1.b1m_complication == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="noComplicationDiagnosed" required value="0">
+                                No
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="yesComplicationDiagnosed" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b1m_complication == 1 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="noComplicationDiagnosed" required value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="yesComplicationDiagnosed" value="1" checked>
+                                Yes
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="noComplicationDiagnosed" value="0" required checked>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b1m_complication" id="yesComplicationDiagnosed" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% endif %}
+                        </fieldset>
+
+                        <div class="form-group" id="complicationDiagnosed">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_hypertensioncom %}
+                                    <input class="form-check-input" name="b1m_hypertensioncom" type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_hypertensioncom" type="checkbox">
+                                {% endif %}
+                                Hypertension
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_visualcom %}
+                                    <input class="form-check-input" name="b1m_visualcom" type="checkbox" checked >
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_visualcom" type="checkbox">
+                                {% endif %}
+                                 Visual Disturbances                               
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_consciousnesscom %}
+                                    <input class="form-check-input" name="b1m_consciousnesscom"  type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_consciousnesscom" type="checkbox">
+                                {% endif %}
+                                Decreased Consciousness
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_seizurecom %} 
+                                    <input class="form-check-input" name="b1m_seizurecom" type="checkbox"  checked>
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_seizurecom" type="checkbox" >
+                                {% endif %}
+                                 Seizure                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_diabetescom %}
+                                    <input class="form-check-input" name="b1m_diabetescom" type="checkbox"  checked >
+                                 {% else %}
+                                    <input class="form-check-input" name="b1m_diabetescom" type="checkbox">
+                                 {% endif %}
+                                Diabetes
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_eclampsiacom %}
+                                    <input class="form-check-input" name="b1m_eclampsiacom" type="checkbox"  checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_eclampsiacom" type="checkbox">
+                                {% endif %}
+                                Pre-eclampsia
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_laborcom %}
+                                    <input class="form-check-input" name="b1m_laborcom" type="checkbox"  checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_laborcom" type="checkbox">
+                                {% endif %} 
+                                Threatened Labor
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_hypremesiscom %}
+                                    <input class="form-check-input" name="b1m_hypremesiscom" type="checkbox" checked>
+                                {% else %}
+                                <input class="form-check-input" name="b1m_hypremesiscom" type="checkbox">
+                                {% endif %}
+                                Hyperemesis                              
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_tbcom %}
+                                    <input class="form-check-input" name="b1m_tbcom" type="checkbox"  checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_tbcom" type="checkbox">
+                                {% endif %}
+                                Active Tuberculosis
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_hivcom %}
+                                    <input class="form-check-input" name="b1m_hivcom" type="checkbox"  checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_hivcom" type="checkbox">
+                                {% endif %}
+                                HIV Infection
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_urinarycom %}
+                                    <input class="form-check-input" name="b1m_urinarycom" type="checkbox"  checked>
+                                {% else %}
+                                <input class="form-check-input" name="b1m_urinarycom" type="checkbox">
+                                {% endif %}
+                                 Urinary Tract Infection                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_fevercom %}
+                                    <input class="form-check-input" name="b1m_fevercom" type="checkbox"  checked>
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_fevercom" type="checkbox">
+                                {% endif %} 
+                                    Fever ( unknown cause )
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_respiratorycom %}
+                                    <input class="form-check-input" name="b1m_respiratorycom" type="checkbox"  checked>
+                                {% else %}
+                                <input class="form-check-input" name="b1m_respiratorycom" type="checkbox">
+                                {% endif %}
+                                 Upper Respiratory Tract Infection                               
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_pulmonarycom %}
+                                    <input class="form-check-input" name="b1m_pulmonarycom" type="checkbox"  checked>
+                                {% else %}
+                                <input class="form-check-input" name="b1m_pulmonarycom" type="checkbox">
+                                {% endif %}
+                                 Pulmonary Oedema                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_chroniccom %}
+                                    <input class="form-check-input" name="b1m_chroniccom" type="checkbox" checked>
+                                {% else %}
+                                    <input class="form-check-input" name="b1m_chroniccom" type="checkbox">
+                                {% endif %}
+                                     Chronic Cough ( at least two weeks) - obtain sputum sample
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if b1.b1m_gastroentetriscom %}
+                                    <input class="form-check-input" name="b1m_gastroentetriscom"  type="checkbox" checked>
+                                {% else %}
+                                     <input class="form-check-input" name="b1m_gastroentetriscom" type="checkbox">
+                                {% endif %}
+                                Gastroenteritis
+                                </label>
+                            </div>
+                            <label>Other, specify </label>
+                            <input class="form-control" type="text" name="b1m_other" value="{{ b1.b1m_other | default_if_none:''}}">
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                        <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
+                        #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notes</label>
+                            {% if b1.b1m_notes == null %}
+                            <textarea class="form-control" name="b1m_notes" type="text" rows="5" 
+                            value=""></textarea>
+                            {% else %}
+                            <textarea class="form-control" name="b1m_notes" type="text" rows="5" 
+                            value="">{{ b1.b1m_notes }}</textarea>
+                            {% endif %}
+                        </div>
+                    </div>                        
+                            
+
+                        {% if is_save_all %}
+                                    
+                        {% else %}
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                        {% endif %}    
+                    </form>
+
+                    {% if role != 'staff' %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="section_number" value="1">
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/> 
+                                </form>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+        
+
+</body>
+
+</html>
+{% endblock %}

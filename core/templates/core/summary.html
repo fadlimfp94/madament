@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Page Content -->
+    <div class="container">
+
+        <div class="row">         
+           <h3> Summary </h3>
+           <h4>Number of completed participant : {{ number_of_completed_participant }}</h4>
+           
+           <table id="myTable" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <!-- <th>Forms</th> -->
+                        <th>Participant_ID</th>
+                        <th>Name</th>
+                        <th>Form A </th>
+                        <th>Form B1 </th>
+                        <th>Form B2 </th>
+                        <th>Form B3 </th>
+                        <th>Form C </th>
+                        <th>Form D1 </th>
+                        <th>Form D2 </th>
+                        <th>Form D3 </th>
+                        <th>Form D4 </th>
+                    </tr>
+                </thead>            
+                <tbody>
+                    {% for summary in summary_list %}
+                        <tr>
+                            <td> {{ summary.0 }} </td>
+                            <td> {{ summary.1 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_a"> {{ summary.2 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_b1"> {{ summary.3 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_b2"> {{ summary.4 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_b3"> {{ summary.5 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_c"> {{ summary.6 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_d/visit/1"> {{ summary.7 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_d/visit/2"> {{ summary.8 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_d/visit/3"> {{ summary.9 }} </td>
+                            <td class='clickable-row' data-href="/participant/{{summary.11}}/form_d/visit/4"> {{ summary.10 }} </td>      
+                        </tr>                      
+                    {% endfor %}     
+                </tbody>
+           </table>
+        </div> 
+    </div>
+    <!-- /.container -->
+{% endblock %}

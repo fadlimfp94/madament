@@ -37,11 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'forms_a',
-    #'forms_b',
-    #'forms_c',
-    'forms_d',
     'core',
+    'forms_a',
+    'forms_d',
+    'forms_b1',
+    'forms_b2',
+    'forms_b3',
+    'forms_c',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +129,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+### set session 
+SESSION_SAVE_EVERY_REQUEST = True
+
+SESSION_COOKIE_AGE = 43200

@@ -52,7 +52,7 @@
         <!-- End of Modal Create Participant-->
 
         <!-- Modal Edit Participant --> 
-         <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="createModallabel" aria-hidden="true">
+         <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="createModallabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -81,37 +81,40 @@
                 </form>
             </div>
           </div>
-        </div> 
+        </div>  -->
         <!-- End of Modal Edit Participant-->
 
 
         <div class="row">         
            <h3> List of Participants </h3>
-           <h4> Number of Registered Participant: {{ participants.count }} </h4>
+           <!-- <h4> Number of Registered Participant: {{ participants.count }} </h4>
            {% for item in number_of_participants_list %}
               <h4>{{ item }}</h4>
-           {% endfor %}
-         
+           {% endfor %} -->
+            
+          <!-- <table id="myTable" class="table table-striped table-bordered nowrap" cellspacing="0" width="100%"> -->
+
            <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
+                        <!-- <th>Forms</th> -->
                         <th>Participant_ID</th>
                         <th>Name</th>
                         <th>Date Admission </th>
                         <th>Created by</th>
-                        <th>Forms</th>
                     </tr>
                 </thead>            
                 <tbody>
                     {% for participant in participants %}
                         <tr>
+                            <!-- <td>
+                              <a href="{{request.get_full_path}}{{participant.id}}" class="btn 
+                              btn-primary">Forms</a>
+                            </td> -->
                             <td>{{ participant.participant_id }}</td>
-                            <td>{{ participant.name }}</td>
-                            <td>{{ participant.date_admission }}</td>
-                            <td>{{ participant.created_by }}</td>
-                            <td>
-                              <a href="{{request.get_full_path}}{{participant.id}}" class="btn btn-info"> &nbsp; &nbsp; &nbsp; Forms &nbsp; &nbsp; &nbsp;</a>
-                            </td>
+                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.name }}</td>
+                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.date_admission }}</td>
+                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.created_by }}</td>
                             <!-- <td>
                               <a class="btn btn-info" data-toggle="modal" data-target="#editModal"> Edit Participant </a>
                             </td> -->

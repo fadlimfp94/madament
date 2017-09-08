@@ -2,29 +2,45 @@
 {% block content2 %}
  <!-- Page Content -->
  
-        <!-- Form Umum Section -->
-        <div class="mycenter">
-        <form action="{% url 'forms_b1:create_form' %}"  method="GET">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Form B"/>        
-        </form>    
-        
+        <!-- Form Umum Section -->    
+    <div class="mycenter">
+        <div class="form-group row">
+            {% if forms.count < 1 %}
+            
+            <h4 style="text-align: center; margin-top: 10px;"> List Form B ( Pregnancy Trimester I ) of {{ participant.name }} </h4>
 
-        <h4 style="text-align: center; margin-top: 10%;"> List Form B ( Baseline Data) of {{ participant.name }} </h4>
+            <div class="col-md-8 col-md-offset-2">
+                <a href="{{request.get_full_path}}create" class="btn btn-primary btn-lg btn-block">
+                    Create Form B
+                </a>
+            </div>
+
+            {% else %}
+            
+            <h4 style="text-align: center; margin-top: 10px;"> List Form B ( Pregnancy Trimester I ) of {{ participant.name }} </h4>
+            
+            {% endif %}
         </div>
+    </div>
 
         <div class="list_all_form">
-            <div class="form-group row">
+            
                 {% for form in forms %}
+                <div class="form-group row">
                     <div class="col-md-8 col-md-offset-2">
-                        <form action="{% url 'forms_b1:process_sectionB1A' %}"  method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_id" value={{form.id}}>
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Form B1 - Pregnancy Trimester I"/>
-                        </form>
+                        <a href="{{request.get_full_path}}{{form.id}}" class="btn btn-primary btn-lg btn-block">
+                            {% if form.data_checked_id != None and form.data_checked_id != "" %}
+                                Form B Trimester I - {{ form.data_entry_id }}  - Checked
+                            {% elif form.is_save_all %}
+                                Form B Trimester I - {{ form.data_entry_id }} - Submitted
+                            {% else %}
+                                Form B Trimester I - {{ form.data_entry_id }} - On Progress    
+                            {% endif %}
+                        </a>
                     </div>
+                </div>
                 {% endfor %}
-            </div>            
+                        
         </div>      
 
 {% endblock %}

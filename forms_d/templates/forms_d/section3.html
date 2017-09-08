@@ -198,7 +198,6 @@
                                 </label>
                             </div>                        
                         </div>
-                        </div>
                         <div class="form-group" id="">                        
                             <label> <h4>Any heart structure abnormality? </h4></label>
                             <div class="radio">                                
@@ -302,23 +301,6 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvpws_1st">LVPWs 1 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_1st" value = "{{ d3.d3c_lvpws_1st }}" step="0.01"  >
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvpws_2nd">LVPWs 2 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_2nd" value = "{{ d3.d3c_lvpws_2nd }}" step="0.01"  >
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <label for="d3c_lvpws_3rd">LVPWs 3 (mm)</label>
-                                    <input class="form-control" type="number" name="d3c_lvpws_3rd" value = "{{ d3.d3c_lvpws_3rd }}" step="0.01"  >
-                                </div>      
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpwd_1st">LVPWd 1 (mm)</label>
                                     <input class="form-control" type="number" name="d3c_lvpwd_1st" value = "{{ d3.d3c_lvpwd_1st }}" step="0.01" >
                                 </div>
@@ -329,6 +311,23 @@
                                 <div class="col-md-4 col-sm-4">
                                     <label for="d3c_lvpwd_3rd">LVPWd 3 (mm)</label>
                                     <input class="form-control" type="number" name="d3c_lvpwd_3rd" value = "{{ d3.d3c_lvpwd_3rd }}" step="0.01" >
+                                </div>      
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d3c_lvpws_1st">LVPWs 1 (mm)</label>
+                                    <input class="form-control" type="number" name="d3c_lvpws_1st" value = "{{ d3.d3c_lvpws_1st }}" step="0.01"  >
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d3c_lvpws_2nd">LVPWs 2 (mm)</label>
+                                    <input class="form-control" type="number" name="d3c_lvpws_2nd" value = "{{ d3.d3c_lvpws_2nd }}" step="0.01"  >
+                                </div>
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="d3c_lvpws_3rd">LVPWs 3 (mm)</label>
+                                    <input class="form-control" type="number" name="d3c_lvpws_3rd" value = "{{ d3.d3c_lvpws_3rd }}" step="0.01"  >
                                 </div>      
                             </div>
                         </div>
@@ -727,15 +726,20 @@
                         <a href="" type="submit" class="btn btn-success"> Edit </a> -->
                     </form>
                 </div>
-                        {% if role != 'staff' %}
-                        {% if is_save_all %}
-                        <form action="{{request.get_full_path}}/../edit" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_id" value={{form.id}}>
-                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
-                        </form>
+                         {% if role != 'staff' %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_id" value={{form.id}}>
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                                </form>
+                                {% endif %}
+                                
+                            {% endif %}
                         {% endif %}
-                        {% endif %} 
-                 </div>
             </div>
  {% endblock %}

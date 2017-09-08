@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Page Content -->
+    <script>
+        function confirmation(){
+            confirm("Apakah anda yakin submit form ini?")
+        }
+    </script>
+    <div class="container">
+        <!-- Form Umum Section -->
+        {% if success %}
+            <div class="alert alert-success text-center">
+              <strong>Success! Your data has been saved </strong>
+            </div>
+        {% endif %}
+        <div class="jumbotron">
+            <h2 class="text-center">Form B - Pregnancy Data Trimester II </h2>
+            <hr>          
+            <form class="patient-form-data" action="{{request.get_full_path}}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_id" value={{form.id}}>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="participant_id"> Participant Id </label>
+                            <input class="form-control disabled" type="text" value="{{participant.participant_id}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participant_name"> Participant Name </label>
+                            <input class="form-control" type="text" name="participant_name" value="{{participant.name}}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date_admission"> Date Admission </label>
+                            <input class="form-control" type="date" name="date_admission" value="{{date_admission}}" readonly>
+                        </div>
+                        {% if context == "create_new_form" %}
+                            <div class="form-group">
+                                <label for="interviewer_id"> Interviewed By </label>
+                                <!--<input class="form-control" type="text" name="interviewer_id">-->
+                                <select class="form-control selectpicker" name="interviewer_id" required>
+                                    {% for interviewer in staff_list %}
+                                        <option value={{interviewer.id}}>{{ interviewer.username }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="interviewed_date"> Date Interviewed </label>
+                                <input class="form-control" type="date" name="date_interviewed" required>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="interviewer_id"> Interviewed By </label>
+                                <input class="form-control" type="text" name="interviewer_id" value="{{interviewer.username}}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="interviewed_date"> Date Interviewed </label>
+                                <input class="form-control" type="date" name="date_interviewed" value="{{date_interviewed}}" readonly>
+                            </div>
+                        {% endif %}                                              
+                    </div>
+
+                    <div class="col-md-6 col-xs-6 col-sm-6">                                            
+                        <div class="form-group">
+                            <label for="created_id"> Created By  </label>
+                            <input class="form-control" type="text" name="data_entry_id" value="{{request.user.username}}" readonly>
+                        </div>
+                        {% if context == "create_new_form" %}
+                            <div class="form-group">
+                                <label for="created_date"> Created Date  </label>
+                                <input class="form-control" type="date" name="date_data_entered" value="{% now "Y-m-d" %}" readonly>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="created_date"> Created Date  </label>
+                                <input class="form-control" type="date" name="date_data_entered" value="{{ date_data_entered }}" readonly>
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="checked_id"> Checked By </label>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{ form.data_checked_id }}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="checked_date"> Checked Date </label>
+                            <input class="form-control" type="date" name="date_data_checked" value="{{ date_data_checked }}" readonly>
+                        </div>
+                    </div>                  
+                </div> <!-- end row -->
+
+                {% if context == "create_new_form" %}
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                            <input type="submit" class="btn btn-primary" value="Create Form"/>
+                        </div>
+                    </div> <!-- End Row -->
+                {% else %}
+                    
+                {% endif %}
+            </form>
+            {% if context == "create_new_form" %}
+    
+            {% else %}
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+                            {% if role == 'staff' %}
+                                {% if is_save_all %}
+
+                                {% else %}
+                                    <form action="{{request.get_full_path}}/../save" method="post">
+                                        {% csrf_token %}
+                                        <input type="submit" class="btn btn-primary" value="Submit Form"/ onclick="confirmation()">
+                                    </form>
+                                {% endif %}
+                            {% else %}
+                                {% if date_data_checked %}
+                                
+                                {% else %}
+                                    <form action="{{request.get_full_path}}/../check" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="btn btn-success" value="Check Form"/> 
+                                    </form>
+                                {% endif %}
+                            {% endif %}
+                    </div> 
+                </div> <!-- End Row -->
+            {% endif %}
+        </div> <!-- End of Form  -->
+        {% if context == "create_new_form" %}
+
+        {% else %}
+            <div class="row">
+                <!-- <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2A">Medical Data</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div> -->
+                {% block form_section %}
+                {% endblock %}
+            </div>
+                
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,6 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
     <!-- Page Content -->
+    <script>
+        $(function() {
+            $("#createForm").click(function(){
+                var name = $('#interviewer_id').val();
+                var dateInterview = $('#date_interviewed').val();
+                var child = $('#child_id').val();
+                
+                // Check if empty of not
+                if (name  == "") {
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Select interviewer, please',
+                    });
+                }
+                else if(dateInterview == ""){
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Select date of interview, please',
+                    });
+                }
+                else if(child == ""){
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Select child, please',
+                    });
+                }
+                else{
+                     $.confirm({
+                        title: 'Confirm!',
+                        content: 'Are you sure?',
+                        buttons: {
+                                    yes: {
+                                        btnClass: 'btn-primary',
+                                        action: function () {
+                                            $('form#patient-form-data').submit();
+                                            return true;
+                                        }
+                                    },
+                                    no: {
+                                        btnClass: 'btn-danger',
+                                        action: function () {
+                                            event.preventDefault();
+                                        }
+                                    },
+                                }
+                    });
+                } 
+            });
+        });
+    </script>
     <div class="container">
         <!-- Form Umum Section -->
         {% if success %}
@@ -11,7 +61,7 @@
         <div class="jumbotron">
             <h2 class="text-center">Form D - Infant Data</h2>
             <hr>         
-            <form class="patient-form-data" action="{{request.get_full_path}}" method="post">
+            <form class="patient-form-data" id="patient-form-data" action="{{request.get_full_path}}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="form_id" value={{form.id}}>
                 <div class="row">
@@ -34,7 +84,8 @@
                             <div class="form-group">
                                 <label for="interviewer_id"> Interviewed By </label>
                                 <!--<input class="form-control" type="text" name="interviewer_id">-->
-                                <select class="form-control selectpicker" name="interviewer_id" required>
+                                <select class="form-control selectpicker" name="interviewer_id" id="interviewer_id" required>
+                                    <option value="">Select interviewer</option>
                                     {% for interviewer in staff_list %}
                                         <option value={{interviewer.id}}>{{ interviewer.username }}</option>
                                     {% endfor %}
@@ -42,7 +93,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="interviewed_date"> Date Interviewed </label>
-                                <input class="form-control" type="date" name="date_interviewed" required>
+                                <input class="form-control" type="date" name="date_interviewed" id="date_interviewed" required>
                             </div>
                         {% else %}
                             <div class="form-group">
@@ -86,7 +137,8 @@
                             <div class="form-group">
                                 <label for="child_id"> Child </label>
                                 <!--<input class="form-control" type="text" name="interviewer_id">-->
-                                <select class="form-control selectpicker" name="child_id" required>
+                                <select class="form-control selectpicker" name="child_id" id="child_id" required>
+                                    <option value="">Select child</option>
                                     {% for child in child_list %}
                                         <option value={{child.child_id}}>{{ child.name }}</option>
                                     {% endfor %}
@@ -98,14 +150,14 @@
                                 <input class="form-control" type="text" name="child_name" value="{{form.child_name}}" readonly>
                             </div>
                         {% endif %}
-                                       
+
                     </div>                  
                 </div> <!-- end row -->
 
                 {% if context == "create_new_form" %}
                     <div class="row">
                         <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                            <input type="submit" class="btn btn-primary" value="Create Form"/>
+                            <input type="button" id="createForm" class="btn btn-primary" value="Create Form"/>
                         </div>
                     </div> <!-- End Row -->
                 {% else %}
@@ -130,8 +182,27 @@
                                         <a href="{{request.get_full_path}}/../save" class="btn btn-primary" style="margin: 0px 35% 0px 0%;"> 
                                         &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
                                     </div> -->
+                                     <script>
+                                            function submitConfirm() {
+                                                $.confirm({
+                                                    title: 'Confirm!',
+                                                    content: 'Are you sure?',
+                                                    buttons: {
+                                                        yes: {
+                                                            btnClass: 'btn-primary',
+                                                            action: function () {
+                                                                location.href = "{{request.get_full_path}}/../save";
+                                                            }
+                                                        },
+                                                        no: {
+                                                            btnClass: 'btn-danger', // multiple classes.
+                                                        },
+                                                    }
+                                                });
+                                            }
+                                    </script>
                                     <div class="col-md-6 col-xs-6 col-sm-6">    
-                                        <a href="{{request.get_full_path}}/../save" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        <a href="#" onclick="submitConfirm()" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
                                         &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
                                     </div> 
                                 {% endif %}
@@ -139,8 +210,27 @@
                                 {% if date_data_checked %}
                                 
                                 {% elif is_save_all %}
+                                    <script>
+                                            function checkConfirm() {
+                                                $.confirm({
+                                                    title: 'Confirm!',
+                                                    content: 'Are you sure?',
+                                                    buttons: {
+                                                        yes: {
+                                                            btnClass: 'btn-primary',
+                                                            action: function () {
+                                                                location.href = "{request.get_full_path}}/../check";
+                                                            }
+                                                        },
+                                                        no: {
+                                                            btnClass: 'btn-danger', // multiple classes.
+                                                        },
+                                                    }
+                                                });
+                                            }
+                                    </script>
                                     <div class="col-md-6 col-xs-6 col-sm-6">    
-                                        <a href="{{request.get_full_path}}/../check" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        <a href="#" onclick="checkConfirm()" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
                                         &nbsp; &nbsp; Check Form &nbsp; &nbsp; </a>
                                     </div>
                                 {% else %}

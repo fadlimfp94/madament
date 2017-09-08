@@ -1,0 +1,819 @@
+{% extends 'forms_b2/form.html' %}
+{% block form_section %}    
+
+
+{% if b1.b5m_housing_type == "2" %}
+    <script>
+        $(document).ready(function(){
+        $("#landedHouse :input").prop("disabled", true);
+        $("#landedHouse").addClass("hidden");
+        });
+    </script>
+{% endif %}
+
+{% if b1.b5m_housing_type == "1" %}
+    <script>
+        $(document).ready(function(){
+        $("#flatapartment :input").prop("disabled", true);
+        $("#flatapartment").addClass("hidden");
+        });
+    </script>
+{% endif %}
+
+{% if b1.b5m_pet == 0 %}
+    <script>
+        $(document).ready(function(){
+        $("#pet_specify :input").prop("disabled", true);
+        });
+    </script>
+{% endif %}
+
+{% if b1.b5m_staying_out_history == 0 %}
+    <script>
+        $(document).ready(function(){
+        $("#travelHistory :input").prop("disabled", true);
+        $("#travelHistory").addClass("hidden");
+
+        });
+    </script>
+{% elif b1.b5m_staying_out_history == null %}
+    <script>
+        $(document).ready(function(){
+        $("#travelHistory :input").prop("disabled", true);
+        $("#travelHistory").addClass("hidden");
+        });
+    </script>
+{% endif %}
+
+
+
+<script>
+        $(document).ready(function(){     
+          $("#noTraveled").click(function(){
+          $("#travelHistory :input").prop("disabled", true);
+          $("#travelHistory").addClass("hidden");
+        });
+
+        $("#yesTraveled").click(function(){            
+            $("#travelHistory :input").prop("disabled", false);
+            $("#travelHistory").removeClass("hidden");
+        });
+
+         $("#noLandedHouse").click(function(){
+            $("#landedHouse :input").prop("disabled", true);
+            $("#landedHouse").addClass("hidden");
+            $("#flatapartment :input").prop("disabled", false);
+            $("#flatapartment").removeClass("hidden");
+
+        });
+
+        $("#yesLandedHouse").click(function(){            
+            $("#landedHouse :input").prop("disabled", false);
+            $("#landedHouse").removeClass("hidden");
+            $("#flatapartment :input").prop("disabled", true);
+            $("#flatapartment").addClass("hidden");
+
+        });
+
+        $("#noPet").click(function(){
+            $("#pet_specify :input").prop("disabled", true);
+        });
+
+        $("#yesPet").click(function(){            
+            $("#pet_specify :input").prop("disabled", false);
+        });         
+    });
+
+    </script>        
+    {% if is_save_all %}
+        <script >
+           $(document).ready(function(){
+           $("#form_b2 :input").prop("disabled", true);           
+        });
+        </script>    
+    {% endif %}   
+
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2A">Medical Data</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question" action="{{request.get_full_path}}" method="POST" id="form_b2">
+                    <h2>Outdoor/indoor pollutant exposure and travel habits</h2>
+                    <hr>
+                    <input type="hidden" name="context" value="SAVE"> 
+                    {% csrf_token %}  
+
+                     <div class="form-group">
+                        <label>Do you use the following cooking fuel in this period of pregnancy?</label>
+                        <div class="form-check">                        
+                            <label class="form-check-label">
+                            {% if b1.b5m_charcoal %}
+                                <input class="form-check-input" name="b5m_charcoal" type="checkbox" checked>
+                            {% else %} 
+                                <input class="form-check-input" name="b5m_charcoal" type="checkbox">
+                            {% endif %}
+                            Charcoal
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_kerosene %}
+                                <input class="form-check-input" name="b5m_kerosene" type="checkbox" checked> 
+                            {% else %}
+                                <input class="form-check-input" name="b5m_kerosene" type="checkbox">
+                            {% endif %}
+                            Kerosene
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_wood %}
+                                <input class="form-check-input" name="b5m_wood" type="checkbox" checked>
+                            {% else %} 
+                                <input class="form-check-input" name="b5m_wood" type="checkbox">
+                            {% endif %}
+                            Wood
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_gas %}
+                                <input class="form-check-input" name="b5m_gas" type="checkbox" checked> 
+                            {% else %}
+                                <input class="form-check-input" name="b5m_gas" type="checkbox">
+                            {% endif %} 
+                            Gas
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_electric %}
+                                <input class="form-check-input" name="b5m_electric" type="checkbox" checked>
+                            {% else %} 
+                                <input class="form-check-input" name="b5m_electric" type="checkbox">
+                            {% endif %}
+                            Electric                            
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label> If other, specify 
+                            </label>
+                            <input class="form-control" type="text" name="b5m_other_cooking_fuel" value="{{ b1.b5m_other_cooking_fuel }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you place your cook stove under a ventilation hood or other means (e.g exhaust fan) to move cooking fumes out of the house? </label>
+                        {% if b1.b5m_exhaust == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios1" value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios2" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_exhaust == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios1" value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios2" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios1" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_exhaust" id="optionsRadios2" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you use any insecticide/pesticide at home? </label>
+                        {% if b1.b5m_pesticide == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="noPesticide" value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="yesPesticide" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_pesticide == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="noPesticide" value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="yesPesticide" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="noPesticide" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pesticide" id="yesPesticide" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}                        
+                    </div>
+
+                    <div class="form-group">
+                        <label> Do you do garbage burning ? </label>
+                        {% if b1.b5m_garbage_burning == '0' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b5m_garbage_burning" id="optionsRadios1" value="0"  checked>
+                                No
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="1">
+                                    Once per week or less
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="2">
+                                    More than once per week but not daily
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    Daily
+                                </label>
+                        </div>
+                        {% elif b1.b5m_garbage_burning == '1' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b5m_garbage_burning" id="optionsRadios1" value="0">
+                                No
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="1" checked>
+                                    Once per week or less
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="2">
+                                    More than once per week but not daily
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    Daily
+                                </label>
+                        </div>
+                        {% elif b1.b5m_garbage_burning == '2' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b5m_garbage_burning" id="optionsRadios1" value="0">
+                                No
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="1">
+                                    Once per week or less
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="2" checked>
+                                    More than once per week but not daily
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    Daily
+                                </label>
+                        </div>
+                        {% elif b1.b5m_garbage_burning == '3' %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b5m_garbage_burning" id="optionsRadios1" value="0">
+                                No
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="1">
+                                    Once per week or less
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="2">
+                                    More than once per week but not daily
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3" checked>
+                                    Daily
+                                </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                                <input type="radio" name="b5m_garbage_burning" id="optionsRadios1" value="0" required>
+                                No
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="1">
+                                    Once per week or less
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="2">
+                                    More than once per week but not daily
+                                </label>
+                        </div>
+                        <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    Daily
+                                </label>
+                        </div>
+                        {% endif %}                 
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Do you have any pet inside or around the house? </label>
+                        {% if b1.b5m_pet == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pet" id="noPet" value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pet" id="yesPet" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_pet == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pet" id="noPet" value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pet" id="yesPet" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_pet" id="noPet" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_pet" id="yesPet" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="pet_specify">
+                        <div class="form-group">
+                            <label>Specify 
+                            </label>
+                            <input class="form-control" type="text" name="b5m_pet_specify" 
+                            value="{{ b1.b5m_pet_specify | default_if_none:'' }}">
+                        </div>
+                    </div>                        
+                    
+
+                     <div class="form-group">                        
+                        <label> What  kind of house do you live in now? </label>
+                        {% if b1.b5m_housing_type == '1' %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="yesLandedHouse" value="1" checked>
+                            Landed house
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="noLandedHouse" value="2">
+                            Flat/apartment
+                            </label>
+                        </div>
+                        {% elif b1.b5m_housing_type == '2' %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="yesLandedHouse" value="1">
+                            Landed house
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="noLandedHouse" value="2" checked>
+                            Flat/apartment
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="yesLandedHouse" value="1" required>
+                            Landed house
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_housing_type" id="noLandedHouse" value="2">
+                            Flat/apartment
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="landedHouse">
+                        <div class="form-group">                        
+                        <label> What landed house type? </label>
+                        {% if b1.b5m_landed_house_type == '1' %}
+                            <div class="radio">                                
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type"  value="1" checked>
+                                One story building
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type" value="2">
+                                More than one story building
+                                </label>
+                            </div>
+                        {% elif b1.b5m_landed_house_type == '2' %}
+                        <div class="radio">                                
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type"  value="1">
+                                One story building
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type" value="2" checked>
+                                More than one story building
+                                </label>
+                            </div>
+                        {% else %}
+                        <div class="radio">                                
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type"  value="1">
+                                One story building
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" name="b5m_landed_house_type" value="2">
+                                More than one story building
+                                </label>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+
+                    <div id="flatapartment">
+                        <div class="form-group">
+                            <label> Flat/apartment level number
+                            </label>
+                            <input class="form-control" type="number" name="b5m_apartment_level_number" value="{{ b1.b5m_apartment_level_number }}">
+                        </div>
+                    </div>
+                        
+
+                    <div class="form-group">                        
+                        <label> Is there any dampness or molds inside your house? </label>
+                        {% if b1.b5m_dampness_house == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_dampness_house"  value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_dampness_house" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_dampness_house == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_dampness_house"  value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_dampness_house" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_dampness_house == 0 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_dampness_house"  value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_dampness_house" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <label>Do you use any of the following equipment inside your house?</label>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_ac %}
+                                <input class="form-check-input" name="b5m_ac" type="checkbox" checked>
+                            {% else %}
+                                <input class="form-check-input" name="b5m_ac" type="checkbox">
+                            {% endif %}
+                            Air conditioner                            
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_fan %}
+                                <input class="form-check-input" name="b5m_fan" type="checkbox" checked>
+                            {% else %}
+                                 <input class="form-check-input" name="b5m_fan" type="checkbox">
+                            {% endif %}
+                                Electric fan                            
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <label class="form-check-label">
+                            {% if b1.b5m_air_filter %}
+                                <input class="form-check-input" name="b5m_air_filter" type="checkbox" checked>
+                            {% else %} 
+                                <input class="form-check-input" name="b5m_air_filter" type="checkbox">
+                            {% endif %}
+                            Air filtering device                            
+                            
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">                        
+                        <label> Have you traveled out of Jakarta or stayed in another place other than your current residence? </label>
+                        {% if b1.b5m_staying_out_history == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history"  id="noTraveled" value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history"  id="yesTraveled" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b5m_staying_out_history == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history" id="noTraveled" value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history" id="yesTraveled" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% else %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history" id="noTraveled" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b5m_staying_out_history" id="yesTraveled" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div id="travelHistory">    
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_residence_street"> Place Address </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_street" value="{{ b1.b5m_staying_out_1st_street | default_if_none:''}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rt"> RT </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_rt" value="{{ b1.b5m_staying_out_1st_rt | default_if_none:''}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rw"> RW </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_rw" value="{{ b1.b5m_staying_out_1st_rw | default_if_none:''}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_district"> District </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_district" value="{{ b1.b5m_staying_out_1st_district | default_if_none:'' }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_city"> City </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_city" value="{{ b1.b5m_staying_out_1st_city | default_if_none:'' }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_1st_zipcode" value="{{ b1.b5m_staying_out_1st_zipcode | default_if_none:'' }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Duration of stay (in days)
+                            </label>
+                            <input class="form-control" type="text" name="b5m_staying_out_1st_duration" value="{{ b1.b5m_staying_out_1st_duration | default_if_none:'' }}" placeholder="in days">
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <label for="a1m_residence_street"> Place Address </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_street" value="{{ b1.b5m_staying_out_2nd_street | default_if_none:''}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rt"> RT </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_rt" value="{{ b1.b5m_staying_out_2nd_rt  | default_if_none:''}}">
+                                </div>
+
+                                <div class="col-md-3 col-sm-3">
+                                    <label for="a1m_residence_rw"> RW </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_rw" value="{{ b1.b5m_staying_out_2nd_rw | default_if_none:''}}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_district"> District </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_district" value="{{ b1.b5m_staying_out_2nd_district | default_if_none:'' }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_city"> City </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_city" value="{{ b1.b5m_staying_out_2nd_city | default_if_none:'' }}">
+                                </div>
+
+                                <div class="col-md-4 col-sm-4">
+                                    <label for="a1m_residence_zipcode"> Zip Code </label>
+                                    <input class="form-control" type="text" name="b5m_staying_out_2nd_zipcode" value="{{ b1.b5m_staying_out_2nd_zipcode | default_if_none:'' }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Duration of stay (in days)
+                            </label>
+                            <input class="form-control" type="text" name="b5m_staying_out_2nd_duration" value="{{ b1.b5m_staying_out_2nd_duration | default_if_none:'' }}" placeholder="in days">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                            <label>Notes</label>
+                            {% if b1.b5m_notes == null %}
+                            <textarea class="form-control" name="b5m_notes" type="text" rows="5" 
+                            value=""></textarea>
+                            {% else %}
+                            <textarea class="form-control" name="b5m_notes" type="text" rows="5" 
+                            value="">{{ b1.b5m_notes }}</textarea>
+                            {% endif %}
+                    </div>
+                
+                        {% if is_save_all %}
+                                    
+                        {% else %}
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                        {% endif %}    
+                    </form>
+
+                    {% if role != 'staff' %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="section_number" value="5">
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/> 
+                                </form>
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+    
+
+</body>
+
+</html>
+{% endblock %}

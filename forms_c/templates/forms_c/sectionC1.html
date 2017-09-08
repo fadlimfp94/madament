@@ -1,0 +1,926 @@
+{% extends 'forms_c/form.html' %}
+{% block form_section %}
+    
+
+
+    <script>
+
+        $(document).ready(function(){        
+
+          
+        $("#noDeliveryCompilation").click(function(){
+             $("#deliveryCompilation :input").prop("disabled", true);
+             $("#deliveryCompilation").addClass("hidden");
+             $("#deliveryCompilation :checkbox").removeAttr('checked');
+        });
+
+        $("#yesDeliveryCompilation").click(function(){           
+            $("#deliveryCompilation :input").prop("disabled", false);
+            $("#deliveryCompilation").removeClass("hidden");
+
+        });
+
+        $("#noAntibiotics").click(function(){
+             $("#receiveAntibiotics :input").prop("disabled", true);
+             $("#receiveAntibiotics").addClass("hidden");
+        });
+
+        $("#yesAntibiotics").click(function(){           
+            $("#receiveAntibiotics :input").prop("disabled", false);
+            $("#receiveAntibiotics").removeClass("hidden");
+        });
+
+        $("#noMaternalBlood").click(function(){             
+             $("#maternalBloodTest :input").prop("disabled", true);
+             $("#maternalBloodTest").addClass("hidden");
+        });
+
+        $("#yesMaternalBlood").click(function(){           
+            $("#maternalBloodTest :input").prop("disabled", false);
+            $("#maternalBloodTest").removeClass("hidden");
+        });
+
+        $("#noVaginalSwab").click(function(){
+             $("#vaginalSwab :input").prop("disabled", true);
+             $("#vaginalSwab").addClass("hidden");
+        });
+
+        $("#yesVaginalSwab").click(function(){           
+            $("#vaginalSwab :input").prop("disabled", false);
+            $("#vaginalSwab").removeClass("hidden");
+        });
+
+         $("#NoChorioamnionitiscom").click(function(){
+             $("#chorioamnionitiscom :input").prop("disabled", true);
+             $("#chorioamnionitiscom").addClass("hidden");
+        });
+
+        $("#YesChorioamnionitiscom").click(function(){           
+            $("#chorioamnionitiscom :input").prop("disabled", false);
+            $("#chorioamnionitiscom").removeClass("hidden");
+        });        
+
+    });
+    </script> 
+
+    {% if c1.c1m_delivery_compilation == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#deliveryCompilation :input").prop("disabled", true);
+           $("#deliveryCompilation").addClass("hidden");           
+        });
+        </script>
+    {% elif c1.c1m_delivery_compilation == null %}
+        <script>
+          $(document).ready(function(){
+          $("#deliveryCompilation").addClass("hidden");          
+        });
+        </script>
+    {% endif %}
+
+    {% if c1.c1m_delivery_blood_test == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#maternalBloodTest :input").prop("disabled", true);
+           $("#maternalBloodTest").addClass("hidden");           
+        });
+        </script>
+    {% elif c1.c1m_delivery_blood_test == null %}
+        <script>
+          $(document).ready(function(){
+           $("#maternalBloodTest :input").prop("disabled", true);
+           $("#maternalBloodTest").addClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+
+
+    {% if c1.c1m_antibiotics == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#receiveAntibiotics :input").prop("disabled", true);
+           $("#receiveAntibiotics").addClass("hidden");           
+        });
+        </script>
+    {% elif c1.c1m_antibiotics == null %}
+        <script>
+          $(document).ready(function(){
+           $("#receiveAntibiotics :input").prop("disabled", true);
+           $("#receiveAntibiotics").addClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+    
+
+    {% if c1.c1m_chorioamnionitiscom == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#chorioamnionitiscom :input").prop("disabled", true);
+           $("#chorioamnionitiscom").addClass("hidden");           
+        });
+        </script>
+    {% elif c1.c1m_chorioamnionitiscom == null %}
+        <script>
+          $(document).ready(function(){
+           $("#chorioamnionitiscom :input").prop("disabled", true);
+           $("#chorioamnionitiscom").addClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+     {% if c1.c1m_vaginal_swab == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#vaginalSwab :input").prop("disabled", true);
+           $("#vaginalSwab").addClass("hidden");           
+        });
+        </script>
+    {% elif c1.c1m_vaginal_swab == null %}
+    <script>
+          $(document).ready(function(){
+           $("#vaginalSwab :input").prop("disabled", true);
+           $("#vaginalSwab").addClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+    {% if is_save_all %}
+        <script >
+           $(document).ready(function(){
+           $("#form_c :input").prop("disabled", true);           
+        });
+        </script>    
+    {% endif %}               
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+               <!-- Tadinya pa-->
+                    <form class="sectionC1-question" action="{{request.get_full_path}}" method="POST" id="form_c">   
+                    <h2>Mother</h2>
+                    <hr>
+                    <input type="hidden" name="context" value="SAVE">
+                    {% csrf_token %}                        
+                        <div class="form-group">                       
+                            <label> Mother UR Number </label>                                              
+                            <input class="form-control" type="text" name="c1m_ur_number" value="{{ form.participant.participant_id }}" readonly="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c1m_pre_height"> Place of Delivery </label>                 
+                            <input class="form-control" type="text" name="c1m_delivery_place" value="{{ c1.c1m_delivery_place }}">
+                        </div>
+
+                        <div class="form-group">
+                            <h4>Gestational Age </h4>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">                            
+                                    <label> Last menstrual period (in weeks) </label>                        
+                                    <input class="form-control" type="number" pattern="[0-9]" 
+                                    name="c1m_gestational_age_fdlm" placeholder="in weeks" value="{{c1.c1m_gestational_age_fdlm}}">  
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <label> ultrasound (in weeks) </label>                         
+                                    <input class="form-control" type="number" name="c1m_gestational_age_usg" placeholder="in weeks" value="{{c1.c1m_gestational_age_usg}}" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6 col-sm-6">                            
+                                <label> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">1</span>                         
+                                <input class="form-control" type="number" name="c1m_systolic1st"  aria-describedby="basic-addon1" value="{{c1.c1m_systolic1st}}" step="0.01">  
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label> Systolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon1">2</span>                         
+                                <input class="form-control" type="number" name="c1m_systolic2nd" aria-describedby="basic-addon1" value="{{c1.c1m_systolic2nd }}" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">                                                        
+                                    <label> Diastolic blood pressure (mmHg) </label>
+                                    <span class="input-group-addon" id="basic-addon1">1</span>                   
+                                    <input class="form-control" type="number" name="c1m_diastolic1st" aria-describedby="basic-addon1" value="{{ c1.c1m_diastolic1st }}" step="0.01">  
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label> Diastolic blood pressure (mmHg) </label>
+                                <span class="input-group-addon" id="basic-addon2">2</span>                
+                                <input class="form-control" type="number" name="c1m_diastolic2nd" aria-describedby="basic-addon1" value="{{ c1.c1m_diastolic2nd }}" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c1m_pre_height"> Weight at delivery (gram) </label>                        
+                            <input class="form-control" type="number" name="c1m_delivery_weight" value="{{ c1.c1m_delivery_weight }}" step="0.01">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Delivery Method </label>
+                            <div class="radio">                                
+                                <label>
+                                    {% if c1.c1m_delivery_method == "1" %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="1" checked required>
+                                    {% else %}                                    
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="1" required>
+                                    {% endif %}
+                                    Unassisted vaginal birth
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if c1.c1m_delivery_method == "2" %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    vacuum
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if c1.c1m_delivery_method == "3" %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios3" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios3" value="3">
+                                    {% endif %}
+                                    Forceps
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if c1.c1m_delivery_method == "4" %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios4" value="4" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios4" value="4">
+                                    {% endif %}
+                                    C-section
+                                </label>
+                            </div>                            
+                        
+
+
+                        <fieldset class="form-group" id="opsi">
+                            <label for="c1m_premature"> Delivery Compilation ? </label>
+                             {% if c1.c1m_delivery_compilation == null %}
+                                <div class="form-check">
+                                    <label>
+                                        <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" required> Yes
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label>
+                                        <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0"> No
+                                    </label>
+                                </div>
+                            {% else %}
+                            <div class="form-check">
+                                <label>                                
+                                    {% if c1.c1m_delivery_compilation %}                                
+                                    <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1" checked> 
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_compilation" id="yesDeliveryCompilation" value="1"> 
+                                    {% endif %}                             
+                                    Yes, specify
+                                    </label>
+                            </div>
+                            <div class="form-check">
+                                    <label>
+                                    {% if c1.c1m_delivery_compilation %}                                
+                                    <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" >
+                                    {% else %}
+                                    <input type="radio" name="c1m_delivery_compilation" id="noDeliveryCompilation" value="0" checked>
+                                    {% endif %}                               
+                                    No
+                                    </label>
+                            </div>
+                            {% endif %}                                                                    
+                        </fieldset>
+
+                        <div class="form-group" id="deliveryCompilation">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_hypertensioncom %}
+                                    <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox" checked>
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox">       
+                                {% endif %}
+                                Hypertension
+                                </label>
+                            </div>                           
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_eclampsiacom %}
+                                <input class="form-check-input" name="c1m_eclampsiacom" type="checkbox" checked>
+                                {% else %}
+                                <input class="form-check-input" name="c1m_eclampsiacom" type="checkbox">
+                                {% endif %}
+                                 Preeclampsia/eclampsia                               
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if c1.c1m_visualcom %}
+                                    <input class="form-check-input" name="c1m_visualcom" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="c1m_visualcom" type="checkbox">
+                                    {% endif %}
+                                    Visual disturbances                                 
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if c1.c1m_consciousnesscom %}
+                                    <input class="form-check-input" name="c1m_consciousnesscom" type="checkbox" checked>
+                                    {% else %}
+                                    <input class="form-check-input" name="c1m_consciousnesscom" type="checkbox">
+                                    {% endif %}
+                                    Decreased consciousness                                   
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_seizurecom %}
+                                    <input class="form-check-input" name="c1m_seizurecom" type="checkbox" checked>
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_seizurecom" type="checkbox">
+                                {% endif %}
+                                Seizure
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_pullmonarycom %}
+                                    <input class="form-check-input" name="c1m_pullmonarycom" type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_pullmonarycom" type="checkbox"> 
+                                {% endif %}
+                                Pulmonary Oedema
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_postpartumcom %}
+                                    <input class="form-check-input" name="c1m_postpartumcom" type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_postpartumcom" type="checkbox">
+                                {% endif %}
+                                Post-partum bleeding
+                                </label>
+                            </div>
+
+                            <div class="form-check">                                
+                                <label class="form-check-label">
+                                    {% if c1.c1m_fevercom %}
+                                    <input class="form-check-input" name="c1m_fevercom" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="c1m_fevercom" type="checkbox">
+                                    {% endif %}
+                                    Fever
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_prematurerupturecom %}
+                                    <input class="form-check-input" name="c1m_prematurerupturecom" type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_prematurerupturecom" type="checkbox">
+                                {% endif %}
+                                Premature rupture of the membrane                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_placentacom %}
+                                    <input class="form-check-input" name="c1m_placentacom" type="checkbox" checked>
+                                {% else %} 
+                                    <input class="form-check-input" name="c1m_placentacom" type="checkbox">
+                                {% endif %}
+                                Placental abruption                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_placenta_praeviacom %}
+                                    <input class="form-check-input" name="c1m_placenta_praeviacom" type="checkbox" checked>
+                                {% else %}
+                                 <input class="form-check-input" name="c1m_placenta_praeviacom" type="checkbox">
+                                {% endif %}
+                                Placenta praevia                                
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if c1.c1m_gbscom %}
+                                    <input class="form-check-input" name="c1m_gbscom" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="c1m_gbscom" type="checkbox">
+                                    {% endif %}
+                                    GBS+
+                                </label>
+                            </div>
+
+
+                           <!--  <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_chorioamnionitiscom %}
+                                    <input class="form-check-input" name="c1m_chorioamnionitiscom" type="checkbox" checked>
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_chorioamnionitiscom" type="checkbox">
+                                {% endif %}
+                                    Chorioamnionitis                               
+                                </label>
+                            </div> -->
+
+
+                        <div class="form-group">
+                            <label> Chorioamnionitis? </label>
+                            {% if c1.c1m_chorioamnionitiscom == null %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="0" required id="NoChorioamnionitiscom"> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="1" id="YesChorioamnionitiscom">
+                                    Yes
+                                </label>
+                            </div>
+
+                            {% elif c1.c1m_chorioamnionitiscom == 1 %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="0" id="NoChorioamnionitiscom"> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="1" checked id="YesChorioamnionitiscom">
+                                    Yes
+                                </label>
+                            </div>                            
+                            {% else %}
+                             <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="0" checked id="NoChorioamnionitiscom">
+                                    No                              
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chorioamnionitiscom" value="1" id="YesChorioamnionitiscom">
+                                    Yes
+                                </label>
+                            </div>
+                            {% endif %}                           
+                        </div>
+
+                        <div id="chorioamnionitiscom">
+                           <!--  <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_chlinical_diagnosiscom %}
+                                    <input class="form-check-input" name="c1m_chlinical_diagnosiscom" type="checkbox" checked> 
+                                {% else %}
+                                    <input class="form-check-input" name="c1m_chlinical_diagnosiscom" type="checkbox">
+                                {% endif %}
+                                Presumed/clinical diagnosis                                
+                                </label>
+                            </div> -->
+                            <label> Presumed/clinical diagnosis </label>
+                            {% if c1.c1m_chlinical_diagnosiscom == null %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="0" required> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="1">
+                                    Yes
+                                </label>
+                            </div>
+
+                            {% elif c1.c1m_chlinical_diagnosiscom == 1 %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="0"> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="1" checked>
+                                    Yes
+                                </label>
+                            </div>                            
+                            {% else %}
+                             <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="0" checked>
+                                    No                              
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_chlinical_diagnosiscom" value="1">
+                                    Yes
+                                </label>
+                            </div>
+                            {% endif %}    
+
+                            <label> Definite (proven by pathology findings) </label>
+                            {% if c1.c1m_definite_diagnosiscom == null %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="0" required> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="1">
+                                    Yes
+                                </label>
+                            </div>
+
+                            {% elif c1.c1m_definite_diagnosiscom == 1 %}
+                            <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="0"> No
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="1" checked>
+                                    Yes
+                                </label>
+                            </div>                            
+                            {% else %}
+                             <div class="radio">                                
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="0" checked>
+                                    No                              
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>                                
+                                    <input type="radio" name="c1m_definite_diagnosiscom" value="1">
+                                    Yes
+                                </label>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                          <!--   <div class="form-check">
+                                <label class="form-check-label">
+                                    {% if c1.c1m_definite_diagnosiscom %}
+                                    <input class="form-check-input" name="c1m_definite_diagnosiscom" type="checkbox" checked> 
+                                    {% else %}
+                                    <input class="form-check-input" name="c1m_definite_diagnosiscom" type="checkbox">
+                                    {% endif %}
+                                    Definite (proven by pathology findings)
+                                </label>
+                            </div> -->
+                       
+                            
+                            <label>Other</label>
+                            <input class="form-control" type="text" name="c1m_othercom" 
+                            value="{{ c1.c1m_othercom | default_if_none:''}}">                           
+                        </div>
+
+                        <div class="alert alert-info" role="alert">
+                        <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
+                        #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
+                        </div>
+
+
+                        <fieldset class="form-group">
+                            <label for="c1m_premature"> Did mother receive any antibiotics ? </label>
+                            {% if c1.c1m_antibiotics == null %}
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="noAntibiotics" value="0" required> No
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1"> Yes
+                                    </label>
+                                </div>
+                            {% elif c1.c1m_antibiotics == 0 %}
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="noAntibiotics" value="0" checked> No
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1"> Yes
+                                    </label>
+                                </div>
+                            {% elif c1.c1m_antibiotics == 1 %}
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="noAntibiotics" value="0"> No
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="c1m_antibiotics" id="yesAntibiotics" value="1" checked> Yes
+                                    </label>
+                                </div>
+                            {% endif %}                                                       
+                        </fieldset>
+
+                        <div id="receiveAntibiotics">
+                            <div class="form-group">
+                                <label> Name of antibiotics </label>                         
+                                <input class="form-control" type="text" name="c1m_antibiotics_type" value="{{c1.c1m_antibiotics_type | default_if_none:'' }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label> Indication </label>                         
+                                <input class="form-control" type="text" name="c1m_antibiotics_indication" value="{{c1.c1m_antibiotics_indication | default_if_none:'' }}" required>
+                            </div>  
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Duration of antibiotics course (days) </label> 
+                                <input class="form-control" type="number" name="c1m_antibiotics_duration" value="{{c1.c1m_antibiotics_duration}}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Proteinuria </label>
+                            <div class="radio">                                
+                                <label>
+                                {% if c1.c1m_proteinuria == "1" %}
+                                <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1" checked>
+                                {% else %}
+                                <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1" required>
+                                {% endif %}
+                                Positive +                               
+                                </label>
+                            </div>
+                            <div class="radio"> 
+                                <label>
+                                    {% if c1.c1m_proteinuria == "2" %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios2" value="2" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios2" value="2">
+                                    {% endif %}
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if c1.c1m_proteinuria == "3" %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios3" value="3" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios3" value="3">
+                                    {% endif %}
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    {% if c1.c1m_proteinuria == "0" %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios0" value="0" checked>
+                                    {% else %}
+                                    <input type="radio" name="c1m_proteinuria" id="optionsRadios0" value="0">
+                                    {% endif %}
+                                    Negative
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <fieldset class="form-group">
+                            <label for="c1m_premature"> Maternal blood test (at birth, optional) </label>
+                            {% if c1.c1m_delivery_blood_test == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="noMaternalBlood" value="0" >                                
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label>                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="yesMaternalBlood" value="1">                               
+                                    Yes
+                                </label>
+                            </div>
+                            {% elif c1.c1m_delivery_blood_test == 1 %}
+                                <div class="form-check">
+                                <label class="form-check-label">                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="noMaternalBlood" value="0" >                                
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label>                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="yesMaternalBlood" value="1" checked>                               
+                                    Yes
+                                </label>
+                            </div>
+                            {% elif c1.c1m_delivery_blood_test == 0 %}
+                            <div class="form-check">
+                                <label class="form-check-label">                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="noMaternalBlood" value="0" checked >                                
+                                    No
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label>                                
+                                    <input type="radio" class="form-check-input" name="c1m_delivery_blood_test" id="yesMaternalBlood" value="1">                               
+                                    Yes
+                                </label>
+                            </div>
+                            {% endif %}
+                        </fieldset>
+
+                        <div id="maternalBloodTest">
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Date </label>                         
+                                <input class="form-control" type="date" name="c1m_blood_test_date" 
+                                value="{{ c1.c1m_blood_test_date }}" >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Hemoglobin level (g/dl) (in decimal) </label>
+                                <input class="form-control" type="number" name="c1m_hb" step="0.01" placeholder="in decimal" value="{{ c1.c1m_hb | default_if_none:''}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> WBC (/micro litre) </label> 
+                                <input class="form-control" type="number" name="c1m_wbc" step="0.01" placeholder="in decimal" value="{{c1.c1m_wbc | default_if_none:''}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="c1m_pre_height"> Platelets/thrombocyte (/microlite) </label> 
+                                <input class="form-control" type="number" name="c1m_platelets" step="0.01" placeholder="in decimal" value="{{ c1.c1m_platelets | default_if_none:'' }}">
+                            </div>                            
+                        
+
+                        <h4>Preeclampsia work up (if there is persistent hypertension, see * above)</h4>
+                        <div class="form-group">
+                                <label> SGOT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_sgot" name="c1m_sgot" step="0.01" placeholder="in decimal" value="{{ c1.c1m_sgot | default_if_none:'' }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> SGPT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_sgpt" name="c1m_sgpt" step="0.01" placeholder="in decimal" value="{{ c1.c1m_sgpt }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Ureum (mg/dl) </label>
+                                <input class="form-control" type="number"  id="c1m_ureum" name="c1m_ureum" step="0.01" placeholder="in decimal" value="{{ c1.c1m_ureum }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Creatinine (mg/dl) </label>
+                                <input class="form-control" type="number" id="c1m_creatinine" name="c1m_creatinine" placeholder="in decimal" value="{{ c1.c1m_creatinine }}" step="0.01">
+                            </div>
+                        </div>
+
+
+                           <!--  <fieldset class="form-group">
+                            <label> Sampling of vaginal swab </label>
+                            <div class="form-check">
+                                <label class="form-check-label">                              
+                                
+                                {% if c1.c1m_vaginal_swab %}
+                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0" checked>
+                                {% else %}
+                                 <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                 {% endif %}
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                {% if c1.c1m_vaginal_swab %}
+                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1" checked>
+                                {% else %}
+                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
+                                {% endif %}
+                                Yes
+                                </label>
+                            </div>                            
+                            </fieldset> -->
+
+                            <fieldset class="form-group">
+                                <label> Sampling of vaginal swab </label>
+                                {% if c1.c1m_vaginal_swab == null %}
+                                    <div class="form-check">                                        
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                            No
+                                        </label>                                        
+                                    </div>
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif c1.c1m_vaginal_swab == 0 %}
+                                        <div class="form-check">                                        
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0" checked>
+                                            No
+                                        </label>                                        
+                                    </div>
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif c1.c1m_vaginal_swab == 1 %}
+                                    <div class="form-check">                                        
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
+                                            No
+                                        </label>                                        
+                                    </div>
+                                    <div class="form-check">
+                                        <label>
+                                            <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1" checked>
+                                            Yes
+                                        </label>
+                                    </div>        
+                                    {% endif %}
+                            </fieldset>
+
+                            <div id="vaginalSwab">
+                                <div class="form-group">
+                                    <label for="c1m_swab_date"> Date taken </label> 
+                                    <input class="form-control" type="date" name="c1m_swab_date" value="{{ c1.c1m_swab_date }}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Notes</label>
+                                {% if c1.c1m_notes == null %}
+                                <textarea class="form-control" name="c1m_notes" type="text" rows="5" 
+                                value=""></textarea>
+                                {% else %}
+                                <textarea class="form-control" name="c1m_notes" type="text" rows="5" 
+                                value="">{{ c1.c1m_notes }}</textarea>
+                                {% endif %}
+                            </div>
+                            </div>
+                       </form>
+
+                            {% if is_save_all %}
+
+                            {% else %}
+                                
+                                <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                                
+                            {% endif %}                       
+                    
+                    
+                    {% if role != 'staff' %}
+                        {% if date_data_checked %}
+
+                        {% else %}
+                            {% if is_save_all %}
+                            <form action="{{request.get_full_path}}/../edit" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="section_number" value="1">
+                                <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                            </form>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>    
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+   
+</body>
+
+</html>
+{% endblock %}

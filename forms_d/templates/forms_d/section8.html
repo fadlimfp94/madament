@@ -236,9 +236,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_cooking_exhaust %}
-                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -246,11 +246,11 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_cooking_exhaust %}
-                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" required>
                                 {% elif d8.d8m_cooking_exhaust == False %}
-                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" >
+                                <input type="radio" name="d8m_cooking_exhaust" id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -262,9 +262,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_pesticide %}
-                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -272,11 +272,11 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_pesticide %}
-                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0" required>
                                 {% elif d8.d8m_pesticide == False %}
-                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_pesticide" id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -288,9 +288,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '0' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="0" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="0" checked required>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" value="0" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="0" type="radio" required>
                                         {% endif %}
                                         No
                                     </label>
@@ -298,9 +298,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '1' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="1" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="1" checked required>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" value="1" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="1" type="radio" required>
                                         {% endif %}
                                         Once per week or less
                                     </label>
@@ -308,9 +308,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '2' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="2" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="2" checked required>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" value="2" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="2" type="radio" required>
                                         {% endif %}
                                         More than once per week but not daily
                                     </label>
@@ -318,9 +318,9 @@
                             <div class="form-check">
                                     <label class="form-check-label">
                                         {% if d8.d8m_garbage_burning == '3' %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="3" checked>
+                                        <input class="form-check-input" name="d8m_garbage_burning" type="radio" value="3" checked required>
                                         {% else %}
-                                        <input class="form-check-input" name="d8m_garbage_burning" value="3" type="radio">
+                                        <input class="form-check-input" name="d8m_garbage_burning" value="3" type="radio" required>
                                         {% endif %}
                                         Daily
                                     </label>
@@ -332,9 +332,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_pet %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -342,11 +342,11 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_pet %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" required>
                                 {% elif d8.d8m_pet == False %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -358,9 +358,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_housing_type == "1" %}
-                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1" checked>
+                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1">
+                                <input type="radio" name="d8m_housing_type" id="landed_house" value="1" required>
                                 {% endif %}
                                 Landed House
                                 </label>
@@ -368,9 +368,9 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_housing_type == "2" %}
-                                <input type="radio" name="d8m_housing_type" id="flat" value="2" checked>
+                                <input type="radio" name="d8m_housing_type" id="flat" value="2" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_housing_type" id="flat" value="2">
+                                <input type="radio" name="d8m_housing_type" id="flat" value="2" required>
                                 {% endif %}
                                 Flat/Apartment, specify the level number:
                                 </label>
@@ -409,9 +409,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_dampness_house %}
-                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1" checked>
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1">
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios1" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -419,11 +419,11 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_dampness_house %}
-                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0" required>
                                 {% elif d8.d8m_dampness_house == False %}
-                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0" checked>
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0">
+                                <input type="radio" name="d8m_dampness_house" id="optionsRadios2" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -469,9 +469,9 @@
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_staying_out_history %}
-                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1" checked>
+                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1">
+                                <input type="radio" name="d8m_staying_out_history" id="yesTravel" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -479,11 +479,11 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_staying_out_history %}
-                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0">
+                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0" required>
                                 {% elif d8.d8m_staying_out_history == False %}
-                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0" checked>
+                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0">
+                                <input type="radio" name="d8m_staying_out_history" id="noTravel" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
@@ -616,13 +616,20 @@
                     </form>
                 </div>
                         {% if role != 'staff' %}
-                        {% if is_save_all %}
-                        <form action="{{request.get_full_path}}/../edit" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_id" value={{form.id}}>
-                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
-                        </form>
+                            {% if date_data_checked %}
+
+                            {% else %}
+
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_id" value={{form.id}}>
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                                </form>
+                                {% endif %}
+                                
+                            {% endif %}
                         {% endif %}
-                        {% endif %} 
+
                  </div>
 {% endblock %}

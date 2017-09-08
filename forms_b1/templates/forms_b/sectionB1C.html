@@ -1,0 +1,1156 @@
+{% extends 'forms_b/form.html' %}
+{% block form_section %}
+
+    <script>
+        $(document).ready(function(){
+
+
+        
+        $("#severityProteinuria :input").prop("disabled", true);
+        /*$("#bloodTest :input").prop("disabled", true);*/
+
+
+        $("#negative").click(function(){
+            $("#severityProteinuria").addClass('hidden');
+        });
+
+        $("#positive").click(function(){
+            $("#severityProteinuria").removeClass('hidden');
+            $("#severityProteinuria :input").prop("disabled", false);
+        });
+
+        $("#noBloodTest").click(function(){
+            $("#bloodTest").addClass('hidden');
+            $("#bloodTest :input").prop("disabled", true);
+            $("#b3m_date_blood").removeAttr('required')
+        });
+
+        $("#yesBloodTest").click(function(){
+            $("#bloodTest").removeClass('hidden');
+            $("#bloodTest :input").prop("disabled", false);
+            $("#b3m_date_blood").addAttr('required')
+        });
+
+        $("#noHivTesting").click(function(){
+            $("#HivTesting").addClass('hidden');
+            $("#HivTesting :input").prop("disabled", true);
+            $("#b3m_hiv_date").removeAttr('required')
+        });
+
+        $("#yesHivTesting").click(function(){
+            $("#HivTesting").removeClass('hidden');
+            $("#HivTesting :input").prop("disabled", false);
+        });
+
+        $("#noTorchTesting").click(function(){
+            $("#TorchTesting").addClass('hidden');
+            $("#TorchTesting :input").prop("disabled", true);
+            $("#b3m_torch_date").removeAttr('required')
+        });
+
+        $("#yesTorchTesting").click(function(){
+            $("#TorchTesting").removeClass('hidden');
+            $("#TorchTesting :input").prop("disabled", false);
+        });
+
+        $("#noHepatitisTesting").click(function(){
+            $("#HepBTesting").addClass('hidden');
+            $("#HepBTesting :input").prop("disabled", true);
+            $("#b3m_hepB_date").removeAttr('required')
+        });
+
+        $("#yesHepatitisTesting").click(function(){
+            $("#HepBTesting").removeClass('hidden');
+            $("#HepBTesting :input").prop("disabled", false);
+        });
+
+        $("#noToxoplasma").click(function(){
+            $("#toxoplasma :input").prop("disabled", true);
+        });
+
+        $("#yesToxoplasma").click(function(){            
+            $("#toxoplasma :input").prop("disabled", false);
+        });       
+  
+    });
+    </script>
+
+    {% if b1.b3m_blood_test == 0 %}
+        <script>
+            $(document).ready(function(){
+                $("#bloodTest :input").prop("disabled", true);
+                $("#bloodTest").addClass("hidden");
+            });
+        </script>
+    {% elif b1.b3m_blood_test == null %}
+    <script>
+            $(document).ready(function(){
+                $("#bloodTest :input").prop("disabled", true);
+                $("#bloodTest").addClass("hidden");
+            });
+        </script>
+    {% endif %}
+
+    {% if b1.b3m_hiv_test == 0 %}
+        <script>
+            $(document).ready(function(){
+                $("#HivTesting :input").prop("disabled", true);
+                $("#HivTesting").addClass("hidden");
+            });
+        </script>
+    {% elif b1.b3m_hiv_test == null %}
+    <script>
+            $(document).ready(function(){
+                $("#HivTesting :input").prop("disabled", true);
+                $("#HivTesting").addClass("hidden");
+            });
+        </script>
+    {% endif %}
+
+    {% if b1.b3m_hepB_test == 0 %}
+        <script>
+            $(document).ready(function(){
+                $("#HepBTesting :input").prop("disabled", true);
+                $("#HepBTesting").addClass("hidden");
+            });
+        </script>
+    {% elif b1.b3m_hepB_test == null %}
+        <script>
+            $(document).ready(function(){
+                $("#HepBTesting :input").prop("disabled", true);
+                $("#HepBTesting").addClass("hidden");
+            });
+        </script>
+    {% endif %}
+
+    {% if b1.b3m_torch_test == 0 %}
+        <script>
+            $(document).ready(function(){
+                $("#TorchTesting :input").prop("disabled", true);
+                $("#TorchTesting").addClass("hidden");
+            });
+        </script>
+    {% elif b1.b3m_torch_test == null %}
+    <script>
+            $(document).ready(function(){
+                $("#TorchTesting :input").prop("disabled", true);
+                $("#TorchTesting").addClass("hidden");
+            });
+        </script>
+    {% endif %}
+
+    {% if is_save_all %}
+        <script >
+           $(document).ready(function(){
+           $("#form_b1 :input").prop("disabled", true);           
+        });
+        </script>    
+    {% endif %}
+
+
+
+            <!-- Question List Section -->
+            <div class="col-md-8 question-list">
+                <div class=""> <!-- Tadinya pa-->
+                    <form class="sectionB1-question" action="{{request.get_full_path}}" method="POST" id="form_b1">
+                    <h2>Laboratory Test</h2>
+                    <hr>
+                    <input type="hidden" name="context" value="SAVE"> 
+                     {% csrf_token %}
+                        <h3>Preeclampsia work up</h3>
+                        <h4>Urinalysis</h4>
+                        <div class="form-group">
+                            <label> Date </label>
+                            <input class="form-control datepicker" type="date"  name="b3m_date_urin"
+                             value="{{ b1.b3m_date_urin }}">
+                        </div>                       
+                  
+                        <div class="form-group">
+                            <label> Proteinuria </label>
+                            {% if b1.b3m_proteinuria == '1' %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1" checked>
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios2" value="2">
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios3" value="3">
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios4" value="0">
+                                    Negative
+                                </label>
+                            </div>
+                            {% elif b1.b3m_proteinuria == '2' %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios2" value="2" checked>
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios3" value="3">
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios4" value="0">
+                                    Negative
+                                </label>
+                            </div>
+                            {% elif b1.b3m_proteinuria == '3' %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios2" value="2">
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios3" value="3" checked>
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios4" value="0">
+                                    Negative
+                                </label>
+                            </div>
+                            {% elif b1.b3m_proteinuria == '0' %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios2" value="2">
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios3" value="3">
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios4" value="0" checked>
+                                    Negative
+                                </label>
+                            </div>
+                            {% else %}
+                            <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1" required>
+                                    Positive +
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios2" value="2">
+                                    Positive ++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios3" value="3">
+                                    Positive +++
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios4" value="0">
+                                    Negative
+                                </label>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+
+                        <fieldset class="form-group">
+                            <label> Blood Test </label>
+                            {% if b1.b3m_blood_test == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="noBloodTest" value="0" required>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="yesBloodTest" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_blood_test == 1 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="noBloodTest" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="yesBloodTest" value="1" checked>
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_blood_test == 0 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="noBloodTest" value="0" checked>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="yesBloodTest" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
+                        </fieldset>
+
+                        <div id="bloodTest">
+                            <div class="form-group">
+                                <label> Date </label>
+                                <input class="form-control" type="date"  id="b3m_date_blood" name="b3m_date_blood" value="{{ b1.b3m_date_blood }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label> Hemoglobin level (g/dl) </label>
+                                <input class="form-control" type="number"  id="b3m_hb" name="b3m_hb" step="0.01" value="{{ b1.b3m_hb }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> RBC (/micro litre)</label>
+                                <input class="form-control" type="number"  id="b3m_rbc" name="b3m_rbc" step="0.01" value="{{ b1.b3m_rbc }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> WBC (/micro litre) </label>
+                                <input class="form-control" type="number"  id="b3m_wbc" name="b3m_wbc" step="0.01" value="{{ b1.b3m_wbc }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Platelets/thrombocyte (/micro litre) </label>
+                                <input class="form-control" type="number"  id="b3m_thrombocyte" name="b3m_thrombocyte" step="0.01" value="{{ b1.b3m_thrombocyte }}">
+                            </div>
+                        </div>
+
+                        <h4>Preeclampsia work up (if there is persistent hypertension, see * above)</h4>
+                        <div class="form-group">
+                                <label> SGOT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="b3m_SGOT" name="b3m_SGOT" step="0.01" value="{{ b1.b3m_SGOT }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> SGPT (mg/dl) </label>
+                                <input class="form-control" type="number"  id="b3m_SGPT" name="b3m_SGPT" step="0.01" value="{{ b1.b3m_SGPT }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Ureum (mg/dl) </label>
+                                <input class="form-control" type="number"  id="b3m_ureum" name="b3m_ureum" step="0.01" value="{{ b1.b3m_ureum }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label> Creatinine (mg/dl) </label>
+                                <input class="form-control" type="number"  id="b3m_creatinine" name="b3m_creatinine" step="0.01" value="{{ b1.b3m_creatinine }}">
+                            </div>
+
+                            <h3>Maternal Infection Markers</h3>
+                            <h4>Blood Test for infection markers</h4>
+
+                            <fieldset class="form-group">
+                            <label for="a3m_premature"> HIV Testing </label>
+                            {% if b1.b3m_hiv_test == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="noHivTesting" value="0" required>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="yesHivTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_hiv_test == 1 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="noHivTesting" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="yesHivTesting" value="1" checked>
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_hiv_test == 0 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="noHivTesting" value="0" checked>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="yesHivTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
+                            </fieldset>
+
+                            <div id="HivTesting">
+                                <div class="form-group">
+                                    <label> Date </label>
+                                    <input class="form-control" type="date"  name="b3m_hiv_date" 
+                                    value="{{ b1.b3m_hiv_date }}" >
+                                </div>
+                                <div class="form-group">
+                                    <label> Positive HIV ? </label>
+                                    {% if b1.b3m_hiv_status == null %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios1" value="0">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios2" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif b1.b3m_hiv_status == 1 %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios1" value="0">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios2" value="1" checked>
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif b1.b3m_hiv_status == 0 %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios1" value="0" checked>
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hiv_status" id="optionsRadios2" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% endif %}                                                                
+                                </div>
+                            </div>
+
+                            <fieldset class="form-group">
+                            <label for="a3m_premature"> Hepatitis B testing </label>
+                            {% if b1.b3m_hepB_test == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="noHepatitisTesting" value="0" required>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="yesHepatitisTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_hepB_test == 1 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="noHepatitisTesting" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="yesHepatitisTesting" value="1" checked>
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_hepB_test == 0 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="noHepatitisTesting" value="0" checked>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="yesHepatitisTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% endif %}                            
+                            </fieldset>
+
+                            <div id="HepBTesting">
+                                <div class="form-group">
+                                    <label> Date </label>
+                                    <input class="form-control" type="date"  name="b3m_hepB_date" 
+                                    value="{{ b1.b3m_hepB_date }}">
+                                </div>
+                                <div class="form-group">
+                                    <label> Positive HbSAG ? </label>
+                                    {% if b1.b3m_hepB_status == null %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios1" value="0">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios2" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif b1.b3m_hepB_status == 1 %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios1" value="0" required>
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios2" value="1" checked>
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% elif b1.b3m_hepB_status == 0 %} 
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios1" value="0" checked>
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios2" value="1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    {% endif %}                           
+                                </div>
+                            </div>
+
+                            <fieldset class="form-group">
+                            <label> TORCH testing </label>
+                            {% if b1.b3m_torch_test == null %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="noTorchTesting" value="0" required>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="yesTorchTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_torch_test == 1 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="noTorchTesting" value="0">
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="yesTorchTesting" value="1" checked>
+                                Yes
+                                </label>
+                            </div>
+                            {% elif b1.b3m_torch_test == 0 %}
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="noTorchTesting" value="0" checked>
+                                No
+                                </label>
+                            </div>                                
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="yesTorchTesting" value="1">
+                                Yes
+                                </label>
+                            </div>
+                            {% endif %}
+                        </fieldset>
+
+                            <div id="TorchTesting">
+                                <div class="form-group">
+                                    <label> Date </label>
+                                    <input class="form-control" type="date"  name="b3m_torch_date" 
+                                    value="{{ b1.b3m_torch_date }}">
+                                </div>
+
+                                 
+                            <label>Any Positive TORCH Result</label>
+                                <div class="form-group">
+                                    <label>Toxoplasma</label>
+                                    {% if b1.b3m_toxo == '1' %}                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" 
+                                             value="1" checked>
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo"  value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                        {% elif b1.b3m_toxo == '2' %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" 
+                                             value="1" checked>
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo"  value="2" checked>
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                        {% elif b1.b3m_toxo == '0' %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" 
+                                             value="1" checked>
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo"  value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" value="0" checked>
+                                            No
+                                            </label>
+                                        </div>
+                                        {% else %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" value="1" >
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo"  value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_toxo" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                        {% endif %}
+                                    </div>                                
+
+
+                                <div class="form-group">
+                                    <label>Rubella</label>
+                                    {% if b1.b3m_rubella == '1' %}                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" 
+                                            id="noToxoplasma" value="1" checked>
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div> 
+                                    {% elif b1.b3m_rubella == '2' %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="2" checked>
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div> 
+                                    {% elif b1.b3m_rubella == '0' %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="0" checked>
+                                            No
+                                            </label>
+                                        </div> 
+                                    {% else %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_rubella" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div> 
+                                    {% endif %}
+                                    </div>
+
+
+                                 <div class="form-group">
+                                    <label>CMV</label>
+                                    {% if b1.b3m_cmv == '1' %}                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% elif b1.b3m_cmv == '2' %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="2" checked>
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% elif b1.b3m_cmv == '0' %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="0" checked>
+                                            No
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_cmv" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% endif %}                            
+                                    </div>                                
+
+
+                                <div class="form-group">
+                                    <label>Herpes Virus</label>
+                                    {% if b1.b3m_herpes == '1' %}                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" 
+                                            id="noToxoplasma" value="1" checked>
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% elif b1.b3m_herpes == '2' %}
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="2" checked>
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% elif b1.b3m_herpes == '0' %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="0" checked>
+                                            No
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                    <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" 
+                                            id="noToxoplasma" value="1">
+                                            Ig G
+                                            </label>
+                                        </div>                                
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="2">
+                                            Ig M
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="b3m_herpes" id="yesToxoplasma" value="0">
+                                            No
+                                            </label>
+                                        </div>
+                                    {% endif %}
+                                    </div>                                                             
+                            </div>                          
+                                
+
+                                <h4>Biological sampling (for storage) and collection date</h4> 
+                                <div class="form-group">
+                                    <label> Urine </label>
+                                    <input class="form-control" type="date" name="b3m_urin_date" 
+                                    value="{{ b1.b3m_urin_date }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Blood </label>
+                                    <input class="form-control" type="date" name="b3m_blood_date" 
+                                    value="{{ b1.b3m_blood_date }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Stool </label>
+                                    <input class="form-control" type="date" name="b3m_stool_date" 
+                                    value="{{ b1.b3m_stool_date }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Hair </label>
+                                    <input class="form-control" type="date" name="b3m_hair_date" 
+                                    value="{{ b1.b3m_hair_date }}"> 
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Nail </label>
+                                    <input class="form-control" type="date" name="b3m_nail_date" 
+                                    value="{{ b1.b3m_nail_date }}">
+                                </div>
+
+
+                                <h4>Lung function test</h4> 
+                                <div class="form-group">
+                                    <label> Date of Examination </label>
+                                    <input class="form-control" type="date" name="b3m_lung_date" 
+                                    value="{{ b1.b3m_lung_date }}">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-3"> <label> FVC Liter </label></div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                        <input class="form-control" type="number" name="b3m_FVC1st" step="0.01" value="{{ b1.b3m_FVC1st }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FVC2nd" step="0.01" value="{{ b1.b3m_FVC2nd }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FVC3rd" step="0.01" value="{{ b1.b3m_FVC3rd }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3"> <label> FEV1 (liter) </label> </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FEV11st" step="0.01" value="{{ b1.b3m_FEV11st }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 ">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FEV12nd" step="0.01" value="{{ b1.b3m_FEV12nd }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"  name="b3m_FEV13rd" step="0.01" value="{{ b1.b3m_FEV13rd }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3"> <label> FEV3 (liter) <label> </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"   name="b3m_FEV31st" step="0.01" value="{{ b1.b3m_FEV31st }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"   name="b3m_FEV32nd" step="0.01" value="{{ b1.b3m_FEV32nd }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"  name="b3m_FEV33rd" step="0.01" value="{{ b1.b3m_FEV33rd }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3"> <label> Peak expiratory flow </label> </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"  name="b3m_PEF1st" step="0.01" value="{{ b1.b3m_PEF1st }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number"  name="b3m_PEF2nd" step="0.01" value="{{ b1.b3m_PEF2nd }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_PEF3rd" step="0.01" value="{{ b1.b3m_PEF3rd }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-3"> <label> FEF2575 </label> </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FEF25751st" step="0.01" value="{{ b1.b3m_FEF25751st }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FEF25752nd" step="0.01" value="{{ b1.b3m_FEF25752nd }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <div class="form-group">                                        
+                                        <input class="form-control" type="number" name="b3m_FEF25753rd" step="0.01" value="{{ b1.b3m_FEF25753rd }}">
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </div>
+
+                            <div class="form-group">
+                                <label>Notes</label>
+                                {% if b1.b3m_notes == null %}
+                                <textarea class="form-control" name="b3m_notes" type="text" rows="5" 
+                                value=""></textarea>
+                                {% else %}
+                                <textarea class="form-control" name="b3m_notes" type="text" rows="5" 
+                                value="">{{ b1.b3m_notes }}</textarea>
+                                {% endif %}
+                            </div>
+
+
+                         {% if is_save_all %}
+                                    
+                        {% else %}
+                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
+                        {% endif %}    
+                    </form>
+
+                    {% if role != 'staff' %}
+                            {% if date_data_checked %}
+
+                            {% else %}
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="section_number" value="3">
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/> 
+                                </form>
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+        <script>
+             $("#save").click(function(){
+            $.notify("Data telah tersimpan", "success");
+        });
+        </script>
+
+</body>
+
+</html>
+{% endblock %}

@@ -340,10 +340,10 @@
                             </div>
                             <div class="radio">
                                 <label>
-                                    {% if d6.d6m_smoking_status == "3" %}
-                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="3" checked required>
+                                    {% if d6.d6m_smoking_status == "0" %}
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="0" checked required>
                                     {% else %}
-                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="3" required>
+                                    <input type="radio" name="d6m_smoking_status" id="neverSmokeMother" value="0" required>
                                     {% endif %}
                                     Never smoke
                                 </label>
@@ -502,10 +502,10 @@
                             </div>
                             <div class="radio">
                                 <label>
-                                    {% if d6.d6f_smoking_status == "3" %}
-                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="3" checked required>
+                                    {% if d6.d6f_smoking_status == "0" %}
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="0" checked required>
                                     {% else %}
-                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="3" required>
+                                    <input type="radio" name="d6f_smoking_status" id="neverSmokeFather" value="0" required>
                                     {% endif %}
                                     Never smoke
                                 </label>
@@ -646,13 +646,20 @@
                     </form>
                 </div>
                         {% if role != 'staff' %}
-                        {% if is_save_all %}
-                        <form action="{{request.get_full_path}}/../edit" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="form_id" value={{form.id}}>
-                            <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
-                        </form>
+                            {% if date_data_checked %}
+
+                            {% else %}
+
+                                {% if is_save_all %}
+                                <form action="{{request.get_full_path}}/../edit" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_id" value={{form.id}}>
+                                    <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Edit"/>
+                                </form>
+                                {% endif %}
+                                
+                            {% endif %}
                         {% endif %}
-                        {% endif %} 
+                        
                  </div>
  {% endblock %}
