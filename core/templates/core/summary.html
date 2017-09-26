@@ -13,6 +13,7 @@
                         <!-- <th>Forms</th> -->
                         <th>Participant_ID</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Form A </th>
                         <th>Form B1 </th>
                         <th>Form B2 </th>
@@ -29,6 +30,11 @@
                         <tr>
                             <td> {{ summary.0 }} </td>
                             <td> {{ summary.1 }} </td>
+                            {% if summary.12 %}
+                            <td> Active </td>
+                            {% else %}
+                            <td> Inactive </td>
+                            {% endif %}
                             <td class='clickable-row' data-href="/participant/{{summary.11}}/form_a"> {{ summary.2 }} </td>
                             <td class='clickable-row' data-href="/participant/{{summary.11}}/form_b1"> {{ summary.3 }} </td>
                             <td class='clickable-row' data-href="/participant/{{summary.11}}/form_b2"> {{ summary.4 }} </td>

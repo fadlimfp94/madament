@@ -62,7 +62,18 @@
         $("#yesHerbs").click(function(){            
             $("#herbs :input").prop("disabled", false);
             $("#herbs").removeClass('hidden');
-        });          
+        });
+
+        $("#noOther").click(function(){
+            $("#otherMed :input").prop("disabled", true);
+            $("#otherMed").addClass('hidden');
+        });
+
+        $("#yesOther").click(function(){
+            $("#otherMed :input").prop("disabled", false);
+            $("#otherMed").removeClass('hidden');
+        });
+
     });
     </script>
 
@@ -122,6 +133,22 @@
     </script>
     {% endif %}
 
+    {% if b1.b6m_other_med_exist == 0 %}
+      <script>
+        $(document).ready(function(){
+        $("#otherMed :input").prop("disabled", true);
+        $("#otherMed").addClass("hidden");
+        });
+    </script>
+    {% elif b1.b6m_other_med_exist  == null %}
+    <script>
+        $(document).ready(function(){
+        $("#otherMed :input").prop("disabled", true);
+        $("#otherMed").addClass("hidden");
+        });
+    </script>
+    {% endif %}
+
     {% if b1.b6m_supplement == 0 %}
       <script>
         $(document).ready(function(){
@@ -145,6 +172,21 @@
         });
         </script>    
     {% endif %}
+
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1A">Medical Data</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB1F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div>
+            </div>
+
 
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
@@ -399,7 +441,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -411,57 +453,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_tea == '1' %}
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios1" value="0" >
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="1" checked>
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios3" value="2">
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_tea == '2' %}
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios1" value="0" >
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="1">
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios3" value="2" checked>
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -474,7 +466,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="3" checked>
                                Monthly
                                </label>
                            </div>
@@ -486,7 +478,57 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="3" checked>
+                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_tea == '2' %}
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios1" value="0" >
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios3" value="2" checked>
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_tea == '1' %}
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios1" value="0" >
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios3" value="2">
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="1" checked>
                                Daily
                                </label>
                            </div>
@@ -499,7 +541,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_tea" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -511,7 +553,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_tea" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -530,7 +572,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -542,57 +584,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_coffee == '1' %}
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios1" value="0" >
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="1" checked>
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios3" value="2">
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_coffee == '2' %}
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios1" value="0" >
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="1">
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios3" value="2" checked>
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -605,7 +597,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="3" checked>
                                Monthly
                                </label>
                            </div>
@@ -617,7 +609,57 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="3" checked>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_coffee == '2' %}
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios1" value="0" >
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios3" value="2" checked>
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_coffee == '1' %}
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios1" value="0" >
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios3" value="2">
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="1" checked>
                                Daily
                                </label>
                            </div>
@@ -630,7 +672,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_coffee" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -642,7 +684,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_coffee" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -661,7 +703,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -673,57 +715,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_alcohol == '1' %}
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios1" value="0">
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="1" checked>
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios3" value="2">
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="3">
-                               Daily
-                               </label>
-                           </div>
-                           {% elif b1.b6m_alcohol == '2' %} 
-                           <div class="radio">                                
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios1" value="0">
-                               Never
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="1">
-                               Monthly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios3" value="2" checked>
-                               Weekly
-                               </label>
-                           </div>
-                           <div class="radio">
-                               <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -736,7 +728,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="3" checked>
                                Monthly
                                </label>
                            </div>
@@ -748,7 +740,57 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="3" checked>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_alcohol == '2' %} 
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios1" value="0">
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios3" value="2" checked>
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="1">
+                               Daily
+                               </label>
+                           </div>
+                           {% elif b1.b6m_alcohol == '1' %}
+                           <div class="radio">                                
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios1" value="0">
+                               Never
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="3">
+                               Monthly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios3" value="2">
+                               Weekly
+                               </label>
+                           </div>
+                           <div class="radio">
+                               <label>
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="1" checked>
                                Daily
                                </label>
                            </div>
@@ -761,7 +803,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="1">
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios2" value="3">
                                Monthly
                                </label>
                            </div>
@@ -773,7 +815,7 @@
                            </div>
                            <div class="radio">
                                <label>
-                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="3">
+                               <input type="radio" name="b6m_alcohol" id="optionsRadios4" value="1">
                                Daily
                                </label>
                            </div>
@@ -942,12 +984,17 @@
                             </label>
                         </div>
                         {% endif %}
-
                     </div>
+
 
                     <div id="supplement">
                         <div class="form-group">
-                        <label> Frequency </label>
+                            <label> Specify </label>
+                            <input class="form-control" type="text" name="b6m_supplement_specify" value="{{ b1.b6m_supplement_specify | default_if_none:'' }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Frequency </label>
                         {% if b1.b6m_supplement_routine == null %}                        
                            <div class="radio">                                
                                <label>
@@ -988,12 +1035,14 @@
                                </label>
                            </div>
                            {% endif %}
-                        </div>                 
-                    <div class="form-group">                        
-                           <label> Duration (in days) </label>
-                           <input class="form-control" type="number" id="b6m_supplement_duration" value="{{ b1.b6m_supplement_duration }}">                       
-                     </div>
-                   </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Duration (in days) </label>
+                            <input class="form-control" type="number" name="b6m_supplement_duration" value="{{ b1.b6m_supplement_duration }}">
+                        </div>
+                    </div>
+                    
 
                      <div class="form-group">                        
                         <label> Herbs </label>
@@ -1037,10 +1086,14 @@
                             </label>
                         </div>
                         {% endif %}
-
                     </div>
 
                     <div id="herbs">
+                        <div class="form-group">
+                            <label> Specify </label>
+                            <input class="form-control" type="text" name="b6m_herbs_specify" value="{{ b1.b6m_herbs_specify | default_if_none:'' }}" required>
+                        </div>
+
                         <div class="form-group">
                         <label>Frequency</label>
                         {% if b1.b6m_herbs_routine == null %}
@@ -1084,20 +1137,64 @@
                            </div>
                           {% endif %}
                         </div>                  
-                      <div class="form-group">                          
+                        <div class="form-group">                          
                              <label> Duration (in days) </label>
-                             <input class="form-control" type="number" id="b6m_herbs_duration" value="{{ b1.b6m_herbs_duration }}">                        
+                             <input class="form-control" type="number" name="b6m_herbs_duration" value="{{ b1.b6m_herbs_duration }}">                        
                        </div>
                     </div>
 
 
-                     <div class="form-group">
-                        <label> Other  
-                        </label>
-                        <input class="form-control" type="text" name="b6m_otherMed" value="{{ b1.b6m_otherMed }}">
+                     <div class="form-group">                        
+                        <label> Other </label>
+                        {% if b1.b6m_other_med_exist == null %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="noOther" value="0" required>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="yesOther" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b6m_other_med_exist == 1 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="noOther" value="0">
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="yesOther" value="1" checked>
+                            Yes
+                            </label>
+                        </div>
+                        {% elif b1.b6m_other_med_exist == 0 %}
+                        <div class="radio">                                
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="noOther" value="0" checked>
+                            No
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                            <input type="radio" name="b6m_other_med_exist" id="yesOther" value="1">
+                            Yes
+                            </label>
+                        </div>
+                        {% endif %}
                     </div>
 
-                     <div id="otherMed">
+                    <div id="otherMed">
+                        <div class="form-group">
+                            <label> Other  
+                            </label>
+                            <input class="form-control" type="text" name="b6m_other_med" value="{{ b1.b6m_other_med | default_if_none:'' }}">
+                        </div>
+
                         <div class="form-group">
                         {% if b1.b6m_other_med_routine == null %}                        
                            <div class="radio">                                
@@ -1142,9 +1239,9 @@
                         </div>
                     
 
-                    <div class="form-group">                          
+                      <div class="form-group">                          
                            <label> Duration (in days)</label>
-                           <input class="form-control" type="number" id="b6m_other_med_duration" value="{{ b1.b6m_other_med_duration }}" placeholder="in days">
+                           <input class="form-control" type="number" name="b6m_other_med_duration" value="{{ b1.b6m_other_med_duration }}" placeholder="in days">
                       </div>
                     </div>
 

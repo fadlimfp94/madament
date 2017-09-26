@@ -38,4 +38,5 @@ urlpatterns = [
 	url(r'^login/$', login, {'template_name': 'login.html', 'authentication_form': forms.LoginForm}, name='login'),
     url(r'^logout/$', logout, {'next_page': 'core:login'}, name='logout'),	
     ####
+    #url(r'^[ -~]*$', views.home, name='anyurl'),
 ]

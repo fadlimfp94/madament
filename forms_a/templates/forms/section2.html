@@ -256,6 +256,10 @@
             $("#job :input").prop("checked", false);
             $("#job :input").prop("required", false);
             $("#job :checkbox").prop("required", false);
+            $("#indoor").val('1');
+            $("#outdoor").val('2');
+            $("#yesExposed").val('1');
+            $("#noExposed").val('0');
         });
         
         $("#noWorkingPregnancy").click(function(){
@@ -313,7 +317,7 @@
                                     Mother Demographic Data 
                                     </a>
                                 </li>
-                                <li class="list-group-item active">
+                                <li class="list-group-item actives">
                                     <a href="{{request.get_full_path}}/../section2"> 
                                     Mother Employment History 
                                     </a>
@@ -369,10 +373,10 @@
                             </div>
                             <div class="radio">
                                 <label>
-                                    {% if a2.a2m_working_status == "3" %}
-                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" checked required>
+                                    {% if a2.a2m_working_status == "0" %}
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="0" checked required>
                                     {% else %}
-                                    <input type="radio" name="a2m_working_status" id="unemployed" value="3" required>
+                                    <input type="radio" name="a2m_working_status" id="unemployed" value="0" required>
                                     {% endif %}
                                     Unemployed
                                 </label>
@@ -604,7 +608,7 @@
                                 <label for="a2m_working_hours"> How long is your working hours?</label>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input class="form-control" type="number" name="a2m_working_hours" value="{{a2.a2m_working_hours}}">
+                                        <input class="form-control" type="number" name="a2m_working_hours" value="{{a2.a2m_working_hours}}" placeholder="in hours">
                                     </div>
                                 </div>                                
                             </div>

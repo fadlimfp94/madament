@@ -11,9 +11,10 @@ import datetime
 @login_required(login_url='core:login')
 def check_form(request, participant_id, form_id):
 	form = CBirth.objects.get(id=int(form_id))
-	form.data_checked_id = request.user.username
-	form.date_data_checked = datetime.date.today()
-	form.save()
+	if request.user.is_staff and form.is_save_all:
+		form.data_checked_id = request.user.username
+		form.date_data_checked = datetime.date.today()
+		form.save()
 	return process_sectionC1(request, participant_id, form_id)
 	
 @login_required(login_url='core:login')
@@ -26,9 +27,10 @@ def save_form(request, participant_id, form_id):
 @login_required(login_url='core:login')
 def edit_form(request, participant_id, form_id):
 	form = CBirth.objects.get(id=int(form_id))
-	form.is_save_all = False
-	form.save()
-	request.session['edit_mode'] = True
+	if request.user.is_staff and (form.data_checked_id == "" or form.data_checked_id == None):
+		form.is_save_all = False
+		form.save()
+		request.session['edit_mode'] = True
 	section_number = request.POST.get('section_number')
 	if section_number == "2":	
 		return process_sectionC2(request, participant_id, form_id)
@@ -48,7 +50,7 @@ def create_form(request, participant_id):
 		participant = Participant.objects.get(id=participant_id)
 		child_obj.name = child_name		
 		c_obj = CBirth()
-		c_obj.participant_id = request.session['participant_id']	
+		c_obj.participant_id = participant_id	
 		c_obj.interviewer_id = request.POST.get('interviewer_id')
 		c_obj.data_entry_id = request.user.username
 		c_obj.date_admission = request.POST.get('date_admission')
@@ -64,12 +66,11 @@ def create_form(request, participant_id):
 		c_obj.child_id = child_id	
 		c_obj.save()
 
-		request.session['form_id'] = c_obj.id
 		print "dia masuk ke process_form"
 		return process_form(request, participant_id, c_obj.id)
 	else:
-		participant = Participant.objects.get(id=request.session['participant_id'])
-		date_admission = participant.date_admission
+		participant = Participant.objects.get(id=int(participant_id))
+		date_admission = participant.date_admission.__str__()
 		staff_list = User.objects.filter(is_staff=False)
 
 		return render(request, 'forms_c/form.html', {'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission })
@@ -82,8 +83,6 @@ def process_form(request, participant_id, form_id):
 ####CONTROLLER SECTION C1
 @login_required(login_url='core:login')
 def process_sectionC1(request, participant_id, form_id):	 
-	# if request.POST.get('form_id'):	
-	# 	request.session['form_id'] = request.POST.get('form_id')
 	c_form_obj = CBirth.objects.get(id=int(form_id))
 	try:
 		c1_obj = CMother.objects.get(c_form=c_form_obj)
@@ -97,8 +96,12 @@ def process_sectionC1(request, participant_id, form_id):
 def create_sectionC1(request, participant_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
 		c_form_obj = CBirth.objects.get(id=int(form_id))
-		c1_obj = CMother()
-		c1_obj.c_form = c_form_obj
+		c1_obj = CMother()		
+		c1_obj.c_form = c_form_obj		
+		c1_obj.participant_id = c_form_obj.participant.participant_id
+		c1_obj.child_id = c_form_obj.child_id
+		c1_obj.data_entry_id = request.user.username
+		c1_obj.created_time = datetime.datetime.now()
 		c1_obj = save_sectionC1(c1_obj, request, participant_id, form_id)
 		print "masuk ke show_sectionC1 true"		
 		return show_sectionC1(request, participant_id, form_id, True)	
@@ -171,6 +174,8 @@ def show_sectionC1(request, participant_id, form_id, is_save):
 
 def save_sectionC1(c1_obj, request, participant_id, form_id):
 	
+	c1_obj.updated_time = datetime.datetime.now()
+	c1_obj.data_updated_id = request.user.username
 	c1_obj.c1m_ur_number = request.POST.get('c1m_ur_number')
 	c1_obj.c1m_delivery_place = request.POST.get('c1m_delivery_place')
 	c1_obj.c1m_gestational_age_fdlm = request.POST.get('c1m_gestational_age_fdlm')
@@ -275,8 +280,6 @@ def save_sectionC1(c1_obj, request, participant_id, form_id):
 ###Controller Section 2
 
 def process_sectionC2(request, participant_id, form_id):
-	# if request.POST.get('form_id'):
-	# 	request.session['form_id'] = request.POST.get('form_id')
 	c_form_obj = CBirth.objects.get(id=int(form_id))
 	try:
 		c2_obj = CPlacentalSampling.objects.get(c_form=c_form_obj)
@@ -290,6 +293,10 @@ def create_sectionC2(request, participant_id, form_id):
 		c_form_obj = CBirth.objects.get(id=int(form_id))
 		c2_obj = CPlacentalSampling()
 		c2_obj.c_form = c_form_obj
+		c2_obj.participant_id = c_form_obj.participant.participant_id
+		c2_obj.data_entry_id = request.user.username
+		c2_obj.created_time = datetime.datetime.now()
+		c2_obj.child_id = c_form_obj.child_id
 		c2_obj = save_sectionC2(c2_obj, request, participant_id, form_id)		
 		return show_sectionC2(request, participant_id, form_id, True)	
 	else:		
@@ -321,9 +328,7 @@ def show_sectionC2(request, participant_id, form_id,  is_save):
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		c2_obj = CPlacentalSampling.objects.get(c_form_id=form.id)
-
-					 		
+		c2_obj = CPlacentalSampling.objects.get(c_form_id=form.id)			 		
 		 
 		print "masuak kasiko"		
 		if form.date_data_checked is not None:
@@ -350,7 +355,8 @@ def save_sectionC2(c2_obj, request, participant_id, form_id):
 	# 	c2_obj.c2m_placental_sampling_test = 1
 	# else:
 	# 	c2_obj.c2m_placental_sampling_test = 0
-
+	c2_obj.updated_time = datetime.datetime.now()
+	c2_obj.data_updated_id = request.user.username
 	c2_obj.c2m_placental_sampling_test = request.POST.get('c2m_placental_sampling_test')
 	c2_obj.c2m_sampling_date = request.POST.get('c2m_sampling_date')
 	c2_obj.c2m_sampling_time = request.POST.get('c2m_sampling_time')
@@ -390,8 +396,6 @@ def save_sectionC2(c2_obj, request, participant_id, form_id):
 ### Controller Section 3
 @login_required(login_url='core:login')
 def process_sectionC3(request, participant_id, form_id):
-	# if request.POST.get('form_id'):
-	# 	request.session['form_id'] = request.POST.get('form_id')
 	c_form_obj = CBirth.objects.get(id=int(form_id))
 	print "masuk kesini"
 	try:
@@ -409,12 +413,16 @@ def create_sectionC3(request, participant_id, form_id):
 		c_form_obj = CBirth.objects.get(id=int(form_id))
 		c3_obj = CInfantData()
 		c3_obj.c_form = c_form_obj
+		c3_obj.participant_id = c_form_obj.participant.participant_id
+		c3_obj.child_id = c_form_obj.child_id
+		c3_obj.data_entry_id = request.user.username
+		c3_obj.created_time = datetime.datetime.now()
 		c3_obj = save_sectionC3(c3_obj, request, participant_id, form_id)
 		print "masuk ke show_sectionc3 true"		
-		return show_sectionC3(request, participant_id, form_id,True)	
+		return show_sectionC3(request, participant_id, form_id, True)	
 	else:		
 		print "masuk ke show_sectionC3 false"
-		return show_sectionC3(request, participant_id, form_id,False)
+		return show_sectionC3(request, participant_id, form_id, False)
 
 @login_required(login_url='core:login')
 def update_sectionC3(request, participant_id, form_id):
@@ -440,35 +448,8 @@ def show_sectionC3(request,participant_id, form_id, is_save):
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		c3_obj = CInfantData.objects.get(c_form_id=form.id)		
-
-		# if c3_obj.c3c_dob is None:
-		# 	date_of_birth = ""
-		# else:
-		# 	date_of_birth = c3_obj.c3c_dob
-		
-
-		# if c3_obj.c3c_blood_test_date is None:
-		# 	blood_test_date = ""
-		# else:
-		# 	blood_test_date = c3_obj.c3c_blood_test_date
-
-		# if c3_obj.c3c_cord_blood_date is None:
-		# 	cord_blood_date = ""
-		# else:
-		# 	cord_blood_date = c3_obj.c3c_cord_blood_date
-		
-		# if c3_obj.c4m_discharge_date is None:
-		# 	mother_discharge_date = ""
-		# else:
-		# 	mother_discharge_date = c3_obj.c4m_discharge_date
-
-		# if c3_obj.c4c_discharge_date is None:
-		# 	baby_discharge_date = ""
-		# else:
-		# 	baby_discharge_date = c3_obj.c4c_discharge_date
-	
-		
+		c3_obj = CInfantData.objects.get(c_form_id=form.id)			
+			
 		if form.date_data_checked is not None:
 			date_data_checked = form.date_data_checked
 			if is_save:				
@@ -493,6 +474,9 @@ def show_sectionC3(request,participant_id, form_id, is_save):
  		
 
 def save_sectionC3(c3_obj, request, participant_id, form_id):
+
+	c3_obj.updated_time = datetime.datetime.now()
+	c3_obj.data_updated_id = request.user.username
 	c3_obj.c3c_ur_number = request.POST.get('c3c_ur_number')
 	c3_obj.c3c_first_name = request.POST.get('c3c_first_name')
 	c3_obj.c3c_surname = request.POST.get('c3c_surname')
@@ -571,10 +555,66 @@ def save_sectionC3(c3_obj, request, participant_id, form_id):
 	c3_obj.c3c_duration_nicu = request.POST.get('c3c_duration_nicu')
 	c3_obj.c3c_neonatal_morbidity = request.POST.get('c3c_neonatal_morbidity')
 	c3_obj.c3c_sepsis = request.POST.get('c3c_sepsis')
+	c3_obj.c3c_congenital_anomaly = request.POST.get('c3c_congenital_anomaly')
+	c3_obj.c3c_congenital_infection = request.POST.get('c3c_congenital_infection')
+	c3_obj.c3c_blood_test_septic = request.POST.get('c3c_blood_test_septic')
+	c3_obj.c3c_cord_blood_analysis = request.POST.get('c3c_cord_blood_analysis')
+	c3_obj.c3c_cord_blood_sampling = request.POST.get('c3c_cord_blood_sampling')
+	c3_obj.c3c_sepsis = request.POST.get('c3c_sepsis')
+	c3_obj.c3c_congenital_anomaly = request.POST.get('c3c_congenital_anomaly')
+	c3_obj.c3c_congenital_infection = request.POST.get('c3c_congenital_infection')
+	c3_obj.c3c_blood_test_septic = request.POST.get('c3c_blood_test_septic')
+	c3_obj.c3c_cord_blood_analysis = request.POST.get('c3c_cord_blood_analysis')
+	c3_obj.c3c_cord_blood_sampling = request.POST.get('c3c_cord_blood_sampling')
+	c3_obj.c3c_toxoplasmosisinf = request.POST.get('c3c_toxoplasmosisinf')
+	c3_obj.c3c_rubellainf = request.POST.get('c3c_rubellainf')
+	c3_obj.c3c_cytomegalovirusinf = request.POST.get('c3c_cytomegalovirusinf')
+	c3_obj.c3c_herpesinf = request.POST.get('c3c_herpesinf')
+	c3_obj.c3c_syphillisinf = request.POST.get('c3c_syphillisinf')
+	c3_obj.c3c_hivinf = request.POST.get('c3c_hivinf')
+	c3_obj.c3c_hiv_prevention = request.POST.get('c3c_hiv_prevention')	
+	# if request.POST.get('c3c_neonatal_morbidity') == '0' :
+	# 	print "neonatal nya 0"
+	# 	c3_obj.c3c_sepsis = False		
+	# 	# Dibawah ini milik congenital infection 
+	# 	c3_obj.c3c_toxoplasmosisinf = False
+	# 	c3_obj.c3c_rubellainf = False
+	# 	c3_obj.c3c_cytomegalovirusinf = False
+	# 	c3_obj.c3c_syphillisinf = False
+	# 	c3_obj.c3c_herpesinf = False
+	# 	c3_obj.c3c_hivinf = False
+	# 	c3_obj.c3c_hiv_prevention = False
+	# else:
+	# 	c3_obj.c3c_sepsis = request.POST.get('c3c_sepsis')
+	# 	c3_obj.c3c_congenital_anomaly = request.POST.get('c3c_congenital_anomaly')
+	# 	c3_obj.c3c_congenital_infection = request.POST.get('c3c_congenital_infection')
+	# 	c3_obj.c3c_blood_test_septic = request.POST.get('c3c_blood_test_septic')
+	# 	c3_obj.c3c_cord_blood_analysis = request.POST.get('c3c_cord_blood_analysis')
+	# 	c3_obj.c3c_cord_blood_sampling = request.POST.get('c3c_cord_blood_sampling')
+
+
+	# if request.POST.get('c3c_congenital_infection') == False:
+	# 	c3_obj.c3c_toxoplasmosisinf = False
+	# 	c3_obj.c3c_rubellainf = False
+	# 	c3_obj.c3c_cytomegalovirusinf = False
+	# 	c3_obj.c3c_syphillisinf = False
+	# 	c3_obj.c3c_hivinf = False
+	# 	c3_obj.c3c_hiv_prevention = False
+	# else:
+	# 	print "masuk ke infection yang else"
+	# 	c3_obj.c3c_toxoplasmosisinf = request.POST.get('c3c_toxoplasmosisinf')
+	# 	c3_obj.c3c_rubellainf = request.POST.get('c3c_rubellainf')
+	# 	c3_obj.c3c_cytomegalovirusinf = request.POST.get('c3c_cytomegalovirusinf')
+	# 	c3_obj.c3c_herpesinf = request.POST.get('c3c_herpesinf')
+	# 	c3_obj.c3c_syphillisinf = request.POST.get('c3c_syphillisinf')
+	# 	c3_obj.c3c_hivinf = request.POST.get('c3c_hivinf')
+	# 	c3_obj.c3c_hiv_prevention = request.POST.get('c3c_hiv_prevention')
+	#c3_obj.c3c_sepsis = request.POST.get('c3c_sepsis')
 	c3_obj.c3c_sepsis_presumed = request.POST.get('c3c_sepsis_presumed')
 	c3_obj.c3c_sepsis_definite = request.POST.get('c3c_sepsis_definite')
 	c3_obj.c3c_sepsis_bacteria1 = request.POST.get('c3c_sepsis_bacteria1')
 	c3_obj.c3c_sepsis_bacteria2 = request.POST.get('c3c_sepsis_bacteria2')
+	c3_obj.c3c_sepsis_antibiotic = request.POST.get('c3c_sepsis_antibiotic')
 	c3_obj.c3c_sepsis_drug1 = request.POST.get('c3c_sepsis_drug1')
 	c3_obj.c3c_sepsis_drug2 = request.POST.get('c3c_sepsis_drug2')
 	c3_obj.c3c_sepsis_dose1 = request.POST.get('c3c_sepsis_dose1')
@@ -590,40 +630,47 @@ def save_sectionC3(c3_obj, request, participant_id, form_id):
 	c3_obj.c3c_other_respiratory_diagnosis = request.POST.get('c3c_other_respiratory_diagnosis')
 	c3_obj.c3c_respiratory_support = request.POST.get('c3c_respiratory_support')
 	c3_obj.c3c_others_morbidities = request.POST.get('c3c_others_morbidities')
-	c3_obj.c3c_congenital_anomaly = request.POST.get('c3c_congenital_anomaly')
+	#c3_obj.c3c_congenital_anomaly = request.POST.get('c3c_congenital_anomaly')
 	c3_obj.c3c_cardiovascularano = request.POST.get('c3c_cardiovascularano')
+	c3_obj.c3c_cardiovascularano_diagnosis = request.POST.get('c3c_cardiovascularano_diagnosis')
 	c3_obj.c3c_cnsano = request.POST.get('c3c_cnsano')
+	c3_obj.c3c_cnsano_diagnosis = request.POST.get('c3c_cnsano_diagnosis')
 	c3_obj.c3c_musculoskeletalano = request.POST.get('c3c_musculoskeletalano')
+	c3_obj.c3c_musculoskeletalano_diagnosis = request.POST.get('c3c_musculoskeletalano_diagnosis')
 	c3_obj.c3c_gastrointestinalano = request.POST.get('c3c_gastrointestinalano')
+	c3_obj.c3c_gastrointestinalano_diagnosis = request.POST.get('c3c_gastrointestinalano_diagnosis')
 	c3_obj.c3c_urogenitalano = request.POST.get('c3c_urogenitalano')
+	c3_obj.c3c_urogenitalano_diagnosis = request.POST.get('c3c_urogenitalano_diagnosis')
 	c3_obj.c3c_respiratoryano = request.POST.get('c3c_respiratoryano')
+	c3_obj.c3c_respiratoryano_diagnosis = request.POST.get('c3c_respiratoryano_diagnosis')
 	c3_obj.c3c_skinano = request.POST.get('c3c_skinano')
+	c3_obj.c3c_skinano_diagnosis = request.POST.get('c3c_skinano_diagnosis')
 	c3_obj.c3c_down_syndromeano = request.POST.get('c3c_down_syndromeano')
 	c3_obj.c3c_other_syndromeano = request.POST.get('c3c_other_syndromeano')
-	c3_obj.c3c_congenital_infection = request.POST.get('c3c_congenital_infection')
-	c3_obj.c3c_toxoplasmosisinf = request.POST.get('c3c_toxoplasmosisinf')
-	c3_obj.c3c_rubellainf = request.POST.get('c3c_rubellainf')
-	c3_obj.c3c_cytomegalovirusinf = request.POST.get('c3c_cytomegalovirusinf')
-	c3_obj.c3c_syphillisinf = request.POST.get('c3c_syphillisinf')
-	c3_obj.c3c_hivinf = request.POST.get('c3c_hivinf')
-	c3_obj.c3c_hiv_prevention = request.POST.get('c3c_hiv_prevention')
-	c3_obj.c3c_blood_test_septic = request.POST.get('c3c_blood_test_septic')
+	# c3_obj.c3c_congenital_infection = request.POST.get('c3c_congenital_infection')
+	# c3_obj.c3c_toxoplasmosisinf = request.POST.get('c3c_toxoplasmosisinf')
+	# c3_obj.c3c_rubellainf = request.POST.get('c3c_rubellainf')
+	# c3_obj.c3c_cytomegalovirusinf = request.POST.get('c3c_cytomegalovirusinf')
+	# c3_obj.c3c_syphillisinf = request.POST.get('c3c_syphillisinf')
+	# c3_obj.c3c_hivinf = request.POST.get('c3c_hivinf')
+	# c3_obj.c3c_hiv_prevention = request.POST.get('c3c_hiv_prevention')
+	#c3_obj.c3c_blood_test_septic = request.POST.get('c3c_blood_test_septic')
 	c3_obj.c3c_blood_test_date = request.POST.get('c3c_blood_test_date')
 	c3_obj.c3c_hb_septic = request.POST.get('c3c_hb_septic')
 	c3_obj.c3c_wbc_septic = request.POST.get('c3c_wbc_septic')
 	c3_obj.c3c_platelet_septic = request.POST.get('c3c_platelet_septic')
 	c3_obj.c3c_crp_septic = request.POST.get('c3c_crp_septic')
 	c3_obj.c3c_ITRatio_septic = request.POST.get('c3c_ITRatio_septic')
-	c3_obj.c3c_cord_blood_analysis = request.POST.get('c3c_cord_blood_analysis')
+	#c3_obj.c3c_cord_blood_analysis = request.POST.get('c3c_cord_blood_analysis')
 	c3_obj.c3c_pH = request.POST.get('c3c_pH')
 	c3_obj.c3c_po2 = request.POST.get('c3c_po2')
 	c3_obj.c3c_pco2 = request.POST.get('c3c_pco2')
 	c3_obj.c3c_hco3 = request.POST.get('c3c_hco3')
 	c3_obj.c3c_base_excess = request.POST.get('c3c_base_excess')
-	c3_obj.c3c_cord_blood_sampling = request.POST.get('c3c_cord_blood_sampling')
+	#c3_obj.c3c_cord_blood_sampling = request.POST.get('c3c_cord_blood_sampling')
 	c3_obj.c3c_cord_blood_date = request.POST.get('c3c_cord_blood_date')
 	c3_obj.c4m_discharge_date = request.POST.get('c4m_discharge_date')
-	c3_obj.c4c_discharge_date = request.POST.get('c4m_discharge_date')
+	c3_obj.c4c_discharge_date = request.POST.get('c4c_discharge_date')
 	c3_obj.c3m_notes = request.POST.get('c3m_notes')
 	c3_obj.save()
 	return c3_obj

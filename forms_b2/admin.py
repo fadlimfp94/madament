@@ -6,6 +6,7 @@ from .models import *
 admin.site.register(B2Pregnancy)
 admin.site.register(B2MedicalData)
 admin.site.register(B2UltrasoundScanResults)
+admin.site.register(B2LaboratoryTest)
 admin.site.register(B2CurrentSmookingHabits)
 admin.site.register(B2PollutanExposure)
 admin.site.register(B2GestationalNutrition)

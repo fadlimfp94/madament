@@ -5,15 +5,16 @@ from .models import *
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.models import User
-from datetime import datetime
+import datetime
 
 # Create your views here.
 @login_required(login_url='core:login')
 def check_form(request, participant_id, form_id):
 	form = B3Pregnancy.objects.get(id=int(form_id))
-	form.data_checked_id = request.user.username
-	form.date_data_checked = datetime.date.today()
-	form.save()
+	if request.user.is_staff and form.is_save_all:
+		form.data_checked_id = request.user.username
+		form.date_data_checked = datetime.date.today()
+		form.save()
 	return process_sectionB1A(request, participant_id, form_id)
 	
 @login_required(login_url='core:login')
@@ -26,9 +27,10 @@ def save_form(request, participant_id, form_id):
 @login_required(login_url='core:login')
 def edit_form(request, participant_id, form_id):
 	form = B3Pregnancy.objects.get(id=int(form_id))
-	form.is_save_all = False
-	form.save()
-	request.session['edit_mode'] = True
+	if request.user.is_staff and (form.data_checked_id == "" or form.data_checked_id == None):
+		form.is_save_all = False
+		form.save()
+		request.session['edit_mode'] = True
 	section_number = request.POST.get('section_number')	
 	if section_number == "2":	
 		return process_sectionB1B(request, participant_id, form_id)
@@ -55,12 +57,11 @@ def create_form(request, participant_id):
 		b1_obj.date_interviewed = request.POST.get('date_interviewed')
 		b1_obj.date_data_entered = request.POST.get('date_data_entered')
 		b1_obj.save()
-		request.session['form_id']= b1_obj.id
 		return process_form(request, participant_id, b1_obj.id)
 	else:
 		print "masuk kesini"
 		participant = Participant.objects.get(id=int(participant_id))
-		date_admission = participant.date_admission
+		date_admission = participant.date_admission.__str__()
 		staff_list = User.objects.filter(is_staff=False)
 		return render(request, 'forms_b3/form.html', {'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission})
 
@@ -87,6 +88,10 @@ def create_sectionB1A(request, participant_id, form_id):
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 		b1_obj = B3MedicalData()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1A(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1A(request,participant_id,form_id, True)	
@@ -139,9 +144,9 @@ def show_sectionB1A(request,participant_id,form_id, is_save):
 		return render(request, 'forms_b3/sectionB1A.html', {'participant' : participant, 'is_save_all' : is_save_all ,'interviewer' : interviewer, 'role' : role, 'context' : 'create', 'form' : form, 'date_interviewed' : date_interviewed, 'date_data_entered' : date_data_entered, 'date_admission' : date_admission})
 
 def save_sectionB1A(b1_obj, request, participant_id, form_id):
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 	b1_obj.b1m_weight = request.POST.get('b1m_weight')
 	b1_obj.b1m_fundal = request.POST.get('b1m_fundal')
 	b1_obj.b1m_systolic1st = request.POST.get('b1m_systolic1st')
@@ -256,6 +261,9 @@ def create_sectionB1B(request, participant_id, form_id):
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 		b1_obj = B3UltrasoundScanResults()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1B(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1B(request, participant_id, form_id, True)	
@@ -312,9 +320,9 @@ def show_sectionB1B(request, participant_id, form_id, is_save):
 
 def save_sectionB1B(b1_obj, request, participant_id, form_id):
 	b1_form =  models.ForeignKey(B3Pregnancy, on_delete=models.PROTECT)
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 	b1_obj.b2m_date_exam = request.POST.get('b2m_date_exam')	
 	b1_obj.b2m_gestat_age = request.POST.get('b2m_gestat_age')
 	b1_obj.b2m_hc = request.POST.get('b2m_hc')
@@ -326,6 +334,7 @@ def save_sectionB1B(b1_obj, request, participant_id, form_id):
 	b1_obj.b2m_conanomaly_specify = request.POST.get('b2m_conanomaly_specify')
 	b1_obj.b2m_SVDoppler = request.POST.get('b2m_SVDoppler')
 	b1_obj.b2m_DVDoppler = request.POST.get('b2m_DVDoppler')
+	b1_obj.b2m_sd_ratio = request.POST.get('b2m_sd_ratio')
 	b1_obj.b2m_rimca = request.POST.get('b2m_rimca')
 	b1_obj.b2m_amnion = request.POST.get('b2m_amnion')
 	b1_obj.b2m_notes = request.POST.get('b2m_notes')
@@ -339,7 +348,7 @@ def process_sectionB1C(request, participant_id, form_id):
 	b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 	print b1_form_obj
 	try:
-		b1_obj = B1LaboratoryTest.objects.get(b1_form=b1_form_obj)
+		b1_obj = B3LaboratoryTest.objects.get(b1_form=b1_form_obj)
 		print b1_obj
 		print "masuk ke update_section1"
 		return update_sectionB1C(request, participant_id, form_id)	
@@ -351,8 +360,11 @@ def process_sectionB1C(request, participant_id, form_id):
 def create_sectionB1C(request, participant_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
-		b1_obj = B1LaboratoryTest()
+		b1_obj = B3LaboratoryTest()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1C(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1C(request, participant_id, form_id, True)	
@@ -363,7 +375,7 @@ def create_sectionB1C(request, participant_id, form_id):
 @login_required(login_url='core:login')
 def update_sectionB1C(request, participant_id, form_id):
 	if request.method == "POST" and request.POST.get('context') == "SAVE":
-		b1_obj = B1LaboratoryTest.objects.get(b1_form_id=int(form_id))
+		b1_obj = B3LaboratoryTest.objects.get(b1_form_id=int(form_id))
 		b1_obj = save_sectionB1C(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section yang diupdate true"
 		return show_sectionB1C(request, participant_id, form_id, True)	
@@ -385,7 +397,7 @@ def show_sectionB1C(request, participant_id, form_id, is_save):
 	if not request.user.is_staff:
 		role = 'staff'
 	try:
-		b1_obj = B1LaboratoryTest.objects.get(b1_form_id=form.id)	
+		b1_obj = B3LaboratoryTest.objects.get(b1_form_id=form.id)	
 		
 		if form.date_data_checked is not None:
 			date_data_checked = form.date_data_checked
@@ -411,11 +423,9 @@ def save_sectionB1C(b1_obj, request, participant_id, form_id):
 	b1_form =  models.ForeignKey(B3Pregnancy, on_delete=models.PROTECT)
 
 	# b1_obj.b4m_household_smoker = request.POST.get('b4m_household_smoker')
-
-	#DATE
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 	b1_obj.b3m_date_urin =  request.POST.get('b3m_date_urin')
 	b1_obj.b3m_proteinuria = request.POST.get('b3m_proteinuria')
 	b1_obj.b3m_blood_test = request.POST.get('b3m_blood_test')
@@ -485,6 +495,9 @@ def create_sectionB1D(request, participant_id, form_id):
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 		b1_obj = B3CurrentSmookingHabits()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1D(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1D(request, participant_id, form_id, True)	
@@ -539,9 +552,9 @@ def show_sectionB1D(request, participant_id, form_id, is_save):
 
 def save_sectionB1D(b1_obj, request, participant_id, form_id):
 	b1_form =  models.ForeignKey(B3Pregnancy, on_delete=models.PROTECT)
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 	b1_obj.b4m_smoking_status = request.POST.get('b4m_smoking_status')
 	b1_obj.b4m_quitting_duration = request.POST.get('b4m_quitting_duration')
 	b1_obj.b4m_cigar_type = request.POST.get('b4m_cigar_type')
@@ -581,6 +594,9 @@ def create_sectionB1E(request, participant_id, form_id):
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 		b1_obj = B3PollutanExposure()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1E(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1E(request, participant_id, form_id, True)	
@@ -634,9 +650,9 @@ def show_sectionB1E(request, participant_id, form_id, is_save):
 
 def save_sectionB1E(b1_obj, request, participant_id, form_id):
 	b1_form =  models.ForeignKey(B3Pregnancy, on_delete=models.PROTECT)
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 	if request.POST.get('b5m_charcoal') == 'on':
 		b1_obj.b5m_charcoal = True
 	else:
@@ -727,6 +743,9 @@ def create_sectionB1F(request, participant_id, form_id):
 		b1_form_obj = B3Pregnancy.objects.get(id=int(form_id))
 		b1_obj = B3GestationalNutrition()
 		b1_obj.b1_form = b1_form_obj
+		b1_obj.participant_id = b1_form_obj.participant.participant_id
+		b1_obj.data_entry_id = request.user.username
+		b1_obj.created_time = datetime.datetime.now()
 		b1_obj = save_sectionB1F(b1_obj, request, participant_id, form_id)
 		print "masuk ke show section true"
 		return show_sectionB1F(request, participant_id, form_id, True)	
@@ -780,9 +799,8 @@ def show_sectionB1F(request, participant_id, form_id, is_save):
 
 def save_sectionB1F(b1_obj, request, participant_id, form_id):
 	b1_obj.b6m_fasting_pregnancy = request.POST.get('b6m_fasting_pregnancy')
-	b1_obj.mothercode = participant_id
-	b1_obj.saved_time = datetime.now()
-	b1_obj.data_entry_id = request.user.username
+	b1_obj.updated_time = datetime.datetime.now()
+	b1_obj.data_updated_id = request.user.username
 
 	if request.POST.get('b6m_ramadhan') == 'on':
 		b1_obj.b6m_ramadhan = True
@@ -828,14 +846,17 @@ def save_sectionB1F(b1_obj, request, participant_id, form_id):
 	b1_obj.b6m_analgesia_specify = request.POST.get('b6m_analgesia_specify')
 	b1_obj.b6m_analgesia_duration = request.POST.get('b6m_analgesia_duration')
 	b1_obj.b6m_supplement = request.POST.get('b6m_supplement')
+	b1_obj.b6m_supplement_specify = request.POST.get('b6m_supplement_specify')
 	b1_obj.b6m_supplement_duration =  request.POST.get('b6m_supplement_duration')
 	b1_obj.b6m_supplement_routine = request.POST.get('b6m_supplement_routine')
 	b1_obj.b6m_herbs = request.POST.get('b6m_herbs')
+	b1_obj.b6m_herbs_specify = request.POST.get('b6m_herbs_specify')
 	b1_obj.b6m_herbs_routine = request.POST.get('b6m_herbs_routine')
 	b1_obj.b6m_herbs_duration = request.POST.get('b6m_herbs_duration')
-	b1_obj.b6m_other = request.POST.get('b6m_other')
-	b1_obj.b6m_other_routine = request.POST.get('b6m_other_routine')
-	b1_obj.b6m_other_duration = request.POST.get('b6m_other_duration')
+	b1_obj.b6m_other_med_exist = request.POST.get('b6m_other_med_exist')
+	b1_obj.b6m_other_med = request.POST.get('b6m_other_med')
+	b1_obj.b6m_other_med_routine = request.POST.get('b6m_other_med_routine')
+	b1_obj.b6m_other_med_duration = request.POST.get('b6m_other_med_duration')
 	b1_obj.b6m_notes = request.POST.get('b6m_notes')
 	b1_obj.save()
 	return b1_obj 

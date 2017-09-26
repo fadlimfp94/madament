@@ -2,9 +2,46 @@
 {% block content %}
     <!-- Page Content -->
     <script>
-        function confirmation(){
-            confirm("Apakah anda yakin submit form ini?")
-        }
+        $(function() {
+            $("#createForm").click(function(){
+                var name = $('#interviewer_id').val();
+                var dateInterview = $('#date_interviewed').val();
+                // Check if empty of not
+                if (name  == "") {
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Select interviewer, please',
+                    });
+                }
+                else if(dateInterview == ""){
+                    $.alert({
+                        title: 'Alert!',
+                        content: 'Select date of interview, please',
+                    });
+                }
+                else{
+                     $.confirm({
+                        title: 'Confirm!',
+                        content: 'Interview Date: '+dateInterview+'<br>Are you sure to continue?',
+                        buttons: {
+                                    yes: {
+                                        btnClass: 'btn-primary',
+                                        action: function () {
+                                            $('form.patient-form-data').submit();
+                                            return true;
+                                        }
+                                    },
+                                    no: {
+                                        btnClass: 'btn-danger',
+                                        action: function () {
+                                            event.preventDefault();
+                                        }
+                                    },
+                                }
+                    });
+                } 
+            });
+        });
     </script>
     <div class="container">
         <!-- Form Umum Section -->
@@ -39,7 +76,8 @@
                             <div class="form-group">
                                 <label for="interviewer_id"> Interviewed By </label>
                                 <!--<input class="form-control" type="text" name="interviewer_id">-->
-                                <select class="form-control selectpicker" name="interviewer_id" required>
+                                <select class="form-control selectpicker" id="interviewer_id" name="interviewer_id" required>
+                                    <option value="">Select interviewer</option>
                                     {% for interviewer in staff_list %}
                                         <option value={{interviewer.id}}>{{ interviewer.username }}</option>
                                     {% endfor %}
@@ -47,7 +85,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="interviewed_date"> Date Interviewed </label>
-                                <input class="form-control" type="date" name="date_interviewed" required>
+                                <input class="form-control" type="date" id="date_interviewed" name="date_interviewed" required>
                             </div>
                         {% else %}
                             <div class="form-group">
@@ -79,7 +117,7 @@
                         {% endif %}
                         <div class="form-group">
                             <label for="checked_id"> Checked By </label>
-                            <input class="form-control" type="text" name="data_checked_id" value="{{ form.data_checked_id }}" readonly>
+                            <input class="form-control" type="text" name="data_checked_id" value="{{ form.data_checked_id | default_if_none:'' }}" readonly>
                         </div>
 
                         <div class="form-group">
@@ -92,7 +130,7 @@
                 {% if context == "create_new_form" %}
                     <div class="row">
                         <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
-                            <input type="submit" class="btn btn-primary" value="Create Form"/>
+                            <input type="button" id="createForm" class="btn btn-primary" value="Create Form"/>
                         </div>
                     </div> <!-- End Row -->
                 {% else %}
@@ -102,48 +140,77 @@
             {% if context == "create_new_form" %}
     
             {% else %}
-                <div class="row">
-                    <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5">
+            <div class="form-group">
+                 <div class="row">
+                    <!-- <div class="col-md-6 col-xs-6 col-sm-6 col-md-offset-5"> -->
                             {% if role == 'staff' %}
                                 {% if is_save_all %}
 
                                 {% else %}
-                                    <form action="{{request.get_full_path}}/../save" method="post">
-                                        {% csrf_token %}
-                                        <input type="submit" class="btn btn-primary" value="Submit Form">
-                                    </form>
+                                    <script>
+                                            function submitConfirm() {
+                                                $.confirm({
+                                                    title: 'Confirm!',
+                                                    content: 'Are you sure to submit this form?',
+                                                    buttons: {
+                                                        yes: {
+                                                            btnClass: 'btn-primary',
+                                                            action: function () {
+                                                                location.href = "{{request.get_full_path}}/../save";
+                                                            }
+                                                        },
+                                                        no: {
+                                                            btnClass: 'btn-danger', // multiple classes.
+                                                        },
+                                                    }
+                                                });
+                                            }
+                                    </script>
+                                    <div class="col-md-5 col-xs-2 col-xs-offset-2 col-sm-4 col-sm-offset-1">    
+                                        <a href="#" onclick="submitConfirm()" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
+                                    </div> 
                                 {% endif %}
                             {% else %}
                                 {% if date_data_checked %}
-                                
+
+                                {% elif is_save_all %}
+                                <script>
+                                            function checkConfirm() {
+                                                $.confirm({
+                                                    title: 'Confirm!',
+                                                    content: 'Are you sure to check this form?',
+                                                    buttons: {
+                                                        yes: {
+                                                            btnClass: 'btn-primary',
+                                                            action: function () {
+                                                                location.href = "{request.get_full_path}}/../check";
+                                                            }
+                                                        },
+                                                        no: {
+                                                            btnClass: 'btn-danger', // multiple classes.
+                                                        },
+                                                    }
+                                                });
+                                            }
+                                    </script>
+                                    <div class="col-md-6 col-xs-6 col-sm-6">    
+                                        <a href="#" onclick="checkConfirm()" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
+                                        &nbsp; &nbsp; Check Form &nbsp; &nbsp; </a>
+                                    </div>
                                 {% else %}
-                                    <form action="{{request.get_full_path}}/../check" method="POST">
-                                    {% csrf_token %}
-                                    <input type="submit" class="btn btn-success" value="Check Form"/> 
-                                    </form>
+                                    
                                 {% endif %}
-                            {% endif %}
-                    </div> 
+                            {% endif %}                    
                 </div> <!-- End Row -->
+            </div>
             {% endif %}
         </div> <!-- End of Form  -->
         {% if context == "create_new_form" %}
 
         {% else %}
             <div class="row">
-                <div class="col-md-4 section-list">
-                <div class="panel panel-primary">
-                    <div class="panel-heading text-center"> List of Sections  </div>
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1A">Medical Data</a></li>
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1B">Ultrasound Scan Results</a></li>
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1C">Laboratory Test</a></li>                        
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1D">Current smoking habits </a></li>
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1F">Gestational nutrition and medications </a></li>
-                    </ul>
-                </div>
-            </div>
+                
                 {% block form_section %}
                 {% endblock %}
             </div>

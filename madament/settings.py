@@ -25,7 +25,7 @@ SECRET_KEY = 'fxpl^xf9fc-c!zxlpyu^uri6v5le_s4m%%!(h9&fl3hzxinnc&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '192.168.43.98']
+ALLOWED_HOSTS = ['localhost', '192.168.1.6']
 
 
 # Application definition
@@ -134,5 +134,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 ### set session 
 SESSION_SAVE_EVERY_REQUEST = True
-
 SESSION_COOKIE_AGE = 43200

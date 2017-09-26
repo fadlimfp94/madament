@@ -289,7 +289,7 @@
                         <li class="list-group-item">
                             <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
-                        <li class="list-group-item active">
+                        <li class="list-group-item actives">
                             <a href="{{request.get_full_path}}/../section6"> Current Second Hand Smoking Exposure </a> 
                         </li>
                         <li class="list-group-item">
@@ -415,7 +415,9 @@
                             </div>                        
                         </div>
                     
-                        <div class="form-group">                        
+                    </div>
+
+                    <div class="form-group">                        
                         <label> Besides you, is there any other household member who smokes? </label>
                         <div class="radio">                                
                             <label>
@@ -430,6 +432,8 @@
                         <div class="radio">
                             <label>
                             {% if d6.d6m_smoking_household %}
+                            <input type="radio" name="d6m_smoking_household" id="noHouseholdSmoke" value="0">
+                            {% elif d6.d6m_smoking_household == None %}
                             <input type="radio" name="d6m_smoking_household" id="noHouseholdSmoke" value="0">
                             {% else %}
                             <input type="radio" name="d6m_smoking_household" id="noHouseholdSmoke" value="0" checked>
@@ -474,8 +478,7 @@
                                 </label>
                             </div>                        
                         </div>
-                        </div>
-                    </div>    
+                        </div>    
 
                     <div class="form-group">
                         <h4> Father</h4>

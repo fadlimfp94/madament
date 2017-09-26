@@ -49,7 +49,8 @@ def create_form(request, participant_id):
 	if request.method == "POST":
 		a_obj = ABaseLine()
 		a_obj.participant_id = participant_id	
-		a_obj.interviewer_id = request.POST.get('interviewer_id')
+		#a_obj.interviewer_id = request.POST.get('interviewer_id')
+		a_obj.interviewer_id = request.POST.get('interviewer_id').split("/")[0] 
 		a_obj.data_entry_id = request.user.username
 		a_obj.date_admission = request.POST.get('date_admission')
 		a_obj.date_interviewed = request.POST.get('date_interviewed')
@@ -58,7 +59,7 @@ def create_form(request, participant_id):
 		return process_form(request, participant_id, a_obj.id)
 	else:
 		participant = Participant.objects.get(id=int(participant_id))
-		date_admission = participant.date_admission
+		date_admission = participant.date_admission.__str__()
 		staff_list = User.objects.filter(is_staff=False)
 		return render(request, 'forms/form.html', {'staff_list' : staff_list, 'context' : 'create_new_form', 'participant' : participant, 'date_admission' : date_admission})
 
@@ -87,7 +88,9 @@ def create_section1(request, participant_id, form_id):
 		a1_obj.a_form = a_form_obj
 		a1_obj.participant_id = a_form_obj.participant.participant_id
 		a1_obj.created_by = request.user.username
-		a1_obj.edited_by = request.user.username
+		a1_obj.updated_by = request.user.username
+		a1_obj.created_time = datetime.datetime.now()
+		a1_obj.updated_time = datetime.datetime.now()
 		a1_obj = save_section1(a1_obj, request, participant_id, form_id)
 		return show_section1(request, participant_id, form_id, True)	
 	else:
@@ -110,7 +113,7 @@ def show_section1(request, participant_id, form_id, is_save):
 	is_save_all = form.is_save_all	
 	date_interviewed = form.date_interviewed
 	date_data_entered = form.date_data_entered
-	date_admission = form.date_admission
+	date_admission = form.date_admission.__str__()
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
@@ -141,8 +144,7 @@ def show_section1(request, participant_id, form_id, is_save):
 def save_section1(a1_obj, request, participant_id, form_id):
 	a1_obj.a1m_name = request.POST.get('a1m_name')
 	a1_obj.a1m_pob = request.POST.get('a1m_pob')
-	a1_obj.a1m_dob = request.POST.get('a1m_dob')
-	
+	a1_obj.a1m_dob = request.POST.get('a1m_dob')	
 	a1_obj.a1m_residence_street = request.POST.get('a1m_residence_street')
 	a1_obj.a1m_residence_rt = request.POST.get('a1m_residence_rt')
 	a1_obj.a1m_residence_rw = request.POST.get('a1m_residence_rw')
@@ -151,7 +153,7 @@ def save_section1(a1_obj, request, participant_id, form_id):
 	a1_obj.a1m_residence_zipcode = request.POST.get('a1m_residence_zipcode')
 	a1_obj.a1m_moving_date = request.POST.get('a1m_moving_date')
 	d1 = datetime.datetime.strptime(a1_obj.a1m_moving_date, '%Y-%m-%d').date()
-	d2 = datetime.date.today()
+	d2 = datetime.datetime.strptime(a1_obj.a_form.date_interviewed, '%Y-%m-%d').date()
 	a1_obj.a1m_residing_duration = (d2 - d1).days / 30
 	a1_obj.a1m_residential_status = request.POST.get('a1m_residential_status')
 	
@@ -205,7 +207,8 @@ def save_section1(a1_obj, request, participant_id, form_id):
 	a1_obj.a1m_relative_mobile_phone_number = request.POST.get('a1m_relative_mobile_phone_number')
 	
 	a1_obj.a1m_notes = request.POST.get('a1m_notes')
-	a1_obj.edited_by = request.user.username
+	a1_obj.updated_by = request.user.username
+	a1_obj.updated_time = datetime.datetime.now()
 	a1_obj.save()
 	if request.user.is_staff:
 		a1_obj.a_form.is_save_all = True
@@ -232,7 +235,9 @@ def create_section2(request, participant_id, form_id):
 		a2_obj.a_form = a_form_obj
 		a2_obj.participant_id = a_form_obj.participant.participant_id
 		a2_obj.created_by = request.user.username
-		a2_obj.edited_by = request.user.username
+		a2_obj.updated_by = request.user.username
+		a2_obj.created_time = datetime.datetime.now()
+		a2_obj.updated_time = datetime.datetime.now()
 		a2_obj = save_section2(a2_obj, request, participant_id, form_id)
 		return show_section2(request, participant_id, form_id, True)	
 	else:
@@ -255,7 +260,7 @@ def show_section2(request, participant_id, form_id, is_save):
 	is_save_all = form.is_save_all	
 	date_interviewed = form.date_interviewed
 	date_data_entered = form.date_data_entered
-	date_admission = form.date_admission
+	date_admission = form.date_admission.__str__()
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
@@ -282,71 +287,97 @@ def show_section2(request, participant_id, form_id, is_save):
 #@login_required(login_url='core:login')
 def save_section2(a2_obj, request, participant_id, form_id):
 	a2_obj.a2m_working_status = request.POST.get('a2m_working_status')
-	a2_obj.a2m_working_type = request.POST.get('a2m_working_type')
-	
-	if request.POST.get('a2m_working_pregnancy') == '1':
-		a2_obj.a2m_working_pregnancy = True
-		if request.POST.get('a2m_maternal_leave') == "1":
-			if request.POST.get('a2m_maternal_leave_duration'):
-				a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
-			else:
-				a2_obj.a2m_maternal_leave_duration = None
-			a2_obj.a2m_maternal_leave = True
-		else:
-			a2_obj.a2m_maternal_leave_duration = None
-			a2_obj.a2m_maternal_leave = False
-	else:
-		a2_obj.a2m_working_pregnancy = False
+	if request.POST.get('a2m_working_status') == "0":
+		a2_obj.a2m_working_type = ""
+		a2_obj.a2m_working_pregnancy = None
 		a2_obj.a2m_maternal_leave = None
 		a2_obj.a2m_maternal_leave_duration = None
-	
-	a2_obj.a2m_work_street = request.POST.get('a2m_work_street')
-	a2_obj.a2m_work_rt = request.POST.get('a2m_work_rt')
-	a2_obj.a2m_work_rw = request.POST.get('a2m_work_rw')
-	a2_obj.a2m_work_district = request.POST.get('a2m_work_district')
-	a2_obj.a2m_work_city = request.POST.get('a2m_work_city')
-	a2_obj.a2m_work_zipcode = request.POST.get('a2m_work_zip_code')
-	a2_obj.a2m_work_phone_number = request.POST.get('a2m_work_phone')
-	if request.POST.get('a2m_car') == 'on':
-		a2_obj.a2m_travel_by_car = True
-	else:
-		a2_obj.a2m_travel_by_car = False	
-	if request.POST.get('a2m_motorcycle') == 'on':
-		a2_obj.a2m_travel_by_motorcycle = True
-	else:
-		a2_obj.a2m_travel_by_motorcycle = False
-	if request.POST.get('a2m_cycling') == 'on':
-		a2_obj.a2m_travel_by_cycling = True
-	else:
-		a2_obj.a2m_travel_by_cycling = False
-	if request.POST.get('a2m_walking') == 'on':
-		a2_obj.a2m_travel_by_walking = True
-	else:
-		a2_obj.a2m_travel_by_walking = False
-	if request.POST.get('a2m_public') == 'on':
-		a2_obj.a2m_travel_by_public_transport = True
-		a2_obj.a2m_public_transport_type = request.POST.get('a2m_public_transport')
-	else:
-		a2_obj.a2m_travel_by_public_transport = False
+		a2_obj.a2m_work_street = ""
+		a2_obj.a2m_work_rt = ""
+		a2_obj.a2m_work_rw = ""
+		a2_obj.a2m_work_district = ""
+		a2_obj.a2m_work_city = ""
+		a2_obj.a2m_work_zipcode = ""
+		a2_obj.a2m_work_phone_number = ""
+
+		a2_obj.a2m_travel_by_car = None	
+		a2_obj.a2m_travel_by_motorcycle = None
+		a2_obj.a2m_travel_by_cycling = None
+		a2_obj.a2m_travel_by_walking = None
+		a2_obj.a2m_travel_by_public_transport = None
 		a2_obj.a2m_public_transport_type = ""	
-	if request.POST.get('a2m_time_travel'):
-		a2_obj.a2m_work_time_travel = request.POST.get('a2m_time_travel')
-	else:
-		a2_obj.a2m_work_time_travel = None	
-	if request.POST.get('a2m_pollutant') == '1':
-		a2_obj.a2m_is_exposed_to_pollution = True
-	else:
-		a2_obj.a2m_is_exposed_to_pollution = False	
-	if request.POST.get('a2m_working_hours'):	
-		a2_obj.a2m_working_hours = request.POST.get('a2m_working_hours')
-	else:
+		a2_obj.a2m_work_time_travel = None
+		a2_obj.a2m_is_exposed_to_pollution = None	
 		a2_obj.a2m_working_hours = None
-	if request.POST.get('a2m_working_area'):	
-		a2_obj.a2m_working_area = request.POST.get('a2m_working_area')
+		a2_obj.a2m_working_area = ""
+	
 	else:
-		a2_obj.a2m_working_area = ""	
+		a2_obj.a2m_working_type = request.POST.get('a2m_working_type')
+		
+		if request.POST.get('a2m_working_pregnancy') == '1':
+			a2_obj.a2m_working_pregnancy = True
+			if request.POST.get('a2m_maternal_leave') == "1":
+				if request.POST.get('a2m_maternal_leave_duration'):
+					a2_obj.a2m_maternal_leave_duration = request.POST.get('a2m_maternal_leave_duration')
+				else:
+					a2_obj.a2m_maternal_leave_duration = None
+				a2_obj.a2m_maternal_leave = True
+			else:
+				a2_obj.a2m_maternal_leave_duration = None
+				a2_obj.a2m_maternal_leave = False
+		else:
+			a2_obj.a2m_working_pregnancy = False
+			a2_obj.a2m_maternal_leave = None
+			a2_obj.a2m_maternal_leave_duration = None
+		
+		a2_obj.a2m_work_street = request.POST.get('a2m_work_street')
+		a2_obj.a2m_work_rt = request.POST.get('a2m_work_rt')
+		a2_obj.a2m_work_rw = request.POST.get('a2m_work_rw')
+		a2_obj.a2m_work_district = request.POST.get('a2m_work_district')
+		a2_obj.a2m_work_city = request.POST.get('a2m_work_city')
+		a2_obj.a2m_work_zipcode = request.POST.get('a2m_work_zip_code')
+		a2_obj.a2m_work_phone_number = request.POST.get('a2m_work_phone')
+		if request.POST.get('a2m_car') == 'on':
+			a2_obj.a2m_travel_by_car = True
+		else:
+			a2_obj.a2m_travel_by_car = False	
+		if request.POST.get('a2m_motorcycle') == 'on':
+			a2_obj.a2m_travel_by_motorcycle = True
+		else:
+			a2_obj.a2m_travel_by_motorcycle = False
+		if request.POST.get('a2m_cycling') == 'on':
+			a2_obj.a2m_travel_by_cycling = True
+		else:
+			a2_obj.a2m_travel_by_cycling = False
+		if request.POST.get('a2m_walking') == 'on':
+			a2_obj.a2m_travel_by_walking = True
+		else:
+			a2_obj.a2m_travel_by_walking = False
+		if request.POST.get('a2m_public') == 'on':
+			a2_obj.a2m_travel_by_public_transport = True
+			a2_obj.a2m_public_transport_type = request.POST.get('a2m_public_transport')
+		else:
+			a2_obj.a2m_travel_by_public_transport = False
+			a2_obj.a2m_public_transport_type = ""	
+		if request.POST.get('a2m_time_travel'):
+			a2_obj.a2m_work_time_travel = request.POST.get('a2m_time_travel')
+		else:
+			a2_obj.a2m_work_time_travel = None	
+		if request.POST.get('a2m_pollutant') == '1':
+			a2_obj.a2m_is_exposed_to_pollution = True
+		else:
+			a2_obj.a2m_is_exposed_to_pollution = False	
+		if request.POST.get('a2m_working_hours'):	
+			a2_obj.a2m_working_hours = request.POST.get('a2m_working_hours')
+		else:
+			a2_obj.a2m_working_hours = None
+		if request.POST.get('a2m_working_area'):	
+			a2_obj.a2m_working_area = request.POST.get('a2m_working_area')
+		else:
+			a2_obj.a2m_working_area = ""	
 	a2_obj.a2m_notes = request.POST.get('a2m_notes')
-	a2_obj.edited_by = request.user.username
+	a2_obj.updated_by = request.user.username
+	a2_obj.updated_time = datetime.datetime.now()
 	a2_obj.save()
 	if request.user.is_staff:
 		a2_obj.a_form.is_save_all = True
@@ -373,7 +404,9 @@ def create_section3(request, participant_id, form_id):
 		a3_obj.a_form = a_form_obj
 		a3_obj.participant_id = a_form_obj.participant.participant_id
 		a3_obj.created_by = request.user.username
-		a3_obj.edited_by = request.user.username
+		a3_obj.updated_by = request.user.username
+		a3_obj.created_time = datetime.datetime.now()
+		a3_obj.updated_time = datetime.datetime.now()
 		a3_obj = save_section3(a3_obj, request, participant_id, form_id)
 		return show_section3(request, participant_id, form_id, True)	
 	else:
@@ -396,7 +429,7 @@ def show_section3(request, participant_id, form_id, is_save):
 	is_save_all = form.is_save_all	
 	date_interviewed = form.date_interviewed
 	date_data_entered = form.date_data_entered
-	date_admission = form.date_admission
+	date_admission = form.date_admission.__str__()
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
@@ -614,24 +647,32 @@ def save_section3(a3_obj, request, participant_id, form_id):
 	if request.POST.get('a3m_other_desease') != '':
 		a3_obj.a3m_other_disease = True
 		a3_obj.a3m_other_disease_name = request.POST.get('a3m_other_desease')
+		if request.POST.get('a3m_other_fam_mother') == 'on':
+			a3_obj.a3m_other_mother = True
+		else:
+			a3_obj.a3m_other_mother = False
+		
+		if request.POST.get('a3m_other_fam_father') == 'on':
+			a3_obj.a3m_other_father = True
+		else:
+			a3_obj.a3m_other_father = False
+		
+		if request.POST.get('a3m_other_fam_siblings') == 'on':
+			a3_obj.a3m_other_sibling = True
+		else:
+			a3_obj.a3m_other_sibling = False
 	else:
 		a3_obj.a3m_other_disease = False
 		a3_obj.a3m_other_disease_name = ""
-
-	if request.POST.get('a3m_other_fam_mother') == 'on':
-		a3_obj.a3m_other_mother = True
-	else:
 		a3_obj.a3m_other_mother = False
-	if request.POST.get('a3m_other_fam_father') == 'on':
-		a3_obj.a3m_other_father = True
-	else:
 		a3_obj.a3m_other_father = False
-	if request.POST.get('a3m_other_fam_siblings') == 'on':
-		a3_obj.a3m_other_sibling = True
-	else:
-		a3_obj.a3m_other_sibling = False		
+		a3_obj.a3m_other_sibling = False
+
+
+			
 	a3_obj.a3m_notes = request.POST.get('a3m_notes')
-	a3_obj.edited_by = request.user.username
+	a3_obj.updated_by = request.user.username
+	a3_obj.updated_time = datetime.datetime.now()
 	a3_obj.save()
 	if request.user.is_staff:
 		a3_obj.a_form.is_save_all = True
@@ -659,7 +700,9 @@ def create_section4(request, participant_id, form_id):
 		a4_obj.a_form = a_form_obj
 		a4_obj.participant_id = a_form_obj.participant.participant_id
 		a4_obj.created_by = request.user.username
-		a4_obj.edited_by = request.user.username
+		a4_obj.updated_by = request.user.username
+		a4_obj.created_time = datetime.datetime.now()
+		a4_obj.updated_time = datetime.datetime.now()
 		a4_obj = save_section4(a4_obj, request, participant_id, form_id)
 		return show_section4(request, participant_id, form_id, True)	
 	else:
@@ -682,7 +725,7 @@ def show_section4(request, participant_id, form_id, is_save):
 	is_save_all = form.is_save_all	
 	date_interviewed = form.date_interviewed
 	date_data_entered = form.date_data_entered
-	date_admission = form.date_admission
+	date_admission = form.date_admission.__str__()
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
@@ -897,7 +940,8 @@ def save_section4(a4_obj, request, participant_id, form_id):
 
 	
 	a4_obj.a4m_notes = request.POST.get('a4m_notes')
-	a4_obj.edited_by = request.user.username
+	a4_obj.updated_by = request.user.username
+	a4_obj.updated_time = datetime.datetime.now()
 	a4_obj.save()
 	if request.user.is_staff:
 		a4_obj.a_form.is_save_all = True
@@ -923,7 +967,9 @@ def create_section5(request, participant_id, form_id):
 		a5_obj.a_form = a_form_obj
 		a5_obj.participant_id = a_form_obj.participant.participant_id
 		a5_obj.created_by = request.user.username
-		a5_obj.edited_by = request.user.username
+		a5_obj.updated_by = request.user.username
+		a5_obj.created_time = datetime.datetime.now()
+		a5_obj.updated_time = datetime.datetime.now()
 		a5_obj = save_section5(a5_obj, request, participant_id, form_id)
 		return show_section5(request, participant_id, form_id, True)	
 	else:
@@ -946,7 +992,7 @@ def show_section5(request, participant_id, form_id, is_save):
 	is_save_all = form.is_save_all	
 	date_interviewed = form.date_interviewed
 	date_data_entered = form.date_data_entered
-	date_admission = form.date_admission
+	date_admission = form.date_admission.__str__()
 	role = ''
 	if not request.user.is_staff:
 		role = 'staff'
@@ -997,7 +1043,7 @@ def save_section5(a5_obj, request, participant_id, form_id):
 		a5_obj.a5m_mother_smoke_pipes = False
 	
 	### household
-	if request.POST.get('a5m_presmoking_status') != "0" and request.POST.get('a5m_household_smoker') == "1":
+	if request.POST.get('a5m_household_smoker') == "1":
 		a5_obj.a5m_other_member_smoke = True
 		if request.POST.get('a5m_household_smoker_number'):
 			a5_obj.a5m_other_member_smoke_number = request.POST.get('a5m_household_smoker_number')
@@ -1012,8 +1058,12 @@ def save_section5(a5_obj, request, participant_id, form_id):
 		if request.POST.get('a5m_household_presence') == "1":
 			a5_obj.a5m_smoke_in_front_of = True
 		else:
-			a5_obj.a5m_smoke_in_front_of = False
-
+			a5_obj.a5m_smoke_in_front_of = False		
+	elif request.POST.get('a5m_household_smoker') == "0":
+		a5_obj.a5m_other_member_smoke = False
+		a5_obj.a5m_other_member_smoke_number = None
+		a5_obj.a5m_total_cigarretes_per_day = None
+		a5_obj.a5m_smoke_in_front_of = False
 	else:
 		a5_obj.a5m_other_member_smoke = None
 		a5_obj.a5m_other_member_smoke_number = None
@@ -1084,7 +1134,8 @@ def save_section5(a5_obj, request, participant_id, form_id):
 	###
 
 	a5_obj.a5m_notes = request.POST.get('a5m_notes')
-	a5_obj.edited_by = request.user.username
+	a5_obj.updated_by = request.user.username
+	a5_obj.updated_time = datetime.datetime.now()
 	a5_obj.save()
 	if request.user.is_staff:
 		a5_obj.a_form.is_save_all = True

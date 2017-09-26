@@ -5,7 +5,7 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center"> List of Sections  </div>
                             <ul class="list-group">
-                                <li class="list-group-item active">
+                                <li class="list-group-item actives">
                                     <a href="{{request.get_full_path}}/../section1"> 
                                     Mother Demographic Data 
                                     </a>
@@ -111,7 +111,7 @@
                                 <div class="col-md-7 col-sm-7">
                                     <label for="a1m_residing_duration"> How long have your resided in the current address (in month)
                                     </label>
-                                    <input class="form-control" type="number" id= "a1m_residing_duration" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}" placeholder="this field will be filled automatically when saved">
+                                    <input class="form-control" type="number" id= "a1m_residing_duration" name="a1m_residing_duration" value = "{{ a1.a1m_residing_duration }}" placeholder="this field will be filled automatically when saved" readonly>
                                 </div>
                             </div>
                         </div>
@@ -154,11 +154,11 @@
                             <label for="a1m_residence">Previous Residence (if any)</label> <br>
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_1st_start_year"> From</label>
+                                    <label for="a1m_previous_residence_1st_start_year"> From (year)</label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_1st_start_year" value = "{{ a1.a1m_previous_residence_1st_start_year }}" >                                  
                                 </div>
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_1st_end_year"> To</label>
+                                    <label for="a1m_previous_residence_1st_end_year"> To (year)</label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_1st_end_year" value = "{{ a1.a1m_previous_residence_1st_end_year }}" >
                                 </div>
                                 <div class="col-md-3 col-sm-3">
@@ -180,12 +180,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_2nd_start_year"> From</label>                                    
+                                    <label for="a1m_previous_residence_2nd_start_year"> From (year)</label>                                    
                                     <input class="form-control" type="number" name="a1m_previous_residence_2nd_start_year" value = "{{ a1.a1m_previous_residence_2nd_start_year }}" >
                                 </div>
 
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="aa1m_previous_residence_2nd_end_year"> To</label>
+                                    <label for="aa1m_previous_residence_2nd_end_year"> To (year) </label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_2nd_end_year" value = "{{ a1.a1m_previous_residence_2nd_end_year }}" >
                                 </div>
 
@@ -210,12 +210,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_3rd_start_year"> From</label>                                    
+                                    <label for="a1m_previous_residence_3rd_start_year"> From (year) </label>                                    
                                     <input class="form-control" type="number" name="a1m_previous_residence_3rd_start_year" value = "{{ a1.a1m_previous_residence_3rd_start_year }}" >
                                 </div>
 
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_3rd_end_year"> To</label>
+                                    <label for="a1m_previous_residence_3rd_end_year"> To (year) </label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_3rd_end_year" value = "{{ a1.a1m_previous_residence_3rd_end_year }}" >
                                 </div>
 
@@ -240,12 +240,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_4th_start_year"> From</label>                                    
+                                    <label for="a1m_previous_residence_4th_start_year"> From (year)</label>                                    
                                     <input class="form-control" type="number" name="a1m_previous_residence_4th_start_year" value = "{{ a1.a1m_previous_residence_4th_start_year }}" >
                                 </div>
 
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_4th_end_year"> To</label>
+                                    <label for="a1m_previous_residence_4th_end_year"> To (year) </label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_4th_end_year" value = "{{ a1.a1m_previous_residence_4th_end_year }}" >
                                 </div>
 
@@ -270,12 +270,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_5th_start_year"> From</label>                                    
+                                    <label for="a1m_previous_residence_5th_start_year"> From (year) </label>                                    
                                     <input class="form-control" type="number" name="a1m_previous_residence_5th_start_year" value = "{{ a1.a1m_previous_residence_5th_start_year }}" >
                                 </div>
 
                                 <div class="col-md-2 col-sm-2">
-                                    <label for="a1m_previous_residence_5th_end_year"> To</label>
+                                    <label for="a1m_previous_residence_5th_end_year"> To (year) </label>
                                     <input class="form-control" type="number" name="a1m_previous_residence_5th_end_year" value = "{{ a1.a1m_previous_residence_5th_end_year }}" >
                                 </div>
 
@@ -319,7 +319,7 @@
                         <div class="form-group">
                             <label> Education Level </label>
                             <div class="radio">                                
-                                <label>
+                                <label> 
                                     {% if a1.a1m_education_level == "1" %}
                                     <input type="radio" name="a1m_education_level" id="optionsRadios1" value="1" checked required>
                                     {% else %}

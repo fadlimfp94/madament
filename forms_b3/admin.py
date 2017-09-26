@@ -6,6 +6,7 @@ from .models import *
 admin.site.register(B3Pregnancy)
 admin.site.register(B3MedicalData)
 admin.site.register(B3UltrasoundScanResults)
+admin.site.register(B3LaboratoryTest)
 admin.site.register(B3CurrentSmookingHabits)
 admin.site.register(B3PollutanExposure)
 admin.site.register(B3GestationalNutrition)

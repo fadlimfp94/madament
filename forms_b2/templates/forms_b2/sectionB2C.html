@@ -153,7 +153,7 @@
                     <ul class="list-group">
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2A">Medical Data</a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2B">Ultrasound Scan Results</a></li>
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2F">Gestational nutrition and medications </a></li>
@@ -283,7 +283,7 @@
                             {% else %}
                             <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1" required>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
                                     Positive +
                                 </label>
                             </div>
@@ -824,7 +824,7 @@
                                         <div class="form-check">
                                             <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="b3m_cmv" 
-                                            id="noToxoplasma" value="1">
+                                            id="noToxoplasma" value="1" checked>
                                             Ig G
                                             </label>
                                         </div>                                

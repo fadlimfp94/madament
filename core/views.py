@@ -3,13 +3,14 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import update_session_auth_hash
 from .models import *
+import datetime
 
-## Fadli
+## FORMS Fadli
 from forms_a.models import *
 from forms_d.models import *
 ##
 
-##GAMA
+## FORMS GAMA
 from forms_b1.models import *
 from forms_b2.models import *
 from forms_b3.models import *
@@ -22,7 +23,8 @@ def home(request):
 
 @login_required(login_url='core:login')
 def summary(request):
-	if request.user.is_staff:
+	if request.user.is_staff or True: ##kalau mau data entry biasa tidak bisa akses maka hapus or True nya
+		#participants = Participant.objects.filter(active_status=True)
 		participants = Participant.objects.all()
 		summary_list = []
 		number_of_completed_participant = 0
@@ -184,7 +186,7 @@ def summary(request):
 			if form_a_status == "3" and form_b1_status == "3" and form_b2_status == "3" and form_c_all_complete and form_d1_all_complete and form_d2_all_complete and form_d3_all_complete and form_d4_all_complete:
 				number_of_completed_participant = number_of_completed_participant + 1
 
-			summary_list.append([participant.participant_id, participant.name, form_a_status, form_b1_status, form_b2_status, form_b3_status, form_c_status, form_d1_status, form_d2_status, form_d3_status, form_d4_status, participant.id])	
+			summary_list.append([participant.participant_id, participant.name, form_a_status, form_b1_status, form_b2_status, form_b3_status, form_c_status, form_d1_status, form_d2_status, form_d3_status, form_d4_status, participant.id, participant.active_status])	
 		
 		###### end of filling summary_list ######
 
@@ -205,7 +207,9 @@ def create_participant(request):
 	participant_obj.participant_id =  puskesmas_obj.puskesmas_id+format_number(number_of_people+1)
 	participant_obj.puskesmas_id = puskesmas_id
 	participant_obj.created_by = request.user.username
-	participant_obj.edited_by = request.user.username
+	participant_obj.updated_by = request.user.username
+	participant_obj.created_time = datetime.now()
+	participant_obj.updated_time = datetime.now()
 	participant_obj.save()
 	return home(request)
 
@@ -216,6 +220,7 @@ def edit_participant(request, participant_id):
 	participant_obj.name = request.POST.get('participant_name_edit')
 	participant_obj.date_admission = request.POST.get('participant_date_edit')
 	participant_obj.edited_by = request.user.username
+	participant_obj.edited_time = datetime.now()
 	participant_obj.save()
 	return home(request)
 ###
@@ -235,7 +240,7 @@ def redirect_to_forms(request, participant_id):
 
 @login_required(login_url='core:login')
 def participant_list(request):
-	participants = Participant.objects.all()
+	participants = Participant.objects.filter(active_status=True)
 	puskesmas_list = Puskesmas.objects.all()
 	number_of_participants_list = []
 	for puskesmas in puskesmas_list:
@@ -245,9 +250,8 @@ def participant_list(request):
 
 @login_required(login_url='core:login')
 def forms(request, participant_id):
-	#request.session['participant_id'] = participant_id
 	participant = Participant.objects.get(id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/forms.html', {'participant' : participant, 'date_admission' : date_admission})
 
 ##################################
@@ -256,7 +260,7 @@ def forms(request, participant_id):
 def form_a(request, participant_id):
 	participant = Participant.objects.get(id=participant_id)
 	forms = ABaseLine.objects.filter(participant_id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_a.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
@@ -279,7 +283,7 @@ def form_d(request, participant_id, visiting_id):
 		visiting_number = "Fourth"
 	else:
 		raise ValueError("Oops! We can't find the page you are looking for")	
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_d.html', {'child_list' : child_list, 'visiting_number' : visiting_number,'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 
@@ -290,28 +294,29 @@ def form_d(request, participant_id, visiting_id):
 def form_c(request, participant_id):	
 	participant = Participant.objects.get(id=participant_id)
 	forms = CBirth.objects.filter(participant_id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_c.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
 def form_b1(request, participant_id):
 	participant = Participant.objects.get(id=participant_id)
 	forms = B1Pregnancy.objects.filter(participant_id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_b1.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
 def form_b2(request, participant_id):
 	participant = Participant.objects.get(id=participant_id)
 	forms = B2Pregnancy.objects.filter(participant_id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_b2.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
 @login_required(login_url='core:login')
 def form_b3(request, participant_id):
 	participant = Participant.objects.get(id=participant_id)
 	forms = B3Pregnancy.objects.filter(participant_id=participant_id)
-	date_admission = participant.date_admission
+	date_admission = participant.date_admission.__str__()
 	return render(request, 'core/form_b3.html', {'participant' : participant, 'forms' : forms, 'date_admission' : date_admission})
 
-	##################################
+
+##################################

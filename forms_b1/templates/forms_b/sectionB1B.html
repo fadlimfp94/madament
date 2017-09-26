@@ -49,6 +49,20 @@
                 })
             })
             </script>
+
+            <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1A">Medical Data</a></li>
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB1B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div>
+            </div>
             
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
@@ -74,31 +88,31 @@
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Gestational Age ( weeks ) </label>                         
-                            <input class="form-control" type="number" name="b2m_gestat_age"  required placeholder="in weeks" value="{{ b1.b2m_gestat_age }}">
+                            <input class="form-control" type="number" name="b2m_gestat_age" placeholder="in weeks" value="{{ b1.b2m_gestat_age }}">
                         </div>
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Head Circumference ( in cm ) </label>                        
-                            <input class="form-control" type="number" name="b2m_hc" required placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_hc }}">
+                            <input class="form-control" type="number" name="b2m_hc" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_hc }}">
                         </div>
 
                         <div class="form-group">
-                            <label for="a3m_pre_height"> Abdominal circumference ( in cm ) </label>                 <input class="form-control" type="number" name="b2m_ac" required placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_ac }}">
+                            <label for="a3m_pre_height"> Abdominal circumference ( in cm ) </label>                 <input class="form-control" type="number" name="b2m_ac" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_ac }}">
                         </div>
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Biparietal diameter ( in cm ) </label>    
-                            <input class="form-control" type="number" name="b2m_bd" required placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_bd }}">
+                            <input class="form-control" type="number" name="b2m_bd"  placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_bd }}">
                         </div>
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Femur length ( in cm ) </label>                         
-                            <input class="form-control" type="number" name="b2m_fl" required placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_fl }}">
+                            <input class="form-control" type="number" name="b2m_fl" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_fl }}">
                         </div>
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Distensio intercerebellar (in cm)  </label>        
-                            <input class="form-control" type="number" name="b2m_di" required placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_di }}">
+                            <input class="form-control" type="number" name="b2m_di" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_di }}">
                         </div>
 
                         <fieldset class="form-group">
@@ -157,17 +171,22 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a3m_pre_height"> Systolic Velocity (m/s) </label>                   
-                                    <input class="form-control" type="number" name="b2m_SVDoppler" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_SVDoppler }}">
+                                    <input class="form-control" type="number" name="b2m_SVDoppler" placeholder="enter decimal number" step="0.001" value="{{ b1.b2m_SVDoppler }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="a3m_pre_height"> Diastolic (m/s) </label>                         
-                                    <input class="form-control" type="number" name="b2m_DVDoppler" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_DVDoppler }}">
+                                    <input class="form-control" type="number" name="b2m_DVDoppler" placeholder="enter decimal number" step="0.001" value="{{ b1.b2m_DVDoppler }}">
                                 </div>
                             </div>
                         </div> 
+
+                        <div class="form-group">
+                            <label> SD ratio systolic velocity/diastolic velocity </label> 
+                            <input class="form-control" type="number" name="b2m_sd_ratio" placeholder="enter decimal number" step="0.001" value="{{ b1.b2m_sd_ratio }}">
+                        </div>
 
                         <div class="form-group">
                             <label for="a3m_pre_height"> Resistance index of medical cerebral artery (RI MCA) </label> <input class="form-control" type="number" name="b2m_rimca" placeholder="enter decimal number" step="0.01" value="{{ b1.b2m_rimca }}">

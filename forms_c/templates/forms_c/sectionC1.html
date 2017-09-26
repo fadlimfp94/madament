@@ -5,9 +5,8 @@
 
     <script>
 
-        $(document).ready(function(){        
-
-          
+        $(document).ready(function(){    
+       
         $("#noDeliveryCompilation").click(function(){
              $("#deliveryCompilation :input").prop("disabled", true);
              $("#deliveryCompilation").addClass("hidden");
@@ -19,38 +18,31 @@
             $("#deliveryCompilation").removeClass("hidden");
 
         });
-
         $("#noAntibiotics").click(function(){
              $("#receiveAntibiotics :input").prop("disabled", true);
              $("#receiveAntibiotics").addClass("hidden");
         });
-
         $("#yesAntibiotics").click(function(){           
             $("#receiveAntibiotics :input").prop("disabled", false);
             $("#receiveAntibiotics").removeClass("hidden");
         });
-
         $("#noMaternalBlood").click(function(){             
              $("#maternalBloodTest :input").prop("disabled", true);
              $("#maternalBloodTest").addClass("hidden");
         });
-
         $("#yesMaternalBlood").click(function(){           
             $("#maternalBloodTest :input").prop("disabled", false);
             $("#maternalBloodTest").removeClass("hidden");
         });
-
         $("#noVaginalSwab").click(function(){
              $("#vaginalSwab :input").prop("disabled", true);
              $("#vaginalSwab").addClass("hidden");
         });
-
         $("#yesVaginalSwab").click(function(){           
             $("#vaginalSwab :input").prop("disabled", false);
             $("#vaginalSwab").removeClass("hidden");
         });
-
-         $("#NoChorioamnionitiscom").click(function(){
+        $("#NoChorioamnionitiscom").click(function(){
              $("#chorioamnionitiscom :input").prop("disabled", true);
              $("#chorioamnionitiscom").addClass("hidden");
         });
@@ -94,8 +86,6 @@
         </script>
     {% endif %}
 
-
-
     {% if c1.c1m_antibiotics == 0 %}
         <script>
           $(document).ready(function(){
@@ -111,8 +101,6 @@
         });
         </script>
     {% endif %}
-
-    
 
     {% if c1.c1m_chorioamnionitiscom == 0 %}
         <script>
@@ -152,12 +140,23 @@
            $("#form_c :input").prop("disabled", true);           
         });
         </script>    
-    {% endif %}               
+    {% endif %}
+
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../section1">Mother</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../section2" checked>Placental Sampling</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../section3">Infant Data</a></li>                        
+                    </ul>
+                </div>
+            </div>               
 
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                <!-- Tadinya pa-->
-                    <form class="sectionC1-question" action="{{request.get_full_path}}" method="POST" id="form_c">   
+                    <form class="sectionC1-question" action="{{request.get_full_path}}" method="POST" id="form_c">  
                     <h2>Mother</h2>
                     <hr>
                     <input type="hidden" name="context" value="SAVE">
@@ -225,7 +224,7 @@
                             <div class="radio">                                
                                 <label>
                                     {% if c1.c1m_delivery_method == "1" %}
-                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="1" checked required>
+                                    <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="1" checked>
                                     {% else %}                                    
                                     <input type="radio" name="c1m_delivery_method" id="optionsRadios1" value="1" required>
                                     {% endif %}
@@ -261,10 +260,8 @@
                                     {% endif %}
                                     C-section
                                 </label>
-                            </div>                            
-                        
-
-
+                            </div>                          
+           
                         <fieldset class="form-group" id="opsi">
                             <label for="c1m_premature"> Delivery Compilation ? </label>
                              {% if c1.c1m_delivery_compilation == null %}
@@ -308,7 +305,7 @@
                                 {% if c1.c1m_hypertensioncom %}
                                     <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox" checked>
                                 {% else %}
-                                    <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox">       
+                                    <input class="form-check-input" name="c1m_hypertensioncom" type="checkbox">     
                                 {% endif %}
                                 Hypertension
                                 </label>
@@ -433,20 +430,7 @@
                                     {% endif %}
                                     GBS+
                                 </label>
-                            </div>
-
-
-                           <!--  <div class="form-check">
-                                <label class="form-check-label">
-                                {% if c1.c1m_chorioamnionitiscom %}
-                                    <input class="form-check-input" name="c1m_chorioamnionitiscom" type="checkbox" checked>
-                                {% else %}
-                                    <input class="form-check-input" name="c1m_chorioamnionitiscom" type="checkbox">
-                                {% endif %}
-                                    Chorioamnionitis                               
-                                </label>
-                            </div> -->
-
+                            </div>                        
 
                         <div class="form-group">
                             <label> Chorioamnionitis? </label>
@@ -491,7 +475,7 @@
                             {% endif %}                           
                         </div>
 
-                        <div id="chorioamnionitiscom">
+                       
                            <!--  <div class="form-check">
                                 <label class="form-check-label">
                                 {% if c1.c1m_chlinical_diagnosiscom %}
@@ -502,6 +486,7 @@
                                 Presumed/clinical diagnosis                                
                                 </label>
                             </div> -->
+                         <div id="chorioamnionitiscom">
                             <label> Presumed/clinical diagnosis </label>
                             {% if c1.c1m_chlinical_diagnosiscom == null %}
                             <div class="radio">                                
@@ -583,28 +568,17 @@
                                 </label>
                             </div>
                             {% endif %}
-                        </div>
-
-                          <!--   <div class="form-check">
-                                <label class="form-check-label">
-                                    {% if c1.c1m_definite_diagnosiscom %}
-                                    <input class="form-check-input" name="c1m_definite_diagnosiscom" type="checkbox" checked> 
-                                    {% else %}
-                                    <input class="form-check-input" name="c1m_definite_diagnosiscom" type="checkbox">
-                                    {% endif %}
-                                    Definite (proven by pathology findings)
-                                </label>
-                            </div> -->
+                        </div>                        
                        
-                            
+                         
                             <label>Other</label>
                             <input class="form-control" type="text" name="c1m_othercom" 
                             value="{{ c1.c1m_othercom | default_if_none:''}}">                           
                         </div>
 
                         <div class="alert alert-info" role="alert">
-                        <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
-                        #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
+                            <strong>Warning!</strong> Hypertension is defined if there is a persistent systolic blood pressure (BP) of 140 mm Hg or higher, or a diastolic BP of 90 mmHg or higher after 20 weeks of gestation in a women with previously normal blood pressure. 
+                            #Preeclampsia is defined if there is a new onset of hypertension plus proteinuria or, in the absence of proteinuria, any of the following symptoms: new-onset thrombocytopenia, impaired liver function, renal insufficiency, pulmonary edema, or visual or cerebral disturbances
                         </div>
 
 
@@ -670,7 +644,7 @@
                                 {% if c1.c1m_proteinuria == "1" %}
                                 <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1" checked>
                                 {% else %}
-                                <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1" required>
+                                <input type="radio" name="c1m_proteinuria" id="optionsRadios1" value="1">
                                 {% endif %}
                                 Positive +                               
                                 </label>
@@ -797,32 +771,6 @@
                             </div>
                         </div>
 
-
-                           <!--  <fieldset class="form-group">
-                            <label> Sampling of vaginal swab </label>
-                            <div class="form-check">
-                                <label class="form-check-label">                              
-                                
-                                {% if c1.c1m_vaginal_swab %}
-                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0" checked>
-                                {% else %}
-                                 <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="noVaginalSwab" value="0">
-                                 {% endif %}
-                                No
-                                </label>
-                            </div>                                
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                {% if c1.c1m_vaginal_swab %}
-                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1" checked>
-                                {% else %}
-                                <input type="radio" class="form-check-input" name="c1m_vaginal_swab" id="yesVaginalSwab" value="1">
-                                {% endif %}
-                                Yes
-                                </label>
-                            </div>                            
-                            </fieldset> -->
-
                             <fieldset class="form-group">
                                 <label> Sampling of vaginal swab </label>
                                 {% if c1.c1m_vaginal_swab == null %}
@@ -884,16 +832,14 @@
                                 value="">{{ c1.c1m_notes }}</textarea>
                                 {% endif %}
                             </div>
-                            </div>
-                       </form>
-
+                        </div>                      
+                                             
                             {% if is_save_all %}
 
-                            {% else %}
-                                
-                                <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>
-                                
-                            {% endif %}                       
+                            {% else %}                                
+                                <input id="submit_button" type="submit" class="btn btn-info btn-block form-button" value="Save"/>                                
+                            {% endif %} 
+                     </form>                      
                     
                     
                     {% if role != 'staff' %}

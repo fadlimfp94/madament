@@ -33,9 +33,12 @@ class DInfant(models.Model):
 class D1InfantGrowth(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d1c_ur_number = models.CharField(max_length=25, blank=True)
 	d1c_first_name = models.CharField(max_length=25, blank=True)
 	d1c_surname = models.CharField(max_length=25, blank=True)
@@ -76,9 +79,12 @@ class D1InfantGrowth(models.Model):
 class D2InfantFeeding(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d2c_breast_feeding_status = models.NullBooleanField(blank=True)
 	d2c_supplementary_food = models.NullBooleanField(blank=True)
 	d2c_infant_formula = models.NullBooleanField(blank=True)
@@ -97,9 +103,12 @@ class D2InfantFeeding(models.Model):
 class D3InfantCardiovascular(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d3c_date_blood_pressure = models.CharField(max_length=15, blank=True)
 	d3c_examiner_bp = models.CharField(max_length=25, blank=True)
 	d3c_systolic_1st = models.CharField(max_length=25, blank=True)
@@ -114,13 +123,14 @@ class D3InfantCardiovascular(models.Model):
 	d3c_date_echo = models.CharField(max_length=15, blank=True)
 	d3c_examiner_echo = models.CharField(max_length=25, blank=True)
 	CINELOOPS_OBTAINED_STATUS_LIST = (
+						('', ''),
 						('1', '4 chamber view'),
 						('2', '5 chamber view'),
 						('3', 'Parasternal long axis'),
 						('4', 'Short axis view'),		
 	)
 	#d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, default="")
-	d3c_cineloops = models.CharField(max_length=1, blank=True)
+	d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, blank=True)
 	d3c_heart_abnormality = models.NullBooleanField(blank=True)
 	d3c_heart_abnormality_detail = models.CharField(max_length=25, blank=True)
 	d3c_lvidd_1st = models.CharField(max_length=25, blank=True)
@@ -206,9 +216,12 @@ class D3InfantCardiovascular(models.Model):
 class D4InfantLungFunction(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d4c_date_lung = models.CharField(max_length=15, blank=True)
 	d4c_examiner_lung = models.CharField(max_length=25, blank=True)
 	d4c_resistance_1st = models.CharField(max_length=25, blank=True)
@@ -219,10 +232,11 @@ class D4InfantLungFunction(models.Model):
 	d4c_time_constant_2nd = models.CharField(max_length=25, blank=True)
 	d4c_fvc_1st = models.CharField(max_length=25, blank=True)
 	d4c_fvc_2nd = models.CharField(max_length=25, blank=True)
-	d4c_fev_1st = models.CharField(max_length=25, blank=True)
-	d4c_fev_2nd = models.CharField(max_length=25, blank=True)
+	d4c_fev1_1st = models.CharField(max_length=25, blank=True)
+	d4c_fev1_2nd = models.CharField(max_length=25, blank=True)
 	d4c_respiratory_symptom = models.NullBooleanField(blank=True)
 	FREQUENCY_STATUS_LIST = (
+						('', ''),
 						('0', 'Not at all'),
 						('1', 'Once'),
 						('2', 'Twice'),
@@ -230,15 +244,15 @@ class D4InfantLungFunction(models.Model):
 						('4', 'Every day'),		
 	)
 	#d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, default="")
-	d4c_dry_cough = models.CharField(max_length=1, blank=True)
-	d4c_phlegmy_cough = models.CharField(max_length=1, blank=True)
-	d4c_runny_nose = models.CharField(max_length=1, blank=True)
-	d4c_stuffed_nose = models.CharField(max_length=1, blank=True)
-	d4c_wheeze = models.CharField(max_length=1, blank=True)
-	d4c_breath_shortness = models.CharField(max_length=1, blank=True)
-	d4c_rattly_chest = models.CharField(max_length=1, blank=True)
-	d4c_snoring = models.CharField(max_length=1, blank=True)
-	d4c_stridor = models.CharField(max_length=1, blank=True)
+	d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_phlegmy_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_runny_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stuffed_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_wheeze = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_breath_shortness = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_rattly_chest = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_snoring = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stridor = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
 	d4_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
@@ -246,13 +260,16 @@ class D4InfantLungFunction(models.Model):
 class D5InfantBiological(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d5c_blood = models.NullBooleanField(blank=True)
 	d5c_blood_date = models.CharField(max_length=15, blank=True)
-	d5c_buccal_swab = models.NullBooleanField(blank=True)
-	d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
+	# d5c_buccal_swab = models.NullBooleanField(blank=True)
+	# d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_1 = models.NullBooleanField(blank=True)
 	d5c_hair_1_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_6 = models.NullBooleanField(blank=True)
@@ -274,22 +291,27 @@ class D5InfantBiological(models.Model):
 class D6CurrentSmoking(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	SMOKING_STATUS_LIST = (
+					('', ''),
 					('1', 'Smoker'),
 					('2', 'Ex-smoker'),
 					('0', 'Never smoke'),
 		)
 	SMOKING_FREQUENCY_LIST = (
+						('', ''),
 						('1','Daily'),
 						('2','Weekly'),
 						('3', 'Monthly'),
 						('0','Never'),
 		)
 	#d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, default="")
-	d6m_smoking_status = models.CharField(max_length=1, blank=True)
+	d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6m_quitting_smoke = models.NullBooleanField(blank=True)
 	d6m_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6m_cigar_number = models.CharField(max_length=15, blank=True)
@@ -299,11 +321,11 @@ class D6CurrentSmoking(models.Model):
 	d6m_household_cigar_number = models.CharField(max_length=15, blank=True)
 	d6m_household_presence = models.NullBooleanField(blank=True)
 
-	d6f_smoking_status = models.CharField(max_length=1, blank=True)
+	d6f_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6f_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6f_cigar_number = models.CharField(max_length=15, blank=True)
 	d6f_cigar_type = models.NullBooleanField(blank=True)
-	d6f_smoking_frequency = models.CharField(max_length=1, blank=True)
+	d6f_smoking_frequency = models.CharField(choices=SMOKING_FREQUENCY_LIST, max_length=1, blank=True)
 	d6f_smoking_presence = models.NullBooleanField(blank=True)
 	d6_notes = models.TextField(blank=True)
 	def __str__(self):
@@ -312,9 +334,12 @@ class D6CurrentSmoking(models.Model):
 class D7Infection(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d7c_infection = models.NullBooleanField(blank=True)
 	d7c_infection_upper_respi = models.NullBooleanField(blank=True)
 	d7c_infection_lower_respi = models.NullBooleanField(blank=True)
@@ -327,7 +352,7 @@ class D7Infection(models.Model):
 	d7c_infection_others_detail = models.CharField(max_length=25, blank=True)
 	d7c_infection_unknown = models.NullBooleanField(blank=True)
 	d7c_physician_clinic = models.CharField(max_length=25, blank=True)
-	d7c_contact = models.CharField(max_length=25, blank=True)
+	#d7c_contact = models.CharField(max_length=25, blank=True)
 	d7c_infection_symptoms = models.NullBooleanField(blank=True)
 	d7c_symptoms_respi = models.NullBooleanField(blank=True)
 	d7c_symptoms_gastro = models.NullBooleanField(blank=True)
@@ -340,13 +365,14 @@ class D7Infection(models.Model):
 	d7c_physician = models.CharField(max_length=25, blank=True)
 	d7c_hospital_contact = models.CharField(max_length=25, blank=True)
 	WARD_STATUS_LIST = (
+						('', ''),
 						('1','Emergency room only'),
 						('2','One day care'),
 						('3', 'General Ward'),
 						('4','High care/intensive care'),
 		)
 	#d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, default="")
-	d7c_ward = models.CharField(max_length=1, blank=True)
+	d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, blank=True)
 	d7c_additional_test = models.NullBooleanField(blank=True)
 	d7c_blood_test = models.NullBooleanField(blank=True)
 	d7c_blood_count = models.NullBooleanField(blank=True)
@@ -354,6 +380,7 @@ class D7Infection(models.Model):
 	d7c_procalcitonin = models.NullBooleanField(blank=True)
 	d7c_blood_culture = models.NullBooleanField(blank=True)
 	d7c_blood_culture_date = models.CharField(max_length=15, blank=True)
+	d7c_blood_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_blood_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_typhoid = models.NullBooleanField(blank=True)
 	d7c_dengue_ns_1 = models.NullBooleanField(blank=True)
@@ -364,12 +391,17 @@ class D7Infection(models.Model):
 	d7c_urinalysis_date = models.CharField(max_length=15, blank=True)
 	d7c_urine_culture = models.NullBooleanField(blank=True)
 	d7c_urine_date = models.CharField(max_length=15, blank=True)
+	d7c_urine_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_urine_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_csf = models.NullBooleanField(blank=True)
 	d7c_csf_date = models.CharField(max_length=15, blank=True)
+	d7c_csf_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_csf_microorganism = models.CharField(max_length=25, blank=True)
+	d7c_faecal_analysis = models.NullBooleanField(blank=True)
+	d7c_faecal_analysis_date = models.CharField(max_length=15, blank=True)
 	d7c_faecal_culture = models.NullBooleanField(blank=True)
 	d7c_faecal_date = models.CharField(max_length=15, blank=True)
+	d7c_faecal_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_faecal_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_chest_xray = models.NullBooleanField(blank=True)
 	d7c_chest_xray_findings = models.CharField(max_length=25, blank=True)
@@ -413,9 +445,12 @@ class D7Infection(models.Model):
 class D8PollutantExposure(models.Model):
 	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d8m_charcoal = models.NullBooleanField(blank=True)
 	d8m_kerosene = models.NullBooleanField(blank=True)
 	d8m_wood = models.NullBooleanField(blank=True)
@@ -426,26 +461,28 @@ class D8PollutantExposure(models.Model):
 	d8m_cooking_exhaust = models.NullBooleanField(blank=True)
 	d8m_pesticide = models.NullBooleanField(blank=True)	
 	GARBAGE_BURNING_STATUS_LIST = (
+						('', ''),
 						('0','No'),
 						('1','Once per week or less'),
 						('2', 'More than once per week but not daily'),
 						('3','Daily'),
 		)
 	#d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, default="")
-	d8m_garbage_burning = models.CharField(max_length=1, blank=True)
+	d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, blank=True)
 	d8m_pet = models.NullBooleanField(blank=True)
+	d8m_pet_detail = models.CharField(max_length=25, blank=True)
 	HOUSING_TYPE_LIST = (
+						('', ''),
 						('1','Landed House'),
 						('2', 'Flat/Apartment'),
 		)
-	#d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, default="")
-	d8m_housing_type = models.CharField(max_length=1, blank=True)
+	d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, blank=True)
 	LANDED_HOUSE_TYPE_LIST = (
+						('', ''),
 						('1','One story building'),
 						('2', 'More than one story building'),
 		)
-	#d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, default="")
-	d8m_landed_house_type = models.CharField(max_length=1, blank=True)
+	d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, blank=True)
 	d8m_apartment_level_number = models.CharField(max_length=15, blank=True)
 	d8m_dampness_house = models.NullBooleanField(blank=True)
 	d8m_ac = models.NullBooleanField(blank=True)
@@ -494,11 +531,14 @@ class DInfant2(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", participant_name : "+unicode(self.participant.name )+ ", child_name : "+unicode(self.child_name )+ ", interviewer_id : "+unicode(self.interviewer_id )+ ", data_entry_id : "+unicode(self.data_entry_id )+ ", is_save_all : "+unicode(self.is_save_all )+ ", date_data_checked : "+ unicode(self.date_data_checked )+"]"
 
 class D1InfantGrowth2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d1c_ur_number = models.CharField(max_length=25, blank=True)
 	d1c_first_name = models.CharField(max_length=25, blank=True)
 	d1c_surname = models.CharField(max_length=25, blank=True)
@@ -537,11 +577,14 @@ class D1InfantGrowth2(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D2InfantFeeding2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d2c_breast_feeding_status = models.NullBooleanField(blank=True)
 	d2c_supplementary_food = models.NullBooleanField(blank=True)
 	d2c_infant_formula = models.NullBooleanField(blank=True)
@@ -558,11 +601,14 @@ class D2InfantFeeding2(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D3InfantCardiovascular2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d3c_date_blood_pressure = models.CharField(max_length=15, blank=True)
 	d3c_examiner_bp = models.CharField(max_length=25, blank=True)
 	d3c_systolic_1st = models.CharField(max_length=25, blank=True)
@@ -577,13 +623,14 @@ class D3InfantCardiovascular2(models.Model):
 	d3c_date_echo = models.CharField(max_length=15, blank=True)
 	d3c_examiner_echo = models.CharField(max_length=25, blank=True)
 	CINELOOPS_OBTAINED_STATUS_LIST = (
+						('', ''),
 						('1', '4 chamber view'),
 						('2', '5 chamber view'),
 						('3', 'Parasternal long axis'),
 						('4', 'Short axis view'),		
 	)
 	#d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, default="")
-	d3c_cineloops = models.CharField(max_length=1, blank=True)
+	d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, blank=True)
 	d3c_heart_abnormality = models.NullBooleanField(blank=True)
 	d3c_heart_abnormality_detail = models.CharField(max_length=25, blank=True)
 	d3c_lvidd_1st = models.CharField(max_length=25, blank=True)
@@ -667,11 +714,14 @@ class D3InfantCardiovascular2(models.Model):
 
 
 class D4InfantLungFunction2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d4c_date_lung = models.CharField(max_length=15, blank=True)
 	d4c_examiner_lung = models.CharField(max_length=25, blank=True)
 	d4c_resistance_1st = models.CharField(max_length=25, blank=True)
@@ -682,10 +732,11 @@ class D4InfantLungFunction2(models.Model):
 	d4c_time_constant_2nd = models.CharField(max_length=25, blank=True)
 	d4c_fvc_1st = models.CharField(max_length=25, blank=True)
 	d4c_fvc_2nd = models.CharField(max_length=25, blank=True)
-	d4c_fev_1st = models.CharField(max_length=25, blank=True)
-	d4c_fev_2nd = models.CharField(max_length=25, blank=True)
+	d4c_fev1_1st = models.CharField(max_length=25, blank=True)
+	d4c_fev1_2nd = models.CharField(max_length=25, blank=True)
 	d4c_respiratory_symptom = models.NullBooleanField(blank=True)
 	FREQUENCY_STATUS_LIST = (
+						('', ''),
 						('0', 'Not at all'),
 						('1', 'Once'),
 						('2', 'Twice'),
@@ -693,29 +744,32 @@ class D4InfantLungFunction2(models.Model):
 						('4', 'Every day'),		
 	)
 	#d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, default="")
-	d4c_dry_cough = models.CharField(max_length=1, blank=True)
-	d4c_phlegmy_cough = models.CharField(max_length=1, blank=True)
-	d4c_runny_nose = models.CharField(max_length=1, blank=True)
-	d4c_stuffed_nose = models.CharField(max_length=1, blank=True)
-	d4c_wheeze = models.CharField(max_length=1, blank=True)
-	d4c_breath_shortness = models.CharField(max_length=1, blank=True)
-	d4c_rattly_chest = models.CharField(max_length=1, blank=True)
-	d4c_snoring = models.CharField(max_length=1, blank=True)
-	d4c_stridor = models.CharField(max_length=1, blank=True)
+	d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_phlegmy_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_runny_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stuffed_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_wheeze = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_breath_shortness = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_rattly_chest = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_snoring = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stridor = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
 	d4_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D5InfantBiological2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d5c_blood = models.NullBooleanField(blank=True)
 	d5c_blood_date = models.CharField(max_length=15, blank=True)
-	d5c_buccal_swab = models.NullBooleanField(blank=True)
-	d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
+	# d5c_buccal_swab = models.NullBooleanField(blank=True)
+	# d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_1 = models.NullBooleanField(blank=True)
 	d5c_hair_1_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_6 = models.NullBooleanField(blank=True)
@@ -735,24 +789,29 @@ class D5InfantBiological2(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D6CurrentSmoking2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	SMOKING_STATUS_LIST = (
+					('', ''),
 					('1', 'Smoker'),
 					('2', 'Ex-smoker'),
 					('0', 'Never smoke'),
 		)
 	SMOKING_FREQUENCY_LIST = (
+						('', ''),
 						('1','Daily'),
 						('2','Weekly'),
 						('3', 'Monthly'),
 						('0','Never'),
 		)
 	#d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, default="")
-	d6m_smoking_status = models.CharField(max_length=1, blank=True)
+	d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6m_quitting_smoke = models.NullBooleanField(blank=True)
 	d6m_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6m_cigar_number = models.CharField(max_length=15, blank=True)
@@ -762,22 +821,25 @@ class D6CurrentSmoking2(models.Model):
 	d6m_household_cigar_number = models.CharField(max_length=15, blank=True)
 	d6m_household_presence = models.NullBooleanField(blank=True)
 
-	d6f_smoking_status = models.CharField(max_length=1, blank=True)
+	d6f_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6f_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6f_cigar_number = models.CharField(max_length=15, blank=True)
 	d6f_cigar_type = models.NullBooleanField(blank=True)
-	d6f_smoking_frequency = models.CharField(max_length=1, blank=True)
+	d6f_smoking_frequency = models.CharField(choices=SMOKING_FREQUENCY_LIST, max_length=1, blank=True)
 	d6f_smoking_presence = models.NullBooleanField(blank=True)
 	d6_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D7Infection2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d7c_infection = models.NullBooleanField(blank=True)
 	d7c_infection_upper_respi = models.NullBooleanField(blank=True)
 	d7c_infection_lower_respi = models.NullBooleanField(blank=True)
@@ -790,7 +852,7 @@ class D7Infection2(models.Model):
 	d7c_infection_others_detail = models.CharField(max_length=25, blank=True)
 	d7c_infection_unknown = models.NullBooleanField(blank=True)
 	d7c_physician_clinic = models.CharField(max_length=25, blank=True)
-	d7c_contact = models.CharField(max_length=25, blank=True)
+	#d7c_contact = models.CharField(max_length=25, blank=True)
 	d7c_infection_symptoms = models.NullBooleanField(blank=True)
 	d7c_symptoms_respi = models.NullBooleanField(blank=True)
 	d7c_symptoms_gastro = models.NullBooleanField(blank=True)
@@ -803,13 +865,14 @@ class D7Infection2(models.Model):
 	d7c_physician = models.CharField(max_length=25, blank=True)
 	d7c_hospital_contact = models.CharField(max_length=25, blank=True)
 	WARD_STATUS_LIST = (
+						('', ''),
 						('1','Emergency room only'),
 						('2','One day care'),
 						('3', 'General Ward'),
 						('4','High care/intensive care'),
 		)
 	#d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, default="")
-	d7c_ward = models.CharField(max_length=1, blank=True)
+	d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, blank=True)
 	d7c_additional_test = models.NullBooleanField(blank=True)
 	d7c_blood_test = models.NullBooleanField(blank=True)
 	d7c_blood_count = models.NullBooleanField(blank=True)
@@ -817,6 +880,7 @@ class D7Infection2(models.Model):
 	d7c_procalcitonin = models.NullBooleanField(blank=True)
 	d7c_blood_culture = models.NullBooleanField(blank=True)
 	d7c_blood_culture_date = models.CharField(max_length=15, blank=True)
+	d7c_blood_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_blood_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_typhoid = models.NullBooleanField(blank=True)
 	d7c_dengue_ns_1 = models.NullBooleanField(blank=True)
@@ -827,12 +891,17 @@ class D7Infection2(models.Model):
 	d7c_urinalysis_date = models.CharField(max_length=15, blank=True)
 	d7c_urine_culture = models.NullBooleanField(blank=True)
 	d7c_urine_date = models.CharField(max_length=15, blank=True)
+	d7c_urine_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_urine_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_csf = models.NullBooleanField(blank=True)
 	d7c_csf_date = models.CharField(max_length=15, blank=True)
+	d7c_csf_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_csf_microorganism = models.CharField(max_length=25, blank=True)
+	d7c_faecal_analysis = models.NullBooleanField(blank=True)
+	d7c_faecal_analysis_date = models.CharField(max_length=15, blank=True)
 	d7c_faecal_culture = models.NullBooleanField(blank=True)
 	d7c_faecal_date = models.CharField(max_length=15, blank=True)
+	d7c_faecal_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_faecal_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_chest_xray = models.NullBooleanField(blank=True)
 	d7c_chest_xray_findings = models.CharField(max_length=25, blank=True)
@@ -874,11 +943,14 @@ class D7Infection2(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D8PollutantExposure2(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant2, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d8m_charcoal = models.NullBooleanField(blank=True)
 	d8m_kerosene = models.NullBooleanField(blank=True)
 	d8m_wood = models.NullBooleanField(blank=True)
@@ -889,26 +961,30 @@ class D8PollutantExposure2(models.Model):
 	d8m_cooking_exhaust = models.NullBooleanField(blank=True)
 	d8m_pesticide = models.NullBooleanField(blank=True)	
 	GARBAGE_BURNING_STATUS_LIST = (
+						('', ''),
 						('0','No'),
 						('1','Once per week or less'),
 						('2', 'More than once per week but not daily'),
 						('3','Daily'),
 		)
 	#d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, default="")
-	d8m_garbage_burning = models.CharField(max_length=1, blank=True)
+	d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, blank=True)
 	d8m_pet = models.NullBooleanField(blank=True)
+	d8m_pet_detail = models.CharField(max_length=25, blank=True)
 	HOUSING_TYPE_LIST = (
+						('', ''),
 						('1','Landed House'),
 						('2', 'Flat/Apartment'),
 		)
 	#d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, default="")
-	d8m_housing_type = models.CharField(max_length=1, blank=True)
+	d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, blank=True)
 	LANDED_HOUSE_TYPE_LIST = (
+						('', ''),
 						('1','One story building'),
 						('2', 'More than one story building'),
 		)
 	#d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, default="")
-	d8m_landed_house_type = models.CharField(max_length=1, blank=True)
+	d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, blank=True)
 	d8m_apartment_level_number = models.CharField(max_length=15, blank=True)
 	d8m_dampness_house = models.NullBooleanField(blank=True)
 	d8m_ac = models.NullBooleanField(blank=True)
@@ -957,11 +1033,14 @@ class DInfant3(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", participant_name : "+unicode(self.participant.name )+ ", child_name : "+unicode(self.child_name )+ ", interviewer_id : "+unicode(self.interviewer_id )+ ", data_entry_id : "+unicode(self.data_entry_id )+ ", is_save_all : "+unicode(self.is_save_all )+ ", date_data_checked : "+ unicode(self.date_data_checked )+"]"
 
 class D1InfantGrowth3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d1c_ur_number = models.CharField(max_length=25, blank=True)
 	d1c_first_name = models.CharField(max_length=25, blank=True)
 	d1c_surname = models.CharField(max_length=25, blank=True)
@@ -1000,11 +1079,14 @@ class D1InfantGrowth3(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D2InfantFeeding3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d2c_breast_feeding_status = models.NullBooleanField(blank=True)
 	d2c_supplementary_food = models.NullBooleanField(blank=True)
 	d2c_infant_formula = models.NullBooleanField(blank=True)
@@ -1021,11 +1103,14 @@ class D2InfantFeeding3(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D3InfantCardiovascular3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d3c_date_blood_pressure = models.CharField(max_length=15, blank=True)
 	d3c_examiner_bp = models.CharField(max_length=25, blank=True)
 	d3c_systolic_1st = models.CharField(max_length=25, blank=True)
@@ -1040,13 +1125,14 @@ class D3InfantCardiovascular3(models.Model):
 	d3c_date_echo = models.CharField(max_length=15, blank=True)
 	d3c_examiner_echo = models.CharField(max_length=25, blank=True)
 	CINELOOPS_OBTAINED_STATUS_LIST = (
+						('', ''),
 						('1', '4 chamber view'),
 						('2', '5 chamber view'),
 						('3', 'Parasternal long axis'),
 						('4', 'Short axis view'),		
 	)
 	#d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, default="")
-	d3c_cineloops = models.CharField(max_length=1, blank=True)
+	d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, blank=True)
 	d3c_heart_abnormality = models.NullBooleanField(blank=True)
 	d3c_heart_abnormality_detail = models.CharField(max_length=25, blank=True)
 	d3c_lvidd_1st = models.CharField(max_length=25, blank=True)
@@ -1130,11 +1216,14 @@ class D3InfantCardiovascular3(models.Model):
 
 
 class D4InfantLungFunction3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d4c_date_lung = models.CharField(max_length=15, blank=True)
 	d4c_examiner_lung = models.CharField(max_length=25, blank=True)
 	d4c_resistance_1st = models.CharField(max_length=25, blank=True)
@@ -1145,10 +1234,11 @@ class D4InfantLungFunction3(models.Model):
 	d4c_time_constant_2nd = models.CharField(max_length=25, blank=True)
 	d4c_fvc_1st = models.CharField(max_length=25, blank=True)
 	d4c_fvc_2nd = models.CharField(max_length=25, blank=True)
-	d4c_fev_1st = models.CharField(max_length=25, blank=True)
-	d4c_fev_2nd = models.CharField(max_length=25, blank=True)
+	d4c_fev1_1st = models.CharField(max_length=25, blank=True)
+	d4c_fev1_2nd = models.CharField(max_length=25, blank=True)
 	d4c_respiratory_symptom = models.NullBooleanField(blank=True)
 	FREQUENCY_STATUS_LIST = (
+						('', ''),
 						('0', 'Not at all'),
 						('1', 'Once'),
 						('2', 'Twice'),
@@ -1156,29 +1246,32 @@ class D4InfantLungFunction3(models.Model):
 						('4', 'Every day'),		
 	)
 	#d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, default="")
-	d4c_dry_cough = models.CharField(max_length=1, blank=True)
-	d4c_phlegmy_cough = models.CharField(max_length=1, blank=True)
-	d4c_runny_nose = models.CharField(max_length=1, blank=True)
-	d4c_stuffed_nose = models.CharField(max_length=1, blank=True)
-	d4c_wheeze = models.CharField(max_length=1, blank=True)
-	d4c_breath_shortness = models.CharField(max_length=1, blank=True)
-	d4c_rattly_chest = models.CharField(max_length=1, blank=True)
-	d4c_snoring = models.CharField(max_length=1, blank=True)
-	d4c_stridor = models.CharField(max_length=1, blank=True)
+	d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_phlegmy_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_runny_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stuffed_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_wheeze = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_breath_shortness = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_rattly_chest = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_snoring = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stridor = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
 	d4_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D5InfantBiological3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d5c_blood = models.NullBooleanField(blank=True)
 	d5c_blood_date = models.CharField(max_length=15, blank=True)
-	d5c_buccal_swab = models.NullBooleanField(blank=True)
-	d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
+	# d5c_buccal_swab = models.NullBooleanField(blank=True)
+	# d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_1 = models.NullBooleanField(blank=True)
 	d5c_hair_1_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_6 = models.NullBooleanField(blank=True)
@@ -1198,24 +1291,29 @@ class D5InfantBiological3(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D6CurrentSmoking3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	SMOKING_STATUS_LIST = (
+					('', ''),
 					('1', 'Smoker'),
 					('2', 'Ex-smoker'),
 					('0', 'Never smoke'),
 		)
 	SMOKING_FREQUENCY_LIST = (
+						('', ''),
 						('1','Daily'),
 						('2','Weekly'),
 						('3', 'Monthly'),
 						('0','Never'),
 		)
 	#d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, default="")
-	d6m_smoking_status = models.CharField(max_length=1, blank=True)
+	d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6m_quitting_smoke = models.NullBooleanField(blank=True)
 	d6m_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6m_cigar_number = models.CharField(max_length=15, blank=True)
@@ -1225,22 +1323,25 @@ class D6CurrentSmoking3(models.Model):
 	d6m_household_cigar_number = models.CharField(max_length=15, blank=True)
 	d6m_household_presence = models.NullBooleanField(blank=True)
 
-	d6f_smoking_status = models.CharField(max_length=1, blank=True)
+	d6f_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6f_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6f_cigar_number = models.CharField(max_length=15, blank=True)
 	d6f_cigar_type = models.NullBooleanField(blank=True)
-	d6f_smoking_frequency = models.CharField(max_length=1, blank=True)
+	d6f_smoking_frequency = models.CharField(choices=SMOKING_FREQUENCY_LIST, max_length=1, blank=True)
 	d6f_smoking_presence = models.NullBooleanField(blank=True)
 	d6_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D7Infection3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d7c_infection = models.NullBooleanField(blank=True)
 	d7c_infection_upper_respi = models.NullBooleanField(blank=True)
 	d7c_infection_lower_respi = models.NullBooleanField(blank=True)
@@ -1253,7 +1354,7 @@ class D7Infection3(models.Model):
 	d7c_infection_others_detail = models.CharField(max_length=25, blank=True)
 	d7c_infection_unknown = models.NullBooleanField(blank=True)
 	d7c_physician_clinic = models.CharField(max_length=25, blank=True)
-	d7c_contact = models.CharField(max_length=25, blank=True)
+	#d7c_contact = models.CharField(max_length=25, blank=True)
 	d7c_infection_symptoms = models.NullBooleanField(blank=True)
 	d7c_symptoms_respi = models.NullBooleanField(blank=True)
 	d7c_symptoms_gastro = models.NullBooleanField(blank=True)
@@ -1266,13 +1367,14 @@ class D7Infection3(models.Model):
 	d7c_physician = models.CharField(max_length=25, blank=True)
 	d7c_hospital_contact = models.CharField(max_length=25, blank=True)
 	WARD_STATUS_LIST = (
+						('', ''),
 						('1','Emergency room only'),
 						('2','One day care'),
 						('3', 'General Ward'),
 						('4','High care/intensive care'),
 		)
 	#d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, default="")
-	d7c_ward = models.CharField(max_length=1, blank=True)
+	d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, blank=True)
 	d7c_additional_test = models.NullBooleanField(blank=True)
 	d7c_blood_test = models.NullBooleanField(blank=True)
 	d7c_blood_count = models.NullBooleanField(blank=True)
@@ -1280,6 +1382,7 @@ class D7Infection3(models.Model):
 	d7c_procalcitonin = models.NullBooleanField(blank=True)
 	d7c_blood_culture = models.NullBooleanField(blank=True)
 	d7c_blood_culture_date = models.CharField(max_length=15, blank=True)
+	d7c_blood_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_blood_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_typhoid = models.NullBooleanField(blank=True)
 	d7c_dengue_ns_1 = models.NullBooleanField(blank=True)
@@ -1290,12 +1393,17 @@ class D7Infection3(models.Model):
 	d7c_urinalysis_date = models.CharField(max_length=15, blank=True)
 	d7c_urine_culture = models.NullBooleanField(blank=True)
 	d7c_urine_date = models.CharField(max_length=15, blank=True)
+	d7c_urine_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_urine_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_csf = models.NullBooleanField(blank=True)
 	d7c_csf_date = models.CharField(max_length=15, blank=True)
+	d7c_csf_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_csf_microorganism = models.CharField(max_length=25, blank=True)
+	d7c_faecal_analysis = models.NullBooleanField(blank=True)
+	d7c_faecal_analysis_date = models.CharField(max_length=15, blank=True)
 	d7c_faecal_culture = models.NullBooleanField(blank=True)
 	d7c_faecal_date = models.CharField(max_length=15, blank=True)
+	d7c_faecal_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_faecal_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_chest_xray = models.NullBooleanField(blank=True)
 	d7c_chest_xray_findings = models.CharField(max_length=25, blank=True)
@@ -1337,11 +1445,14 @@ class D7Infection3(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D8PollutantExposure3(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant3, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d8m_charcoal = models.NullBooleanField(blank=True)
 	d8m_kerosene = models.NullBooleanField(blank=True)
 	d8m_wood = models.NullBooleanField(blank=True)
@@ -1352,26 +1463,30 @@ class D8PollutantExposure3(models.Model):
 	d8m_cooking_exhaust = models.NullBooleanField(blank=True)
 	d8m_pesticide = models.NullBooleanField(blank=True)	
 	GARBAGE_BURNING_STATUS_LIST = (
+						('', ''),
 						('0','No'),
 						('1','Once per week or less'),
 						('2', 'More than once per week but not daily'),
 						('3','Daily'),
 		)
 	#d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, default="")
-	d8m_garbage_burning = models.CharField(max_length=1, blank=True)
+	d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, blank=True)
 	d8m_pet = models.NullBooleanField(blank=True)
+	d8m_pet_detail = models.CharField(max_length=25, blank=True)
 	HOUSING_TYPE_LIST = (
+						('', ''),
 						('1','Landed House'),
 						('2', 'Flat/Apartment'),
 		)
 	#d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, default="")
-	d8m_housing_type = models.CharField(max_length=1, blank=True)
+	d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, blank=True)
 	LANDED_HOUSE_TYPE_LIST = (
+						('', ''),
 						('1','One story building'),
 						('2', 'More than one story building'),
 		)
 	#d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, default="")
-	d8m_landed_house_type = models.CharField(max_length=1, blank=True)
+	d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, blank=True)
 	d8m_apartment_level_number = models.CharField(max_length=15, blank=True)
 	d8m_dampness_house = models.NullBooleanField(blank=True)
 	d8m_ac = models.NullBooleanField(blank=True)
@@ -1420,11 +1535,14 @@ class DInfant4(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", participant_name : "+unicode(self.participant.name )+ ", child_name : "+unicode(self.child_name )+ ", interviewer_id : "+unicode(self.interviewer_id )+ ", data_entry_id : "+unicode(self.data_entry_id )+ ", is_save_all : "+unicode(self.is_save_all )+ ", date_data_checked : "+ unicode(self.date_data_checked )+"]"
 
 class D1InfantGrowth4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d1c_ur_number = models.CharField(max_length=25, blank=True)
 	d1c_first_name = models.CharField(max_length=25, blank=True)
 	d1c_surname = models.CharField(max_length=25, blank=True)
@@ -1463,11 +1581,14 @@ class D1InfantGrowth4(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D2InfantFeeding4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d2c_breast_feeding_status = models.NullBooleanField(blank=True)
 	d2c_supplementary_food = models.NullBooleanField(blank=True)
 	d2c_infant_formula = models.NullBooleanField(blank=True)
@@ -1484,11 +1605,14 @@ class D2InfantFeeding4(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D3InfantCardiovascular4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d3c_date_blood_pressure = models.CharField(max_length=15, blank=True)
 	d3c_examiner_bp = models.CharField(max_length=25, blank=True)
 	d3c_systolic_1st = models.CharField(max_length=25, blank=True)
@@ -1503,13 +1627,14 @@ class D3InfantCardiovascular4(models.Model):
 	d3c_date_echo = models.CharField(max_length=15, blank=True)
 	d3c_examiner_echo = models.CharField(max_length=25, blank=True)
 	CINELOOPS_OBTAINED_STATUS_LIST = (
+						('', ''),
 						('1', '4 chamber view'),
 						('2', '5 chamber view'),
 						('3', 'Parasternal long axis'),
 						('4', 'Short axis view'),		
 	)
 	#d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, default="")
-	d3c_cineloops = models.CharField(max_length=1, blank=True)
+	d3c_cineloops = models.CharField(choices=CINELOOPS_OBTAINED_STATUS_LIST, max_length=1, blank=True)
 	d3c_heart_abnormality = models.NullBooleanField(blank=True)
 	d3c_heart_abnormality_detail = models.CharField(max_length=25, blank=True)
 	d3c_lvidd_1st = models.CharField(max_length=25, blank=True)
@@ -1593,11 +1718,14 @@ class D3InfantCardiovascular4(models.Model):
 
 
 class D4InfantLungFunction4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d4c_date_lung = models.CharField(max_length=15, blank=True)
 	d4c_examiner_lung = models.CharField(max_length=25, blank=True)
 	d4c_resistance_1st = models.CharField(max_length=25, blank=True)
@@ -1608,10 +1736,11 @@ class D4InfantLungFunction4(models.Model):
 	d4c_time_constant_2nd = models.CharField(max_length=25, blank=True)
 	d4c_fvc_1st = models.CharField(max_length=25, blank=True)
 	d4c_fvc_2nd = models.CharField(max_length=25, blank=True)
-	d4c_fev_1st = models.CharField(max_length=25, blank=True)
-	d4c_fev_2nd = models.CharField(max_length=25, blank=True)
+	d4c_fev1_1st = models.CharField(max_length=25, blank=True)
+	d4c_fev1_2nd = models.CharField(max_length=25, blank=True)
 	d4c_respiratory_symptom = models.NullBooleanField(blank=True)
 	FREQUENCY_STATUS_LIST = (
+						('', ''),
 						('0', 'Not at all'),
 						('1', 'Once'),
 						('2', 'Twice'),
@@ -1619,29 +1748,32 @@ class D4InfantLungFunction4(models.Model):
 						('4', 'Every day'),		
 	)
 	#d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, default="")
-	d4c_dry_cough = models.CharField(max_length=1, blank=True)
-	d4c_phlegmy_cough = models.CharField(max_length=1, blank=True)
-	d4c_runny_nose = models.CharField(max_length=1, blank=True)
-	d4c_stuffed_nose = models.CharField(max_length=1, blank=True)
-	d4c_wheeze = models.CharField(max_length=1, blank=True)
-	d4c_breath_shortness = models.CharField(max_length=1, blank=True)
-	d4c_rattly_chest = models.CharField(max_length=1, blank=True)
-	d4c_snoring = models.CharField(max_length=1, blank=True)
-	d4c_stridor = models.CharField(max_length=1, blank=True)
+	d4c_dry_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_phlegmy_cough = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_runny_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stuffed_nose = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_wheeze = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_breath_shortness = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_rattly_chest = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_snoring = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
+	d4c_stridor = models.CharField(choices=FREQUENCY_STATUS_LIST, max_length=1, blank=True)
 	d4_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D5InfantBiological4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d5c_blood = models.NullBooleanField(blank=True)
 	d5c_blood_date = models.CharField(max_length=15, blank=True)
-	d5c_buccal_swab = models.NullBooleanField(blank=True)
-	d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
+	# d5c_buccal_swab = models.NullBooleanField(blank=True)
+	# d5c_buccal_swab_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_1 = models.NullBooleanField(blank=True)
 	d5c_hair_1_date = models.CharField(max_length=15, blank=True)
 	d5c_hair_6 = models.NullBooleanField(blank=True)
@@ -1661,24 +1793,29 @@ class D5InfantBiological4(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D6CurrentSmoking4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	SMOKING_STATUS_LIST = (
+					('', ''),
 					('1', 'Smoker'),
 					('2', 'Ex-smoker'),
 					('0', 'Never smoke'),
 		)
 	SMOKING_FREQUENCY_LIST = (
+						('', ''),
 						('1','Daily'),
 						('2','Weekly'),
 						('3', 'Monthly'),
 						('0','Never'),
 		)
 	#d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, default="")
-	d6m_smoking_status = models.CharField(max_length=1, blank=True)
+	d6m_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6m_quitting_smoke = models.NullBooleanField(blank=True)
 	d6m_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6m_cigar_number = models.CharField(max_length=15, blank=True)
@@ -1688,22 +1825,25 @@ class D6CurrentSmoking4(models.Model):
 	d6m_household_cigar_number = models.CharField(max_length=15, blank=True)
 	d6m_household_presence = models.NullBooleanField(blank=True)
 
-	d6f_smoking_status = models.CharField(max_length=1, blank=True)
+	d6f_smoking_status = models.CharField(choices=SMOKING_STATUS_LIST, max_length=1, blank=True)
 	d6f_quitting_duration = models.CharField(max_length=15, blank=True)
 	d6f_cigar_number = models.CharField(max_length=15, blank=True)
 	d6f_cigar_type = models.NullBooleanField(blank=True)
-	d6f_smoking_frequency = models.CharField(max_length=1, blank=True)
+	d6f_smoking_frequency = models.CharField(choices=SMOKING_FREQUENCY_LIST, max_length=1, blank=True)
 	d6f_smoking_presence = models.NullBooleanField(blank=True)
 	d6_notes = models.TextField(blank=True)
 	def __str__(self):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D7Infection4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d7c_infection = models.NullBooleanField(blank=True)
 	d7c_infection_upper_respi = models.NullBooleanField(blank=True)
 	d7c_infection_lower_respi = models.NullBooleanField(blank=True)
@@ -1716,7 +1856,7 @@ class D7Infection4(models.Model):
 	d7c_infection_others_detail = models.CharField(max_length=25, blank=True)
 	d7c_infection_unknown = models.NullBooleanField(blank=True)
 	d7c_physician_clinic = models.CharField(max_length=25, blank=True)
-	d7c_contact = models.CharField(max_length=25, blank=True)
+	#d7c_contact = models.CharField(max_length=25, blank=True)
 	d7c_infection_symptoms = models.NullBooleanField(blank=True)
 	d7c_symptoms_respi = models.NullBooleanField(blank=True)
 	d7c_symptoms_gastro = models.NullBooleanField(blank=True)
@@ -1729,13 +1869,14 @@ class D7Infection4(models.Model):
 	d7c_physician = models.CharField(max_length=25, blank=True)
 	d7c_hospital_contact = models.CharField(max_length=25, blank=True)
 	WARD_STATUS_LIST = (
+						('', ''),
 						('1','Emergency room only'),
 						('2','One day care'),
 						('3', 'General Ward'),
 						('4','High care/intensive care'),
 		)
 	#d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, default="")
-	d7c_ward = models.CharField(max_length=1, blank=True)
+	d7c_ward = models.CharField(choices=WARD_STATUS_LIST, max_length=1, blank=True)
 	d7c_additional_test = models.NullBooleanField(blank=True)
 	d7c_blood_test = models.NullBooleanField(blank=True)
 	d7c_blood_count = models.NullBooleanField(blank=True)
@@ -1743,6 +1884,7 @@ class D7Infection4(models.Model):
 	d7c_procalcitonin = models.NullBooleanField(blank=True)
 	d7c_blood_culture = models.NullBooleanField(blank=True)
 	d7c_blood_culture_date = models.CharField(max_length=15, blank=True)
+	d7c_blood_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_blood_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_typhoid = models.NullBooleanField(blank=True)
 	d7c_dengue_ns_1 = models.NullBooleanField(blank=True)
@@ -1753,12 +1895,17 @@ class D7Infection4(models.Model):
 	d7c_urinalysis_date = models.CharField(max_length=15, blank=True)
 	d7c_urine_culture = models.NullBooleanField(blank=True)
 	d7c_urine_date = models.CharField(max_length=15, blank=True)
+	d7c_urine_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_urine_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_csf = models.NullBooleanField(blank=True)
 	d7c_csf_date = models.CharField(max_length=15, blank=True)
+	d7c_csf_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_csf_microorganism = models.CharField(max_length=25, blank=True)
+	d7c_faecal_analysis = models.NullBooleanField(blank=True)
+	d7c_faecal_analysis_date = models.CharField(max_length=15, blank=True)
 	d7c_faecal_culture = models.NullBooleanField(blank=True)
 	d7c_faecal_date = models.CharField(max_length=15, blank=True)
+	d7c_faecal_microorganism_exist = models.NullBooleanField(blank=True)
 	d7c_faecal_microorganism = models.CharField(max_length=25, blank=True)
 	d7c_chest_xray = models.NullBooleanField(blank=True)
 	d7c_chest_xray_findings = models.CharField(max_length=25, blank=True)
@@ -1800,11 +1947,14 @@ class D7Infection4(models.Model):
 		return "[participant_id : " + unicode(self.participant_id)+ ", child_id : "+unicode(self.child_id )+"]"
 
 class D8PollutantExposure4(models.Model):
-	d_form = models.ForeignKey(DInfant, on_delete=models.PROTECT)
+	d_form = models.ForeignKey(DInfant4, on_delete=models.PROTECT)
 	created_by = models.CharField(max_length=25, blank=True)
-	edited_by = models.CharField(max_length=25, blank=True)
+	updated_by = models.CharField(max_length=25, blank=True)
+	created_time = models.CharField(max_length=28, blank=True)
+	updated_time = models.CharField(max_length=28, blank=True)
 	participant_id = models.CharField(max_length=10, blank=True)
 	child_id = models.CharField(max_length=12, blank=True)
+
 	d8m_charcoal = models.NullBooleanField(blank=True)
 	d8m_kerosene = models.NullBooleanField(blank=True)
 	d8m_wood = models.NullBooleanField(blank=True)
@@ -1815,26 +1965,30 @@ class D8PollutantExposure4(models.Model):
 	d8m_cooking_exhaust = models.NullBooleanField(blank=True)
 	d8m_pesticide = models.NullBooleanField(blank=True)	
 	GARBAGE_BURNING_STATUS_LIST = (
+						('', ''),
 						('0','No'),
 						('1','Once per week or less'),
 						('2', 'More than once per week but not daily'),
 						('3','Daily'),
 		)
 	#d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, default="")
-	d8m_garbage_burning = models.CharField(max_length=1, blank=True)
+	d8m_garbage_burning = models.CharField(choices=GARBAGE_BURNING_STATUS_LIST, max_length=1, blank=True)
 	d8m_pet = models.NullBooleanField(blank=True)
+	d8m_pet_detail = models.CharField(max_length=25, blank=True)
 	HOUSING_TYPE_LIST = (
+						('', ''),
 						('1','Landed House'),
 						('2', 'Flat/Apartment'),
 		)
 	#d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, default="")
-	d8m_housing_type = models.CharField(max_length=1, blank=True)
+	d8m_housing_type = models.CharField(choices=HOUSING_TYPE_LIST, max_length=1, blank=True)
 	LANDED_HOUSE_TYPE_LIST = (
+						('', ''),
 						('1','One story building'),
 						('2', 'More than one story building'),
 		)
 	#d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, default="")
-	d8m_landed_house_type = models.CharField(max_length=1, blank=True)
+	d8m_landed_house_type = models.CharField(choices=LANDED_HOUSE_TYPE_LIST, max_length=1, blank=True)
 	d8m_apartment_level_number = models.CharField(max_length=15, blank=True)
 	d8m_dampness_house = models.NullBooleanField(blank=True)
 	d8m_ac = models.NullBooleanField(blank=True)

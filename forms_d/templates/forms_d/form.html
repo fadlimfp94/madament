@@ -6,6 +6,8 @@
             $("#createForm").click(function(){
                 var name = $('#interviewer_id').val();
                 var dateInterview = $('#date_interviewed').val();
+                var dateInterviewTester = $('#date_interviewed').val();
+
                 var child = $('#child_id').val();
                 
                 // Check if empty of not
@@ -15,7 +17,7 @@
                         content: 'Select interviewer, please',
                     });
                 }
-                else if(dateInterview == ""){
+                else if(dateInterviewTester == ""){
                     $.alert({
                         title: 'Alert!',
                         content: 'Select date of interview, please',
@@ -30,7 +32,7 @@
                 else{
                      $.confirm({
                         title: 'Confirm!',
-                        content: 'Are you sure?',
+                        content: 'Interview Date:'+dateInterview+'<br>Are you sure to continue?',
                         buttons: {
                                     yes: {
                                         btnClass: 'btn-primary',
@@ -186,7 +188,7 @@
                                             function submitConfirm() {
                                                 $.confirm({
                                                     title: 'Confirm!',
-                                                    content: 'Are you sure?',
+                                                    content: 'Are you sure to submit this form?',
                                                     buttons: {
                                                         yes: {
                                                             btnClass: 'btn-primary',
@@ -214,7 +216,7 @@
                                             function checkConfirm() {
                                                 $.confirm({
                                                     title: 'Confirm!',
-                                                    content: 'Are you sure?',
+                                                    content: 'Are you sure to check this form?',
                                                     buttons: {
                                                         yes: {
                                                             btnClass: 'btn-primary',

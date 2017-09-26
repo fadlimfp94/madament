@@ -4,16 +4,19 @@
     <script>
         $(function() {
             $("#createForm").click(function(){
-                var name = $('#interviewer_id').val();
-                var dateInterview = $('#date_interviewed').val();
+                var name = $('#interviewer_id').val().split("/")[1];
+                var dateInterview = formatDate(new Date($('#date_interviewed').val()));
+                var dateInterviewTester = $('#date_interviewed').val();
+                //var monthInterview = dateInterview.getMonth();
+
                 // Check if empty of not
-                if (name  == "") {
+                if (name  == undefined) {
                     $.alert({
                         title: 'Alert!',
                         content: 'Select interviewer, please',
                     });
                 }
-                else if(dateInterview == ""){
+                else if(dateInterviewTester== ""){
                     $.alert({
                         title: 'Alert!',
                         content: 'Select date of interview, please',
@@ -22,7 +25,7 @@
                 else{
                      $.confirm({
                         title: 'Confirm!',
-                        content: 'Are you sure?',
+                        content: 'Interview Date: '+dateInterview+'<br>Are you sure to continue?',
                         buttons: {
                                     yes: {
                                         btnClass: 'btn-primary',
@@ -42,6 +45,21 @@
                 } 
             });
         });
+
+        function formatDate(date) {
+          var monthNames = [
+            "January", "February", "March",
+            "April", "May", "June", "July",
+            "August", "September", "October",
+            "November", "December"
+          ];
+
+          var day = date.getDate();
+          var monthIndex = date.getMonth();
+          var year = date.getFullYear();
+
+          return monthNames[monthIndex] + ' ' + day + ', ' + year;
+        }
     </script>
     <div class="container">
         <!-- Form Umum Section -->
@@ -79,7 +97,7 @@
                                 <select class="form-control selectpicker" name="interviewer_id" id="interviewer_id" required>
                                     <option value="">Select interviewer</option>
                                     {% for interviewer in staff_list %}
-                                        <option value={{interviewer.id}}>{{ interviewer.username }}</option>
+                                        <option value={{interviewer.id}}/{{interviewer.username}}>{{ interviewer.username }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -159,7 +177,7 @@
                                             function submitConfirm() {
                                                 $.confirm({
                                                     title: 'Confirm!',
-                                                    content: 'Are you sure?',
+                                                    content: 'Are you sure to submit this form?',
                                                     buttons: {
                                                         yes: {
                                                             btnClass: 'btn-primary',
@@ -174,7 +192,7 @@
                                                 });
                                             }
                                     </script>
-                                    <div class="col-md-6 col-xs-6 col-sm-6">    
+                                    <div class="col-md-5 col-xs-2 col-xs-offset-2 col-sm-4 col-sm-offset-1">    
                                         <a href="#" onclick="submitConfirm()" class="btn btn-primary" style="margin: 0px 60% 0px 90%;"> 
                                         &nbsp; &nbsp; Submit Form &nbsp; &nbsp; </a>
                                     </div> 
@@ -187,7 +205,7 @@
                                             function checkConfirm() {
                                                 $.confirm({
                                                     title: 'Confirm!',
-                                                    content: 'Are you sure?',
+                                                    content: 'Are you sure to check this form?',
                                                     buttons: {
                                                         yes: {
                                                             btnClass: 'btn-primary',

@@ -16,7 +16,7 @@
                 $("#d5c_blood_date :input[type='date']").prop("required", false);
             }
 
-            if($('#d5c_buccal_swab').is(':checked')){
+            /*if($('#d5c_buccal_swab').is(':checked')){
                 $("#d5c_buccal_swab_date").removeClass('hidden');
                 $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", false);
                 $("#d5c_buccal_swab_date :input[type='date']").prop("required", true);
@@ -26,7 +26,7 @@
                 $("#d5c_buccal_swab_date :input[type='date']").removeAttr('value');
                 $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", true);
                 $("#d5c_buccal_swab_date :input[type='date']").prop("required", false);
-            }
+            }*/
 
             if($('#d5c_hair_1').is(':checked')){
                 $("#d5c_hair_1_date").removeClass('hidden');
@@ -127,7 +127,7 @@
                 }
             })
 
-            $('#d5c_buccal_swab').click(function(){
+            /*$('#d5c_buccal_swab').click(function(){
                 if (this.checked) {
                     $("#d5c_buccal_swab_date").removeClass('hidden');
                     $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", false);
@@ -139,7 +139,7 @@
                     $("#d5c_buccal_swab_date :input[type='date']").prop("readonly", true);
                     $("#d5c_buccal_swab_date :input[type='date']").prop("required", false);
                 }
-            })
+            })*/
 
             $('#d5c_hair_1').click(function(){
                 if (this.checked) {
@@ -258,7 +258,7 @@
                         <li class="list-group-item">
                             <a href="{{request.get_full_path}}/../section4"> Infant Lung Function and Respiratory Symptoms </a>
                         </li>
-                        <li class="list-group-item active">
+                        <li class="list-group-item actives">
                             <a href="{{request.get_full_path}}/../section5"> Infant Biological Samples </a> 
                         </li>
                         <li class="list-group-item">
@@ -301,7 +301,7 @@
                             <input class="form-control" type="date" name="d5c_blood_date" value="{{ d5.d5c_blood_date }}" required>
                         </div>
 
-                        <div class="form-check">
+                        <!-- <div class="form-check">
                             <label class="form-check-label">
                                 {% if d5.d5c_buccal_swab %}
                                     <input class="form-check-input" name="d5c_buccal_swab" id="d5c_buccal_swab" type="checkbox" checked>
@@ -314,7 +314,7 @@
                         <div class="form-group" id="d5c_buccal_swab_date">
                             <label for="d5c_buccal_swab_date"> Buccal Swab Date </label>
                             <input class="form-control" type="date" name="d5c_buccal_swab_date"  value="{{ d5.d5c_buccal_swab_date }}" required>
-                        </div>
+                        </div> -->
 
                         <div class="form-check">
                             <label class="form-check-label">

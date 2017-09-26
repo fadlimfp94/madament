@@ -33,8 +33,7 @@
 
         $("#noHivTesting").click(function(){
             $("#HivTesting").addClass('hidden');
-            $("#HivTesting :input").prop("disabled", true);
-            $("#b3m_hiv_date").removeAttr('required')
+            $("#HivTesting :input").prop("disabled", true);            
         });
 
         $("#yesHivTesting").click(function(){
@@ -74,6 +73,20 @@
   
     });
     </script>
+
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1A">Medical Data</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB1C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div>
+            </div>
 
     {% if b1.b3m_blood_test == 0 %}
         <script>
@@ -270,7 +283,7 @@
                             {% else %}
                             <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1" required>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
                                     Positive +
                                 </label>
                             </div>
@@ -301,7 +314,7 @@
                             {% if b1.b3m_blood_test == null %}
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="noBloodTest" value="0" required>
+                                <input type="radio" class="form-check-input" name="b3m_blood_test" id="noBloodTest" value="0">
                                 No
                                 </label>
                             </div>                                
@@ -343,7 +356,7 @@
                         <div id="bloodTest">
                             <div class="form-group">
                                 <label> Date </label>
-                                <input class="form-control" type="date"  id="b3m_date_blood" name="b3m_date_blood" value="{{ b1.b3m_date_blood }}" required>
+                                <input class="form-control" type="date"  id="b3m_date_blood" name="b3m_date_blood" value="{{ b1.b3m_date_blood }}">
                             </div>
 
                             <div class="form-group">
@@ -396,7 +409,7 @@
                             {% if b1.b3m_hiv_test == null %}
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="noHivTesting" value="0" required>
+                                <input type="radio" class="form-check-input" name="b3m_hiv_test" id="noHivTesting" value="0">
                                 No
                                 </label>
                             </div>                                
@@ -491,7 +504,7 @@
                             {% if b1.b3m_hepB_test == null %}
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="noHepatitisTesting" value="0" required>
+                                <input type="radio" class="form-check-input" name="b3m_hepB_test" id="noHepatitisTesting" value="0">
                                 No
                                 </label>
                             </div>                                
@@ -554,7 +567,7 @@
                                     {% elif b1.b3m_hepB_status == 1 %}
                                     <div class="radio">                                
                                         <label>
-                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios1" value="0" required>
+                                            <input type="radio" name="b3m_hepB_status" id="optionsRadios1" value="0">
                                             No
                                         </label>
                                     </div>
@@ -586,7 +599,7 @@
                             {% if b1.b3m_torch_test == null %}
                             <div class="form-check">
                                 <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="noTorchTesting" value="0" required>
+                                <input type="radio" class="form-check-input" name="b3m_torch_test" id="noTorchTesting" value="0">
                                 No
                                 </label>
                             </div>                                
@@ -811,7 +824,7 @@
                                         <div class="form-check">
                                             <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="b3m_cmv" 
-                                            id="noToxoplasma" value="1">
+                                            id="noToxoplasma" value="1" checked>
                                             Ig G
                                             </label>
                                         </div>                                

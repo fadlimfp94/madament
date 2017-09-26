@@ -101,7 +101,7 @@
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2B">Ultrasound Scan Results</a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2F">Gestational nutrition and medications </a></li>
                     </ul>
                 </div>
@@ -292,7 +292,7 @@
                         </div>
                         <div class="radio">
                                 <label>
-                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="3">
                                     Daily
                                 </label>
                         </div>
@@ -317,7 +317,7 @@
                         </div>
                         <div class="radio">
                                 <label>
-                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="3">
                                     Daily
                                 </label>
                         </div>
@@ -342,7 +342,7 @@
                         </div>
                         <div class="radio">
                                 <label>
-                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="3">
                                     Daily
                                 </label>
                         </div>
@@ -367,7 +367,7 @@
                         </div>
                         <div class="radio">
                                 <label>
-                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3" checked>
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="3" checked>
                                     Daily
                                 </label>
                         </div>
@@ -392,7 +392,7 @@
                         </div>
                         <div class="radio">
                                 <label>
-                                    <input type="radio" name="b3m_garbage_burning" id="optionsRadios2" value="3">
+                                    <input type="radio" name="b5m_garbage_burning" id="optionsRadios2" value="3">
                                     Daily
                                 </label>
                         </div>
@@ -719,7 +719,7 @@
                         <div class="form-group">
                             <label> Duration of stay (in days)
                             </label>
-                            <input class="form-control" type="text" name="b5m_staying_out_1st_duration" value="{{ b1.b5m_staying_out_1st_duration | default_if_none:'' }}" placeholder="in days">
+                            <input class="form-control" type="number" name="b5m_staying_out_1st_duration" value="{{ b1.b5m_staying_out_1st_duration | default_if_none:'' }}" placeholder="in days">
                         </div>
 
 
@@ -764,7 +764,7 @@
                         <div class="form-group">
                             <label> Duration of stay (in days)
                             </label>
-                            <input class="form-control" type="text" name="b5m_staying_out_2nd_duration" value="{{ b1.b5m_staying_out_2nd_duration | default_if_none:'' }}" placeholder="in days">
+                            <input class="form-control" type="number" name="b5m_staying_out_2nd_duration" value="{{ b1.b5m_staying_out_2nd_duration | default_if_none:'' }}" placeholder="in days">
                         </div>
                     </div>
 

@@ -1,8 +1,481 @@
 {% extends 'forms_c/form.html' %}
 {% block form_section %}
+    
+
+    {% if c3.c3c_respiratory_diagnosis != "4" %}
+    <script>
+        $(document).ready(function(){
+           $("#otherRespiratoryDiagnosis :input").prop("required", false);
+           $("#otherRespiratoryDiagnosis :input").prop("disabled", true);
+           $("#otherRespiratoryDiagnosis").addClass("hidden");           
+        });
+    </script>
+    {% elif c3.c3c_respiratory_diagnosis == "4" %}
+    <script>
+        $(document).ready(function(){
+           $("#otherRespiratoryDiagnosis :input").prop("required", true);
+           $("#otherRespiratoryDiagnosis :input").prop("disabled", false);
+           $("#otherRespiratoryDiagnosis").removeClass("hidden");           
+        });
+    </script>
+    {% endif %}
+
+    {% if c3.c3c_still_birth == 1 %}
+    <script>
+          $(document).ready(function(){
+           $("#stillBirth :input").prop("disabled", true);
+           $("#stillBirth").addClass("hidden");           
+        });
+        </script>
+    {% elif c3.c3c_still_birth == null %}
+    <script>
+          $(document).ready(function(){
+           $("#stillBirth :input").prop("disabled", true);
+           $("#stillBirth").addClass("hidden");           
+        });
+        </script>
+    {% else %}
+    <script>
+          $(document).ready(function(){
+           $("#stillBirth :input").prop("disabled", false);
+           $("#stillBirth").removeClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_resuscitation == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#resuscitation :input").prop("disabled", true);
+           $("#resuscitation").addClass("hidden");
+           $("#resuscitation :input").val('');           
+        });
+        </script>
+    {% elif c3.c3c_resuscitation == null %}
+    <script>
+          $(document).ready(function(){
+           $("#resuscitation :input").prop("disabled", true);
+           $("#resuscitation").addClass("hidden");   
+           $("#resuscitation :input").val('');         
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_resuscitation_drug == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#resuscitationDrug :input").prop("disabled", true);
+           $("#resuscitationDrug").addClass("hidden"); 
+           $("#resuscitationDrug :input").val('');           
+        });
+        </script>
+    {% elif  c3.c3c_resuscitation_drug == null %}
+    <script>
+          $(document).ready(function(){
+           $("#resuscitationDrug :input").prop("disabled", true);
+           $("#resuscitationDrug").addClass("hidden");
+           $("#resuscitationDrug :input").val('');           
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_nicu == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#nicu :input").prop("disabled", true);
+           $("#nicu").addClass("hidden");           
+        });
+        </script>
+    {% elif c3.c3c_nicu == null %}
+    <script>
+          $(document).ready(function(){
+           $("#nicu :input").prop("disabled", true); 
+           $("#nicu").addClass("hidden");           
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_neonatal_morbidity == 0 %}
+    <script>
+          $(document).ready(function(){
+          $("#neonatalMorbidity").addClass('hidden');
+          $("#neonatalMorbidity :input").prop("disabled", true);
+                      
+        });
+        </script>
+    {% elif c3.c3c_neonatal_morbidity == null %}
+    <script>
+          $(document).ready(function(){
+           $("#neonatalMorbidity").addClass('hidden'); 
+           $("#neonatalMorbidity :input").prop("disabled", true);                      
+        });
+      </script>
+    {% else %}
+    <script>
+          $(document).ready(function(){
+           $("#neonatalMorbidity").removeClass('hidden'); 
+           $("#neonatalMorbidity :input").prop("disabled", false);                      
+        });
+      </script>
+    {% endif %}
+
+    {% if c3.c3c_nursery_care == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#nurseryCare :input").prop("disabled", true);
+           $("#nurseryCare").addClass("hidden");           
+        });
+        </script>
+    {% elif c3.c3c_nursery_care == null %}
+    <script>
+          $(document).ready(function(){
+           $("#nurseryCare :input").prop("disabled", true);
+           $("#nurseryCare").addClass("hidden");            
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_sepsis_definite == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#definite :input").prop("disabled", true);
+           $("#definite").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_sepsis_definite == null %}
+        <script>
+          $(document).ready(function(){
+           $("#definite :input").prop("disabled", true);
+           $("#definite").addClass('hidden');
+                       
+        });
+        </script>
+    {% endif %}
+
+
+    {% if c3.c3c_sepsis_antibiotic == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#antibiotic :input").prop("disabled", true);
+           $("#antibiotic").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_sepsis_antibiotic == null %}
+        <script>
+          $(document).ready(function(){
+           $("#antibiotic :input").prop("disabled", true);
+           $("#antibiotic").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_sepsis == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#Sepsis :input").prop("disabled", true);
+           $("#Sepsis").addClass("hidden");                      
+        });
+        </script>
+    {% elif c3.c3c_sepsis == null %}
+        <script>
+          $(document).ready(function(){
+           $("#Sepsis :input").prop("disabled", true);
+           $("#Sepsis").addClass("hidden");                       
+        });
+        </script>
+    {% else %}
+        <script>
+          $(document).ready(function(){
+           $("#Sepsis :input").prop("disabled", false);
+           $("#Sepsis").removeClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_congenital_anomaly == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#congenitalAnomaly :input").prop("disabled", true);
+           $("#congenitalAnomaly").addClass("hidden");                       
+        });
+        </script>
+    {% elif c3.c3c_congenital_anomaly == null %}
+        <script>
+          $(document).ready(function(){
+           $("#congenitalAnomaly :input").prop("disabled", true);
+           $("#congenitalAnomaly").addClass("hidden");                       
+        });
+        </script>
+      {% else %}
+      <script>
+          $(document).ready(function(){
+           $("#congenitalAnomaly :input").prop("disabled", false);
+           $("#congenitalAnomaly").removeClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_congenital_infection == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#congenitalInfection :input").prop("disabled", true);
+           $("#congenitalInfection").addClass("hidden");                       
+        });
+        </script>
+    {% elif c3.c3c_congenital_infection == null %}
+        <script>
+          $(document).ready(function(){
+           $("#congenitalInfection :input").prop("disabled", true);
+           $("#congenitalInfection").addClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_blood_test_septic == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#bloodTestSeptic :input").prop("disabled", true);
+           $("#bloodTestSeptic").addClass("hidden");                       
+        });
+        </script>
+    {% elif c3.c3c_blood_test_septic == null %}
+    <script>
+          $(document).ready(function(){
+           $("#bloodTestSeptic :input").prop("disabled", true);
+           $("#bloodTestSeptic").addClass("hidden");                       
+        });
+        </script>
+    {% else %}
+    <script>
+          $(document).ready(function(){
+           $("#bloodTestSeptic :input").prop("disabled", false);
+           $("#bloodTestSeptic").removeClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_respiratory_distress == null %}
+        <script>
+          $(document).ready(function(){
+           $("#Respiratory :input").prop("disabled", true);
+           $("#Respiratory").addClass("hidden");                    
+        });
+        </script>
+    {% elif c3.c3c_respiratory_distress == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#Respiratory :input").prop("disabled", true);
+           $("#Respiratory").addClass("hidden");                      
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_blood_test_septic == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#bloodTestSeptic :input").prop("disabled", true);
+           $("#bloodTestSeptic").addClass("hidden");                       
+        });
+        </script>
+    {% elif c3.c3c_blood_test_septic == null %}
+    <script>
+          $(document).ready(function(){
+           $("#bloodTestSeptic :input").prop("disabled", true);
+           $("#bloodTestSeptic").addClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_cord_blood_analysis == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodAnalysis :input").prop("disabled", true);
+           $("#cordBloodAnalysis").addClass("hidden");                       
+        });
+        </script>
+    {% elif c3.c3c_cord_blood_analysis == null %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodAnalysis :input").prop("disabled", true);
+           $("#cordBloodAnalysis").addClass("hidden");                      
+        });
+        </script>
+    {% else %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodAnalysis :input").prop("disabled", false);
+           $("#cordBloodAnalysis").removeClass("hidden");                      
+        });
+      </script>
+    {% endif %}
+
+    {% if c3.c3c_cord_blood_sampling == 0 %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodSampling :input").prop("disabled", true);
+           $("#cordBloodSampling").addClass("hidden");                    
+        });
+        </script>
+    {% elif c3.c3c_cord_blood_sampling == null %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodSampling :input").prop("disabled", true);
+           $("#cordBloodSampling").addClass("hidden");                       
+        });
+        </script>
+    {% else %}
+    <script>
+          $(document).ready(function(){
+           $("#cordBloodSampling :input").prop("disabled", false);
+           $("#cordBloodSampling").removeClass("hidden");                       
+        });
+        </script>
+    {% endif %}
+    
+    {% if c3.c3c_cardiovascularano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#cardiovascular :input").prop("disabled", true);
+           $("#cardiovascular").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_cardiovascularano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#cardiovascular :input").prop("disabled", true);
+           $("#cardiovascular").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_cnsano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#cnsano :input").prop("disabled", true);
+           $("#cnsano").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_cnsano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#cnsano :input").prop("disabled", true);
+           $("#cnsano").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_musculoskeletalano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#musculoskeletal :input").prop("disabled", true);
+           $("#musculoskeletal").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_musculoskeletalano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#musculoskeletal :input").prop("disabled", true);
+           $("#musculoskeletal").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_gastrointestinalano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#gastrointestinal :input").prop("disabled", true);
+           $("#gastrointestinal").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_gastrointestinalano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#gastrointestinal :input").prop("disabled", true);
+           $("#gastrointestinal").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_urogenitalano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#urogenital :input").prop("disabled", true);
+           $("#urogenital").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_urogenitalano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#urogenital :input").prop("disabled", true);
+           $("#urogenital").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_respiratoryano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#respiratoryano :input").prop("disabled", true);
+           $("#respiratoryano").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_respiratoryano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#respiratoryano :input").prop("disabled", true);
+           $("#respiratoryano").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if c3.c3c_skinano == 0 %}
+        <script>
+          $(document).ready(function(){
+           $("#skin :input").prop("disabled", true);
+           $("#skin").addClass('hidden');
+                       
+        });
+        </script>
+    {% elif c3.c3c_skinano == null %}
+        <script>
+          $(document).ready(function(){
+           $("#skin :input").prop("disabled", true);
+           $("#skin").addClass('hidden');                       
+        });
+        </script>
+    {% endif %}
+
+    {% if is_save_all %}
+        <script >
+           $(document).ready(function(){
+           $("#form_c :input").prop("disabled", true);           
+        });
+        </script>    
+    {% endif %}
+
     <script>
         $(document).ready(function(){     
         
+        $("#c3c_respiratory_diagnosis_other").click(function(){
+            $("#otherRespiratoryDiagnosis :input").prop("required", true);
+            $("#otherRespiratoryDiagnosis :input").prop("disabled", false);
+            $("#otherRespiratoryDiagnosis").removeClass('hidden');
+        });
+
+        $(".c3c_respiratory_diagnosis_not_other").click(function(){
+            $("#otherRespiratoryDiagnosis :input").prop("required", false);
+            $("#otherRespiratoryDiagnosis :input").prop("disabled", true);
+            $("#otherRespiratoryDiagnosis").addClass('hidden');
+        });
+
 
         $("#noResuscitation").click(function(){
             $("#resuscitation :input").prop("disabled", true);
@@ -43,6 +516,16 @@
         $("#yesDefinite").click(function(){
             $("#definite :input").prop("disabled", false);
             $("#definite").removeClass('hidden');
+        });
+
+        $("#noAntibiotic").click(function(){            
+            $("#antibiotic :input").prop("disabled", true);
+             $("#antibiotic").addClass('hidden');
+        });
+
+        $("#yesAntibiotic").click(function(){
+            $("#antibiotic :input").prop("disabled", false);
+            $("#antibiotic").removeClass('hidden');
         });
 
         $("#noBloodTestSeptic").click(function(){            
@@ -88,30 +571,28 @@
         $("#yesStillBirth").click(function(){            
             $("#stillBirth :input").prop("disabled", true);
             $("#stillBirth").addClass("hidden");
-
         });
 
          $("#noStillBirth").click(function(){            
             $("#stillBirth :input").prop("disabled", false);
-            $("#stillBirth").removeClass("hidden");           
+            $("#stillBirth").removeClass("hidden");                     
         });
+
+         $("#noNeonatalMorbidity").click(function(){
+            $("#neonatalMorbidity").addClass('hidden'); 
+            $("#neonatalMorbidity :input").prop("disabled", true);
+         });
+
+          $("#yesNeonatalMorbidity").click(function(){
+            $("#neonatalMorbidity").removeClass('hidden'); 
+            $("#neonatalMorbidity :input").prop("disabled", false);
+         });
 
          $("#yesStillBirth").click(function(){            
             $("#stillBirth :input").prop("disabled", true);
             $("#stillBirth").addClass("hidden");
-
         });
-
-         $("#noNeonatalMorbidity").click(function(){            
-            $("#neonatalMorbidity :input").prop("disabled", true);
-            $("#neonatalMorbidity").addClass("hidden");           
-        });
-
-        $("#yesNeonatalMorbidity").click(function(){            
-            $("#neonatalMorbidity :input").prop("disabled", false);
-            $("#neonatalMorbidity").removeClass("hidden");
-        });
-
+      
         $("#noCongenitalAnomaly").click(function(){            
             $("#congenitalAnomaly :input").prop("disabled", true);
             $("#congenitalAnomaly").addClass("hidden");           
@@ -152,271 +633,89 @@
             $("#congenitalInfection").removeClass("hidden");
         });
 
+        $("#noCardiovascular").click(function(){            
+            $("#cardiovascular :input").prop("disabled", true);
+             $("#cardiovascular").addClass('hidden');
+        });
+
+        $("#yesCardiovascular").click(function(){
+            $("#cardiovascular :input").prop("disabled", false);
+            $("#cardiovascular").removeClass('hidden');
+        });
+
+        $("#noCnsano").click(function(){            
+            $("#cnsano :input").prop("disabled", true);
+             $("#cnsano").addClass('hidden');
+        });
+
+        $("#yesCnsano").click(function(){
+            $("#cnsano :input").prop("disabled", false);
+            $("#cnsano").removeClass('hidden');
+        });
+
+        $("#noMusculoskeletal").click(function(){            
+            $("#musculoskeletal :input").prop("disabled", true);
+             $("#musculoskeletal").addClass('hidden');
+        });
+
+        $("#yesMusculoskeletal").click(function(){
+            $("#musculoskeletal :input").prop("disabled", false);
+            $("#musculoskeletal").removeClass('hidden');
+        });
+
+        $("#noGastrointestinal").click(function(){            
+            $("#gastrointestinal :input").prop("disabled", true);
+             $("#gastrointestinal").addClass('hidden');
+        });
+
+        $("#yesGastrointestinal").click(function(){
+            $("#gastrointestinal :input").prop("disabled", false);
+            $("#gastrointestinal").removeClass('hidden');
+        });
+
+        $("#noUrogenital").click(function(){            
+            $("#urogenital :input").prop("disabled", true);
+             $("#urogenital").addClass('hidden');
+        });
+
+        $("#yesUrogenital").click(function(){
+            $("#urogenital :input").prop("disabled", false);
+            $("#urogenital").removeClass('hidden');
+        });
+
+        $("#noRespiratoryano").click(function(){            
+            $("#respiratoryano :input").prop("disabled", true);
+             $("#respiratoryano").addClass('hidden');
+        });
+
+        $("#yesRespiratoryano").click(function(){
+            $("#respiratoryano :input").prop("disabled", false);
+            $("#respiratoryano").removeClass('hidden');
+        });
+
+        $("#noSkin").click(function(){            
+            $("#skin :input").prop("disabled", true);
+             $("#skin").addClass('hidden');
+        });
+
+        $("#yesSkin").click(function(){
+            $("#skin :input").prop("disabled", false);
+            $("#skin").removeClass('hidden');
+        });
 
     });
     </script>
 
-    {% if c3.c3c_still_birth == 1 %}
-    <script>
-          $(document).ready(function(){
-           $("#stillBirth :input").prop("disabled", true);
-           $("#stillBirth").addClass("hidden");           
-        });
-        </script>
-    {% elif c3.c3c_still_birth == null %}
-    <script>
-          $(document).ready(function(){
-           $("#stillBirth :input").prop("disabled", true);
-           $("#stillBirth").addClass("hidden");           
-        });
-        </script>
-    {% else %}
-    <script>
-          $(document).ready(function(){
-           $("#stillBirth :input").prop("disabled", false);
-           $("#stillBirth").removeClass("hidden");           
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_resuscitation == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#resuscitation :input").prop("disabled", true);
-           $("#resuscitation").addClass("hidden");           
-        });
-        </script>
-    {% elif c3.c3c_resuscitation == null %}
-    <script>
-          $(document).ready(function(){
-           $("#resuscitation :input").prop("disabled", true);
-           $("#resuscitation").addClass("hidden");           
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_resuscitation_drug == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#resuscitationDrug :input").prop("disabled", true);
-           $("#resuscitationDrug").addClass("hidden"); 
-           $("#resuscitationDrug :input").val('');           
-        });
-        </script>
-    {% elif  c3.c3c_resuscitation_drug == null %}
-    <script>
-          $(document).ready(function(){
-           $("#resuscitationDrug :input").prop("disabled", true);
-           $("#resuscitationDrug").addClass("hidden");
-           $("#resuscitationDrug :input").val('');           
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_nicu == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#nicu :input").prop("disabled", true);
-           $("#nicu").addClass("hidden");           
-        });
-        </script>
-    {% elif c3.c3c_nicu == null %}
-    <script>
-          $(document).ready(function(){
-           $("#nicu :input").prop("disabled", true); 
-           $("#nicu").addClass("hidden");           
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_neonatal_morbidity == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#neonatalMorbidity :input").prop("disabled", true);
-           $("#neonatalMorbidity").addClass("hidden");           
-        });
-        </script>
-    {% elif c3.c3c_neonatal_morbidity == null %}
-    <script>
-          $(document).ready(function(){
-           $("#neonatalMorbidity :input").prop("disabled", true); 
-           $("#neonatalMorbidity").addClass("hidden");           
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_nursery_care == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#nurseryCare :input").prop("disabled", true);
-           $("#nurseryCare").addClass("hidden");           
-        });
-        </script>
-    {% elif c3.c3c_nursery_care == null %}
-    <script>
-          $(document).ready(function(){
-           $("#nurseryCare :input").prop("disabled", true);
-           $("#nurseryCare").addClass("hidden");            
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_sepsis_definite == 0 %}
-        <script>
-          $(document).ready(function(){
-           $("#definite :input").prop("disabled", true);
-           $("#definite").addClass('hidden');
-                       
-        });
-        </script>
-    {% elif c3.c3c_sepsis_definite == null %}
-        <script>
-          $(document).ready(function(){
-           $("#definite :input").prop("disabled", true);
-           $("#definite").addClass('hidden');
-                       
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_sepsis == 0 %}
-        <script>
-          $(document).ready(function(){
-           $("#Sepsis :input").prop("disabled", true);
-           $("#Sepsis").addClass("hidden");
-           $("#Sepsis :input").val('');            
-        });
-        </script>
-    {% elif c3.c3c_sepsis == null %}
-        <script>
-          $(document).ready(function(){
-           $("#Sepsis :input").prop("disabled", true);
-           $("#Sepsis").addClass("hidden");
-           $("#Sepsis :input").val('');            
-        });
-        </script>
-    {% else %}
-        <script>
-          $(document).ready(function(){
-           $("#Sepsis :input").prop("disabled", false);
-           $("#Sepsis").removeClass("hidden");
-                       
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_congenital_anomaly == 0 %}
-        <script>
-          $(document).ready(function(){
-           $("#congenitalAnomaly :input").prop("disabled", true);
-           $("#congenitalAnomaly").addClass("hidden");
-           $("#congenitalAnomaly :input").val('');            
-        });
-        </script>
-    {% elif c3.c3c_congenital_anomaly == null %}
-        <script>
-          $(document).ready(function(){
-           $("#congenitalAnomaly :input").prop("disabled", true);
-           $("#congenitalAnomaly").addClass("hidden");
-           $("#congenitalAnomaly :input").val('');            
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_congenital_infection == 0 %}
-        <script>
-          $(document).ready(function(){
-           $("#congenitalInfection :input").prop("disabled", true);
-           $("#congenitalInfection").addClass("hidden");
-           $("#congenitalInfection :input").val('');            
-        });
-        </script>
-    {% elif c3.c3c_congenital_infection == null %}
-        <script>
-          $(document).ready(function(){
-           $("#congenitalInfection :input").prop("disabled", true);
-           $("#congenitalInfection").addClass("hidden");
-           $("#congenitalInfection :input").val('');            
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_respiratory_distress == null %}
-        <script>
-          $(document).ready(function(){
-           $("#Respiratory :input").prop("disabled", true);
-           $("#Respiratory").addClass("hidden");                    
-        });
-        </script>
-    {% elif c3.c3c_respiratory_distress == 0 %}
-        <script>
-          $(document).ready(function(){
-           $("#Respiratory :input").prop("disabled", true);
-           $("#Respiratory").addClass("hidden");                      
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_blood_test_septic == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#bloodTestSeptic :input").prop("disabled", true);
-           $("#bloodTestSeptic").addClass("hidden");                       
-        });
-        </script>
-    {% elif c3.c3c_blood_test_septic == null %}
-    <script>
-          $(document).ready(function(){
-           $("#bloodTestSeptic :input").prop("disabled", true);
-           $("#bloodTestSeptic").addClass("hidden");                       
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_cord_blood_analysis == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#cordBloodAnalysis :input").prop("disabled", true);
-           $("#cordBloodAnalysis").addClass("hidden");
-           $("#cordBloodAnalysis :input").val('');            
-        });
-        </script>
-    {% elif c3.c3c_cord_blood_analysis == null %}
-    <script>
-          $(document).ready(function(){
-           $("#cordBloodAnalysis :input").prop("disabled", true);
-           $("#cordBloodAnalysis").addClass("hidden");
-           $("#cordBloodAnalysis :input").val('');            
-        });
-        </script>
-    {% endif %}
-
-    {% if c3.c3c_cord_blood_sampling == 0 %}
-    <script>
-          $(document).ready(function(){
-           $("#cordBloodSampling :input").prop("disabled", true);
-           $("#cordBloodSampling").addClass("hidden");
-                    
-        });
-        </script>
-    {% elif c3.c3c_cord_blood_sampling == null %}
-    <script>
-          $(document).ready(function(){
-           $("#cordBloodSampling :input").prop("disabled", true);
-           $("#cordBloodSampling").addClass("hidden");
-                       
-        });
-        </script>
-    {% endif %}
-    
-
-    {% if is_save_all %}
-        <script >
-           $(document).ready(function(){
-           $("#form_c :input").prop("disabled", true);           
-        });
-        </script>    
-    {% endif %}
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../section1">Mother</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../section2" checked>Placental Sampling</a></li>
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../section3">Infant Data</a></li>                        
+                    </ul>
+                </div>
+            </div>
 
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
@@ -435,7 +734,7 @@
 
                         <div class="form-group">
                             <label> Child First Name </label>                         
-                            <input class="form-control" type="text" name="c3c_first_name" value="{{ c3.c3c_first_name }}">
+                            <input class="form-control" type="text" name="c3c_first_name" value="{{ c3.c3c_first_name }}" required>
                         </div>
 
                         <div class="form-group">
@@ -639,12 +938,12 @@
                             <div class="col-md-6 col-sm-6">                            
                                 <label> Birth length (cm) </label>
                                 <span class="input-group-addon" id="basic-addon1">1</span>                        
-                                <input class="form-control" type="text" name="c3c_birth_length_1st"  aria-describedby="basic-addon1" value="{{c3.c3c_birth_length_1st }}" >  
+                                <input class="form-control" type="number" name="c3c_birth_length_1st"  aria-describedby="basic-addon1" value="{{c3.c3c_birth_length_1st }}" step="0.01">  
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label> Birth length (cm) </label>
                                 <span class="input-group-addon" id="basic-addon1">2</span>                         
-                                <input class="form-control" type="text" name="c3c_birth_length_2nd" value="{{ c3.c3c_birth_length_2nd }}" >
+                                <input class="form-control" type="number" name="c3c_birth_length_2nd" value="{{ c3.c3c_birth_length_2nd }}" step="0.01">
                             </div>
                         </div>
 
@@ -652,12 +951,12 @@
                             <div class="col-md-6 col-sm-6">                            
                                 <label> Head circumference </label>
                                 <span class="input-group-addon" id="basic-addon1">1</span>                         
-                                <input class="form-control" type="text" name="c3c_hc_1st"  aria-describedby="basic-addon1" value="{{ c3.c3c_hc_1st }}" >  
+                                <input class="form-control" type="number" name="c3c_hc_1st"  aria-describedby="basic-addon1" value="{{ c3.c3c_hc_1st }}" step="0.01">  
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <label> Head circumference </label>
                                 <span class="input-group-addon" id="basic-addon1">2</span>                         
-                                <input class="form-control" type="text" name="c3c_hc_2nd" value="{{ c3.c3c_hc_2nd }} ">
+                                <input class="form-control" type="number" name="c3c_hc_2nd" value="{{ c3.c3c_hc_2nd }}" step="0.01">
                             </div>
                         </div>
 
@@ -723,7 +1022,7 @@
                         {% if c3.c3c_failure_respiration == null %}
                             <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_failure_respiration" id="noFailureRespiration" value="0">
+                                    <input type="radio" name="c3c_failure_respiration" id="noFailureRespiration" value="0" >
                                     No 
                                 </label>
                             </div>
@@ -944,7 +1243,7 @@
 
                             <div class="form-group">
                                 <label> Dose ( microgram/milligram) (*choose either unit) </label>        
-                                <input class="form-control" type="number" name="c3c_drug_dose" step="0.1" value="{{ c3.c3c_drug_dose }}">
+                                <input class="form-control" type="number" name="c3c_drug_dose" step="0.01" value="{{ c3.c3c_drug_dose }}">
                             </div>
                         </div>
 
@@ -953,7 +1252,7 @@
                             {% if c3.c3c_nursery_care == null %}
                             <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_nursery_care" id="noNurseryCare" value="0" >
+                                    <input type="radio" name="c3c_nursery_care" id="noNurseryCare" value="0">
                                     No 
                                 </label>
                             </div>
@@ -993,8 +1292,9 @@
                         </div>
 
                         <div class="form-group" id="nurseryCare">
-                            <label> Duration </label>
-                            <input class="form-control" type="Number" name="c3c_duration_nursery_care" value="{{ c3.c3c_duration_nursery_care }}">
+                            <label> Duration (in days) </label>
+                            <input class="form-control" type="Number" name="c3c_duration_nursery_care" 
+                            value="{{ c3.c3c_duration_nursery_care }}">
                         </div>
 
                         <div class="form-group">
@@ -1042,7 +1342,7 @@
                         </div>
 
                         <div class="form-group" id="nicu">
-                            <label> Duration </label>
+                            <label> Duration (in days)</label>
                             <input class="form-control" type="number" name="c3c_duration_nicu" value="{{ c3.c3c_duration_nicu }}">
                         </div>
 
@@ -1097,39 +1397,39 @@
                             {% if c3.c3c_sepsis == null %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="noSepsis" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="noSepsis" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="yesSepsis" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="yesSepsis" value="1">
                                         Yes
                                     </label>
                                 </div>
                             {% elif c3.c3c_sepsis == 1%}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="noSepsis" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="noSepsis" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="yesSepsis" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="yesSepsis" value="1" checked>
                                         Yes
                                     </label>
                                 </div>
                             {% else %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="noSepsis" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="noSepsis" value="0" checked>
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_sepsis" id="yesSepsis" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_sepsis" id="yesSepsis" value="1">
                                         Yes
                                     </label>
                                 </div>
@@ -1238,56 +1538,104 @@
                                         <label> Name of bacteria 2 </label>                         
                                         <input class="form-control" type="text" name="c3c_sepsis_bacteria2" value="{{ c3.c3c_sepsis_bacteria2 | default_if_none:''  }}">
                                     </div>
-                                
-
-                                <h4>Antibiotics </h4>
-                                <div class="form-group">
-                                    <label> Name of drug 1 </label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_drug1" value="{{ c3.c3c_sepsis_drug1 | default_if_none:''  }}">
-                                </div>
+                                  </div>                                
 
                                 <div class="form-group">
-                                    <label> Name of drug 2 </label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_drug2" value="{{ c3.c3c_sepsis_drug2 | default_if_none:'' }}">
+                                    <label> Antibiotics? </label>
+                                    {% if c3.c3c_sepsis_antibiotic == null %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="c3c_sepsis_antibiotic" id="noAntibiotic" 
+                                            value="0">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                        <input type="radio" name="c3c_sepsis_antibiotic" id="yesAntibiotic" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    {% elif c3.c3c_sepsis_antibiotic == 1 %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="c3c_sepsis_antibiotic" id="noAntibiotic" 
+                                            value="0">
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                        <input type="radio" name="c3c_sepsis_antibiotic" id="yesAntibiotic" value="1" checked>
+                                        Yes
+                                        </label>
+                                    </div>
+                                    {% else %}
+                                    <div class="radio">                                
+                                        <label>
+                                            <input type="radio" name="c3c_sepsis_antibiotic" id="noAntibiotic" 
+                                            value="0" checked>
+                                            No
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                        <input type="radio" name="c3c_sepsis_antibiotic" id="yesAntibiotic" value="1">
+                                        Yes
+                                        </label>
+                                    </div>
+                                    {% endif %}                            
                                 </div>
 
-                                <div class="form-group">
-                                    <label> Dose 1 (mg) </label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_dose1" value="{{ c3.c3c_sepsis_dose1 | default_if_none:'' }}">
-                                </div>
+                                <div id="antibiotic">
+                                  <div class="form-group">
+                                      <label> Name of drug 1 </label>                         
+                                      <input class="form-control" type="text" name="c3c_sepsis_drug1" value="{{ c3.c3c_sepsis_drug1 | default_if_none:''  }}">
+                                  </div>
 
-                                <div class="form-group">
-                                    <label> Dose 2 (mg) </label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_dose2" value="{{ c3.c3c_sepsis_dose2 | default_if_none:'' }}">
-                                </div>
+                                  <div class="form-group">
+                                      <label> Name of drug 2 </label>                         
+                                      <input class="form-control" type="text" name="c3c_sepsis_drug2" value="{{ c3.c3c_sepsis_drug2 | default_if_none:'' }}">
+                                  </div>
 
-                                <div class="form-group">
-                                    <label> Frequency 1 (every hours)</label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_frequency1" value="{{ c3.c3c_sepsis_frequency1 | default_if_none:''  }}">
-                                </div>
+                                  <div class="form-group">
+                                      <label> Dose 1 (mg) </label>                         
+                                      <input class="form-control" type="number" name="c3c_sepsis_dose1" value="{{ c3.c3c_sepsis_dose1 | default_if_none:'' }}" step="0.01">
+                                  </div>
 
-                                <div class="form-group">
-                                    <label> Frequency 2 (every hours) </label>                         
-                                    <input class="form-control" type="text" name="c3c_sepsis_frequency2" value="{{ c3.c3c_sepsis_frequency2 | default_if_none:''  }}">
-                                </div>
+                                  <div class="form-group">
+                                      <label> Dose 2 (mg) </label>                         
+                                      <input class="form-control" type="number" name="c3c_sepsis_dose2" value="{{ c3.c3c_sepsis_dose2 | default_if_none:'' }}" step="0.01">
+                                  </div>
 
-                                <div class="form-group">
-                                    <label> Duration of antibiotics 1 (days) </label>                        
-                                    <input class="form-control" type="number" name="c3c_sepsis_duration1" value="{{ c3.c3c_sepsis_duration1 }}">
-                                </div>
+                                  <div class="form-group">
+                                      <label> Frequency 1 (every hours)</label>                         
+                                      <input class="form-control" type="number" name="c3c_sepsis_frequency1" value="{{ c3.c3c_sepsis_frequency1 | default_if_none:''  }}">
+                                  </div>
 
-                                <div class="form-group">
-                                    <label>Duration of antibiotics 2 (days) </label>                         
-                                    <input class="form-control" type="number" name="c3c_sepsis_duration2" value="{{ c3.c3c_sepsis_duration2 }}">
-                                </div>
+                                  <div class="form-group">
+                                      <label> Frequency 2 (every hours) </label>                         
+                                      <input class="form-control" type="number" name="c3c_sepsis_frequency2" value="{{ c3.c3c_sepsis_frequency2 | default_if_none:''  }}">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label> Duration of antibiotics 1 (days) </label>                        
+                                      <input class="form-control" type="number" name="c3c_sepsis_duration1" value="{{ c3.c3c_sepsis_duration1 }}">
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label>Duration of antibiotics 2 (days) </label>                         
+                                      <input class="form-control" type="number" name="c3c_sepsis_duration2" value="{{ c3.c3c_sepsis_duration2 }}">
+                                  </div>
                               </div>
+                            </div>
 
                                 <div class="form-group">
                                     <label> Icterus needing light therapy/exchange transfusion </label>
                                     {% if c3.c3c_icterus == null %}
                                     <div class="radio">                                
                                         <label>
-                                            <input type="radio" name="c3c_icterus" value="0" >
+                                            <input type="radio" name="c3c_icterus" value="0">
                                             No
                                         </label>
                                     </div>
@@ -1420,9 +1768,9 @@
                                         <div class="radio">                                
                                             <label>
                                             {% if c3.c3c_respiratory_diagnosis == "1" %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios1" value="1" checked >
+                                                <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="1"  checked >
                                             {% else %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios1" value="1">
+                                                <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="1">
                                             {% endif %}
                                                 Nenatal pneumonia                                 
                                             </label>
@@ -1430,9 +1778,9 @@
                                         <div class="radio">
                                             <label>
                                             {% if c3.c3c_respiratory_diagnosis == "2" %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios2" value="2" checked>
+                                                <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="2" checked>
                                             {% else %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios2" value="2">
+                                                <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="2">
                                              {% endif %}
                                                 Hyaline membrane disease
                                             </label>
@@ -1440,9 +1788,9 @@
                                         <div class="radio">
                                             <label>
                                             {% if c3.c3c_respiratory_diagnosis == "3" %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios3" value="3" checked>
+                                                <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="3" checked>
                                              {% else %}
-                                                 <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios3" value="3">
+                                                 <input type="radio" name="c3c_respiratory_diagnosis" class="c3c_respiratory_diagnosis_not_other" value="3">
                                              {% endif %}
                                                 Meconium aspiration syndrome
                                             </label>
@@ -1450,16 +1798,16 @@
                                         <div class="radio">
                                             <label>
                                             {% if c3.c3c_respiratory_diagnosis == "4" %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios4" value="4" checked>
+                                                <input type="radio" name="c3c_respiratory_diagnosis" id="c3c_respiratory_diagnosis_other" value="4" checked>
                                             {% else %}
-                                                <input type="radio" name="c3c_respiratory_diagnosis" id="optionsRadios4" value="4">
+                                                <input type="radio" name="c3c_respiratory_diagnosis" id="c3c_respiratory_diagnosis_other" value="4">
                                             {% endif %}
                                                 Others
                                             </label>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" id="otherRespiratoryDiagnosis">
                                             <label> If Others, specify </label>
-                                            <input class="form-control" type="text" name="c3c_other_respiratory_diagnosis" value="{{ c3.c3c_other_respiratory_diagnosis | default_if_none:''  }}">
+                                            <input class="form-control" type="text" name="c3c_other_respiratory_diagnosis"  value="{{ c3.c3c_other_respiratory_diagnosis | default_if_none:''  }}">
                                         </div>
                                     </div>
 
@@ -1494,7 +1842,7 @@
                                             {% endif %}                                                
                                             Non-invasive IPPR
                                             
-                                            </label>
+                                      </label>
                                         </div>
                                         <div class="radio">
                                             <label>
@@ -1514,45 +1862,46 @@
                                     <input class="form-control" type="text" name="c3c_others_morbidities" value="{{ c3.c3c_others_morbidities | default_if_none:'' }}">
                                 </div>
                             </div>
+                          
 
                             <div class="form-group">
                                 <label> Any congenital anomaly </label>
                                 {% if c3.c3c_congenital_anomaly == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" class="form-check-input" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" class="form-check-input"  name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_congenital_anomaly == 1 %}
                                     <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0">
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1" checked>
                                         Yes
                                         </label>
                                     </div>
                                 {% else %}
                                     <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_congenital_anomaly" id="noCongenitalAnomaly" value="0" checked>
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_congenital_anomaly" id="yesCongenitalAnomaly" value="1">
                                         Yes
                                         </label>
                                     </div>
@@ -1564,296 +1913,331 @@
                                 {% if c3.c3c_cardiovascularano == null %}
                                     <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cardiovascularano" id="noCongenitalAnomaly" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="noCardiovascular" value="0">
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_cardiovascularano" id="yesCongenitalAnomaly" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="yesCardiovascular" value="1">
                                         Yes
                                         </label>
                                     </div>
                                 {% elif c3.c3c_cardiovascularano == 1 %}
                                     <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cardiovascularano" id="noCongenitalAnomaly" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="noCardiovascular" value="0">
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_cardiovascularano" id="yesCongenitalAnomaly" value="1"checked>
+                                        <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="yesCardiovascular" value="1"checked>
                                         Yes
                                         </label>
                                     </div>
                                 {% else %}
                                     <div class="radio">                                
                                         <label>
-                                            <input type="radio" name="c3c_cardiovascularano" id="noCongenitalAnomaly" value="0" checked>
+                                            <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="noCardiovascular" value="0" checked>
                                             No 
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_cardiovascularano" id="yesCongenitalAnomaly" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cardiovascularano" id="yesCardiovascular" value="1">
                                         Yes
                                         </label>
                                     </div>
                                 {% endif %}
+
+                                <div class="form-group" id="cardiovascular">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_cardiovascularano_diagnosis" value="{{ c3.c3c_cardiovascularano_diagnosis | default_if_none:'' }}">
+                                </div>
 
 
                                 <label> Central nervous system </label>
                                 {% if c3.c3c_cnsano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_cnsano"  value="0">
+                                    <input type="radio" name="c3c_cnsano" id="noCnsano"  value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_cnsano" value="1">
+                                    <input type="radio" name="c3c_cnsano" id="yesCnsano" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_cnsano == 1%}
                                     <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cnsano"  value="0">
+                                        <input type="radio" name="c3c_cnsano" id="noCnsano" value="0">
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_cnsano" value="1" checked>
+                                        <input type="radio" name="c3c_cnsano" id="yesCnsano" value="1" checked>
                                         Yes
                                         </label>
                                     </div>
                                 {% else %}
                                      <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cnsano"  value="0" checked>
+                                        <input type="radio" name="c3c_cnsano" id="noCnsano" value="0" checked>
                                         No 
                                     </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="c3c_cnsano" value="1">
+                                        <input type="radio" name="c3c_cnsano" id="yesCnsano" value="1">
                                         Yes
                                         </label>
                                     </div>
                                 {% endif %}
 
+                                <div class="form-group" id="cnsano">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_cnsano_diagnosis" value="{{ c3.c3c_cnsano_diagnosis | default_if_none:'' }}">
+                                </div>
+
                                 <label> Musculosketal </label>
                                 {% if c3.c3c_musculoskeletalano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_musculoskeletalano" id="noMusculoskeletal" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_musculoskeletalano" id="yesMusculoskeletal" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_musculoskeletalano == 1 %}
                                      <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_musculoskeletalano" id="noMusculoskeletal" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="yesCongenitalAnomaly" value="1" checked>
+                                    <input type="radio" name="c3c_musculoskeletalano" id="yesMusculoskeletal" value="1" checked>
                                     Yes
                                     </label>
                                 </div>
                                 {% else %}
                                  <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="noCongenitalAnomaly" value="0" checked>
+                                    <input type="radio" name="c3c_musculoskeletalano" id="noMusculoskeletal" value="0" checked>
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_musculoskeletalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_musculoskeletalano" id="yesMusculoskeletal" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% endif %}
 
+                                <div class="form-group" id="musculoskeletal">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_musculoskeletalano_diagnosis" value="{{ c3.c3c_musculoskeletalano_diagnosis | default_if_none:'' }}">
+                                </div>
+
                                 <label> Gastrointestinal </label>
                                 {% if c3.c3c_gastrointestinalano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_gastrointestinalano" id="noGastrointestinal" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_gastrointestinalano" id="yesGastrointestinal" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_gastrointestinalano == 1 %}
                                     <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_gastrointestinalano" id="noGastrointestinal" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="yesCongenitalAnomaly" value="1" checked>
+                                    <input type="radio" name="c3c_gastrointestinalano" id="yesGastrointestinal" value="1" checked>
                                     Yes
                                     </label>
                                 </div>
                                 {% else %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="noCongenitalAnomaly" value="0" checked>
+                                    <input type="radio" name="c3c_gastrointestinalano" id="noGastrointestinal" value="0" checked>
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_gastrointestinalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_gastrointestinalano" id="yesGastrointestinal" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% endif %}
 
+                                <div class="form-group" id="gastrointestinal">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_gastrointestinalano_diagnosis" value="{{ c3.c3c_gastrointestinalano_diagnosis | default_if_none:'' }}">
+                                </div>
+
                                 <label> Urogenital </label>
                                 {% if c3.c3c_urogenitalano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="noCongenitalAnomaly" value="0" >
+                                    <input type="radio" name="c3c_urogenitalano" id="noUrogenital" value="0" >
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_urogenitalano" id="yesUrogenital" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_urogenitalano == 1 %}
                                     <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_urogenitalano" id="noUrogenital" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="yesCongenitalAnomaly" value="1" checked>
+                                    <input type="radio" name="c3c_urogenitalano" id="yesUrogenital" value="1" checked>
                                     Yes
                                     </label>
                                 </div>
                                 {% else %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="noCongenitalAnomaly" value="0" checked>
+                                    <input type="radio" name="c3c_urogenitalano" id="noUrogenital" value="0" checked>
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_urogenitalano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_urogenitalano" id="yesUrogenital" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% endif %}
 
+                                <div class="form-group" id="urogenital">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_urogenitalano_diagnosis" value="{{ c3.c3c_urogenitalano_diagnosis | default_if_none:'' }}">
+                                </div>
+
                                 <label> Respiratory </label>
                                 {% if c3.c3c_respiratoryano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_respiratoryano" id="noRespiratoryano" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_respiratoryano" id="yesRespiratoryano" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_respiratoryano == 1 %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_respiratoryano" id="noRespiratoryano" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="yesCongenitalAnomaly" value="1" checked>
+                                    <input type="radio" name="c3c_respiratoryano" id="yesRespiratoryano" value="1" checked>
                                     Yes
                                     </label>
                                 </div>
                                 {% else %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="noCongenitalAnomaly" value="0" checked>
+                                    <input type="radio" name="c3c_respiratoryano" id="noRespiratoryano" value="0" checked>
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_respiratoryano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_respiratoryano" id="yesRespiratoryano" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% endif %}
 
+                                <div class="form-group" id="respiratoryano">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_respiratoryano_diagnosis" value="{{ c3.c3c_respiratoryano_diagnosis | default_if_none:'' }}">
+                                </div>
+
                                 <label> Skin </label>
                                 {% if c3.c3c_skinano == null %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_skinano" id="noCongenitalAnomaly" value="0" >
+                                    <input type="radio" name="c3c_skinano" id="noSkin" value="0" >
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_skinano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_skinano" id="yesSkin" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% elif c3.c3c_skinano == 1%}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_skinano" id="noCongenitalAnomaly" value="0">
+                                    <input type="radio" name="c3c_skinano" id="noSkin" value="0">
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_skinano" id="yesCongenitalAnomaly" value="1" checked>
+                                    <input type="radio" name="c3c_skinano" id="yesSkin" value="1" checked>
                                     Yes
                                     </label>
                                 </div>
                                 {% else %}
                                 <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="c3c_skinano" id="noCongenitalAnomaly" value="0" checked>
+                                    <input type="radio" name="c3c_skinano" id="noSkin" value="0" checked>
                                     No 
                                 </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                    <input type="radio" name="c3c_skinano" id="yesCongenitalAnomaly" value="1">
+                                    <input type="radio" name="c3c_skinano" id="yesSkin" value="1">
                                     Yes
                                     </label>
                                 </div>
                                 {% endif %}
+
+                                <div class="form-group" id="skin">
+                                  <label> Specify diagnosis </label>
+                                  <input class="form-control" type="text" name="c3c_skinano_diagnosis" value="{{ c3.c3c_skinano_diagnosis | default_if_none:'' }}">
+                                </div>
 
                                 <label> Down syndrome (suspected or proven )</label>
                                 {% if c3.c3c_down_syndromeano == null %}
@@ -1899,7 +2283,7 @@
 
                                 <div class="form-group">
                                     <label>Other syndrome</label>                         
-                                    <input class="form-control" type="text" name="c3c_other_syndromeano" value="{{ c3.c3c_other_syndromeano | default_if_none:''  }}">
+                                    <input class="form-control" type="text" name="c3c_other_syndromeano" value="{{ c3.c3c_other_syndromeano | default_if_none:''}}">
                                 </div>      
                             </div>
 
@@ -2074,6 +2458,48 @@
                                 </div>
                                 {% endif %}
 
+                                <label> Herpes Simplex </label>
+                                {% if c3.c3c_herpesinf == null %}
+                                <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="0">
+                                    No 
+                                </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="1">
+                                    Yes
+                                    </label>
+                                </div>
+                                {% elif c3.c3c_herpesinf == 1 %}
+                                <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="0">
+                                    No 
+                                </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="1" checked>
+                                    Yes
+                                    </label>
+                                </div>
+                                {% else %}
+                                <div class="radio">                                
+                                <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="0" checked>
+                                    No 
+                                </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                    <input type="radio" name="c3c_herpesinf"  value="1">
+                                    Yes
+                                    </label>
+                                </div>
+                                {% endif %}
+
                                 <label> Syphillis </label>
                                 {% if c3.c3c_syphillisinf == null %}
                                 <div class="radio">                                
@@ -2210,39 +2636,39 @@
                             {% if c3.c3c_blood_test_septic == null %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1">
                                         Yes
                                     </label>
                                 </div>
                             {% elif c3.c3c_blood_test_septic == 1 %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1" checked>
                                         Yes
                                     </label>
                                 </div>
                             {% else %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="noBloodTestSeptic" value="0" checked>
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_blood_test_septic" id="yesBloodTestSeptic" value="1">
                                         Yes
                                     </label>
                                 </div>
@@ -2257,27 +2683,27 @@
 
                             <div class="form-group">
                                 <label> Hb (g/dL) </label>                         
-                                <input class="form-control" type="number" name="c3c_hb_septic" step="0.1" placeholder="in decimal" value="{{ c3.c3c_hb_septic }}">
+                                <input class="form-control" type="number" name="c3c_hb_septic" step="0.01" placeholder="in decimal" value="{{ c3.c3c_hb_septic }}">
                             </div>
 
                             <div class="form-group">
                                 <label> WBC (/micro litre x 1000) </label>                         
-                                <input class="form-control" type="number" name="c3c_wbc_septic" step="0.1" placeholder="in decimal" value="{{ c3.c3c_wbc_septic }}">
+                                <input class="form-control" type="number" name="c3c_wbc_septic" step="0.01" placeholder="in decimal" value="{{ c3.c3c_wbc_septic }}">
                             </div>
 
                             <div class="form-group">
                                 <label> Platelet count (/micro litre x 1000) </label>                         
-                                <input class="form-control" type="number" name="c3c_platelet_septic" step="0.1" placeholder="in decimal" value="{{ c3.c3c_platelet_septic }}">
+                                <input class="form-control" type="number" name="c3c_platelet_septic" step="0.01" placeholder="in decimal" value="{{ c3.c3c_platelet_septic }}">
                             </div>
 
                             <div class="form-group">
                                 <label> CRP (mg x dL) </label>                         
-                                <input class="form-control" type="number" name="c3c_crp_septic" step="0.1" placeholder="in decimal" value="{{ c3.c3c_crp_septic }}">
+                                <input class="form-control" type="number" name="c3c_crp_septic" step="0.01" placeholder="in decimal" value="{{ c3.c3c_crp_septic }}">
                             </div>
 
                             <div class="form-group">
                                 <label> IT Ratio </label>                         
-                                <input class="form-control" type="number" name="c3c_ITRatio_septic" step="0.1" placeholder="in decimal" value="{{ c3.c3c_ITRatio_septic }}">
+                                <input class="form-control" type="number" name="c3c_ITRatio_septic" step="0.01" placeholder="in decimal" value="{{ c3.c3c_ITRatio_septic }}">
                             </div>
                         </div>
 
@@ -2287,39 +2713,39 @@
                             {% if c3.c3c_cord_blood_analysis == null %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1">
                                         Yes
                                     </label>
                                 </div>
                             {% elif c3.c3c_cord_blood_analysis == 1 %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1" checked>
                                         Yes
                                     </label>
                                 </div>  
                             {% else %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="nocordBloodAnalysis" value="0" checked>
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_analysis" id="yescordBloodAnalysis" value="1">
                                         Yes
                                     </label>
                                 </div>
@@ -2329,27 +2755,27 @@
                         <div id="cordBloodAnalysis">
                             <div class="form-group">
                                 <label> pH </label>                         
-                                <input class="form-control" type="number" name="c3c_pH" value="{{ c3.c3c_pH }}">
+                                <input class="form-control" type="number" name="c3c_pH" value="{{ c3.c3c_pH }}" step="0.01">
                             </div>
 
                             <div class="form-group">
                                 <label> pO2 </label>                         
-                                <input class="form-control" type="number" name="c3c_po2" value="{{ c3.c3c_po2 }}">
+                                <input class="form-control" type="number" name="c3c_po2" value="{{ c3.c3c_po2 }}" step="0.01">
                             </div>
 
                             <div class="form-group">
                                 <label> pCO2 </label>                         
-                                <input class="form-control" type="number" name="c3c_pco2" value="{{ c3.c3c_pco2 }}">
+                                <input class="form-control" type="number" name="c3c_pco2" value="{{ c3.c3c_pco2 }}" step="0.01">
                             </div>
 
                             <div class="form-group">
                                 <label> HCO3 </label>                         
-                                <input class="form-control" type="number" name="c3c_hco3" value="{{ c3.c3c_hco3 }}">
+                                <input class="form-control" type="number" name="c3c_hco3" value="{{ c3.c3c_hco3 }}" step="0.01">
                             </div>
 
                             <div class="form-group">
                                 <label> Base Excess </label>                         
-                                <input class="form-control" type="number" name="c3c_base_excess" value="{{ c3.c3c_base_excess }}">
+                                <input class="form-control" type="number" name="c3c_base_excess" value="{{ c3.c3c_base_excess }}" step="0.01">
                             </div>
                         </div>
 
@@ -2358,39 +2784,39 @@
                             {% if c3.c3c_cord_blood_sampling == null %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1">
                                         Yes
                                     </label>
                                 </div>
                             {% elif c3.c3c_cord_blood_sampling == 1 %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0">
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1" checked>
                                         Yes
                                     </label>
                                 </div>
                             {% else %}
                                 <div class="radio">                                
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0" checked>
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="nocordBloodSampling" value="0" checked>
                                         No
                                     </label>
                                 </div>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1">
+                                        <input type="radio" class="form-check-input" name="c3c_cord_blood_sampling" id="yescordBloodSampling" value="1">
                                         Yes
                                     </label>
                                 </div>

@@ -54,6 +54,33 @@
                 }
             });
 
+
+            if($('#yes_pet').is(':checked')){
+                $("#pet_detail").removeClass('hidden');
+                $("#pet_detail :input").prop("readonly", false);
+                $("#pet_detail :input").prop("required", true);
+            }
+            else{
+                $("#pet_detail").addClass('hidden');
+                $("#pet_detail :input").removeAttr('value');
+                $("#pet_detail :input").prop("readonly", true);
+                $("#pet_detail :input").prop("required", false);
+            }
+
+            $('#yes_pet').click(function(){
+                $("#pet_detail").removeClass('hidden');
+                $("#pet_detail :input").prop("readonly", false);
+                $("#pet_detail :input").prop("required", true);
+            });
+
+            $('#no_pet').click(function(){
+                $("#pet_detail").addClass('hidden');
+                $("#pet_detail :input").removeAttr('value');
+                $("#pet_detail :input").prop("readonly", true);
+                $("#pet_detail :input").prop("required", false);
+            });
+
+
             if($("#landed_house").is(':checked')){
                 console.log("1");
                 $("#flat_level_number").addClass('hidden');
@@ -145,7 +172,7 @@
                         <li class="list-group-item">
                             <a href="{{request.get_full_path}}/../section7"> Infection Episode </a> 
                         </li>
-                        <li class="list-group-item active">
+                        <li class="list-group-item actives">
                             <a href="{{request.get_full_path}}/../section8"> Outdoor/Indoor Pollutant Exposure and Travel Habits </a> 
                         </li>
                     </ul>
@@ -328,13 +355,13 @@
                         </div>
 
                         <div class="form-group" id="">                        
-                            <h4> Does you have any pet inside or around the house? </h4>
+                            <h4> Do you have any pet inside or around the house? </h4>
                             <div class="radio">                                
                                 <label>
                                 {% if d8.d8m_pet %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" checked required>
+                                <input type="radio" name="d8m_pet" id="yes_pet" value="1" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios1" value="1" required>
+                                <input type="radio" name="d8m_pet" id="yes_pet" value="1" required>
                                 {% endif %}
                                 Yes
                                 </label>
@@ -342,14 +369,17 @@
                             <div class="radio">
                                 <label>
                                 {% if d8.d8m_pet %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" required>
+                                <input type="radio" name="d8m_pet" id="no_pet" value="0" required>
                                 {% elif d8.d8m_pet == False %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" checked required>
+                                <input type="radio" name="d8m_pet" id="no_pet" value="0" checked required>
                                 {% else %}
-                                <input type="radio" name="d8m_pet" id="optionsRadios2" value="0" required>
+                                <input type="radio" name="d8m_pet" id="no_pet" value="0" required>
                                 {% endif %}
                                 No
                                 </label>
+                            </div>
+                            <div class="form-check" id="pet_detail">
+                                    <input class="form-control" type="text" name="d8m_pet_detail" value="{{ d8.d8m_pet_detail }}" required>       
                             </div>                        
                         </div>
 

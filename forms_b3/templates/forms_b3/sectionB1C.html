@@ -148,6 +148,19 @@
     {% endif %}
 
 
+    <div class="col-md-4 section-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> List of Sections  </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1A">Medical Data</a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1B">Ultrasound Scan Results</a></li>
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB1C">Laboratory Test</a></li>                        
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1D">Current smoking habits </a></li>
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
+                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB1F">Gestational nutrition and medications </a></li>
+                    </ul>
+                </div>
+            </div>
             <!-- Question List Section -->
             <div class="col-md-8 question-list">
                 <div class=""> <!-- Tadinya pa-->
@@ -269,7 +282,7 @@
                             {% else %}
                             <div class="radio">                                
                                 <label>
-                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1" required>
+                                    <input type="radio" name="b3m_proteinuria" id="optionsRadios1" value="1">
                                     Positive +
                                 </label>
                             </div>
@@ -810,7 +823,7 @@
                                         <div class="form-check">
                                             <label class="form-check-label">
                                             <input type="radio" class="form-check-input" name="b3m_cmv" 
-                                            id="noToxoplasma" value="1">
+                                            id="noToxoplasma" value="1" checked>
                                             Ig G
                                             </label>
                                         </div>                                

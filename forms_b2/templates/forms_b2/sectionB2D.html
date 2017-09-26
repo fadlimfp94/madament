@@ -5,32 +5,25 @@
         <script>
         $(document).ready(function(){
 
-            // This For Mother smoke
-            /*$("#yesExSmoker :input").prop("disabled", true);
-            $("#everSmoker :input").prop("disabled", true);
-            $("#averageCigars :input").prop("disabled", true);
-            $("#smokePipeOrCigars :input").prop("disabled", true);*/
-
-
-
             $("#smoker").click(function(){
-                $("#yesExSmoker").addClass("hidden");
                 $("#everSmoker").removeClass("hidden");
                 $("#everSmoker :input").prop("disabled", false);
                 $("#averageCigars :input").prop("disabled", false);
                 $("#smokePipeOrCigars :input").prop("disabled", false);
                 $("#motherNeverSmoke").removeClass('hidden');
                 $("#motherNeverSmoke :input").prop('disabled', false);
+                $("#yesExSmoker").addClass("hidden");
+                $("#yesExSmoker :input").prop('disabled', true);
             });
 
             $("#exSmokerMother").click(function(){
-                $("#yesExSmoker :input").prop("disabled", false);
-                $("#yesExSmoker").removeClass("hidden");
                 $("#motherNeverSmoke").removeClass('hidden');
                 $("#motherNeverSmoke :input").prop('disabled', false);
                 $("#everSmoker :input").prop("disabled", false);
                 $("#averageCigars :input").prop("disabled", false);
                 $("#smokePipeOrCigars :input").prop("disabled", false);
+                $("#yesExSmoker :input").prop("disabled", false);
+                $("#yesExSmoker").removeClass("hidden");
             });
 
             $("#neverSmoke").click(function(){
@@ -52,17 +45,17 @@
             /*$("#exSmokerQuit :input").prop("disabled", true);*/
 
             $("#smokerFather").click(function(){
-                $("#exSmokerQuit").addClass("hidden");
-                $("#exSmokerQuit :input").prop("disabled", true);
                 $("#ifNeverSmoke").removeClass("hidden");
                 $("#ifNeverSmoke :input").prop("disabled", false);
+                $("#exSmokerQuit").addClass("hidden");
+                $("#exSmokerQuit :input").prop("disabled", true);
             });
 
             $("#exSmokerFather").click(function(){
-                $("#exSmokerQuit").removeClass("hidden");
-                $("#exSmokerQuit :input").prop("disabled", false);
                 $("#ifNeverSmoke :input").prop("disabled", false);
                 $("#ifNeverSmoke").removeClass("hidden");
+                $("#exSmokerQuit").removeClass("hidden");
+                $("#exSmokerQuit :input").prop("disabled", false);
             });
 
             $("#neverSmokeFather").click(function(){
@@ -78,7 +71,7 @@
             $("#noSmokingPresence").click(function(){
                 $("#ifWorkColleaguesSmoke :input").prop("disabled", true);
                 $("#ifWorkColleaguesSmoke").addClass("hidden");
-            });
+            });      
         });
     </script>                   
 
@@ -192,7 +185,7 @@
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2A">Medical Data</a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2B">Ultrasound Scan Results</a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2C">Laboratory Test</a></li>                        
-                        <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
+                        <li class="list-group-item actives"><a href="{{request.get_full_path}}/../sectionB2D">Current smoking habits </a></li>
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2E">Outdoor/indoor pollutant exposure and travel habits </a></li> 
                         <li class="list-group-item"><a href="{{request.get_full_path}}/../sectionB2F">Gestational nutrition and medications </a></li>
                     </ul>
@@ -296,7 +289,7 @@
                         <div id="yesExSmoker">
                             <div class="form-group">
                                 <label> For how long have you quitted smoking during this pregnancy period ? (month) </label>
-                                <input class="form-control" type="Number" step="0.01" id="b4m_quitting_duration" name="b4m_quitting_duration"placeholder="in month" 
+                                <input class="form-control" type="Number" step="1" id="b4m_quitting_duration" name="b4m_quitting_duration"placeholder="in month" 
                                 value="{{ b1.b4m_quitting_duration }}">
                             </div>
                         </div>
@@ -550,7 +543,7 @@
                         <div id="exSmokerQuit">
                             <div class="form-group">
                                 <label for="b4f_quitting_duration"> For how long have you quit now ? (month) </label>
-                                <input class="form-control" type="number" name="b4f_quitting_duration" placeholder="in month" value="{{ b1.b4f_quitting_duration }}" step="0.01">
+                                <input class="form-control" type="number" name="b4f_quitting_duration" placeholder="in month" value="{{ b1.b4f_quitting_duration }}" step="1">
                             </div>
                         </div>
                     <!-- endif you were an ex-smoker -->

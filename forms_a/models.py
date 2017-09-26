@@ -31,7 +31,9 @@ class ABaseLine(models.Model):
 class A1MotherDemographic(models.Model):
     a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
     created_by = models.CharField(max_length=25, blank=True)
-    edited_by = models.CharField(max_length=25, blank=True)
+    updated_by = models.CharField(max_length=25, blank=True)
+    created_time = models.CharField(max_length=28, blank=True)
+    updated_time = models.CharField(max_length=28, blank=True)
     participant_id = models.CharField(max_length=10, blank=True)
     a1m_name = models.CharField(max_length=25, blank=True)
     a1m_pob = models.CharField(max_length=25, blank=True)
@@ -118,13 +120,15 @@ class A1MotherDemographic(models.Model):
 class A2MotherEmployment(models.Model):
     a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
     created_by = models.CharField(max_length=25, blank=True)
-    edited_by = models.CharField(max_length=25, blank=True)
+    updated_by = models.CharField(max_length=25, blank=True)
+    created_time = models.CharField(max_length=28, blank=True)
+    updated_time = models.CharField(max_length=28, blank=True)
     participant_id = models.CharField(max_length=10, blank=True)
     EMPLOYMENT_STATUS_LIST = (
                         ('', ''),
                         ('1', 'Employed'),
                         ('2', 'Self-employed'),
-                        ('3', 'Unemployed'),    
+                        ('0', 'Unemployed'),    
         )
     a2m_working_status = models.CharField(choices=EMPLOYMENT_STATUS_LIST, max_length=1, default="", blank=True)
     a2m_working_type = models.CharField(max_length=25, blank=True)
@@ -140,10 +144,10 @@ class A2MotherEmployment(models.Model):
     a2m_work_phone_number = models.CharField(max_length=25, blank=True)
     a2m_travel_by_car = models.NullBooleanField(default=False, blank=True)
     a2m_travel_by_motorcycle = models.NullBooleanField(default=False, blank=True)
-    a2m_travel_by_public_transport = models.NullBooleanField(default=False, blank=True)
-    a2m_public_transport_type = models.CharField(max_length=25, blank=True)
     a2m_travel_by_cycling = models.NullBooleanField(default=False, blank=True)
     a2m_travel_by_walking = models.NullBooleanField(default=False, blank=True)
+    a2m_travel_by_public_transport = models.NullBooleanField(default=False, blank=True)
+    a2m_public_transport_type = models.CharField(max_length=25, blank=True)
     a2m_work_time_travel = models.IntegerField(null=True, blank=True)
     a2m_is_exposed_to_pollution = models.NullBooleanField(default=False, blank=True)
     a2m_working_hours = models.IntegerField(null=True, blank=True)
@@ -162,7 +166,9 @@ class A2MotherEmployment(models.Model):
 class A3Obstetric(models.Model):
     a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
     created_by = models.CharField(max_length=25, blank=True)
-    edited_by = models.CharField(max_length=25, blank=True)
+    updated_by = models.CharField(max_length=25, blank=True)
+    created_time = models.CharField(max_length=28, blank=True)
+    updated_time = models.CharField(max_length=28, blank=True)
     participant_id = models.CharField(max_length=10, blank=True)
     a3m_pre_pregnancy_weight = models.CharField(max_length=25, blank=True)
     a3m_pre_pregnancy_height = models.CharField(max_length=25, blank=True)
@@ -172,7 +178,6 @@ class A3Obstetric(models.Model):
     a3m_parity = models.CharField(max_length=25, blank=True)
     a3m_abortus = models.CharField(max_length=25, blank=True)
     a3m_previous_premature = models.NullBooleanField(blank=True)
-
     a3m_previous_miscarriage = models.NullBooleanField(blank=True)
     a3m_previous_complication = models.NullBooleanField(blank=True)
     a3m_hypertension_complication = models.NullBooleanField(blank=True)
@@ -227,7 +232,9 @@ class A3Obstetric(models.Model):
 class A4Father(models.Model):
     a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
     created_by = models.CharField(max_length=25, blank=True)
-    edited_by = models.CharField(max_length=25, blank=True)
+    updated_by = models.CharField(max_length=25, blank=True)
+    created_time = models.CharField(max_length=28, blank=True)
+    updated_time = models.CharField(max_length=28, blank=True)
     participant_id = models.CharField(max_length=10, blank=True)
     
     a4f_name = models.CharField(max_length=25, blank=True)
@@ -258,7 +265,7 @@ class A4Father(models.Model):
                         ('', ''),
                         ('1', 'Employed'),
                         ('2', 'Self-employed'),
-                        ('3', 'Unemployed'),
+                        ('0', 'Unemployed'),
                          
         )
     a4f_employment_status = models.CharField(choices=EMPLOYMENT_STATUS_LIST, max_length=1, default="", blank=True)
@@ -319,7 +326,9 @@ class A4Father(models.Model):
 class A5PrePregnancySmoking(models.Model):
     a_form = models.ForeignKey(ABaseLine, on_delete=models.PROTECT)
     created_by = models.CharField(max_length=25, blank=True)
-    edited_by = models.CharField(max_length=25, blank=True)
+    updated_by = models.CharField(max_length=25, blank=True)
+    created_time = models.CharField(max_length=28, blank=True)
+    updated_time = models.CharField(max_length=28, blank=True)
     participant_id = models.CharField(max_length=10, blank=True)
     SMOKING_STATUS_LIST = (
                     ('', ''),   

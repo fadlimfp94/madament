@@ -2,9 +2,10 @@
 {% block content %}
 <!-- Page Content -->
     <div class="container">
-
+    <div>
         <div class="row">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createModal"> Create Participant </button>
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createModal">
+            <i class="fa fa-plus" aria-hidden="true"></i> Create Participant </button>
         </div>     
 
         <!-- Modal Create Participant --> 
@@ -16,19 +17,20 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="createModal">Create Participant</h4>
+                <h4 class="modal-title" id="createModal"><Create Participant</h4>
               </div>
               <form action="{% url 'core:create_participant' %}"  method="POST">
                   {% csrf_token %}
                   <div class="modal-body">
                         <div class="form-group">
                                 <label for="participant_name"> Participant Name </label>
-                                <input class="form-control " type="text" name="participant_name" id="participant_name">
+                                <input class="form-control " type="text" name="participant_name" id="participant_name" maxlength="30">
                         </div>
                         <div class="form-group">
                                 <label for="puskesmas"> Puskesmas </label>
                                 <!--<input class="form-control " type="text" name="puskesmas_code" id="puskesmas_code">-->
-                                <select class="form-control selectpicker" name="puskesmas">
+
+                                <select class="form-control selectpicker" name="puskesmas">                                 
                                   {% for puskesmas in puskesmas_list %}
                                   <option value={{puskesmas.id}}>{{ puskesmas.name }}</option>
                                   {% endfor %}
@@ -51,40 +53,6 @@
         </div> 
         <!-- End of Modal Create Participant-->
 
-        <!-- Modal Edit Participant --> 
-         <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="createModallabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="editModal">Edit Participant</h4>
-              </div>
-              <form action="{% url 'core:edit_participant' participant_id=1%}"  method="POST">
-                  {% csrf_token %}
-                  <div class="modal-body">
-                        <div class="form-group">
-                                <label for="participant_name"> Participant Name </label>
-                                <input class="form-control " type="text" name="participant_name_edit" id="participant_name_edit">
-                        </div>
-                        <div class="form-group">
-                                <label for="date_admission"> Date Admission </label>
-                                <input class="form-control" type="date" id="participant_date_edit" name="participant_date_edit" required>
-                        </div>
-                                
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save"/>
-                  </div>
-                </form>
-            </div>
-          </div>
-        </div>  -->
-        <!-- End of Modal Edit Participant-->
-
-
         <div class="row">         
            <h3> List of Participants </h3>
            <!-- <h4> Number of Registered Participant: {{ participants.count }} </h4>
@@ -105,6 +73,7 @@
                     </tr>
                 </thead>            
                 <tbody>
+                    {% load l10n %}
                     {% for participant in participants %}
                         <tr>
                             <!-- <td>
@@ -112,8 +81,17 @@
                               btn-primary">Forms</a>
                             </td> -->
                             <td>{{ participant.participant_id }}</td>
-                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.name }}</td>
-                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.date_admission }}</td>
+                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">
+                            {% if participant.name|length <= 25 %}
+                              {{ participant.name }}
+                            {% else %}
+                              {{ participant.name|slice:"0:25" }}
+                            {% endif %}
+
+                            </td>
+                            <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">
+                            {{ participant.date_admission|localize }}
+                            </td>
                             <td class='clickable-row' data-href="{{request.get_full_path}}{{participant.id}}">{{ participant.created_by }}</td>
                             <!-- <td>
                               <a class="btn btn-info" data-toggle="modal" data-target="#editModal"> Edit Participant </a>
@@ -122,7 +100,8 @@
                     {% endfor %}     
                 </tbody>
            </table>
-        </div> 
+        </div>
+      </div> 
     </div>
     <!-- /.container -->
 {% endblock %}
